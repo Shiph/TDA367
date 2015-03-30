@@ -50,7 +50,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <!-- Will create executable jar -->
-                            <mainClass>edu.chl.change2projectname.Main</mainClass>
+                            <mainClass>edu.chl.blastinthepast.Main</mainClass>
                         </manifest>
             
                     </archive>

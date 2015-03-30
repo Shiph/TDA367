@@ -1,6 +1,6 @@
-package edu.chl.change2projectname.view;
+package edu.chl.blastinthepast.view;
 
-import edu.chl.change2projectname.model.Project;
+import edu.chl.blastinthepast.model.Project;
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;

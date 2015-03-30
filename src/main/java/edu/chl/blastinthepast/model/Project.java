@@ -1,4 +1,4 @@
-package edu.chl.change2projectname.model;
+package edu.chl.blastinthepast.model;
 
 public class Project {
 	public static final String PROJECT_WINDOW_TEXT = "ProjectTemplate";
