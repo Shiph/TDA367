@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.jgame;
+package jgame;
 import jgame.impl.JGEngineInterface;
 
 /** A timer that generates a callback after a certain number of frames.  It

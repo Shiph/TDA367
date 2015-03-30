@@ -1,7 +1,9 @@
-package edu.chl.blastinthepast.jgame.platform;
+package jgame.platform;
 
-import jgame.*;
-import jgame.impl.*;
+import jgame.JGPoint;
+import jgame.impl.EngineLogic;
+import jgame.impl.JGEngineInterface;
+import jgame.impl.JGameError;
 
 import java.applet.Applet;
 import java.applet.AudioClip;
@@ -200,18 +202,18 @@ KeyListener, WindowListener {
 	public static String getKeyDescStatic(int key) {
 		if (key==32) return "space";
 		if (key==0) return "(none)";
-		if (key==JGEngineInterface.KeyEnter) return "enter";
-		if (key==JGEngineInterface.KeyEsc) return "escape";
-		if (key==JGEngineInterface.KeyUp) return "cursor up";
-		if (key==JGEngineInterface.KeyDown) return "cursor down";
-		if (key==JGEngineInterface.KeyLeft) return "cursor left";
-		if (key==JGEngineInterface.KeyRight) return "cursor right";
-		if (key==JGEngineInterface.KeyShift) return "shift";
-		if (key==JGEngineInterface.KeyAlt) return "alt";
-		if (key==JGEngineInterface.KeyCtrl) return "control";
-		if (key==JGEngineInterface.KeyMouse1) return "left mouse button";
-		if (key==JGEngineInterface.KeyMouse2) return "middle mouse button";
-		if (key==JGEngineInterface.KeyMouse3) return "right mouse button";
+		if (key== JGEngineInterface.KeyEnter) return "enter";
+		if (key== JGEngineInterface.KeyEsc) return "escape";
+		if (key== JGEngineInterface.KeyUp) return "cursor up";
+		if (key== JGEngineInterface.KeyDown) return "cursor down";
+		if (key== JGEngineInterface.KeyLeft) return "cursor left";
+		if (key== JGEngineInterface.KeyRight) return "cursor right";
+		if (key== JGEngineInterface.KeyShift) return "shift";
+		if (key== JGEngineInterface.KeyAlt) return "alt";
+		if (key== JGEngineInterface.KeyCtrl) return "control";
+		if (key== JGEngineInterface.KeyMouse1) return "left mouse button";
+		if (key== JGEngineInterface.KeyMouse2) return "middle mouse button";
+		if (key== JGEngineInterface.KeyMouse3) return "right mouse button";
 		if (key==27) return "escape";
 		if (key >= 33 && key <= 95)
 			return new String(new char[] {(char)key});

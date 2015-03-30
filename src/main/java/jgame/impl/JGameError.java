@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.jgame.impl;
+package jgame.impl;
 /** Exception used for passing error conditions within JGame */
 public class JGameError extends Error {
 	String msg;

@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.jgame.platform;
+package jgame.platform;
 
 import jgame.*;
 
@@ -186,7 +186,7 @@ public abstract class StdGame extends JGEngine {
 	public AppConfig appconfig=null;
 
 	/** Set the status display variables in one go. */
-	public void setStatusDisplay(JGFont status_font,JGColor status_color,
+	public void setStatusDisplay(JGFont status_font, JGColor status_color,
 	String lives_img) {
 		this.status_font=status_font;
 		this.status_color=status_color;
@@ -210,7 +210,7 @@ public abstract class StdGame extends JGEngine {
 	/** Highscore table, null (default) means not defined.  Use setHighscores
 	 * to define the table. If defined, the game will handle highscores by
 	 * means of the states Highscores and EnterHighscore.  */
-	public Highscore [] highscores=null;
+	public Highscore[] highscores=null;
 
 	/** Maximum length of name typed by user. */
 	public int highscore_maxnamelen=15;
@@ -242,7 +242,7 @@ public abstract class StdGame extends JGEngine {
 	/** Define highscore table. */ 
 	public void setHighscores(int nr_highscores, Highscore default_hisc,
 	int maxnamelen) {
-		highscores = new Highscore [nr_highscores];
+		highscores = new Highscore[nr_highscores];
 		for (int i=0; i<nr_highscores; i++)
 			// XXX maybe clone?
 			highscores[i] = default_hisc;
@@ -439,7 +439,7 @@ public abstract class StdGame extends JGEngine {
 		seqtimer=0;
 		clearKey(key_startgame);
 		if (highscores!=null
-		&&  Highscore.findPos(highscores,score)>=0 ) {
+		&&  Highscore.findPos(highscores, score)>=0 ) {
 			setGameState("EnterHighscore");
 		} else {
 			setGameState("Title");
@@ -516,8 +516,8 @@ public abstract class StdGame extends JGEngine {
 			t.start();
 			// load highscores
 			try {
-				Highscore [] loadedhisc = Highscore.load(new FileInputStream(
-						getConfigPath(getClass().getName()+".hsc") ) );
+				Highscore[] loadedhisc = Highscore.load(new FileInputStream(
+						getConfigPath(getClass().getName() + ".hsc")));
 				if (loadedhisc.length > 0) { // empty file, ignore
 					highscores=loadedhisc;
 				}
@@ -598,7 +598,7 @@ public abstract class StdGame extends JGEngine {
 			playername = playername.substring(0,playername.length()-1);
 		if (key==KeyEnter) {
 			highscores = Highscore.insert(highscores,
-					new Highscore(score,playername));
+					new Highscore(score, playername));
 			clearLastKey();
 			clearKey(KeyEnter);
 			saveHighscores();
@@ -614,8 +614,8 @@ public abstract class StdGame extends JGEngine {
 	* success, false on failure. */
 	public boolean saveHighscores() {
 		try {
-			Highscore.save(highscores,new FileOutputStream(
-				getConfigPath(getClass().getName()+".hsc") ) );
+			Highscore.save(highscores, new FileOutputStream(
+					getConfigPath(getClass().getName() + ".hsc")));
 			return true;
 		} catch (Exception e) {
 			// ioexception or accesscontrolexception
@@ -838,7 +838,7 @@ public abstract class StdGame extends JGEngine {
 	}
 
 	/** Get a colour from a colour cycle. */
-	public JGColor cycleColor(JGColor [] cycle, double tmr, double speed) {
+	public JGColor cycleColor(JGColor[] cycle, double tmr, double speed) {
 		return cycle[ ( (int)(tmr*speed) ) % cycle.length ];
 	}
 

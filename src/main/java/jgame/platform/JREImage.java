@@ -1,6 +1,6 @@
-package edu.chl.blastinthepast.jgame.platform;
+package jgame.platform;
 
-import jgame.*;
+import jgame.JGColor;
 import jgame.JGImage;
 import jgame.JGPoint;
 import jgame.impl.JGameError;
@@ -319,7 +319,7 @@ class JREImage implements JGImage {
 	* @param thresh alpha threshold between 0 and 255
 	* @param fast use fast algorithm (only set bg_col behind transp. pixels)
 	* @param bitmask true=use bitmask, false=use translucent */
-	public JGImage toDisplayCompatible(int thresh,JGColor bg_col,
+	public JGImage toDisplayCompatible(int thresh, JGColor bg_col,
 	boolean fast, boolean bitmask) {
 		Color bgcol = new Color(bg_col.r,bg_col.g,bg_col.b);
 		int bgcol_rgb = (bgcol.getRed()<<16) | (bgcol.getGreen()<<8)

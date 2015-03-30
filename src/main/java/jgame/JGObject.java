@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.jgame;
+package jgame;
 
 import jgame.impl.Animation;
 import jgame.impl.JGEngineInterface;

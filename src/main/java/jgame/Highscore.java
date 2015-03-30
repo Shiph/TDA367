@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.jgame;
+package jgame;
 
 import java.io.*;
 import java.util.Enumeration;
@@ -67,7 +67,7 @@ public class Highscore {
 	 * @param highscores  sorted highscore list
 	 * @return  0 means first position, etc.  -1 means not in list
 	 */
-	public static int findPos(Highscore [] highscores, int newscore) {
+	public static int findPos(Highscore[] highscores, int newscore) {
 		for (int i=0; i<highscores.length; i++) {
 			if (newscore > highscores[i].score) return i;
 		}
@@ -76,7 +76,7 @@ public class Highscore {
 
 	/** Try to insert new highscore in given highscore list.  Do nothing if
 	 * it's too low.  Leaves old array untouched. */
-	public static Highscore [] insert(Highscore [] highscores,
+	public static Highscore[] insert(Highscore[] highscores,
 	Highscore newscore) {
 		if (findPos(highscores,newscore.score) >= 0) {
 			highscores[highscores.length-1] = newscore;
@@ -86,7 +86,7 @@ public class Highscore {
 		}
 	}
 
-	public static Highscore [] load(InputStream in)
+	public static Highscore[] load(InputStream in)
 	throws IOException {
 		Vector highscores=new Vector(20,40);
 		InputStreamReader inr = new InputStreamReader(in);
@@ -119,7 +119,7 @@ public class Highscore {
 			}
 			highscores.addElement(hs);
 		}
-		Highscore [] ret = new Highscore [highscores.size()];
+		Highscore[] ret = new Highscore[highscores.size()];
 		for (int i=0; i<highscores.size(); i++) {
 			ret[i] = (Highscore)highscores.elementAt(i);
 		}
@@ -127,7 +127,7 @@ public class Highscore {
 		//return (Highscore[])highscores.toArray(new Highscore[]{});
 	}
 
-	public static void save(Highscore [] highscores,OutputStream out)
+	public static void save(Highscore[] highscores,OutputStream out)
 	throws IOException {
 		PrintStream outp = new PrintStream(out);
 		for (int i=0; i<highscores.length; i++) {
@@ -153,7 +153,7 @@ public class Highscore {
 	/* sorting */
 
 
-	static Highscore [] sort(Highscore a[]) {
+	static Highscore[] sort(Highscore a[]) {
 		/* index value of last element in array */
 	  	int index;
 

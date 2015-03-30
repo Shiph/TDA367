@@ -1,5 +1,4 @@
-package edu.chl.blastinthepast.jgame.impl;
-
+package jgame.impl;
 import jgame.*;
 
 import java.util.Vector;

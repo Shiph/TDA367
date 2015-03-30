@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.jgame.impl;
+package jgame.impl;
 
 import jgame.*;
 
@@ -48,7 +48,7 @@ public class EngineLogic {
 	public JGFont msg_font=null;
 
 	public int outline_thickness=0;
-	public JGColor outline_colour=JGColor.black;
+	public JGColor outline_colour= JGColor.black;
 
 
 	public double fps = 35;
@@ -862,8 +862,8 @@ public class EngineLogic {
 				if (o.resume_in_view
 				&&o.isInView(offscreen_margin_x,offscreen_margin_y)) o.resume();
 			} else {
-				if (o.expiry==JGObject.suspend_off_view
-				||  o.expiry==JGObject.suspend_off_view_expire_off_pf) {
+				if (o.expiry== JGObject.suspend_off_view
+				||  o.expiry== JGObject.suspend_off_view_expire_off_pf) {
 					if (!o.isInView(offscreen_margin_x,offscreen_margin_y))
 						o.suspend();
 				}
@@ -899,12 +899,12 @@ public class EngineLogic {
 					o.expiry -= gamespeed;
 					if (o.expiry < 0) o.remove();
 				} else {
-					if (expiry==JGObject.expire_off_pf
-					||  expiry==JGObject.suspend_off_view_expire_off_pf) {
+					if (expiry== JGObject.expire_off_pf
+					||  expiry== JGObject.suspend_off_view_expire_off_pf) {
 						if (!o.isOnPF(offscreen_margin_x,offscreen_margin_y))
 							o.remove();
 					}
-					if (expiry==JGObject.expire_off_view
+					if (expiry== JGObject.expire_off_view
 					&& !o.isInView(offscreen_margin_x,offscreen_margin_y))
 						o.remove();
 				}
@@ -924,8 +924,8 @@ public class EngineLogic {
 	JGRectangle tmprect1 = new JGRectangle();
 	JGRectangle tmprect2 = new JGRectangle();
 
-	JGObject [] srcobj = new JGObject[50];
-	JGObject [] dstobj = new JGObject[50];
+	JGObject[] srcobj = new JGObject[50];
+	JGObject[] dstobj = new JGObject[50];
 	public void checkCollision(JGEngineInterface eng,int srccid,int dstcid) {
 		if (in_parallel_upd) throw new JGameError("Recursive call",true);
 		in_parallel_upd=true;
@@ -1532,14 +1532,14 @@ public class EngineLogic {
 		return tilestr.toString();
 	}
 
-	public boolean getTiles(JGRectangle dest,JGRectangle r) {
+	public boolean getTiles(JGRectangle dest, JGRectangle r) {
 		if (r==null) return false;
 		dest.copyFrom(r);
 		convertToTiles(dest,r);
 		return true;
 	}
 
-	void convertToTiles(JGRectangle dest,JGRectangle r) {
+	void convertToTiles(JGRectangle dest, JGRectangle r) {
 		if (dest.x >= 0) {
 			dest.x /= tilex;
 			dest.width  = 1 - dest.x + (r.x + r.width  - 1) / tilex;
@@ -1872,7 +1872,7 @@ public class EngineLogic {
 		this.maxframeskip = maxframeskip;
 	}
 
-	public void setRenderSettings(int alpha_thresh,JGColor render_bg_col) {
+	public void setRenderSettings(int alpha_thresh, JGColor render_bg_col) {
 		this.alpha_thresh=alpha_thresh;
 		this.render_bg_color=render_bg_col;
 	}

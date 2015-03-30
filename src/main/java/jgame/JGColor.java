@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.jgame;
+package jgame;
 
 /** Minimal replacement of java.awt.Color. */
 public class JGColor {

@@ -1,5 +1,7 @@
-package edu.chl.blastinthepast.jgame.impl;
-import jgame.*;
+package jgame.impl;
+
+import jgame.JGImage;
+import jgame.JGPoint;
 
 public class ImageMap {
 	JGImage imageutil;

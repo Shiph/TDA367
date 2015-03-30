@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.jgame.platform;
+package jgame.platform;
 
 import jgame.impl.JGameError;
 

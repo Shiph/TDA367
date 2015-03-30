@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.jgame;
+package jgame;
 /** Image functionality */
 public interface JGImage {
 

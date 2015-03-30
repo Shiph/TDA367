@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.jgame;
+package jgame;
 
 /** A generic font specification for fonts on the different
 * platforms.  It is based on the JRE platform, other platforms should do their

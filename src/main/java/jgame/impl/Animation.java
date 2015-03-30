@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.jgame.impl;
+package jgame.impl;
 
 public class Animation {
 	/* settings;  the public ones may be manipulated freely */

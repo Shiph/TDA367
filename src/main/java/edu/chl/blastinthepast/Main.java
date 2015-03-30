@@ -4,7 +4,7 @@ import edu.chl.blastinthepast.controller.ProjectController;
 import edu.chl.blastinthepast.model.Project;
 import edu.chl.blastinthepast.view.ProjectView;
 import javax.swing.SwingUtilities;
-import edu.chl.blastinthepast.jgame.*;
+import jgame.*;
 
 /*
   Application entry class (if using standard java and Swing)

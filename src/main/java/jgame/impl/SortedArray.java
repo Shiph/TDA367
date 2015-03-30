@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.jgame.impl;
+package jgame.impl;
 /** Data structure that can be used as replacement for Hashtable&lt;String&gt;
  * for fast sorted enumeration of its elements.  It can get and put like a
  * Hashtable.  Get uses binary search, and is a little, but not much,  slower

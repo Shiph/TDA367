@@ -1,7 +1,10 @@
-package edu.chl.blastinthepast.jgame.platform;
+package jgame.platform;
 
 import jgame.*;
-import jgame.impl.*;
+import jgame.impl.Animation;
+import jgame.impl.EngineLogic;
+import jgame.impl.JGEngineInterface;
+import jgame.impl.JGameError;
 
 import javax.swing.*;
 import java.applet.Applet;
@@ -337,7 +340,7 @@ public abstract class JGEngine extends Applet implements JGEngineInterface {
 			}
 		}
 		// note that the debug bbox of suspended objects will be visible
-		if ((debugflags&JGEngine.BBOX_DEBUG)!=0) {
+		if ((debugflags& JGEngine.BBOX_DEBUG)!=0) {
 			setColor(g,el.fg_color);
 			JGRectangle bbox = o.getBBox();
 			if (bbox!=null) { // bounding box defined
@@ -407,7 +410,7 @@ public abstract class JGEngine extends Applet implements JGEngineInterface {
 		el.setTile(x,y,tilestr);
 	}
 
-	void setColor(Graphics g,JGColor col) {
+	void setColor(Graphics g, JGColor col) {
 		col.impl=new Color(col.r,col.g,col.b);
 		g.setColor((Color)col.impl);
 	}
@@ -1243,7 +1246,7 @@ public abstract class JGEngine extends Applet implements JGEngineInterface {
 		el.setGameSpeed(gamespeed);
 	}
 
-	public void setRenderSettings(int alpha_thresh,JGColor render_bg_col) {
+	public void setRenderSettings(int alpha_thresh, JGColor render_bg_col) {
 		el.setRenderSettings(alpha_thresh,render_bg_col);
 	}
 
@@ -1271,7 +1274,7 @@ public abstract class JGEngine extends Applet implements JGEngineInterface {
 
 	/** Set foreground and background colour, and message font in one go;
 	* passing a null means ignore that argument. */
-	public void setColorsFont(JGColor fgcolor,JGColor bgcolor,JGFont msgfont) {
+	public void setColorsFont(JGColor fgcolor, JGColor bgcolor,JGFont msgfont) {
 		if (msgfont!=null) el.msg_font = msgfont;
 		if (fgcolor!=null) el.fg_color = fgcolor;
 		if (bgcolor!=null) setBGColor(bgcolor);
@@ -1280,7 +1283,7 @@ public abstract class JGEngine extends Applet implements JGEngineInterface {
 	/** Set parameters of outline surrounding text (for example, used to
 	 *  increase contrast).
 	 * @param thickness 0 = turn off outline */
-	public void setTextOutline(int thickness,JGColor colour) {
+	public void setTextOutline(int thickness, JGColor colour) {
 		// curiously, I've seen the init screen draw in-between these two
 		// statements.  Check of if that's what really happened
 		el.outline_colour=colour;
@@ -1506,7 +1509,7 @@ public abstract class JGEngine extends Applet implements JGEngineInterface {
 			el.scaleXPos(x2,pf_relative),el.scaleYPos(y2,pf_relative) );
 	}
 
-	public void drawPolygon(double [] x,double [] y, JGColor [] col,
+	public void drawPolygon(double [] x,double [] y, JGColor[] col,
 	boolean filled, boolean pf_relative) {
 		if (buf_gfx==null) return;
 		int [] xpos = new int[3];
@@ -1558,7 +1561,7 @@ public abstract class JGEngine extends Applet implements JGEngineInterface {
 
 	public void drawRect(double x,double y,double width,double height,
 	boolean filled, boolean centered,boolean pf_relative,
-	JGColor [] shadecol) {
+	JGColor[] shadecol) {
 		drawRect(buf_gfx,x,y,width,height,filled,centered,pf_relative);
 	}
 
