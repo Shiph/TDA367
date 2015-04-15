@@ -1,23 +1,32 @@
+## Java
+
 *.class
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
 *.war
 *.ear
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-# Intellij
+## GWT
+war/
+html/war/gwt_bree/
+html/gwt-unitCache/
+.apt_generated/
+html/war/WEB-INF/deploy/
+html/war/WEB-INF/classes/
+.gwt/
+gwt-unitCache/
+www-test/
+.gwt-tmp/
+
+## Intellij
 .idea/
 *.iml
 *.iws
 
-# Mac
-.DS_Store
+## Gradle
 
-# Maven
-log/
-target/
+.gradle
+gradle-app.setting
+build/
+
+## OS Specific
+.DS_Store
