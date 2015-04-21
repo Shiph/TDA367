@@ -5,10 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
+import edu.chl.blastinthepast.Player;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -16,25 +15,15 @@ public class BlastInThePast extends ApplicationAdapter {
 
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
-	private Texture bucketImage;
-	private Sprite bucketSprite;
-	private Rectangle bucket;
+	private Player player;
 	private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		bucketImage = new Texture(Gdx.files.local("bucket.png"));
-		bucketSprite = new Sprite(bucketImage);
-		bucket = new Rectangle();
-		bucket.x = 800/2 - 64/2;
-		bucket.y = 480/2 - 64/2;
-		bucket.height = 64;
-		bucket.width = 64;
-		bucketSprite.setX(bucket.x);
-		bucketSprite.setY(bucket.y);
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 480);
+		player = new Player();
 	}
 
 	@Override
@@ -43,26 +32,32 @@ public class BlastInThePast extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		batch.begin();
-		bucketSprite.setRotation(getAimDirection());
-		bucketSprite.draw(batch);
+		player.getSprite().setRotation(getAimDirection());
+		player.getSprite().draw(batch);
 		batch.end();
 
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
 			pcs.firePropertyChange("keyleft", true, false);
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
 			pcs.firePropertyChange("keyright", true, false);
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
+		if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)) {
 			pcs.firePropertyChange("keyup", true, false);
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+		if(Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)) {
 			pcs.firePropertyChange("keydown", true, false);
 		}
 	}
 
+	/**
+	 * Calculates the angle from the player character to the mouse pointer.
+	 *
+	 * @return the angle.
+	 */
 	private float getAimDirection() {
-		return (float)(-Math.atan2(Gdx.input.getY() - (bucket.y + bucket.height/2), Gdx.input.getX() - (bucket.x + bucket.width/2)) * (180/Math.PI)-90);
+		return (float)(-Math.atan2(Gdx.input.getY() - (player.getRectangle().y + player.getRectangle().height/2),
+				Gdx.input.getX() - (player.getRectangle().x + player.getRectangle().width/2)) * (180/Math.PI)-90);
 	}
 
 	/**
@@ -75,27 +70,27 @@ public class BlastInThePast extends ApplicationAdapter {
 	}
 
 	/**
-	 * Updates the bucket's (and bucketSprite's) location.
+	 * Updates the position of the player character's rectangle and sprite.
 	 *
 	 * @param direction - the direction in which to move the sprite. 0 = left, 1 = right, 2 = up, 3 = down.
 	 */
 	public void updatePos(int direction) {
 		switch (direction) {
 			case 0: // move left
-				bucket.x -= 200 * Gdx.graphics.getDeltaTime();
-				bucketSprite.setX(bucketSprite.getX() - 200 * Gdx.graphics.getDeltaTime());
+				player.getRectangle().x -= 200 * Gdx.graphics.getDeltaTime();
+				player.getSprite().setX(player.getSprite().getX() - 200 * Gdx.graphics.getDeltaTime());
 				break;
 			case 1: // move right
-				bucket.x += 200 * Gdx.graphics.getDeltaTime();
-				bucketSprite.setX(bucketSprite.getX() + 200 * Gdx.graphics.getDeltaTime());
+				player.getRectangle().x += 200 * Gdx.graphics.getDeltaTime();
+				player.getSprite().setX(player.getSprite().getX() + 200 * Gdx.graphics.getDeltaTime());
 				break;
 			case 2: // move up
-				bucket.y -= 200 * Gdx.graphics.getDeltaTime();
-				bucketSprite.setY(bucketSprite.getY() + 200 * Gdx.graphics.getDeltaTime());
+				player.getRectangle().y -= 200 * Gdx.graphics.getDeltaTime();
+				player.getSprite().setY(player.getSprite().getY() + 200 * Gdx.graphics.getDeltaTime());
 				break;
 			case 3: // move down
-				bucket.y += 200 * Gdx.graphics.getDeltaTime();
-				bucketSprite.setY(bucketSprite.getY() - 200 * Gdx.graphics.getDeltaTime());
+				player.getRectangle().y += 200 * Gdx.graphics.getDeltaTime();
+				player.getSprite().setY(player.getSprite().getY() - 200 * Gdx.graphics.getDeltaTime());
 				break;
 		}
 	}
