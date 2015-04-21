@@ -7,30 +7,27 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 /**
- * Created by Shif on 21/04/15.
+ * Created by Mattias on 15-04-21.
  */
-public class Player extends Actor {
-
+public class Enemy extends Actor {
     private Texture texture;
     private Sprite sprite;
     private Rectangle rectangle;
-    private int health;
     private int movementSpeed;
+    private int health;
 
     /**
-     * Default constructor for Player with default movement speed and health.
+     * Default constructor for Enemy with default movement speed and health.
      */
-    public Player() {
-        this(200, 100);
+    public Enemy() {
+        this(150, 100);
     }
 
     /**
-     * Creates a new player character with texture, rectangle and sprite.
+     * Creates a new enemy character with texture, rectangle and sprite.
      */
-    public Player(int movementSpeed, int health) {
-        this.movementSpeed = movementSpeed;
-        this.health = health;
-        texture = new Texture(Gdx.files.local("bucket.png"));
+    public Enemy(int movementSpeed, int health) {
+        texture = new Texture(Gdx.files.local("kim.png"));
         sprite = new Sprite(texture);
         rectangle = new Rectangle();
         rectangle.x = 800/2 - 64/2;
@@ -62,10 +59,6 @@ public class Player extends Actor {
         return sprite;
     }
 
-    public int getMovementSpeed() {
-        return movementSpeed;
-    }
-
     /**
      * Sets the players new movement speed.
      * @param newSpeed
@@ -80,6 +73,27 @@ public class Player extends Actor {
      */
     public void setHealth(int newHealth) {
         health = newHealth;
+    }
+
+    public void updatePos(int direction) {
+        switch (direction) {
+            case 0: // move left
+                rectangle.x -= movementSpeed * Gdx.graphics.getDeltaTime();
+                sprite.setX(sprite.getX() - movementSpeed * Gdx.graphics.getDeltaTime());
+                break;
+            case 1: // move right
+                rectangle.x += movementSpeed * Gdx.graphics.getDeltaTime();
+                sprite.setX(sprite.getX() + movementSpeed * Gdx.graphics.getDeltaTime());
+                break;
+            case 2: // move up
+                rectangle.y -= movementSpeed * Gdx.graphics.getDeltaTime();
+                sprite.setY(sprite.getY() + movementSpeed * Gdx.graphics.getDeltaTime());
+                break;
+            case 3: // move down
+                rectangle.y += movementSpeed * Gdx.graphics.getDeltaTime();
+                sprite.setY(sprite.getY() - movementSpeed * Gdx.graphics.getDeltaTime());
+                break;
+        }
     }
 
 }

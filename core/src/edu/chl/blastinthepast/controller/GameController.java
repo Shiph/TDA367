@@ -28,16 +28,16 @@ public class GameController implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         switch(evt.getPropertyName()) {
             case "keyleft":
-                view.updatePos(0);
+                view.updatePlayerPos(0);
                 break;
             case "keyright":
-                view.updatePos(1);
+                view.updatePlayerPos(1);
                 break;
             case "keyup":
-                view.updatePos(2);
+                view.updatePlayerPos(2);
                 break;
             case "keydown":
-                view.updatePos(3);
+                view.updatePlayerPos(3);
                 break;
         }
     }

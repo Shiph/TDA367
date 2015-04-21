@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import edu.chl.blastinthepast.Enemy;
 import edu.chl.blastinthepast.Player;
 import edu.chl.blastinthepast.Projectile;
 
@@ -19,6 +21,7 @@ public class BlastInThePast extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Player player;
+	private Enemy enemy;
 	private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 	private Array<Projectile> projectiles = new Array<Projectile>();
 	
@@ -28,6 +31,20 @@ public class BlastInThePast extends ApplicationAdapter {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 480);
 		player = new Player();
+		enemy = new Enemy();
+	}
+
+	public void create (TiledMap tm) {
+		batch = new SpriteBatch();
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, 800, 480);
+		player = new Player();
+
+		for (int i=0; i<5; i++) {
+			Enemy enemy = new Enemy();
+			enemy.getRectangle().x = 100;
+			enemy.getRectangle().y = 100;
+		}
 	}
 
 	@Override
@@ -42,6 +59,7 @@ public class BlastInThePast extends ApplicationAdapter {
 			p.getSprite().setRotation(p.getDirection());
 			p.getSprite().draw(batch);
 		}
+		enemy.getSprite().draw(batch);
 		batch.end();
 
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
@@ -103,25 +121,23 @@ public class BlastInThePast extends ApplicationAdapter {
 	 *
 	 * @param direction - the direction in which to move the sprite. 0 = left, 1 = right, 2 = up, 3 = down.
 	 */
-	public void updatePos(int direction) {
+	public void updatePlayerPos(int direction) {
 		switch (direction) {
 			case 0: // move left
-				player.getRectangle().x -= 200 * Gdx.graphics.getDeltaTime();
-				player.getSprite().setX(player.getSprite().getX() - 200 * Gdx.graphics.getDeltaTime());
-				for (Projectile p : projectiles) {
-				}
+				player.getRectangle().x -= player.getMovementSpeed() * Gdx.graphics.getDeltaTime();
+				player.getSprite().setX(player.getSprite().getX() - player.getMovementSpeed() * Gdx.graphics.getDeltaTime());
 				break;
 			case 1: // move right
-				player.getRectangle().x += 200 * Gdx.graphics.getDeltaTime();
-				player.getSprite().setX(player.getSprite().getX() + 200 * Gdx.graphics.getDeltaTime());
+				player.getRectangle().x += player.getMovementSpeed() * Gdx.graphics.getDeltaTime();
+				player.getSprite().setX(player.getSprite().getX() + player.getMovementSpeed() * Gdx.graphics.getDeltaTime());
 				break;
 			case 2: // move up
-				player.getRectangle().y += 200 * Gdx.graphics.getDeltaTime();
-				player.getSprite().setY(player.getSprite().getY() + 200 * Gdx.graphics.getDeltaTime());
+				player.getRectangle().y += player.getMovementSpeed() * Gdx.graphics.getDeltaTime();
+				player.getSprite().setY(player.getSprite().getY() + player.getMovementSpeed() * Gdx.graphics.getDeltaTime());
 				break;
 			case 3: // move down
-				player.getRectangle().y -= 200 * Gdx.graphics.getDeltaTime();
-				player.getSprite().setY(player.getSprite().getY() - 200 * Gdx.graphics.getDeltaTime());
+				player.getRectangle().y -= player.getMovementSpeed() * Gdx.graphics.getDeltaTime();
+				player.getSprite().setY(player.getSprite().getY() - player.getMovementSpeed() * Gdx.graphics.getDeltaTime());
 				break;
 		}
 	}
