@@ -14,6 +14,7 @@ public class Projectile {
     private Sprite sprite;
     private Rectangle rectangle;
     private float direction = 0;
+    private float speed = 500;
     private float x = 0;
     private float y = 0;
 
@@ -84,4 +85,7 @@ public class Projectile {
         this.direction = direction;
     }
 
+    public float getSpeed() {
+        return speed;
+    }
 }

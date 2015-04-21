@@ -1,8 +1,6 @@
 package edu.chl.blastinthepast.view;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,6 +22,7 @@ public class BlastInThePast extends ApplicationAdapter {
 	private Enemy enemy;
 	private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 	private Array<Projectile> projectiles = new Array<Projectile>();
+	private MyInputProcessor inputProcessor;
 	
 	@Override
 	public void create () {
@@ -32,14 +31,15 @@ public class BlastInThePast extends ApplicationAdapter {
 		camera.setToOrtho(false, 800, 480);
 		player = new Player();
 		enemy = new Enemy();
+		inputProcessor = new MyInputProcessor();
+		Gdx.input.setInputProcessor(inputProcessor);
 	}
 
-	public void create (TiledMap tm) {
+	public void create(TiledMap tm) {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 480);
 		player = new Player();
-
 		for (int i=0; i<5; i++) {
 			Enemy enemy = new Enemy();
 			enemy.getRectangle().x = 100;
@@ -61,7 +61,6 @@ public class BlastInThePast extends ApplicationAdapter {
 		}
 		enemy.getSprite().draw(batch);
 		batch.end();
-
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
 			pcs.firePropertyChange("keyleft", true, false);
 		}
@@ -74,16 +73,13 @@ public class BlastInThePast extends ApplicationAdapter {
 		if(Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)) {
 			pcs.firePropertyChange("keydown", true, false);
 		}
-		if(Gdx.input.isTouched()) {
-			spawnProjectile();
-		}
 		Iterator<Projectile> iter = projectiles.iterator();
 		while(iter.hasNext()) {
 			Projectile p = iter.next();
-			p.getRectangle().y += Math.cos(Math.toRadians(p.getDirection())) * 200 * Gdx.graphics.getDeltaTime();
-			p.getRectangle().x -= Math.sin(Math.toRadians(p.getDirection())) * 200 * Gdx.graphics.getDeltaTime();
-			p.getSprite().setY((float) (p.getSprite().getY() + Math.cos(Math.toRadians(p.getDirection())) * 200 * Gdx.graphics.getDeltaTime()));
-			p.getSprite().setX((float) (p.getSprite().getX() - Math.sin(Math.toRadians(p.getDirection())) * 200 * Gdx.graphics.getDeltaTime()));
+			p.getRectangle().y += Math.cos(Math.toRadians(p.getDirection())) * p.getSpeed() * Gdx.graphics.getDeltaTime();
+			p.getRectangle().x -= Math.sin(Math.toRadians(p.getDirection())) * p.getSpeed() * Gdx.graphics.getDeltaTime();
+			p.getSprite().setY((float) (p.getSprite().getY() + Math.cos(Math.toRadians(p.getDirection())) * p.getSpeed() * Gdx.graphics.getDeltaTime()));
+			p.getSprite().setX((float) (p.getSprite().getX() - Math.sin(Math.toRadians(p.getDirection())) * p.getSpeed() * Gdx.graphics.getDeltaTime()));
 			if((p.getRectangle().y + 64 < 0) || (p.getRectangle().y > 480) || (p.getRectangle().x > 800) || (p.getRectangle().x + 64 < 0)) {
 				iter.remove();
 			}
@@ -140,6 +136,16 @@ public class BlastInThePast extends ApplicationAdapter {
 				player.getSprite().setY(player.getSprite().getY() - player.getMovementSpeed() * Gdx.graphics.getDeltaTime());
 				break;
 		}
+	}
+
+	private class MyInputProcessor extends InputAdapter {
+
+		@Override
+		public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+			spawnProjectile();
+			return false;
+		}
+
 	}
 
 }
