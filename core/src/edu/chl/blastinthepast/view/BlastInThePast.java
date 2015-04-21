@@ -6,10 +6,13 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.Player;
+import edu.chl.blastinthepast.Projectile;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.Iterator;
 
 public class BlastInThePast extends ApplicationAdapter {
 
@@ -17,6 +20,7 @@ public class BlastInThePast extends ApplicationAdapter {
 	private OrthographicCamera camera;
 	private Player player;
 	private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+	private Array<Projectile> projectiles = new Array<Projectile>();
 	
 	@Override
 	public void create () {
@@ -34,6 +38,10 @@ public class BlastInThePast extends ApplicationAdapter {
 		batch.begin();
 		player.getSprite().setRotation(getAimDirection());
 		player.getSprite().draw(batch);
+		for (Projectile p : projectiles) {
+			p.getSprite().setRotation(p.getDirection());
+			p.getSprite().draw(batch);
+		}
 		batch.end();
 
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
@@ -48,6 +56,27 @@ public class BlastInThePast extends ApplicationAdapter {
 		if(Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)) {
 			pcs.firePropertyChange("keydown", true, false);
 		}
+		if(Gdx.input.isTouched()) {
+			spawnProjectile();
+		}
+		Iterator<Projectile> iter = projectiles.iterator();
+		while(iter.hasNext()) {
+			Projectile p = iter.next();
+			p.getRectangle().y += Math.cos(Math.toRadians(p.getDirection())) * 200 * Gdx.graphics.getDeltaTime();
+			p.getRectangle().x -= Math.sin(Math.toRadians(p.getDirection())) * 200 * Gdx.graphics.getDeltaTime();
+			p.getSprite().setY((float) (p.getSprite().getY() + Math.cos(Math.toRadians(p.getDirection())) * 200 * Gdx.graphics.getDeltaTime()));
+			p.getSprite().setX((float) (p.getSprite().getX() - Math.sin(Math.toRadians(p.getDirection())) * 200 * Gdx.graphics.getDeltaTime()));
+			if((p.getRectangle().y + 64 < 0) || (p.getRectangle().y > 480) || (p.getRectangle().x > 800) || (p.getRectangle().x + 64 < 0)) {
+				iter.remove();
+			}
+		}
+	}
+
+	/**
+	 * Spawns a projectile at the player's location.
+	 */
+	private void spawnProjectile() {
+		projectiles.add(new Projectile(player.getRectangle().getX(), player.getRectangle().getY(), getAimDirection()));
 	}
 
 	/**
@@ -56,7 +85,7 @@ public class BlastInThePast extends ApplicationAdapter {
 	 * @return the angle.
 	 */
 	private float getAimDirection() {
-		return (float)(-Math.atan2(Gdx.input.getY() - (player.getRectangle().y + player.getRectangle().height/2),
+		return (float)(-Math.atan2(Gdx.input.getY() - (480-64-player.getRectangle().y + player.getRectangle().height/2),
 				Gdx.input.getX() - (player.getRectangle().x + player.getRectangle().width/2)) * (180/Math.PI)-90);
 	}
 
@@ -79,17 +108,19 @@ public class BlastInThePast extends ApplicationAdapter {
 			case 0: // move left
 				player.getRectangle().x -= 200 * Gdx.graphics.getDeltaTime();
 				player.getSprite().setX(player.getSprite().getX() - 200 * Gdx.graphics.getDeltaTime());
+				for (Projectile p : projectiles) {
+				}
 				break;
 			case 1: // move right
 				player.getRectangle().x += 200 * Gdx.graphics.getDeltaTime();
 				player.getSprite().setX(player.getSprite().getX() + 200 * Gdx.graphics.getDeltaTime());
 				break;
 			case 2: // move up
-				player.getRectangle().y -= 200 * Gdx.graphics.getDeltaTime();
+				player.getRectangle().y += 200 * Gdx.graphics.getDeltaTime();
 				player.getSprite().setY(player.getSprite().getY() + 200 * Gdx.graphics.getDeltaTime());
 				break;
 			case 3: // move down
-				player.getRectangle().y += 200 * Gdx.graphics.getDeltaTime();
+				player.getRectangle().y -= 200 * Gdx.graphics.getDeltaTime();
 				player.getSprite().setY(player.getSprite().getY() - 200 * Gdx.graphics.getDeltaTime());
 				break;
 		}
