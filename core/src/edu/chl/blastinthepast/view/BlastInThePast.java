@@ -166,7 +166,6 @@ public class BlastInThePast extends ApplicationAdapter implements PropertyChange
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		pcs.firePropertyChange(evt);
-		System.out.println(evt.getPropertyName());
 	}
 
 }
