@@ -2,6 +2,7 @@ package edu.chl.blastinthepast.view;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,6 +25,7 @@ public class BlastInThePast extends ApplicationAdapter {
 	private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 	private Array<Projectile> projectiles = new Array<Projectile>();
 	private Sound wowSound;
+	private Music gottaGoFaster;
 	
 	@Override
 	public void create () {
@@ -31,18 +33,21 @@ public class BlastInThePast extends ApplicationAdapter {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 480);
 		player = new Player();
+		gottaGoFaster = Gdx.audio.newMusic(Gdx.files.internal("sanic.mp3"));
+		gottaGoFaster.setLooping(true);
+		gottaGoFaster.play();
 		enemyArray = new Array<Enemy>();
 		wowSound = Gdx.audio.newSound(Gdx.files.internal("wow.mp3"));
 		for (int i = 0; i < 5; i++) {
 			spawnEnemy();
 		}
-		MyInputProcessor inputProcessor = new MyInputProcessor();
-		Gdx.input.setInputProcessor(inputProcessor);
 		for (Enemy e : enemyArray) {
 			Random r = new Random();
 			e.setX(r.nextFloat() * 800);
 			e.setY(r.nextFloat() * 480);
 		}
+		MyInputProcessor inputProcessor = new MyInputProcessor();
+		Gdx.input.setInputProcessor(inputProcessor);
 	}
 
 	@Override
@@ -151,7 +156,6 @@ public class BlastInThePast extends ApplicationAdapter {
 
 		@Override
 		public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-			//spawnProjectile();
 			pcs.firePropertyChange("shoot", true, false);
 			return false;
 		}
