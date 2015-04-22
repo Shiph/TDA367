@@ -31,8 +31,7 @@ public class Player extends Actor {
     public Player(int movementSpeed, int health) {
         this.movementSpeed = movementSpeed;
         this.health = health;
-        System.out.println("Working Directory = " + System.getProperty("user.dir"));
-        texture = new Texture(Gdx.files.local("bucket.png"));
+        texture = new Texture(Gdx.files.local("sanic.png"));
         sprite = new Sprite(texture);
         rectangle = new Rectangle();
         rectangle.x = 800/2 - 64/2;

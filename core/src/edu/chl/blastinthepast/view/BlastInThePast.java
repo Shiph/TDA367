@@ -1,14 +1,16 @@
 package edu.chl.blastinthepast.view;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import edu.chl.blastinthepast.Enemy;
 import edu.chl.blastinthepast.Player;
 import edu.chl.blastinthepast.Projectile;
@@ -16,23 +18,20 @@ import edu.chl.blastinthepast.Projectile;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Iterator;
+import java.util.Random;
 
 public class BlastInThePast extends ApplicationAdapter {
 
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Player player;
-	private Enemy enemy;
+	private Array<Enemy> enemyArray;
 	private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 	private Array<Projectile> projectiles = new Array<Projectile>();
 	private TiledMap tiledMap;
 	private TiledMapRenderer tiledMapRenderer;
-
-	/*
-	public BlastInThePast(Player player) {
-		this.player = player;
-	}
-	*/
+	private Sound wowSound;
+	private Music gottaGoFaster;
 	
 	@Override
 	public void create () {
@@ -43,22 +42,22 @@ public class BlastInThePast extends ApplicationAdapter {
 		tiledMap = new TmxMapLoader().load("GrassTestMap1.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		player = new Player();
-		enemy = new Enemy();
+		gottaGoFaster = Gdx.audio.newMusic(Gdx.files.internal("sanic.mp3"));
+		gottaGoFaster.setLooping(true);
+		gottaGoFaster.play();
+		enemyArray = new Array<Enemy>();
+		wowSound = Gdx.audio.newSound(Gdx.files.internal("wow.mp3"));
+		for (int i = 0; i < 5; i++) {
+			spawnEnemy();
+		}
+		for (Enemy e : enemyArray) {
+			Random r = new Random();
+			e.setX(r.nextFloat() * 800);
+			e.setY(r.nextFloat() * 480);
+		}
 		MyInputProcessor inputProcessor = new MyInputProcessor();
 		Gdx.input.setInputProcessor(inputProcessor);
 	}
-
-	/*public void create(TiledMap tm) {
-		batch = new SpriteBatch();
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 800, 480);
-		player = new Player();
-		for (int i=0; i<5; i++) {
-			Enemy enemy = new Enemy();
-			enemy.getRectangle().x = 100;
-			enemy.getRectangle().y = 100;
-		}
-	} */
 
 	@Override
 	public void render () {
@@ -76,7 +75,9 @@ public class BlastInThePast extends ApplicationAdapter {
 			p.getSprite().setRotation(p.getDirection());
 			p.getSprite().draw(batch);
 		}
-		enemy.getSprite().draw(batch);
+		for (Enemy e : enemyArray) {
+			e.getSprite().draw(batch);
+		}
 		batch.end();
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
 			pcs.firePropertyChange("keyleft", true, false);
@@ -103,15 +104,20 @@ public class BlastInThePast extends ApplicationAdapter {
 		}
 	}
 
+	public void spawnEnemy() {
+		enemyArray.add(new Enemy());
+	}
+
 	/**
 	 * Spawns a projectile at the player's location.
 	 */
-	public void spawnProjectile(Projectile newProjectile) {
+	public void spawnProjectile() {
+		Projectile newProjectile = player.getWeapon().fire();
 		newProjectile.setX(player.getRectangle().getX());
 		newProjectile.setY(player.getRectangle().getY());
 		newProjectile.setDirection(getAimDirection());
 		projectiles.add(newProjectile);
-		//projectiles.add(new Projectile(player.getRectangle().getX(), player.getRectangle().getY(), getAimDirection()));
+		wowSound.play();
 	}
 
 	/**
@@ -159,15 +165,10 @@ public class BlastInThePast extends ApplicationAdapter {
 		}
 	}
 
-	public Player getPlayer() {
-		return player;
-	}
-
 	private class MyInputProcessor extends InputAdapter {
 
 		@Override
 		public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-			//spawnProjectile();
 			pcs.firePropertyChange("shoot", true, false);
 			return false;
 		}

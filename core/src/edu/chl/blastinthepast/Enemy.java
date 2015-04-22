@@ -75,25 +75,14 @@ public class Enemy extends Actor {
         health = newHealth;
     }
 
-    public void updatePos(int direction) {
-        switch (direction) {
-            case 0: // move left
-                rectangle.x -= movementSpeed * Gdx.graphics.getDeltaTime();
-                sprite.setX(sprite.getX() - movementSpeed * Gdx.graphics.getDeltaTime());
-                break;
-            case 1: // move right
-                rectangle.x += movementSpeed * Gdx.graphics.getDeltaTime();
-                sprite.setX(sprite.getX() + movementSpeed * Gdx.graphics.getDeltaTime());
-                break;
-            case 2: // move up
-                rectangle.y -= movementSpeed * Gdx.graphics.getDeltaTime();
-                sprite.setY(sprite.getY() + movementSpeed * Gdx.graphics.getDeltaTime());
-                break;
-            case 3: // move down
-                rectangle.y += movementSpeed * Gdx.graphics.getDeltaTime();
-                sprite.setY(sprite.getY() - movementSpeed * Gdx.graphics.getDeltaTime());
-                break;
-        }
+    public void setX(float x) {
+        rectangle.setX(x);
+        sprite.setX(x);
+    }
+
+    public void setY(float y) {
+        rectangle.setY(y);
+        sprite.setY(y);
     }
 
 }

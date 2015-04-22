@@ -1,5 +1,6 @@
 package edu.chl.blastinthepast.model;
 
+import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.Enemy;
 import edu.chl.blastinthepast.Player;
 
@@ -8,14 +9,8 @@ import edu.chl.blastinthepast.Player;
  */
 public class GameModel {
 
-    private Player player;
-    //private Array<Enemy> enemyArray = new
-
     public GameModel() {
-        //player = new Player();
+
     }
 
-    public Player getPlayer() {
-        return player;
-    }
 }

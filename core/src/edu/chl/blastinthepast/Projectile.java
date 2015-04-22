@@ -26,7 +26,7 @@ public class Projectile {
         this.direction = direction;
         this.y = x;
         this.x = y;
-        texture = new Texture(Gdx.files.local("bucket.png"));
+        texture = new Texture(Gdx.files.local("triforce.png"));
         sprite = new Sprite(texture);
         rectangle = new Rectangle();
         rectangle.x = x;
