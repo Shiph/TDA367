@@ -1,6 +1,7 @@
 package edu.chl.blastinthepast.view;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -22,6 +23,7 @@ public class BlastInThePast extends ApplicationAdapter {
 	private Array<Enemy> enemyArray;
 	private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 	private Array<Projectile> projectiles = new Array<Projectile>();
+	private Sound wowSound;
 	
 	@Override
 	public void create () {
@@ -30,6 +32,7 @@ public class BlastInThePast extends ApplicationAdapter {
 		camera.setToOrtho(false, 800, 480);
 		player = new Player();
 		enemyArray = new Array<Enemy>();
+		wowSound = Gdx.audio.newSound(Gdx.files.internal("wow.mp3"));
 		for (int i = 0; i < 5; i++) {
 			spawnEnemy();
 		}
@@ -96,6 +99,7 @@ public class BlastInThePast extends ApplicationAdapter {
 		newProjectile.setY(player.getRectangle().getY());
 		newProjectile.setDirection(getAimDirection());
 		projectiles.add(newProjectile);
+		wowSound.play();
 	}
 
 	/**
