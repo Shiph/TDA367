@@ -41,7 +41,7 @@ public class GameController implements PropertyChangeListener {
                 break;
             case "shoot":
                 try {
-                    view.spawnProjectile(view.getPlayer().getWeapon().fire());
+                    view.spawnProjectile();
                 } catch (NullPointerException e) {
                     System.out.println(e.getMessage()); // player don't have a weapon or out of bullets
                 }

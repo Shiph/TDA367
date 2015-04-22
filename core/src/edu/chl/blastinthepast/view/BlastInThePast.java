@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import edu.chl.blastinthepast.Enemy;
 import edu.chl.blastinthepast.Player;
 import edu.chl.blastinthepast.Projectile;
@@ -13,21 +12,16 @@ import edu.chl.blastinthepast.Projectile;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Iterator;
+import java.util.Random;
 
 public class BlastInThePast extends ApplicationAdapter {
 
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Player player;
-	private Enemy enemy;
+	private Array<Enemy> enemyArray;
 	private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 	private Array<Projectile> projectiles = new Array<Projectile>();
-
-	/*
-	public BlastInThePast(Player player) {
-		this.player = player;
-	}
-	*/
 	
 	@Override
 	public void create () {
@@ -35,20 +29,16 @@ public class BlastInThePast extends ApplicationAdapter {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 480);
 		player = new Player();
-		enemy = new Enemy();
+		enemyArray = new Array<Enemy>();
+		for (int i = 0; i < 5; i++) {
+			spawnEnemy();
+		}
 		MyInputProcessor inputProcessor = new MyInputProcessor();
 		Gdx.input.setInputProcessor(inputProcessor);
-	}
-
-	public void create(TiledMap tm) {
-		batch = new SpriteBatch();
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 800, 480);
-		player = new Player();
-		for (int i=0; i<5; i++) {
-			Enemy enemy = new Enemy();
-			enemy.getRectangle().x = 100;
-			enemy.getRectangle().y = 100;
+		for (Enemy e : enemyArray) {
+			Random r = new Random();
+			e.setX(r.nextFloat() * 800);
+			e.setY(r.nextFloat() * 480);
 		}
 	}
 
@@ -64,7 +54,9 @@ public class BlastInThePast extends ApplicationAdapter {
 			p.getSprite().setRotation(p.getDirection());
 			p.getSprite().draw(batch);
 		}
-		enemy.getSprite().draw(batch);
+		for (Enemy e : enemyArray) {
+			e.getSprite().draw(batch);
+		}
 		batch.end();
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
 			pcs.firePropertyChange("keyleft", true, false);
@@ -91,15 +83,19 @@ public class BlastInThePast extends ApplicationAdapter {
 		}
 	}
 
+	public void spawnEnemy() {
+		enemyArray.add(new Enemy());
+	}
+
 	/**
 	 * Spawns a projectile at the player's location.
 	 */
-	public void spawnProjectile(Projectile newProjectile) {
+	public void spawnProjectile() {
+		Projectile newProjectile = player.getWeapon().fire();
 		newProjectile.setX(player.getRectangle().getX());
 		newProjectile.setY(player.getRectangle().getY());
 		newProjectile.setDirection(getAimDirection());
 		projectiles.add(newProjectile);
-		//projectiles.add(new Projectile(player.getRectangle().getX(), player.getRectangle().getY(), getAimDirection()));
 	}
 
 	/**
@@ -145,10 +141,6 @@ public class BlastInThePast extends ApplicationAdapter {
 				player.getSprite().setY(player.getSprite().getY() - player.getMovementSpeed() * Gdx.graphics.getDeltaTime());
 				break;
 		}
-	}
-
-	public Player getPlayer() {
-		return player;
 	}
 
 	private class MyInputProcessor extends InputAdapter {
