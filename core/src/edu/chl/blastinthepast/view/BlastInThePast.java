@@ -11,10 +11,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
-import edu.chl.blastinthepast.Enemy;
-import edu.chl.blastinthepast.InputHandler;
-import edu.chl.blastinthepast.Player;
-import edu.chl.blastinthepast.Projectile;
+import edu.chl.blastinthepast.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -96,7 +93,8 @@ public class BlastInThePast extends ApplicationAdapter implements PropertyChange
 			p.getRectangle().x -= Math.sin(Math.toRadians(p.getDirection())) * p.getSpeed() * Gdx.graphics.getDeltaTime();
 			p.getSprite().setY((float) (p.getSprite().getY() + Math.cos(Math.toRadians(p.getDirection())) * p.getSpeed() * Gdx.graphics.getDeltaTime()));
 			p.getSprite().setX((float) (p.getSprite().getX() - Math.sin(Math.toRadians(p.getDirection())) * p.getSpeed() * Gdx.graphics.getDeltaTime()));
-			if((p.getRectangle().y + 64 < 0) || (p.getRectangle().y > 4000) || (p.getRectangle().x > 4000) || (p.getRectangle().x + 64 < 0)) {
+			if((p.getRectangle().y + player.getSprite().getHeight() < 0) || (p.getRectangle().y > Constants.MAP_HEIGHT) ||
+					(p.getRectangle().x > Constants.MAP_WIDTH) || (p.getRectangle().x + player.getSprite().getWidth() < 0)) {
 				iter.remove();
 			}
 		}
@@ -147,18 +145,34 @@ public class BlastInThePast extends ApplicationAdapter implements PropertyChange
 			case 0: // move left
 				player.getRectangle().x -= player.getMovementSpeed() * Gdx.graphics.getDeltaTime();
 				player.getSprite().setX(player.getSprite().getX() - player.getMovementSpeed() * Gdx.graphics.getDeltaTime());
+				if (player.getSprite().getX()<0){
+					player.getRectangle().setX(0);
+					player.getSprite().setX(0);
+				}
 				break;
 			case 1: // move right
 				player.getRectangle().x += player.getMovementSpeed() * Gdx.graphics.getDeltaTime();
 				player.getSprite().setX(player.getSprite().getX() + player.getMovementSpeed() * Gdx.graphics.getDeltaTime());
+				if (player.getSprite().getX()> Constants.MAP_WIDTH-player.getSprite().getWidth()){
+					player.getRectangle().setX(Constants.MAP_WIDTH-player.getSprite().getWidth());
+					player.getSprite().setX(Constants.MAP_WIDTH-player.getSprite().getWidth());
+				}
 				break;
 			case 2: // move up
 				player.getRectangle().y += player.getMovementSpeed() * Gdx.graphics.getDeltaTime();
 				player.getSprite().setY(player.getSprite().getY() + player.getMovementSpeed() * Gdx.graphics.getDeltaTime());
+				if (player.getSprite().getY()> Constants.MAP_HEIGHT-player.getSprite().getHeight()){
+					player.getRectangle().setY(Constants.MAP_HEIGHT-player.getSprite().getHeight());
+					player.getSprite().setY(Constants.MAP_HEIGHT-player.getSprite().getHeight());
+				}
 				break;
 			case 3: // move down
 				player.getRectangle().y -= player.getMovementSpeed() * Gdx.graphics.getDeltaTime();
 				player.getSprite().setY(player.getSprite().getY() - player.getMovementSpeed() * Gdx.graphics.getDeltaTime());
+				if (player.getSprite().getY()<0){
+					player.getRectangle().setY(0);
+					player.getSprite().setY(0);
+				}
 				break;
 		}
 	}
