@@ -3,22 +3,23 @@ package edu.chl.blastinthepast;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 /**
  * Created by jonas on 2015-04-22.
+ *
+ * InputHandler listens to input by the user and fires PropertyChangeEvents when bound keys are pressed or are being held down
+ * Movement and shoot keys have accompanying flags since it's necessary to check if they are being held down
+ * The checkForInput needs to be called during each render cycle to check if keys are being held down continuously
+ *
  */
 public class InputHandler implements InputProcessor{
-    private boolean north, south, west, east, shoot, isMenuUp;
-    private int northKey, southKey, westKey, eastKey, shootKey, weapon1Key, weapon2Key, menuKey;
-    private Player player;
-
+    private int northKey, southKey, westKey, eastKey, shootKey, reloadKey, weapon1Key, weapon2Key, menuKey;
+    private boolean north=false, south=false, west=false, east=false, shoot=false, menuIsUp=false;
     private PropertyChangeSupport pcs;
 
-    InputHandler(Player player){
-
-        this.player=player;
-
+    public InputHandler(){
         pcs=new PropertyChangeSupport(this);
 
         northKey= Input.Keys.W;
@@ -26,6 +27,7 @@ public class InputHandler implements InputProcessor{
         westKey=Input.Keys.A;
         eastKey=Input.Keys.D;
         shootKey=Input.Buttons.LEFT;
+        reloadKey=Input.Keys.R;
         weapon1Key=Input.Keys.NUM_1;
         weapon2Key=Input.Keys.NUM_2;
         menuKey=Input.Keys.ESCAPE;
@@ -52,14 +54,18 @@ public class InputHandler implements InputProcessor{
         if (keycode==shootKey){
             shoot=true;
         }
+        if (keycode==reloadKey){
+            pcs.firePropertyChange("reload", null, true);
+        }
         if (keycode==menuKey) {
-            isMenuUp=!isMenuUp;
+            pcs.firePropertyChange("menu", null, !menuIsUp);
+            menuIsUp=!menuIsUp;
         }
         if (keycode==weapon1Key) {
-            pcs.firePropertyChange("Weapon 1", null, true);
+            pcs.firePropertyChange("weapon1", null, true);
         }
         if (keycode==weapon2Key){
-            pcs.firePropertyChange("Weapon 2", null, true);
+            pcs.firePropertyChange("weapon2", null, true);
         }
         return true;
     }
@@ -79,7 +85,7 @@ public class InputHandler implements InputProcessor{
             east=false;
         }
         if (keycode==shootKey){
-            shoot=true;
+            shoot=false;
         }
         return false;
     }
@@ -122,31 +128,29 @@ public class InputHandler implements InputProcessor{
         return false;
     }
 
+    public void addListener(PropertyChangeListener pcl) {
+        pcs.addPropertyChangeListener(pcl);
+    }
+
     /**
-     * Function fires property change
+     * Checks if movement and shoot keys are held down continuously
+     * Should be called once during every render cycle
      */
-    public void update(){
+    public void checkForInput(){
         if (north){
-            pcs.firePropertyChange("North", null, true);
+            pcs.firePropertyChange("north", null, true);
         } else if (south){
-            pcs.firePropertyChange("South", null, true);
+            pcs.firePropertyChange("south", null, true);
         }
-
-        if (west) {
-            pcs.firePropertyChange("West", null, true);
+        if (west){
+            pcs.firePropertyChange("west", null, true);
         } else if (east){
-            pcs.firePropertyChange("East", null, true);
+            pcs.firePropertyChange("east", null, true);
         }
-
         if (shoot){
-            pcs.firePropertyChange("Shoot", null, true);
-        }
-
-        if (!isMenuUp){
-            pcs.firePropertyChange("Menu", null, true);
-        } else{
-            pcs.firePropertyChange("Menu", null, false);
+            pcs.firePropertyChange("shoot", null, true);
         }
     }
+
 
 }

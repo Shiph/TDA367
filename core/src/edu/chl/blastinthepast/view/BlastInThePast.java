@@ -12,15 +12,17 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.Enemy;
+import edu.chl.blastinthepast.InputHandler;
 import edu.chl.blastinthepast.Player;
 import edu.chl.blastinthepast.Projectile;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Iterator;
 import java.util.Random;
 
-public class BlastInThePast extends ApplicationAdapter {
+public class BlastInThePast extends ApplicationAdapter implements PropertyChangeListener {
 
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
@@ -32,6 +34,7 @@ public class BlastInThePast extends ApplicationAdapter {
 	private TiledMapRenderer tiledMapRenderer;
 	private Sound wowSound;
 	private Music gottaGoFaster;
+	InputHandler inputHandler;
 	
 	@Override
 	public void create () {
@@ -43,6 +46,7 @@ public class BlastInThePast extends ApplicationAdapter {
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		player = new Player();
 		gottaGoFaster = Gdx.audio.newMusic(Gdx.files.internal("sanic.mp3"));
+		gottaGoFaster.setVolume(0.5f);
 		gottaGoFaster.setLooping(true);
 		gottaGoFaster.play();
 		enemyArray = new Array<Enemy>();
@@ -55,8 +59,9 @@ public class BlastInThePast extends ApplicationAdapter {
 			e.setX(r.nextFloat() * 800);
 			e.setY(r.nextFloat() * 480);
 		}
-		MyInputProcessor inputProcessor = new MyInputProcessor();
-		Gdx.input.setInputProcessor(inputProcessor);
+		inputHandler= new InputHandler();
+		inputHandler.addListener(this);
+		Gdx.input.setInputProcessor(inputHandler);
 	}
 
 	@Override
@@ -68,6 +73,7 @@ public class BlastInThePast extends ApplicationAdapter {
 		batch.setProjectionMatrix(camera.combined);
 		tiledMapRenderer.setView(camera);
 		tiledMapRenderer.render();
+		inputHandler.checkForInput();
 		batch.begin();
 		player.getSprite().setRotation(getAimDirection());
 		player.getSprite().draw(batch);
@@ -79,18 +85,10 @@ public class BlastInThePast extends ApplicationAdapter {
 			e.getSprite().draw(batch);
 		}
 		batch.end();
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
-			pcs.firePropertyChange("keyleft", true, false);
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
-			pcs.firePropertyChange("keyright", true, false);
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)) {
-			pcs.firePropertyChange("keyup", true, false);
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)) {
-			pcs.firePropertyChange("keydown", true, false);
-		}
+		calculateProjectilePos();
+	}
+
+	private void calculateProjectilePos() {
 		Iterator<Projectile> iter = projectiles.iterator();
 		while(iter.hasNext()) {
 			Projectile p = iter.next();
@@ -98,7 +96,7 @@ public class BlastInThePast extends ApplicationAdapter {
 			p.getRectangle().x -= Math.sin(Math.toRadians(p.getDirection())) * p.getSpeed() * Gdx.graphics.getDeltaTime();
 			p.getSprite().setY((float) (p.getSprite().getY() + Math.cos(Math.toRadians(p.getDirection())) * p.getSpeed() * Gdx.graphics.getDeltaTime()));
 			p.getSprite().setX((float) (p.getSprite().getX() - Math.sin(Math.toRadians(p.getDirection())) * p.getSpeed() * Gdx.graphics.getDeltaTime()));
-			if((p.getRectangle().y + 64 < 0) || (p.getRectangle().y > 480) || (p.getRectangle().x > 800) || (p.getRectangle().x + 64 < 0)) {
+			if((p.getRectangle().y + 64 < 0) || (p.getRectangle().y > 4000) || (p.getRectangle().x > 4000) || (p.getRectangle().x + 64 < 0)) {
 				iter.remove();
 			}
 		}
@@ -165,14 +163,10 @@ public class BlastInThePast extends ApplicationAdapter {
 		}
 	}
 
-	private class MyInputProcessor extends InputAdapter {
-
-		@Override
-		public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-			pcs.firePropertyChange("shoot", true, false);
-			return false;
-		}
-
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		pcs.firePropertyChange(evt);
+		System.out.println(evt.getPropertyName());
 	}
 
 }

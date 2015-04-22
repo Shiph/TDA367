@@ -1,5 +1,6 @@
 package edu.chl.blastinthepast.controller;
 
+import edu.chl.blastinthepast.InputHandler;
 import edu.chl.blastinthepast.model.GameModel;
 import edu.chl.blastinthepast.view.BlastInThePast;
 
@@ -15,9 +16,11 @@ public class GameController implements PropertyChangeListener {
     private BlastInThePast view;
 
     private GameController(GameModel model, BlastInThePast view) {
+
         this.model = model;
         this.view = view;
         view.addListener(this);
+
     }
 
     public static GameController create(GameModel model, BlastInThePast view) {
@@ -27,23 +30,23 @@ public class GameController implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch(evt.getPropertyName()) {
-            case "keyleft":
+            case "west":
                 view.updatePlayerPos(0);
                 break;
-            case "keyright":
+            case "east":
                 view.updatePlayerPos(1);
                 break;
-            case "keyup":
+            case "north":
                 view.updatePlayerPos(2);
                 break;
-            case "keydown":
+            case "south":
                 view.updatePlayerPos(3);
                 break;
             case "shoot":
                 try {
                     view.spawnProjectile();
                 } catch (NullPointerException e) {
-                    System.out.println(e.getMessage()); // player don't have a weapon or out of bullets
+                    System.out.println(e.getMessage()); // player doesn't have a weapon or is out of bullets
                 }
                 break;
             default:
