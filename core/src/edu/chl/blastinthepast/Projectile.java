@@ -88,4 +88,17 @@ public class Projectile {
     public float getSpeed() {
         return speed;
     }
+
+    public void setX(float x) {
+        this.x = x;
+        rectangle.setX(x);
+        sprite.setX(x);
+    }
+
+    public void setY(float y) {
+        this.y = y;
+        rectangle.setY(y);
+        sprite.setY(y);
+
+    }
 }

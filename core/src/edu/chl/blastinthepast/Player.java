@@ -16,6 +16,7 @@ public class Player extends Actor {
     private Rectangle rectangle;
     private int health;
     private int movementSpeed;
+    private Weapon weapon;
 
     /**
      * Default constructor for Player with default movement speed and health.
@@ -30,6 +31,7 @@ public class Player extends Actor {
     public Player(int movementSpeed, int health) {
         this.movementSpeed = movementSpeed;
         this.health = health;
+        System.out.println("Working Directory = " + System.getProperty("user.dir"));
         texture = new Texture(Gdx.files.local("bucket.png"));
         sprite = new Sprite(texture);
         rectangle = new Rectangle();
@@ -39,6 +41,7 @@ public class Player extends Actor {
         rectangle.width = 64;
         sprite.setX(rectangle.x);
         sprite.setY(rectangle.y);
+        weapon = new Weapon();
     }
 
     /**
@@ -82,4 +85,11 @@ public class Player extends Actor {
         health = newHealth;
     }
 
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
 }

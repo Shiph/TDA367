@@ -22,7 +22,12 @@ public class BlastInThePast extends ApplicationAdapter {
 	private Enemy enemy;
 	private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 	private Array<Projectile> projectiles = new Array<Projectile>();
-	private MyInputProcessor inputProcessor;
+
+	/*
+	public BlastInThePast(Player player) {
+		this.player = player;
+	}
+	*/
 	
 	@Override
 	public void create () {
@@ -31,7 +36,7 @@ public class BlastInThePast extends ApplicationAdapter {
 		camera.setToOrtho(false, 800, 480);
 		player = new Player();
 		enemy = new Enemy();
-		inputProcessor = new MyInputProcessor();
+		MyInputProcessor inputProcessor = new MyInputProcessor();
 		Gdx.input.setInputProcessor(inputProcessor);
 	}
 
@@ -89,8 +94,12 @@ public class BlastInThePast extends ApplicationAdapter {
 	/**
 	 * Spawns a projectile at the player's location.
 	 */
-	private void spawnProjectile() {
-		projectiles.add(new Projectile(player.getRectangle().getX(), player.getRectangle().getY(), getAimDirection()));
+	public void spawnProjectile(Projectile newProjectile) {
+		newProjectile.setX(player.getRectangle().getX());
+		newProjectile.setY(player.getRectangle().getY());
+		newProjectile.setDirection(getAimDirection());
+		projectiles.add(newProjectile);
+		//projectiles.add(new Projectile(player.getRectangle().getX(), player.getRectangle().getY(), getAimDirection()));
 	}
 
 	/**
@@ -138,11 +147,16 @@ public class BlastInThePast extends ApplicationAdapter {
 		}
 	}
 
+	public Player getPlayer() {
+		return player;
+	}
+
 	private class MyInputProcessor extends InputAdapter {
 
 		@Override
 		public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-			spawnProjectile();
+			//spawnProjectile();
+			pcs.firePropertyChange("shoot", true, false);
 			return false;
 		}
 
