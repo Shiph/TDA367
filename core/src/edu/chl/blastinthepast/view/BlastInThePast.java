@@ -4,6 +4,9 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import edu.chl.blastinthepast.Enemy;
@@ -22,6 +25,8 @@ public class BlastInThePast extends ApplicationAdapter {
 	private Enemy enemy;
 	private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 	private Array<Projectile> projectiles = new Array<Projectile>();
+	private TiledMap tiledMap;
+	private TiledMapRenderer tiledMapRenderer;
 
 	/*
 	public BlastInThePast(Player player) {
@@ -32,15 +37,18 @@ public class BlastInThePast extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 800, 480);
+		camera= new OrthographicCamera();
+		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		camera.update();
+		tiledMap = new TmxMapLoader().load("GrassTestMap1.tmx");
+		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		player = new Player();
 		enemy = new Enemy();
 		MyInputProcessor inputProcessor = new MyInputProcessor();
 		Gdx.input.setInputProcessor(inputProcessor);
 	}
 
-	public void create(TiledMap tm) {
+	/*public void create(TiledMap tm) {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 480);
@@ -50,13 +58,17 @@ public class BlastInThePast extends ApplicationAdapter {
 			enemy.getRectangle().x = 100;
 			enemy.getRectangle().y = 100;
 		}
-	}
+	} */
 
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+		camera.position.set(player.getSprite().getX() + player.getSprite().getWidth() / 2, player.getSprite().getY() + player.getSprite().getWidth() / 2, 0);
+		camera.update();
+		batch.setProjectionMatrix(camera.combined);
+		tiledMapRenderer.setView(camera);
+		tiledMapRenderer.render();
 		batch.begin();
 		player.getSprite().setRotation(getAimDirection());
 		player.getSprite().draw(batch);
