@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.*;
+import edu.chl.blastinthepast.controller.GameStateController;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -31,7 +32,8 @@ public class BlastInThePast extends ApplicationAdapter implements PropertyChange
 	private TiledMapRenderer tiledMapRenderer;
 	private Sound wowSound;
 	private Music gottaGoFaster;
-	InputHandler inputHandler;
+	private GameStateController gsc;
+	//private InputHandler inputHandler;
 	
 	@Override
 	public void create () {
@@ -56,9 +58,10 @@ public class BlastInThePast extends ApplicationAdapter implements PropertyChange
 			e.setX(r.nextFloat() * 800);
 			e.setY(r.nextFloat() * 480);
 		}
-		inputHandler= new InputHandler();
-		inputHandler.addListener(this);
-		Gdx.input.setInputProcessor(inputHandler);
+		//inputHandler= new InputHandler();
+		//inputHandler.addListener(this);
+		//Gdx.input.setInputProcessor(inputHandler);
+		gsc = new GameStateController();
 	}
 
 	@Override
@@ -70,10 +73,12 @@ public class BlastInThePast extends ApplicationAdapter implements PropertyChange
 		batch.setProjectionMatrix(camera.combined);
 		tiledMapRenderer.setView(camera);
 		tiledMapRenderer.render();
-		inputHandler.checkForInput();
+		//inputHandler.checkForInput();
 		batch.begin();
+		/*
 		player.getSprite().setRotation(getAimDirection());
 		player.getSprite().draw(batch);
+		*/
 		for (Projectile p : projectiles) {
 			p.getSprite().setRotation(p.getDirection());
 			p.getSprite().draw(batch);
@@ -82,7 +87,10 @@ public class BlastInThePast extends ApplicationAdapter implements PropertyChange
 			e.getSprite().draw(batch);
 		}
 		batch.end();
+		gsc.update(Gdx.graphics.getDeltaTime());
+		gsc.draw();
 		calculateProjectilePos();
+		pcs.firePropertyChange("update", false, true);
 	}
 
 	private void calculateProjectilePos() {
@@ -182,4 +190,7 @@ public class BlastInThePast extends ApplicationAdapter implements PropertyChange
 		pcs.firePropertyChange(evt);
 	}
 
+	public GameStateController getGameStateController() {
+		return gsc;
+	}
 }
