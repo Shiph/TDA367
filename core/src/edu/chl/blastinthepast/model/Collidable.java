@@ -9,4 +9,5 @@ import com.badlogic.gdx.math.Rectangle;
 public interface Collidable {
     Rectangle rectangle = new Rectangle();
     Rectangle getRectangle();
+    void setRectangle(Rectangle rectangle);
 }
