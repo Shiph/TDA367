@@ -21,7 +21,6 @@ public class InputHandler implements InputProcessor{
 
     public InputHandler(){
         pcs=new PropertyChangeSupport(this);
-
         northKey= Input.Keys.W;
         southKey=Input.Keys.S;
         westKey=Input.Keys.A;

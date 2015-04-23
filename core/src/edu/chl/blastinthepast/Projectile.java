@@ -17,6 +17,7 @@ public class Projectile {
     private float speed = 500;
     private float x = 0;
     private float y = 0;
+    private int damage = 100;
 
     public Projectile() {
         this(0, 0, 0);
@@ -42,7 +43,11 @@ public class Projectile {
      * @return the damage of the projectile.
      */
     public int getDamage() {
-        return 0;
+        return damage;
+    }
+
+    public void setDamage(int newDamage) {
+        damage = newDamage;
     }
 
     /**

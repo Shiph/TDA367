@@ -44,6 +44,10 @@ public class Weapon {
         reloadTimer.setRepeats(false);
     }
 
+    public void setFireRate(int newFireRate) {
+        fireRate = newFireRate;
+    }
+
     public int getFireRate() {
         return fireRate;
     }
