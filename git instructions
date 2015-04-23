@@ -1,0 +1,10 @@
+//Create a seperate branch, in this case named Featureb
+git pull master
+git checkout -b Featureb
+git push -u origin Featureb
+//Make commits and push, commits will now be on branch Featureb
+//When the feature is complete and program is functional, merge with main branch
+git checkout master 
+git pull
+git merge Featureb --no-ff
+git push
