@@ -10,11 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  * Created by Mattias on 15-04-21.
  */
 public class Enemy extends Actor {
+
     private Texture texture;
     private Sprite sprite;
     private Rectangle rectangle;
-    private int movementSpeed;
     private int health;
+    private int movementSpeed;
 
     /**
      * Default constructor for Enemy with default movement speed and health.
