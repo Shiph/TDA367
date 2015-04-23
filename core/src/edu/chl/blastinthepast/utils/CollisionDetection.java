@@ -9,49 +9,28 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.Enemy;
 import edu.chl.blastinthepast.Player;
+import edu.chl.blastinthepast.Character;
 
 /**
  * Created by qwerty458 on 4/23/15.
  */
 public final class CollisionDetection {
-    private final class PlayerCollisionDetection {
 
-        /**
-         * Checks whether the attempted movement results in collision between the player and the rectangles int the CollisionObjectLayer in the map.
-         * @param map The map which the player is moving in.
-         * @param player The player whose Rectangle is to be compared to the rectangles in the map.
-         * @return True if the player collides with a rectangle in the map, false if not.
-         */
-        public boolean collisionDetector(TiledMap map, Player player) {
-            Array<Rectangle> rectangles = mapToRectangles(map);
-            for(int i = rectangles.size; i != 0; i--) {
-                if (player.getRectangle().overlaps(rectangles.get(i))) {
-                    return true;
-                }
+    /**
+     * Checks whether the attempted movement results in collision between the character and the rectangles int the CollisionObjectLayer in the map.
+     * @param map The map which the player is moving in.
+     * @param character The character whose Rectangle is to be compared to the rectangles in the map.
+     * @return True if the player collides with a rectangle in the map, false if not.
+     */
+    public boolean characterCollisionDetector(TiledMap map, Character character) {
+        Array<Rectangle> rectangles = mapToRectangles(map);
+        for(int i = rectangles.size; i != 0; i--) {
+            if (character.getRectangle().overlaps(rectangles.get(i))) {
+                return true;
             }
-            return false;
         }
+        return false;
     }
-
-    private final class EnemyCollisionDetection {
-
-        /**
-         * Checks whether the attempted movement results in collision between the enemy and the rectangles int the CollisionObjectLayer in the map.
-         * @param map The map which the enemy is moving in.
-         * @param enemy The enemy whose Rectangle is to be compared to the rectangles in the map.
-         * @return True if the enemy collides with a rectangle in the map, false if not.
-         */
-        public boolean collisionDetector(TiledMap map, Enemy enemy) {
-            Array<Rectangle> rectangles = mapToRectangles(map);
-            for(int i = rectangles.size; i != 0; i--) {
-                if (enemy.getRectangle().overlaps(rectangles.get(i))) {
-                    return true;
-                }
-            }
-            return false;
-        }
-    }
-
 
     private Array<Rectangle> mapToRectangles(TiledMap map) {
         MapLayer objectLayer = map.getLayers().get("collisionObjectLayer");
