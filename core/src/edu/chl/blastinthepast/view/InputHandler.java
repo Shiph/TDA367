@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast;
+package edu.chl.blastinthepast.view;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -16,11 +16,12 @@ import java.beans.PropertyChangeSupport;
  */
 public class InputHandler implements InputProcessor{
     private int northKey, southKey, westKey, eastKey, shootKey, reloadKey, weapon1Key, weapon2Key, menuKey;
-    private boolean north=false, south=false, west=false, east=false, shoot=false, menuIsUp=false;
+    protected boolean north=false, south=false, west=false, east=false, shoot=false, menuIsUp=false;
     private PropertyChangeSupport pcs;
 
     public InputHandler(){
         pcs=new PropertyChangeSupport(this);
+        System.out.println("new input handler created");
         northKey= Input.Keys.W;
         southKey=Input.Keys.S;
         westKey=Input.Keys.A;
@@ -34,7 +35,9 @@ public class InputHandler implements InputProcessor{
 
     @Override
     public boolean keyDown(int keycode) {
+        System.out.println("inside keyDown");
         if (keycode==northKey){
+            System.out.println("northKey pressed");
             north=true;
             south=false;
         }
