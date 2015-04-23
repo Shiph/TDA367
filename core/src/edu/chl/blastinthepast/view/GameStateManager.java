@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.controller;
+package edu.chl.blastinthepast.view;
 
 import edu.chl.blastinthepast.GameState;
 import edu.chl.blastinthepast.view.PlayState;
@@ -6,13 +6,13 @@ import edu.chl.blastinthepast.view.PlayState;
 /**
  * Created by Shif on 23/04/15.
  */
-public class GameStateController {
+public class GameStateManager {
 
     private GameState gameState;
     public static final int MENU = 0;
     public static final int PLAY = 1;
 
-    public GameStateController() {
+    public GameStateManager() {
         setState(PLAY);
     }
 

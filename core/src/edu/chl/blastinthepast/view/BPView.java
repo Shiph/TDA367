@@ -12,7 +12,6 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.*;
-import edu.chl.blastinthepast.controller.GameStateController;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -20,7 +19,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.Iterator;
 import java.util.Random;
 
-public class BlastInThePast extends ApplicationAdapter implements PropertyChangeListener {
+public class BPView extends ApplicationAdapter implements PropertyChangeListener {
 
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
@@ -32,7 +31,7 @@ public class BlastInThePast extends ApplicationAdapter implements PropertyChange
 	private TiledMapRenderer tiledMapRenderer;
 	private Sound wowSound;
 	private Music gottaGoFaster;
-	private GameStateController gsc;
+	private GameStateManager gsc;
 	//private InputHandler inputHandler;
 	
 	@Override
@@ -61,7 +60,7 @@ public class BlastInThePast extends ApplicationAdapter implements PropertyChange
 		//inputHandler= new InputHandler();
 		//inputHandler.addListener(this);
 		//Gdx.input.setInputProcessor(inputHandler);
-		gsc = new GameStateController();
+		gsc = new GameStateManager();
 	}
 
 	@Override
@@ -190,7 +189,7 @@ public class BlastInThePast extends ApplicationAdapter implements PropertyChange
 		pcs.firePropertyChange(evt);
 	}
 
-	public GameStateController getGameStateController() {
+	public GameStateManager getGameStateController() {
 		return gsc;
 	}
 }

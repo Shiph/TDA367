@@ -1,9 +1,8 @@
 package edu.chl.blastinthepast.controller;
 
 import com.badlogic.gdx.Gdx;
-import edu.chl.blastinthepast.model.GameModel;
-import edu.chl.blastinthepast.view.BlastInThePast;
-import edu.chl.blastinthepast.view.InputHandler;
+import edu.chl.blastinthepast.model.BPModel;
+import edu.chl.blastinthepast.view.BPView;
 import edu.chl.blastinthepast.view.PlayState;
 
 import java.beans.PropertyChangeEvent;
@@ -12,13 +11,13 @@ import java.beans.PropertyChangeListener;
 /**
  * Created by Shif on 20/04/15.
  */
-public class GameController implements PropertyChangeListener {
+public class BPController implements PropertyChangeListener {
 
-    private GameModel model;
-    private BlastInThePast view;
+    private BPModel model;
+    private BPView view;
     private InputHandler inputHandler;
 
-    private GameController(GameModel model, BlastInThePast view) {
+    private BPController(BPModel model, BPView view) {
         this.model = model;
         this.view = view;
         init();
@@ -27,12 +26,12 @@ public class GameController implements PropertyChangeListener {
     private void init() {
         view.addListener(this);
         inputHandler = new InputHandler();
-        Gdx.input.setInputProcessor(inputHandler);
         inputHandler.addListener(this);
+        Gdx.input.setInputProcessor(inputHandler);
     }
 
-    public static GameController create(GameModel model, BlastInThePast view) {
-        return new GameController(model, view);
+    public static BPController create(BPModel model, BPView view) {
+        return new BPController(model, view);
     }
 
     @Override

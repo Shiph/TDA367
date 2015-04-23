@@ -7,9 +7,9 @@ import edu.chl.blastinthepast.Player;
 /**
  * Created by Shif on 20/04/15.
  */
-public class GameModel {
+public class BPModel {
 
-    public GameModel() {
+    public BPModel() {
 
     }
 
