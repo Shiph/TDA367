@@ -11,31 +11,31 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
-import edu.chl.blastinthepast.controller.GameStateController;
+import edu.chl.blastinthepast.view.GameStateManager;
 import edu.chl.blastinthepast.model.Enemy;
 import edu.chl.blastinthepast.model.Player;
 import edu.chl.blastinthepast.model.Projectile;
 import edu.chl.blastinthepast.utils.Constants;
-
+import edu.chl.blastinthepast.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Iterator;
 import java.util.Random;
 
-public class BlastInThePast extends ApplicationAdapter implements PropertyChangeListener {
+public class BPView extends ApplicationAdapter implements PropertyChangeListener {
 
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Player player;
 	private Array<Enemy> enemyArray;
 	private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-	private Array<Projectile> projectiles = new Array<Projectile>();
+
 	private TiledMap tiledMap;
 	private TiledMapRenderer tiledMapRenderer;
 	private Sound wowSound;
 	private Music gottaGoFaster;
-	private GameStateController gsc;
+	private GameStateManager gsc;
 	//private InputHandler inputHandler;
 	
 	@Override
@@ -64,14 +64,14 @@ public class BlastInThePast extends ApplicationAdapter implements PropertyChange
 		//inputHandler= new InputHandler();
 		//inputHandler.addListener(this);
 		//Gdx.input.setInputProcessor(inputHandler);
-		gsc = new GameStateController();
+		gsc = new GameStateManager();
 	}
 
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		camera.position.set(player.getSprite().getX() + player.getSprite().getWidth() / 2, player.getSprite().getY() + player.getSprite().getWidth() / 2, 0);
+		//camera.position.set(player.getSprite().getX() + player.getSprite().getWidth() / 2, player.getSprite().getY() + player.getSprite().getWidth() / 2, 0);
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		tiledMapRenderer.setView(camera);
@@ -82,33 +82,22 @@ public class BlastInThePast extends ApplicationAdapter implements PropertyChange
 		player.getSprite().setRotation(getAimDirection());
 		player.getSprite().draw(batch);
 		*/
-		for (Projectile p : projectiles) {
+		/*for (Projectile p : projectiles) {
 			p.getSprite().setRotation(p.getDirection());
 			p.getSprite().draw(batch);
 		}
 		for (Enemy e : enemyArray) {
 			e.getSprite().draw(batch);
-		}
+		}*/
 		batch.end();
 		gsc.update(Gdx.graphics.getDeltaTime());
 		gsc.draw();
-		calculateProjectilePos();
+		getProjectilePos();
 		pcs.firePropertyChange("update", false, true);
 	}
 
-	private void calculateProjectilePos() {
-		Iterator<Projectile> iter = projectiles.iterator();
-		while(iter.hasNext()) {
-			Projectile p = iter.next();
-			p.getRectangle().y += Math.cos(Math.toRadians(p.getDirection())) * p.getSpeed() * Gdx.graphics.getDeltaTime();
-			p.getRectangle().x -= Math.sin(Math.toRadians(p.getDirection())) * p.getSpeed() * Gdx.graphics.getDeltaTime();
-			p.getSprite().setY((float) (p.getSprite().getY() + Math.cos(Math.toRadians(p.getDirection())) * p.getSpeed() * Gdx.graphics.getDeltaTime()));
-			p.getSprite().setX((float) (p.getSprite().getX() - Math.sin(Math.toRadians(p.getDirection())) * p.getSpeed() * Gdx.graphics.getDeltaTime()));
-			if((p.getRectangle().y + player.getSprite().getHeight() < 0) || (p.getRectangle().y > Constants.MAP_HEIGHT) ||
-					(p.getRectangle().x > Constants.MAP_WIDTH) || (p.getRectangle().x + player.getSprite().getWidth() < 0)) {
-				iter.remove();
-			}
-		}
+	private void getProjectilePos(){
+
 	}
 
 	public void spawnEnemy() {
@@ -120,10 +109,7 @@ public class BlastInThePast extends ApplicationAdapter implements PropertyChange
 	 */
 	public void spawnProjectile() {
 		Projectile newProjectile = player.getWeapon().fire();
-		newProjectile.setX(player.getRectangle().getX());
-		newProjectile.setY(player.getRectangle().getY());
-		newProjectile.setDirection(getAimDirection());
-		projectiles.add(newProjectile);
+		//projectiles.add(newProjectile);
 		wowSound.play();
 	}
 
@@ -132,10 +118,10 @@ public class BlastInThePast extends ApplicationAdapter implements PropertyChange
 	 *
 	 * @return the angle.
 	 */
-	private float getAimDirection() {
+	/*private float getAimDirection() {
 		return (float)(-Math.atan2(Gdx.input.getY() - (480-64-player.getRectangle().y + player.getRectangle().height/2),
 				Gdx.input.getX() - (player.getRectangle().x + player.getRectangle().width/2)) * (180/Math.PI)-90);
-	}
+	}*/
 
 	/**
 	 * Adds a listener to the PropertyChangeSupport pcs.
@@ -146,54 +132,12 @@ public class BlastInThePast extends ApplicationAdapter implements PropertyChange
 		pcs.addPropertyChangeListener(pcl);
 	}
 
-	/**
-	 * Updates the position of the player character's rectangle and sprite.
-	 *
-	 * @param direction - the direction in which to move the sprite. 0 = left, 1 = right, 2 = up, 3 = down.
-	 */
-	public void updatePlayerPos(int direction) {
-		switch (direction) {
-			case 0: // move left
-				player.getRectangle().x -= player.getMovementSpeed() * Gdx.graphics.getDeltaTime();
-				player.getSprite().setX(player.getSprite().getX() - player.getMovementSpeed() * Gdx.graphics.getDeltaTime());
-				if (player.getSprite().getX()<0){
-					player.getRectangle().setX(0);
-					player.getSprite().setX(0);
-				}
-				break;
-			case 1: // move right
-				player.getRectangle().x += player.getMovementSpeed() * Gdx.graphics.getDeltaTime();
-				player.getSprite().setX(player.getSprite().getX() + player.getMovementSpeed() * Gdx.graphics.getDeltaTime());
-				if (player.getSprite().getX()> Constants.MAP_WIDTH-player.getSprite().getWidth()){
-					player.getRectangle().setX(Constants.MAP_WIDTH-player.getSprite().getWidth());
-					player.getSprite().setX(Constants.MAP_WIDTH-player.getSprite().getWidth());
-				}
-				break;
-			case 2: // move up
-				player.getRectangle().y += player.getMovementSpeed() * Gdx.graphics.getDeltaTime();
-				player.getSprite().setY(player.getSprite().getY() + player.getMovementSpeed() * Gdx.graphics.getDeltaTime());
-				if (player.getSprite().getY()> Constants.MAP_HEIGHT-player.getSprite().getHeight()){
-					player.getRectangle().setY(Constants.MAP_HEIGHT-player.getSprite().getHeight());
-					player.getSprite().setY(Constants.MAP_HEIGHT-player.getSprite().getHeight());
-				}
-				break;
-			case 3: // move down
-				player.getRectangle().y -= player.getMovementSpeed() * Gdx.graphics.getDeltaTime();
-				player.getSprite().setY(player.getSprite().getY() - player.getMovementSpeed() * Gdx.graphics.getDeltaTime());
-				if (player.getSprite().getY()<0){
-					player.getRectangle().setY(0);
-					player.getSprite().setY(0);
-				}
-				break;
-		}
-	}
-
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		pcs.firePropertyChange(evt);
 	}
 
-	public GameStateController getGameStateController() {
+	public GameStateManager getGameStateController() {
 		return gsc;
 	}
 }

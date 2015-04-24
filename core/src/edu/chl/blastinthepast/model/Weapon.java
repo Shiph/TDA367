@@ -1,5 +1,7 @@
 package edu.chl.blastinthepast.model;
 
+import edu.chl.blastinthepast.utils.Position;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
@@ -10,7 +12,7 @@ import javax.swing.Timer;
 public class Weapon {
 
 
-    private Projectile projectile = new Projectile();
+    private Projectile projectile;
     private final int MAGAZINE_CAPACITY = 20;
     private final int RELOAD_TIME=1500; //Milliseconds
 
@@ -23,8 +25,11 @@ public class Weapon {
     private boolean isReloading=false;
     private Timer reloadTimer;
 
+    private Position position;
+    private float direction;
 
-    public Weapon(){
+
+    public Weapon(Position pos, float direction){
         //Here we create the reloading timer which will be used in the reload function
         ActionListener reloading=new ActionListener() {
             @Override
@@ -42,6 +47,9 @@ public class Weapon {
         };
         reloadTimer=new Timer(RELOAD_TIME, reloading);
         reloadTimer.setRepeats(false);
+
+        position=new Position(pos);
+        this.direction=direction;
     }
 
     public void setFireRate(int newFireRate) {
@@ -57,7 +65,7 @@ public class Weapon {
         if((currentTime-latestShot)>=fireRate && bulletsLeftInMagazine>0) {
             latestShot=System.currentTimeMillis();
             bulletsLeftInMagazine--;
-            return new Projectile();
+            return new Projectile(position, direction);
         } else if(totalBullets > 0 && bulletsLeftInMagazine<=0 && !isReloading) {
             reload();
             throw new NullPointerException("Reloading");

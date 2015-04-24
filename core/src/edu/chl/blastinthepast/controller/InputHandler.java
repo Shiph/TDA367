@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.view;
+package edu.chl.blastinthepast.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

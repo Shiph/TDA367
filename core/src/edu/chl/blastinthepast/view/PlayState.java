@@ -3,7 +3,9 @@ package edu.chl.blastinthepast.view;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import edu.chl.blastinthepast.controller.GameState;
 import edu.chl.blastinthepast.model.Player;
-import edu.chl.blastinthepast.controller.GameStateController;
+import edu.chl.blastinthepast.view.GameStateManager;
+import edu.chl.blastinthepast.controller.GameState;
+import edu.chl.blastinthepast.model.Player;
 
 /**
  * Created by Shif on 23/04/15.
@@ -14,7 +16,7 @@ public class PlayState extends GameState {
     private SpriteBatch batch;
     //private InputHandler inputHandler;
 
-    public PlayState(GameStateController gsc) {
+    public PlayState(GameStateManager gsc) {
         super(gsc);
     }
 
@@ -23,9 +25,11 @@ public class PlayState extends GameState {
         System.out.println("inside init playstate");
         player = new Player();
         batch = new SpriteBatch();
-        //inputHandler = new InputHandler();
-        //Gdx.input.setInputProcessor(inputHandler);
-        //System.out.println(Gdx.input.getInputProcessor());
+        /*
+        inputHandler = new InputHandler();
+        Gdx.input.setInputProcessor(inputHandler);
+        System.out.println(Gdx.input.getInputProcessor());
+        */
     }
 
     @Override
@@ -36,7 +40,7 @@ public class PlayState extends GameState {
 
     @Override
     public void draw() {
-        player.draw(batch);
+
     }
 
     @Override

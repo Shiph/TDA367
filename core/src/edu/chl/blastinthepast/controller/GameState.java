@@ -1,15 +1,15 @@
 package edu.chl.blastinthepast.controller;
 
-import edu.chl.blastinthepast.controller.GameStateController;
+import edu.chl.blastinthepast.view.GameStateManager;
 
 /**
  * Created by Shif on 23/04/15.
  */
 public abstract class GameState {
 
-    protected GameStateController gsc;
+    protected GameStateManager gsc;
 
-    protected GameState(GameStateController gsc) {
+    protected GameState(GameStateManager gsc) {
         this.gsc = gsc;
         init();
     }

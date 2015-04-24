@@ -4,7 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
+import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
+
+import java.util.Iterator;
 
 /**
  * Created by Shif on 21/04/15.
@@ -16,13 +19,14 @@ public class Projectile {
     private int damage = 100;
     private Position position;
 
-    public Projectile() {
-        this(0, 0, 0);
-    }
-
     public Projectile(float x, float y, float direction) {
         this.direction = direction;
         position=new Position(x, y);
+    }
+
+    public Projectile(Position pos, float direction){
+        this.direction=direction;
+        position=new Position(pos);
     }
 
     /**
@@ -61,4 +65,10 @@ public class Projectile {
     public Position getPosition(){
         return position;
     }
+
+    public void calculatePosition() {
+        position.setX(position.getX() - (float) Math.cos(Math.toRadians(direction)) * speed * Gdx.graphics.getDeltaTime());
+        position.setX(position.getY() + (float) Math.cos(Math.toRadians(direction)) * speed * Gdx.graphics.getDeltaTime());
+    }
+
 }
