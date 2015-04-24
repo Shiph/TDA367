@@ -16,7 +16,7 @@ public class GameController implements PropertyChangeListener {
 
     private GameModel model;
     private BlastInThePast view;
-    private InputHandler inputHandler;
+    //private InputHandler inputHandler;
 
     private GameController(GameModel model, BlastInThePast view) {
         this.model = model;
@@ -26,9 +26,9 @@ public class GameController implements PropertyChangeListener {
 
     private void init() {
         view.addListener(this);
-        inputHandler = new InputHandler();
-        Gdx.input.setInputProcessor(inputHandler);
-        inputHandler.addListener(this);
+        //inputHandler = new InputHandler();
+        //Gdx.input.setInputProcessor(inputHandler);
+        //inputHandler.addListener(this);
     }
 
     public static GameController create(GameModel model, BlastInThePast view) {
@@ -39,7 +39,8 @@ public class GameController implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         switch(evt.getPropertyName()) {
             case "west":
-                ((PlayState)view.getGameStateController().getGameState()).getPlayer().move("west", Gdx.graphics.getDeltaTime());
+                //((PlayState)view.getGameStateController().getGameState()).getPlayer().move("west", Gdx.graphics.getDeltaTime());
+                view.updatePlayerPos(0);
                 break;
             case "east":
                 view.updatePlayerPos(1);
@@ -57,16 +58,9 @@ public class GameController implements PropertyChangeListener {
                     System.out.println(e.getMessage()); // player doesn't have a weapon or is out of bullets
                 }
                 break;
-            case "update":
-                update();
-                break;
             default:
                 break;
         }
-    }
-
-    private void update() {
-        inputHandler.checkForInput();
     }
 
 }

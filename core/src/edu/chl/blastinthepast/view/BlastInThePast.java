@@ -13,6 +13,10 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.*;
 import edu.chl.blastinthepast.controller.GameStateController;
+import edu.chl.blastinthepast.controller.InputHandler;
+import edu.chl.blastinthepast.model.Enemy;
+import edu.chl.blastinthepast.model.Player;
+import edu.chl.blastinthepast.model.Projectile;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -33,7 +37,7 @@ public class BlastInThePast extends ApplicationAdapter implements PropertyChange
 	private Sound wowSound;
 	private Music gottaGoFaster;
 	private GameStateController gsc;
-	//private InputHandler inputHandler;
+	private InputHandler inputHandler;
 	
 	@Override
 	public void create () {
@@ -58,9 +62,9 @@ public class BlastInThePast extends ApplicationAdapter implements PropertyChange
 			e.setX(r.nextFloat() * 800);
 			e.setY(r.nextFloat() * 480);
 		}
-		//inputHandler= new InputHandler();
-		//inputHandler.addListener(this);
-		//Gdx.input.setInputProcessor(inputHandler);
+		inputHandler= new InputHandler();
+		inputHandler.addListener(this);
+		Gdx.input.setInputProcessor(inputHandler);
 		gsc = new GameStateController();
 	}
 
@@ -73,7 +77,7 @@ public class BlastInThePast extends ApplicationAdapter implements PropertyChange
 		batch.setProjectionMatrix(camera.combined);
 		tiledMapRenderer.setView(camera);
 		tiledMapRenderer.render();
-		//inputHandler.checkForInput();
+		inputHandler.checkForInput();
 		batch.begin();
 		/*
 		player.getSprite().setRotation(getAimDirection());
