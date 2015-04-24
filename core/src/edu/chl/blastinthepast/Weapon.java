@@ -9,20 +9,15 @@ import javax.swing.Timer;
  */
 public class Weapon {
 
-
     private Projectile projectile = new Projectile();
     private final int MAGAZINE_CAPACITY = 20;
-    private final int RELOAD_TIME=1500; //Milliseconds
-
+    private final int RELOAD_TIME = 1500; //Reload time in milliseconds
     private int bulletsLeftInMagazine = 20;
     private int totalBullets = 200;
     private int fireRate = 100; //Time between shots in milliseconds
-
     private long latestShot=0;
-
     private boolean isReloading=false;
     private Timer reloadTimer;
-
 
     public Weapon(){
         //Here we create the reloading timer which will be used in the reload function
@@ -48,18 +43,21 @@ public class Weapon {
         return fireRate;
     }
 
-    public Projectile fire() {
-       long currentTime=System.currentTimeMillis();
-        if((currentTime-latestShot)>=fireRate && bulletsLeftInMagazine>0) {
-            latestShot=System.currentTimeMillis();
+    public boolean hasAmmo() {
+        long currentTime=System.currentTimeMillis();
+        if((currentTime - latestShot)>=fireRate && bulletsLeftInMagazine>0) {
+            latestShot = System.currentTimeMillis();
             bulletsLeftInMagazine--;
-            return new Projectile();
-        } else if(totalBullets > 0 && bulletsLeftInMagazine<=0 && !isReloading) {
+            return true;
+        } else if(totalBullets>0 && bulletsLeftInMagazine<=0 && !isReloading) {
             reload();
-            throw new NullPointerException("Reloading");
-        } else{
-            throw new NullPointerException(bulletsLeftInMagazine+" No bullets left");
+            return true;
         }
+        return false;
+    }
+
+    public Projectile fire() {
+        return new Projectile();
     }
 
     public void addAmmo(int amount) {
