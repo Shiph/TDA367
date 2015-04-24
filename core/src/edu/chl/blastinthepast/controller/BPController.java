@@ -1,6 +1,7 @@
 package edu.chl.blastinthepast.controller;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import edu.chl.blastinthepast.model.BPModel;
 import edu.chl.blastinthepast.view.BPView;
 import edu.chl.blastinthepast.view.PlayState;
@@ -15,7 +16,7 @@ public class BPController implements PropertyChangeListener {
 
     private BPModel model;
     private BPView view;
-    private InputHandler inputHandler;
+    //private InputHandler inputHandler;
 
     private BPController(BPModel model, BPView view) {
         this.model = model;
@@ -25,9 +26,6 @@ public class BPController implements PropertyChangeListener {
 
     private void init() {
         view.addListener(this);
-        inputHandler = new InputHandler();
-        inputHandler.addListener(this);
-        Gdx.input.setInputProcessor(inputHandler);
     }
 
     public static BPController create(BPModel model, BPView view) {
@@ -56,16 +54,9 @@ public class BPController implements PropertyChangeListener {
                     System.out.println(e.getMessage()); // player doesn't have a weapon or is out of bullets
                 }
                 break;
-            case "update":
-                update();
-                break;
             default:
                 break;
         }
-    }
-
-    private void update() {
-        inputHandler.checkForInput();
     }
 
 }

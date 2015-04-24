@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.*;
+import edu.chl.blastinthepast.controller.InputHandler;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -31,8 +32,8 @@ public class BPView extends ApplicationAdapter implements PropertyChangeListener
 	private TiledMapRenderer tiledMapRenderer;
 	private Sound wowSound;
 	private Music gottaGoFaster;
-	private GameStateManager gsc;
-	//private InputHandler inputHandler;
+	private GameStateManager gsm;
+	private InputHandler inputHandler;
 	
 	@Override
 	public void create () {
@@ -57,27 +58,23 @@ public class BPView extends ApplicationAdapter implements PropertyChangeListener
 			e.setX(r.nextFloat() * 800);
 			e.setY(r.nextFloat() * 480);
 		}
-		//inputHandler= new InputHandler();
-		//inputHandler.addListener(this);
-		//Gdx.input.setInputProcessor(inputHandler);
-		gsc = new GameStateManager();
+		inputHandler= new InputHandler();
+		inputHandler.addListener(this);
+		Gdx.input.setInputProcessor(inputHandler);
+		gsm = new GameStateManager();
 	}
 
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		camera.position.set(player.getSprite().getX() + player.getSprite().getWidth() / 2, player.getSprite().getY() + player.getSprite().getWidth() / 2, 0);
+		camera.position.set(player.getRectangle().getX() + player.getRectangle().getWidth() / 2, player.getRectangle().getY() + player.getRectangle().getWidth() / 2, 0);
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		tiledMapRenderer.setView(camera);
 		tiledMapRenderer.render();
-		//inputHandler.checkForInput();
+		inputHandler.checkForInput();
 		batch.begin();
-		/*
-		player.getSprite().setRotation(getAimDirection());
-		player.getSprite().draw(batch);
-		*/
 		for (Projectile p : projectiles) {
 			p.getSprite().setRotation(p.getDirection());
 			p.getSprite().draw(batch);
@@ -86,8 +83,8 @@ public class BPView extends ApplicationAdapter implements PropertyChangeListener
 			e.getSprite().draw(batch);
 		}
 		batch.end();
-		gsc.update(Gdx.graphics.getDeltaTime());
-		gsc.draw();
+		gsm.update(Gdx.graphics.getDeltaTime());
+		gsm.draw();
 		calculateProjectilePos();
 		pcs.firePropertyChange("update", false, true);
 	}
@@ -190,6 +187,6 @@ public class BPView extends ApplicationAdapter implements PropertyChangeListener
 	}
 
 	public GameStateManager getGameStateController() {
-		return gsc;
+		return gsm;
 	}
 }

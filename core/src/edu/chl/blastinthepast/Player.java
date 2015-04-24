@@ -94,47 +94,6 @@ public class Player extends Actor {
         return weapon;
     }
 
-    public void update(float dt) {
-        if(north) {
-            System.out.println("north true");
-            rectangle.y += movementSpeed * dt;
-            sprite.setY(sprite.getY() + movementSpeed * dt);
-            if (sprite.getY()> Constants.MAP_HEIGHT-sprite.getHeight()){
-                rectangle.setY(Constants.MAP_HEIGHT - sprite.getHeight());
-                sprite.setY(Constants.MAP_HEIGHT - sprite.getHeight());
-            }
-        }
-        if(south) {
-            System.out.println("south true");
-            rectangle.y -= movementSpeed * dt;
-            sprite.setY(sprite.getY() - movementSpeed * dt);
-            if (sprite.getY()<0){
-                rectangle.setY(0);
-                sprite.setY(0);
-            }
-        }
-        if(west) {
-            System.out.println("west true");
-            rectangle.x -= movementSpeed * dt;
-            sprite.setX(sprite.getX() - movementSpeed * dt);
-            if (sprite.getX()<0){
-                rectangle.setX(0);
-                sprite.setX(0);
-            }
-        }
-        if(east) {
-            System.out.println("east true");
-            rectangle.x += movementSpeed * dt;
-            sprite.setX(sprite.getX() + movementSpeed * dt);
-            if (sprite.getX()> Constants.MAP_WIDTH-sprite.getWidth()){
-                rectangle.setX(Constants.MAP_WIDTH - sprite.getWidth());
-                sprite.setX(Constants.MAP_WIDTH - sprite.getWidth());
-            }
-        }
-
-
-    }
-
     public void draw(SpriteBatch batch) {
         batch.begin();
         sprite.setRotation(getAimDirection());
@@ -147,69 +106,11 @@ public class Player extends Actor {
                 Gdx.input.getX() - (rectangle.x + rectangle.width/2)) * (180/Math.PI)-90);
     }
 
-    /**
-     * Updates the position of the player character's rectangle and sprite.
-     *
-     * @param direction - the direction in which to move the sprite. 0 = left, 1 = right, 2 = up, 3 = down.
-     */
-    /*
-    public void updatePlayerPos(int direction) {
-        switch (direction) {
-            case 0: // move left
-                rectangle.x -= movementSpeed * Gdx.graphics.getDeltaTime();
-                sprite.setX(sprite.getX() - movementSpeed * Gdx.graphics.getDeltaTime());
-                if (sprite.getX()<0){
-                    rectangle.setX(0);
-                    sprite.setX(0);
-                }
-                break;
-            case 1: // move right
-                rectangle.x += movementSpeed * Gdx.graphics.getDeltaTime();
-                sprite.setX(sprite.getX() + movementSpeed * Gdx.graphics.getDeltaTime());
-                if (sprite.getX()> Constants.MAP_WIDTH-sprite.getWidth()){
-                    rectangle.setX(Constants.MAP_WIDTH - sprite.getWidth());
-                    sprite.setX(Constants.MAP_WIDTH - sprite.getWidth());
-                }
-                break;
-            case 2: // move up
-                rectangle.y += movementSpeed * Gdx.graphics.getDeltaTime();
-                sprite.setY(sprite.getY() + movementSpeed * Gdx.graphics.getDeltaTime());
-                if (sprite.getY()> Constants.MAP_HEIGHT-sprite.getHeight()){
-                    rectangle.setY(Constants.MAP_HEIGHT - sprite.getHeight());
-                    sprite.setY(Constants.MAP_HEIGHT - sprite.getHeight());
-                }
-                break;
-            case 3: // move down
-                rectangle.y -= movementSpeed * Gdx.graphics.getDeltaTime();
-                sprite.setY(sprite.getY() - movementSpeed * Gdx.graphics.getDeltaTime());
-                if (sprite.getY()<0){
-                    rectangle.setY(0);
-                    sprite.setY(0);
-                }
-                break;
-        }
-    }
-
-    public void setNorth(boolean up) {
-        this.north = up;
-    }
-
-    public void setSouth(boolean down) {
-        this.south = down;
-    }
-
-    public void setWest(boolean left) {
-        this.west = left;
-    }
-
-    public void setEast(boolean right) {
-        this.east = right;
-    }
-*/
     public void move(String direction, float dt) {
         switch (direction) {
             case "west":
                 rectangle.x -= movementSpeed * dt;
+                System.out.println("rectangle x: " + rectangle.x);
                 sprite.setX(sprite.getX() - movementSpeed * dt);
                 if (sprite.getX()<0){
                     rectangle.setX(0);
