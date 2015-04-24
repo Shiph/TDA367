@@ -1,6 +1,5 @@
 package edu.chl.blastinthepast.controller;
 
-import edu.chl.blastinthepast.InputHandler;
 import edu.chl.blastinthepast.model.GameModel;
 import edu.chl.blastinthepast.view.BlastInThePast;
 

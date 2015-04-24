@@ -1,7 +1,6 @@
-package edu.chl.blastinthepast;
+package edu.chl.blastinthepast.model;
 
 import com.badlogic.gdx.math.Rectangle;
-import edu.chl.blastinthepast.model.Collidable;
 
 /**
  * Created by Mattias on 15-04-23.

@@ -1,12 +1,14 @@
 package edu.chl.blastinthepast;
 
+import edu.chl.blastinthepast.model.Character;
+
 /**
  * Created by Mattias on 15-04-23.
  */
 public class FireRatePowerUp implements PowerUp{
 
     @Override
-    public void applyPowerUp(Character character) {
+    public void applyPowerUp(edu.chl.blastinthepast.model.Character character) {
         character.getWeapon().setFireRate(character.getWeapon().getFireRate()+50);
     }
 

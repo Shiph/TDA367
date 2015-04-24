@@ -1,12 +1,14 @@
 package edu.chl.blastinthepast;
 
+import edu.chl.blastinthepast.model.Character;
+
 /**
  * Created by Mattias on 15-04-23.
  */
 public class MovementSpeedPowerUp implements PowerUp {
 
     @Override
-    public void applyPowerUp(Character character) {
+    public void applyPowerUp(edu.chl.blastinthepast.model.Character character) {
         character.setMovementSpeed(character.getMovementSpeed()+100);
     }
 
