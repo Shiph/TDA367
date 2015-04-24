@@ -30,3 +30,6 @@ build/
 
 ## OS Specific
 .DS_Store
+
+## Gitinspector
+gitinspector/
