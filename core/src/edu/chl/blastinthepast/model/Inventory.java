@@ -1,7 +1,8 @@
-package edu.chl.blastinthepast;
+package edu.chl.blastinthepast.model;
 
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.utils.Array;
+import edu.chl.blastinthepast.model.Weapon;
+
 import java.util.LinkedList;
 
 /**

@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast;
+package edu.chl.blastinthepast.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -7,28 +7,31 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 /**
- * Created by Mattias on 15-04-21.
+ * Created by Shif on 21/04/15.
  */
-public class Enemy extends Actor {
+public class Player extends Actor {
 
     private Texture texture;
     private Sprite sprite;
     private Rectangle rectangle;
     private int health;
     private int movementSpeed;
+    private Weapon weapon;
 
     /**
-     * Default constructor for Enemy with default movement speed and health.
+     * Default constructor for Player with default movement speed and health.
      */
-    public Enemy() {
-        this(150, 100);
+    public Player() {
+        this(200, 100);
     }
 
     /**
-     * Creates a new enemy character with texture, rectangle and sprite.
+     * Creates a new player character with texture, rectangle and sprite.
      */
-    public Enemy(int movementSpeed, int health) {
-        texture = new Texture(Gdx.files.local("kim.png"));
+    public Player(int movementSpeed, int health) {
+        this.movementSpeed = movementSpeed;
+        this.health = health;
+        texture = new Texture(Gdx.files.local("sanic.png"));
         sprite = new Sprite(texture);
         rectangle = new Rectangle();
         rectangle.x = 800/2 - 64/2;
@@ -37,6 +40,7 @@ public class Enemy extends Actor {
         rectangle.width = 64;
         sprite.setX(rectangle.x);
         sprite.setY(rectangle.y);
+        weapon = new Weapon();
     }
 
     /**
@@ -60,6 +64,10 @@ public class Enemy extends Actor {
         return sprite;
     }
 
+    public int getMovementSpeed() {
+        return movementSpeed;
+    }
+
     /**
      * Sets the players new movement speed.
      * @param newSpeed
@@ -76,14 +84,11 @@ public class Enemy extends Actor {
         health = newHealth;
     }
 
-    public void setX(float x) {
-        rectangle.setX(x);
-        sprite.setX(x);
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
     }
 
-    public void setY(float y) {
-        rectangle.setY(y);
-        sprite.setY(y);
+    public Weapon getWeapon() {
+        return weapon;
     }
-
 }

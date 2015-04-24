@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast;
+package edu.chl.blastinthepast.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

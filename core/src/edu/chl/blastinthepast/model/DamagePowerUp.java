@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast;
+package edu.chl.blastinthepast.model;
 
 /**
  * Created by Mattias on 15-04-23.
@@ -6,7 +6,7 @@ package edu.chl.blastinthepast;
 public class DamagePowerUp implements PowerUp {
 
     @Override
-    public void applyPowerUp(Character character) {
+    public void applyPowerUp(edu.chl.blastinthepast.model.Character character) {
         Projectile projectile = character.getWeapon().getProjectile();
         projectile.setDamage(projectile.getDamage()+100);
     }
