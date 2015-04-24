@@ -99,11 +99,6 @@ public class Player extends Actor {
         sprite.setRotation(getAimDirection());
         sprite.draw(batch);
         batch.end();
-        System.out.println("Sprite x in Player.draw():   \t" + sprite.getX());
-        System.out.println("Rectangle x in Player.draw():\t" + rectangle.x);
-        System.out.println("Sprite y in Player.draw():   \t" + sprite.getY());
-        System.out.println("Rectangle y in Player.draw():\t" + rectangle.y);
-        System.out.println("");
     }
 
     private float getAimDirection() {

@@ -52,7 +52,7 @@ public class BPController implements PropertyChangeListener {
                 break;
             case "shoot":
                 try {
-                    view.spawnProjectile();
+                    ((PlayState)view.getGameStateController().getGameState()).spawnProjectile();
                 } catch (NullPointerException e) {
                     System.out.println(e.getMessage()); // player doesn't have a weapon or is out of bullets
                 }

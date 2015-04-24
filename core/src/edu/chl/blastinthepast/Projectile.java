@@ -3,6 +3,7 @@ package edu.chl.blastinthepast;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
@@ -100,5 +101,12 @@ public class Projectile {
         rectangle.setY(y);
         sprite.setY(y);
 
+    }
+
+    public void draw(SpriteBatch batch) {
+        sprite.setRotation(direction);
+        batch.begin();
+        sprite.draw(batch);
+        batch.end();
     }
 }

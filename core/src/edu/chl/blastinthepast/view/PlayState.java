@@ -1,6 +1,8 @@
 package edu.chl.blastinthepast.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -8,10 +10,9 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
-import edu.chl.blastinthepast.Enemy;
-import edu.chl.blastinthepast.GameState;
-import edu.chl.blastinthepast.Player;
+import edu.chl.blastinthepast.*;
 
+import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -25,6 +26,9 @@ public class PlayState extends GameState {
     private OrthographicCamera camera;
     private TiledMapRenderer tiledMapRenderer;
     private TiledMap tiledMap;
+    private Array<Projectile> projectiles = new Array<Projectile>();
+    private Sound wowSound;
+    private Music gottaGoFaster;
 
     public PlayState(GameStateManager gsc) {
         super(gsc);
@@ -46,6 +50,11 @@ public class PlayState extends GameState {
         camera.update();
         tiledMap = new TmxMapLoader().load("GrassTestMap1.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+        wowSound = Gdx.audio.newSound(Gdx.files.internal("wow.mp3"));
+        gottaGoFaster = Gdx.audio.newMusic(Gdx.files.internal("sanic.mp3"));
+        gottaGoFaster.setVolume(0.5f);
+        gottaGoFaster.setLooping(true);
+        gottaGoFaster.play();
     }
 
     private void spawnEnemies() {
@@ -61,14 +70,18 @@ public class PlayState extends GameState {
         batch.setProjectionMatrix(camera.combined);
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.setView(camera);
-        tiledMapRenderer.render();
+        calculateProjectilePos();
     }
 
     @Override
     public void draw() {
+        tiledMapRenderer.render();
         player.draw(batch);
         for (Enemy e : enemyArray) {
             e.draw(batch);
+        }
+        for (Projectile p : projectiles) {
+            p.draw(batch);
         }
     }
 
@@ -83,6 +96,35 @@ public class PlayState extends GameState {
 
     public Player getPlayer() {
         return player;
+    }
+
+    private void calculateProjectilePos() {
+        Iterator<Projectile> iter = projectiles.iterator();
+        while(iter.hasNext()) {
+            Projectile p = iter.next();
+            p.getRectangle().y += Math.cos(Math.toRadians(p.getDirection())) * p.getSpeed() * Gdx.graphics.getDeltaTime();
+            p.getRectangle().x -= Math.sin(Math.toRadians(p.getDirection())) * p.getSpeed() * Gdx.graphics.getDeltaTime();
+            p.getSprite().setY((float) (p.getSprite().getY() + Math.cos(Math.toRadians(p.getDirection())) * p.getSpeed() * Gdx.graphics.getDeltaTime()));
+            p.getSprite().setX((float) (p.getSprite().getX() - Math.sin(Math.toRadians(p.getDirection())) * p.getSpeed() * Gdx.graphics.getDeltaTime()));
+            if((p.getRectangle().y + player.getSprite().getHeight() < 0) || (p.getRectangle().y > Constants.MAP_HEIGHT) ||
+                    (p.getRectangle().x > Constants.MAP_WIDTH) || (p.getRectangle().x + player.getSprite().getWidth() < 0)) {
+                iter.remove();
+            }
+        }
+    }
+
+    public void spawnProjectile() {
+        Projectile newProjectile = player.getWeapon().fire();
+        newProjectile.setX(player.getRectangle().getX());
+        newProjectile.setY(player.getRectangle().getY());
+        newProjectile.setDirection(getAimDirection());
+        projectiles.add(newProjectile);
+        wowSound.play();
+    }
+
+    private float getAimDirection() {
+        return (float)(-Math.atan2(Gdx.input.getY() - (480-64-player.getRectangle().y + player.getRectangle().height/2),
+                Gdx.input.getX() - (player.getRectangle().x + player.getRectangle().width/2)) * (180/Math.PI)-90);
     }
 
 }
