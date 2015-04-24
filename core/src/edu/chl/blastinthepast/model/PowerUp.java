@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast;
+package edu.chl.blastinthepast.model;
 
 import edu.chl.blastinthepast.model.Character;
 

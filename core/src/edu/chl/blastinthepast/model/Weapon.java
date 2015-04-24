@@ -1,7 +1,5 @@
 package edu.chl.blastinthepast.model;
 
-import edu.chl.blastinthepast.Projectile;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
