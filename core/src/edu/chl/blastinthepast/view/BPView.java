@@ -23,13 +23,13 @@ import java.util.Random;
 public class BPView extends ApplicationAdapter implements PropertyChangeListener {
 
 	private SpriteBatch batch;
-	private OrthographicCamera camera;
+	//private OrthographicCamera camera;
 	private Player player;
 	private Array<Enemy> enemyArray;
 	private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 	private Array<Projectile> projectiles = new Array<Projectile>();
-	private TiledMap tiledMap;
-	private TiledMapRenderer tiledMapRenderer;
+	//private TiledMap tiledMap;
+	//private TiledMapRenderer tiledMapRenderer;
 	private Sound wowSound;
 	private Music gottaGoFaster;
 	private GameStateManager gsm;
@@ -38,17 +38,20 @@ public class BPView extends ApplicationAdapter implements PropertyChangeListener
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+		/*
 		camera= new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.update();
-		tiledMap = new TmxMapLoader().load("GrassTestMap1.tmx");
-		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+		*/
+		//tiledMap = new TmxMapLoader().load("GrassTestMap1.tmx");
+		//tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		gottaGoFaster = Gdx.audio.newMusic(Gdx.files.internal("sanic.mp3"));
 		gottaGoFaster.setVolume(0.5f);
 		gottaGoFaster.setLooping(true);
-		gottaGoFaster.play();
+		//gottaGoFaster.play();
 		enemyArray = new Array<Enemy>();
 		wowSound = Gdx.audio.newSound(Gdx.files.internal("wow.mp3"));
+		/*
 		for (int i = 0; i < 5; i++) {
 			spawnEnemy();
 		}
@@ -57,6 +60,7 @@ public class BPView extends ApplicationAdapter implements PropertyChangeListener
 			e.setX(r.nextFloat() * 800);
 			e.setY(r.nextFloat() * 480);
 		}
+		*/
 		inputHandler= new InputHandler();
 		inputHandler.addListener(this);
 		Gdx.input.setInputProcessor(inputHandler);
@@ -71,14 +75,19 @@ public class BPView extends ApplicationAdapter implements PropertyChangeListener
 
 	@Override
 	public void render () {
+		inputHandler.checkForInput();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		camera.position.set(player.getRectangle().getX() + player.getRectangle().getWidth() / 2, player.getRectangle().getY() + player.getRectangle().getWidth() / 2, 0);
-		camera.update();
-		batch.setProjectionMatrix(camera.combined);
-		tiledMapRenderer.setView(camera);
-		tiledMapRenderer.render();
-		inputHandler.checkForInput();
+		//camera.position.set(player.getRectangle().getX() + player.getRectangle().getWidth() / 2, player.getRectangle().getY() + player.getRectangle().getWidth() / 2, 0);
+		System.out.println("Player rectangle x in render:\t" + player.getRectangle().getX());
+		System.out.println("Player sprite x in render:   \t" + player.getSprite().getX());
+		System.out.println("Player rectangle y in render:\t" + player.getRectangle().getY());
+		System.out.println("Player sprite y in render:   \t" + player.getSprite().getY());
+		System.out.println("");
+		//camera.update();
+		//batch.setProjectionMatrix(camera.combined);
+		//tiledMapRenderer.setView(camera);
+		//tiledMapRenderer.render();
 		batch.begin();
 		for (Projectile p : projectiles) {
 			p.getSprite().setRotation(p.getDirection());
@@ -122,6 +131,10 @@ public class BPView extends ApplicationAdapter implements PropertyChangeListener
 		newProjectile.setDirection(getAimDirection());
 		projectiles.add(newProjectile);
 		wowSound.play();
+		System.out.println("rectangle x:\t" + player.getRectangle().x);
+		System.out.println("sprite x:   \t" + player.getSprite().getX());
+		System.out.println("rectangle y:\t" + player.getRectangle().y);
+		System.out.println("sprite y:   \t" + player.getSprite().getY());
 	}
 
 	/**

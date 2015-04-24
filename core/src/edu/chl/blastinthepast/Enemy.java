@@ -3,6 +3,7 @@ package edu.chl.blastinthepast;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
@@ -83,6 +84,12 @@ public class Enemy extends Actor {
     public void setY(float y) {
         rectangle.setY(y);
         sprite.setY(y);
+    }
+
+    public void draw(SpriteBatch batch) {
+        batch.begin();
+        sprite.draw(batch);
+        batch.end();
     }
 
 }
