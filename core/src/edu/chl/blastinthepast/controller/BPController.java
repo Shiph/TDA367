@@ -39,13 +39,16 @@ public class BPController implements PropertyChangeListener {
                 ((PlayState)view.getGameStateController().getGameState()).getPlayer().move("west", Gdx.graphics.getDeltaTime());
                 break;
             case "east":
-                view.updatePlayerPos(1);
+                ((PlayState)view.getGameStateController().getGameState()).getPlayer().move("east", Gdx.graphics.getDeltaTime());
+                //view.updatePlayerPos(1);
                 break;
             case "north":
-                view.updatePlayerPos(2);
+                ((PlayState)view.getGameStateController().getGameState()).getPlayer().move("north", Gdx.graphics.getDeltaTime());
+                //view.updatePlayerPos(2);
                 break;
             case "south":
-                view.updatePlayerPos(3);
+                ((PlayState)view.getGameStateController().getGameState()).getPlayer().move("south", Gdx.graphics.getDeltaTime());
+                //view.updatePlayerPos(3);
                 break;
             case "shoot":
                 try {

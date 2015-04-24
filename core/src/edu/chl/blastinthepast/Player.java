@@ -110,12 +110,15 @@ public class Player extends Actor {
         switch (direction) {
             case "west":
                 rectangle.x -= movementSpeed * dt;
-                System.out.println("rectangle x: " + rectangle.x);
                 sprite.setX(sprite.getX() - movementSpeed * dt);
                 if (sprite.getX()<0){
                     rectangle.setX(0);
                     sprite.setX(0);
                 }
+                System.out.println("rectangle x: " + rectangle.x);
+                System.out.println("sprite x: " + sprite.getX());
+                System.out.println("rectangle y: " + rectangle.y);
+                System.out.println("sprite y: " + sprite.getY());
                 break;
             case "east":
                 rectangle.x += movementSpeed * dt;
@@ -124,6 +127,10 @@ public class Player extends Actor {
                     rectangle.setX(Constants.MAP_WIDTH - sprite.getWidth());
                     sprite.setX(Constants.MAP_WIDTH - sprite.getWidth());
                 }
+                System.out.println("rectangle x: " + rectangle.x);
+                System.out.println("sprite x: " + sprite.getX());
+                System.out.println("rectangle y: " + rectangle.y);
+                System.out.println("sprite y: " + sprite.getY());
                 break;
             case "north":
                 rectangle.y += movementSpeed * dt;
@@ -132,6 +139,10 @@ public class Player extends Actor {
                     rectangle.setY(Constants.MAP_HEIGHT - sprite.getHeight());
                     sprite.setY(Constants.MAP_HEIGHT - sprite.getHeight());
                 }
+                System.out.println("rectangle x: " + rectangle.x);
+                System.out.println("sprite x: " + sprite.getX());
+                System.out.println("rectangle y: " + rectangle.y);
+                System.out.println("sprite y: " + sprite.getY());
                 break;
             case "south":
                 rectangle.y -= movementSpeed * dt;
@@ -140,6 +151,10 @@ public class Player extends Actor {
                     rectangle.setY(0);
                     sprite.setY(0);
                 }
+                System.out.println("rectangle x: " + rectangle.x);
+                System.out.println("sprite x: " + sprite.getX());
+                System.out.println("rectangle y: " + rectangle.y);
+                System.out.println("sprite y: " + sprite.getY());
                 break;
             default: break;
         }

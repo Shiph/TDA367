@@ -43,7 +43,6 @@ public class BPView extends ApplicationAdapter implements PropertyChangeListener
 		camera.update();
 		tiledMap = new TmxMapLoader().load("GrassTestMap1.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
-		player = new Player();
 		gottaGoFaster = Gdx.audio.newMusic(Gdx.files.internal("sanic.mp3"));
 		gottaGoFaster.setVolume(0.5f);
 		gottaGoFaster.setLooping(true);
@@ -62,6 +61,12 @@ public class BPView extends ApplicationAdapter implements PropertyChangeListener
 		inputHandler.addListener(this);
 		Gdx.input.setInputProcessor(inputHandler);
 		gsm = new GameStateManager();
+		if (gsm.getGameState() instanceof PlayState) {
+			player = ((PlayState)gsm.getGameState()).getPlayer();
+		} else {
+			System.out.println("Can't create player, state is not in PlayState");
+		}
+
 	}
 
 	@Override
@@ -86,7 +91,6 @@ public class BPView extends ApplicationAdapter implements PropertyChangeListener
 		gsm.update(Gdx.graphics.getDeltaTime());
 		gsm.draw();
 		calculateProjectilePos();
-		pcs.firePropertyChange("update", false, true);
 	}
 
 	private void calculateProjectilePos() {
@@ -139,48 +143,6 @@ public class BPView extends ApplicationAdapter implements PropertyChangeListener
 		pcs.addPropertyChangeListener(pcl);
 	}
 
-	/**
-	 * Updates the position of the player character's rectangle and sprite.
-	 *
-	 * @param direction - the direction in which to move the sprite. 0 = left, 1 = right, 2 = up, 3 = down.
-	 */
-	public void updatePlayerPos(int direction) {
-		switch (direction) {
-			case 0: // move left
-				player.getRectangle().x -= player.getMovementSpeed() * Gdx.graphics.getDeltaTime();
-				player.getSprite().setX(player.getSprite().getX() - player.getMovementSpeed() * Gdx.graphics.getDeltaTime());
-				if (player.getSprite().getX()<0){
-					player.getRectangle().setX(0);
-					player.getSprite().setX(0);
-				}
-				break;
-			case 1: // move right
-				player.getRectangle().x += player.getMovementSpeed() * Gdx.graphics.getDeltaTime();
-				player.getSprite().setX(player.getSprite().getX() + player.getMovementSpeed() * Gdx.graphics.getDeltaTime());
-				if (player.getSprite().getX()> Constants.MAP_WIDTH-player.getSprite().getWidth()){
-					player.getRectangle().setX(Constants.MAP_WIDTH-player.getSprite().getWidth());
-					player.getSprite().setX(Constants.MAP_WIDTH-player.getSprite().getWidth());
-				}
-				break;
-			case 2: // move up
-				player.getRectangle().y += player.getMovementSpeed() * Gdx.graphics.getDeltaTime();
-				player.getSprite().setY(player.getSprite().getY() + player.getMovementSpeed() * Gdx.graphics.getDeltaTime());
-				if (player.getSprite().getY()> Constants.MAP_HEIGHT-player.getSprite().getHeight()){
-					player.getRectangle().setY(Constants.MAP_HEIGHT-player.getSprite().getHeight());
-					player.getSprite().setY(Constants.MAP_HEIGHT-player.getSprite().getHeight());
-				}
-				break;
-			case 3: // move down
-				player.getRectangle().y -= player.getMovementSpeed() * Gdx.graphics.getDeltaTime();
-				player.getSprite().setY(player.getSprite().getY() - player.getMovementSpeed() * Gdx.graphics.getDeltaTime());
-				if (player.getSprite().getY()<0){
-					player.getRectangle().setY(0);
-					player.getSprite().setY(0);
-				}
-				break;
-		}
-	}
-
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		pcs.firePropertyChange(evt);
@@ -189,4 +151,5 @@ public class BPView extends ApplicationAdapter implements PropertyChangeListener
 	public GameStateManager getGameStateController() {
 		return gsm;
 	}
+
 }
