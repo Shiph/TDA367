@@ -114,12 +114,14 @@ public class PlayState extends GameState {
     }
 
     public void spawnProjectile() {
-        Projectile newProjectile = player.getWeapon().fire();
-        newProjectile.setX(player.getRectangle().getX());
-        newProjectile.setY(player.getRectangle().getY());
-        newProjectile.setDirection(getAimDirection());
-        projectiles.add(newProjectile);
-        wowSound.play();
+        if (player.getWeapon().hasAmmo()) {
+            Projectile newProjectile = player.getWeapon().fire();
+            newProjectile.setX(player.getRectangle().getX());
+            newProjectile.setY(player.getRectangle().getY());
+            newProjectile.setDirection(getAimDirection());
+            projectiles.add(newProjectile);
+            wowSound.play();
+        }
     }
 
     private float getAimDirection() {

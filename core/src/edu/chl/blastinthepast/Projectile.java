@@ -16,17 +16,13 @@ public class Projectile {
     private Rectangle rectangle;
     private float direction = 0;
     private float speed = 500;
-    private float x = 0;
-    private float y = 0;
 
     public Projectile() {
         this(0, 0, 0);
     }
 
-    public Projectile(float x, float y, float direction) {
+    public Projectile(int x, int y, float direction) {
         this.direction = direction;
-        this.y = x;
-        this.x = y;
         texture = new Texture(Gdx.files.local("triforce.png"));
         sprite = new Sprite(texture);
         rectangle = new Rectangle();
@@ -91,13 +87,11 @@ public class Projectile {
     }
 
     public void setX(float x) {
-        this.x = x;
         rectangle.setX(x);
         sprite.setX(x);
     }
 
     public void setY(float y) {
-        this.y = y;
         rectangle.setY(y);
         sprite.setY(y);
 
