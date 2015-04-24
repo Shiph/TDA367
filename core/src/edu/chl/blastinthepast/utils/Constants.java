@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast;
+package edu.chl.blastinthepast.utils;
 
 /**
  * Created by jonas on 2015-04-22.

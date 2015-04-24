@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast;
+package edu.chl.blastinthepast.controller;
 
 import edu.chl.blastinthepast.controller.GameStateController;
 

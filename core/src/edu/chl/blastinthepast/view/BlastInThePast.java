@@ -11,8 +11,11 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
-import edu.chl.blastinthepast.*;
 import edu.chl.blastinthepast.controller.GameStateController;
+import edu.chl.blastinthepast.model.Enemy;
+import edu.chl.blastinthepast.model.Player;
+import edu.chl.blastinthepast.model.Projectile;
+import edu.chl.blastinthepast.utils.Constants;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

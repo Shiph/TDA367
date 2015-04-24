@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast;
+package edu.chl.blastinthepast.model;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

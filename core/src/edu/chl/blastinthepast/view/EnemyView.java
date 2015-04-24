@@ -1,33 +1,22 @@
-package edu.chl.blastinthepast;
+package edu.chl.blastinthepast.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import edu.chl.blastinthepast.model.Enemy;
+import edu.chl.blastinthepast.utils.Position;
 
 /**
- * Created by Mattias on 15-04-21.
+ * Created by jonas on 2015-04-23.
  */
-public class Enemy extends Actor {
-
+public class EnemyView {
     private Texture texture;
     private Sprite sprite;
     private Rectangle rectangle;
-    private int health;
-    private int movementSpeed;
+    private Enemy enemy;
 
-    /**
-     * Default constructor for Enemy with default movement speed and health.
-     */
-    public Enemy() {
-        this(150, 100);
-    }
-
-    /**
-     * Creates a new enemy character with texture, rectangle and sprite.
-     */
-    public Enemy(int movementSpeed, int health) {
+    EnemyView(Enemy newEnemy){
         texture = new Texture(Gdx.files.local("kim.png"));
         sprite = new Sprite(texture);
         rectangle = new Rectangle();
@@ -37,7 +26,9 @@ public class Enemy extends Actor {
         rectangle.width = 64;
         sprite.setX(rectangle.x);
         sprite.setY(rectangle.y);
+        enemy=newEnemy;
     }
+
 
     /**
      * @return the texture of the player character.
@@ -60,30 +51,8 @@ public class Enemy extends Actor {
         return sprite;
     }
 
-    /**
-     * Sets the players new movement speed.
-     * @param newSpeed
-     */
-    public void setMovementSpeed(int newSpeed) {
-        movementSpeed = newSpeed;
-    }
-
-    /**
-     * Sets the players new health.
-     * @param newHealth
-     */
-    public void setHealth(int newHealth) {
-        health = newHealth;
-    }
-
-    public void setX(float x) {
-        rectangle.setX(x);
-        sprite.setX(x);
-    }
-
-    public void setY(float y) {
-        rectangle.setY(y);
-        sprite.setY(y);
+    public Position getPosition(){
+        return enemy.getPosition();
     }
 
 }

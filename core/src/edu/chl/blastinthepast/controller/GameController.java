@@ -27,8 +27,9 @@ public class GameController implements PropertyChangeListener {
     private void init() {
         view.addListener(this);
         inputHandler = new InputHandler();
-        Gdx.input.setInputProcessor(inputHandler);
         inputHandler.addListener(this);
+        Gdx.input.setInputProcessor(inputHandler);
+
     }
 
     public static GameController create(GameModel model, BlastInThePast view) {

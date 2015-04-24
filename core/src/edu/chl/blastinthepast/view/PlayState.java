@@ -1,9 +1,8 @@
 package edu.chl.blastinthepast.view;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import edu.chl.blastinthepast.GameState;
-import edu.chl.blastinthepast.Player;
+import edu.chl.blastinthepast.controller.GameState;
+import edu.chl.blastinthepast.model.Player;
 import edu.chl.blastinthepast.controller.GameStateController;
 
 /**

@@ -7,9 +7,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import edu.chl.blastinthepast.Enemy;
-import edu.chl.blastinthepast.Player;
-import edu.chl.blastinthepast.Character;
+import edu.chl.blastinthepast.model.Character;
 
 /**
  * Created by qwerty458 on 4/23/15.

@@ -1,6 +1,5 @@
 package edu.chl.blastinthepast.controller;
 
-import edu.chl.blastinthepast.GameState;
 import edu.chl.blastinthepast.view.PlayState;
 
 /**
