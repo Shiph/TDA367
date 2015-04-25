@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import edu.chl.blastinthepast.model.BPModel;
 import edu.chl.blastinthepast.view.BPView;
+import edu.chl.blastinthepast.view.MenuState;
 import edu.chl.blastinthepast.view.PlayState;
 
 import java.beans.PropertyChangeEvent;
@@ -35,27 +36,48 @@ public class BPController implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         switch(evt.getPropertyName()) {
             case "west":
-                ((PlayState)view.getGameStateController().getGameState()).getPlayer().move("west", Gdx.graphics.getDeltaTime());
+                if (view.getGameStateController().getGameState() instanceof PlayState) {
+                    ((PlayState) view.getGameStateController().getGameState()).getPlayer().move("west", Gdx.graphics.getDeltaTime());
+                }
                 break;
             case "east":
-                ((PlayState)view.getGameStateController().getGameState()).getPlayer().move("east", Gdx.graphics.getDeltaTime());
+                if (view.getGameStateController().getGameState() instanceof PlayState) {
+                    ((PlayState) view.getGameStateController().getGameState()).getPlayer().move("east", Gdx.graphics.getDeltaTime());
+                }
                 break;
             case "north":
-                try {
+                if (view.getGameStateController().getGameState() instanceof PlayState) {
                     ((PlayState) view.getGameStateController().getGameState()).getPlayer().move("north", Gdx.graphics.getDeltaTime());
-                } catch(ClassCastException c) {} // Clicking in menu screen.
+                }
                 break;
             case "south":
-                try {
+                if (view.getGameStateController().getGameState() instanceof PlayState) {
                     ((PlayState) view.getGameStateController().getGameState()).getPlayer().move("south", Gdx.graphics.getDeltaTime());
-                } catch (ClassCastException c) {} // Clicking in menu screen.
+                }
                 break;
             case "shoot":
-                try {
-                    ((PlayState)view.getGameStateController().getGameState()).spawnProjectile();
-                } catch (NullPointerException e) {
-                    System.out.println(e.getMessage()); // player doesn't have a weapon or is out of bullets
-                } catch (ClassCastException c) {} // Clicking in menu screen.
+                if (view.getGameStateController().getGameState() instanceof PlayState) {
+                    try {
+                        ((PlayState) view.getGameStateController().getGameState()).spawnProjectile();
+                    } catch (NullPointerException e) {
+                        System.out.println(e.getMessage()); // player doesn't have a weapon or is out of bullets
+                    }
+                }
+                break;
+            case "enter":
+                if (view.getGameStateController().getGameState() instanceof MenuState) {
+                    ((MenuState) view.getGameStateController().getGameState()).select();
+                }
+                break;
+            case "up":
+                if (view.getGameStateController().getGameState() instanceof MenuState) {
+                    ((MenuState) view.getGameStateController().getGameState()).moveUp();
+                }
+                break;
+            case "down":
+                if (view.getGameStateController().getGameState() instanceof MenuState) {
+                    ((MenuState) view.getGameStateController().getGameState()).moveDown();
+                }
                 break;
             default:
                 break;

@@ -14,7 +14,7 @@ import java.beans.PropertyChangeListener;
 /**
  * Created by MattiasJ on 2015-04-24.
  */
-public class MenuState extends GameState implements PropertyChangeListener {
+public class MenuState extends GameState {
 
     private SpriteBatch batch;
     private BitmapFont titleFont;
@@ -25,16 +25,17 @@ public class MenuState extends GameState implements PropertyChangeListener {
     private int currentItem;
     private String[] menuItems;
     private Music music;
-    private InputHandler inputHandler;
+    //private InputHandler inputHandler;
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
+        this.gsm = gsm;
     }
 
     public void init() {
-        inputHandler = new InputHandler();
-        Gdx.input.setInputProcessor(inputHandler);
-        inputHandler.addListener(this);
+        //inputHandler = new InputHandler();
+        //Gdx.input.setInputProcessor(inputHandler);
+        //inputHandler.addListener(this);
         camera = new OrthographicCamera();
         batch = new SpriteBatch();
         music = Gdx.audio.newMusic(Gdx.files.internal("sanic.mp3"));
@@ -47,7 +48,7 @@ public class MenuState extends GameState implements PropertyChangeListener {
     }
 
     public void update(float dt) {
-        handleInput();
+        //handleInput();
     }
 
     public void draw() {
@@ -75,7 +76,7 @@ public class MenuState extends GameState implements PropertyChangeListener {
     public void handleInput() {
     }
 
-    private void select() {
+    public void select() {
         if(currentItem == 0) {
             gsm.setState(GameStateManager.PLAY);
         } else if(currentItem == 1) {
@@ -89,7 +90,7 @@ public class MenuState extends GameState implements PropertyChangeListener {
         titleFont.dispose();
         music.stop();
     }
-
+/*
     public void propertyChange(PropertyChangeEvent evt) {
         System.out.println("MenuState");
         if(evt.getPropertyName().equals("north")) {
@@ -104,6 +105,20 @@ public class MenuState extends GameState implements PropertyChangeListener {
             }
         } else if(evt.getPropertyName().equals("enter")) {
             select();
+        }
+    }
+*/
+    public void moveUp() {
+        if(currentItem > 0) {
+            currentItem--;
+            draw();
+        }
+    }
+
+    public void moveDown() {
+        if(currentItem < 2) {
+            currentItem++;
+            draw();
         }
     }
 

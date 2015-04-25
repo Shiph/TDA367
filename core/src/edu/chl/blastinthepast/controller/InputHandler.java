@@ -16,7 +16,7 @@ import java.beans.PropertyChangeSupport;
  *
  */
 public class InputHandler implements InputProcessor{
-    private int northKey, southKey, westKey, eastKey, shootKey, reloadKey, weapon1Key, weapon2Key, menuKey;
+    private int northKey, southKey, westKey, eastKey, shootKey, enterKey, reloadKey, weapon1Key, weapon2Key, menuKey, upKey, downKey, leftKey, rightKey;
     protected boolean north=false, south=false, west=false, east=false, shoot=false, menuIsUp=false;
     private PropertyChangeSupport pcs;
 
@@ -27,10 +27,16 @@ public class InputHandler implements InputProcessor{
         westKey=Input.Keys.A;
         eastKey=Input.Keys.D;
         shootKey=Input.Buttons.LEFT;
+        enterKey = Input.Keys.ENTER;
         reloadKey=Input.Keys.R;
         weapon1Key=Input.Keys.NUM_1;
         weapon2Key=Input.Keys.NUM_2;
         menuKey=Input.Keys.ESCAPE;
+        upKey = Input.Keys.UP;
+        downKey = Input.Keys.DOWN;
+        leftKey = Input.Keys.LEFT;
+        rightKey = Input.Keys.RIGHT;
+
     }
 
     @Override
@@ -53,6 +59,21 @@ public class InputHandler implements InputProcessor{
         }
         if (keycode==shootKey){
             shoot=true;
+        }
+        if (keycode==enterKey){
+            pcs.firePropertyChange("enter", null, true);
+        }
+        if (keycode==upKey){
+            pcs.firePropertyChange("up", null, true);
+        }
+        if (keycode==downKey){
+            pcs.firePropertyChange("down", null, true);
+        }
+        if (keycode==leftKey){
+            pcs.firePropertyChange("left", null, true);
+        }
+        if (keycode==rightKey){
+            pcs.firePropertyChange("right", null, true);
         }
         if (keycode==reloadKey){
             pcs.firePropertyChange("reload", null, true);

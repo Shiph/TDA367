@@ -7,10 +7,10 @@ import edu.chl.blastinthepast.view.GameStateManager;
  */
 public abstract class GameState {
 
-    protected GameStateManager gsc;
+    protected GameStateManager gsm;
 
-    protected GameState(GameStateManager gsc) {
-        this.gsc = gsc;
+    protected GameState(GameStateManager gsm) {
+        this.gsm = gsm;
         init();
     }
 

@@ -30,8 +30,8 @@ public class PlayState extends GameState {
     private Sound wowSound;
     private Music gottaGoFaster;
 
-    public PlayState(GameStateManager gsc) {
-        super(gsc);
+    public PlayState(GameStateManager gsm) {
+        super(gsm);
     }
 
     @Override
