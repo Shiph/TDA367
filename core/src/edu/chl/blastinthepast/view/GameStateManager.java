@@ -6,21 +6,29 @@ package edu.chl.blastinthepast.view;
 public class GameStateManager {
 
     private GameState gameState;
+    private MenuState menuState;
+    private PlayState playState;
     public static final int MENU = 0;
     public static final int PLAY = 1;
 
     public GameStateManager() {
-        setState(MENU);
+        setState(MENU, true);
     }
 
-    public void setState(int state) {
+    public void setState(int state, boolean newGame) {
         if(gameState!=null) {
             gameState.dispose();
         }
-        if (state == MENU) {
-            gameState = new MenuState(this);
-        } else if (state == PLAY) {
-            gameState = new PlayState(this);
+        if (state == MENU && newGame) {
+            menuState = new MenuState(this);
+            gameState = menuState;
+        } else if(state == MENU && !newGame){
+            gameState = menuState;
+        } else if (state == PLAY && newGame) {
+            playState = new PlayState(this);
+            gameState = playState;
+        } else if(state == PLAY && !newGame) {
+            gameState = playState;
         }
     }
 

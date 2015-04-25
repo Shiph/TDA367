@@ -64,6 +64,10 @@ public class BPController implements PropertyChangeListener {
                     }
                 }
                 break;
+            case "escape":
+                    view.getGameStateController().setState(0, false);
+                    view.getGameStateController().getGameState().draw();
+                break;
             case "enter":
                 if (view.getGameStateController().getGameState() instanceof MenuState) {
                     ((MenuState) view.getGameStateController().getGameState()).select();
