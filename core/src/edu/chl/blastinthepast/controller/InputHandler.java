@@ -2,6 +2,7 @@ package edu.chl.blastinthepast.controller;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import edu.chl.blastinthepast.view.GameStateManager;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -95,8 +96,7 @@ public class InputHandler implements InputProcessor{
     }
 
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button)
-    {
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (button==shootKey){
             shoot=true;
         }
@@ -104,8 +104,7 @@ public class InputHandler implements InputProcessor{
     }
 
     @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button)
-    {
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         if (button==shootKey){
             shoot=false;
         }
@@ -135,21 +134,20 @@ public class InputHandler implements InputProcessor{
      * Checks if movement and shoot keys are held down continuously
      * Should be called once during every render cycle
      */
-    public void checkForInput(){
-        if (north){
+    public void checkForInput() {
+        if (north) {
             pcs.firePropertyChange("north", null, true);
-        } else if (south){
+        } else if (south) {
             pcs.firePropertyChange("south", null, true);
         }
-        if (west){
+        if (west) {
             pcs.firePropertyChange("west", null, true);
-        } else if (east){
+        } else if (east) {
             pcs.firePropertyChange("east", null, true);
         }
-        if (shoot){
+        if (shoot) {
             pcs.firePropertyChange("shoot", null, true);
         }
     }
-
 
 }

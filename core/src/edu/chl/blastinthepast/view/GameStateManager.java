@@ -1,8 +1,5 @@
 package edu.chl.blastinthepast.view;
 
-import edu.chl.blastinthepast.GameState;
-import edu.chl.blastinthepast.view.PlayState;
-
 /**
  * Created by Shif on 23/04/15.
  */
@@ -13,7 +10,7 @@ public class GameStateManager {
     public static final int PLAY = 1;
 
     public GameStateManager() {
-        setState(PLAY);
+        setState(MENU);
     }
 
     public void setState(int state) {
@@ -21,9 +18,8 @@ public class GameStateManager {
             gameState.dispose();
         }
         if (state == MENU) {
-            // switch to menu state
+            gameState = new MenuState(this);
         } else if (state == PLAY) {
-            // switch to play state
             gameState = new PlayState(this);
         }
     }

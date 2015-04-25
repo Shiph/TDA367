@@ -69,7 +69,6 @@ public class PlayState extends GameState {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         tiledMapRenderer.setView(camera);
-        tiledMapRenderer.setView(camera);
         calculateProjectilePos();
     }
 

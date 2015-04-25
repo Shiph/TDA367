@@ -16,7 +16,6 @@ public class BPController implements PropertyChangeListener {
 
     private BPModel model;
     private BPView view;
-    //private InputHandler inputHandler;
 
     private BPController(BPModel model, BPView view) {
         this.model = model;
@@ -40,22 +39,23 @@ public class BPController implements PropertyChangeListener {
                 break;
             case "east":
                 ((PlayState)view.getGameStateController().getGameState()).getPlayer().move("east", Gdx.graphics.getDeltaTime());
-                //view.updatePlayerPos(1);
                 break;
             case "north":
-                ((PlayState)view.getGameStateController().getGameState()).getPlayer().move("north", Gdx.graphics.getDeltaTime());
-                //view.updatePlayerPos(2);
+                try {
+                    ((PlayState) view.getGameStateController().getGameState()).getPlayer().move("north", Gdx.graphics.getDeltaTime());
+                } catch(ClassCastException c) {} // Clicking in menu screen.
                 break;
             case "south":
-                ((PlayState)view.getGameStateController().getGameState()).getPlayer().move("south", Gdx.graphics.getDeltaTime());
-                //view.updatePlayerPos(3);
+                try {
+                    ((PlayState) view.getGameStateController().getGameState()).getPlayer().move("south", Gdx.graphics.getDeltaTime());
+                } catch (ClassCastException c) {} // Clicking in menu screen.
                 break;
             case "shoot":
                 try {
                     ((PlayState)view.getGameStateController().getGameState()).spawnProjectile();
                 } catch (NullPointerException e) {
                     System.out.println(e.getMessage()); // player doesn't have a weapon or is out of bullets
-                }
+                } catch (ClassCastException c) {} // Clicking in menu screen.
                 break;
             default:
                 break;
