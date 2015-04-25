@@ -3,6 +3,7 @@ package edu.chl.blastinthepast.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import edu.chl.blastinthepast.model.Projectile;
 
@@ -47,6 +48,12 @@ public class ProjectileView {
      */
     public Rectangle getRectangle() {
         return rectangle;
+    }
+    public void draw(SpriteBatch batch) {
+        sprite.setRotation(projectile.getDirection());
+        batch.begin();
+        sprite.draw(batch);
+        batch.end();
     }
 
 }

@@ -22,7 +22,6 @@ public class InputHandler implements InputProcessor{
 
     public InputHandler(){
         pcs=new PropertyChangeSupport(this);
-        System.out.println("new input handler created");
         northKey= Input.Keys.W;
         southKey=Input.Keys.S;
         westKey=Input.Keys.A;
@@ -36,9 +35,7 @@ public class InputHandler implements InputProcessor{
 
     @Override
     public boolean keyDown(int keycode) {
-        System.out.println("inside keyDown");
         if (keycode==northKey){
-            System.out.println("northKey pressed");
             north=true;
             south=false;
         }

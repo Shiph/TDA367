@@ -15,7 +15,7 @@ public class DesktopLauncher {
 		config.width = 800;
 		config.height = 480;
 		BPModel model = new BPModel();
-		BPView view = new BPView();
+		BPView view = new BPView(model);
 		BPController controller = BPController.create(model, view);
 		new LwjglApplication(view, config);
 	}

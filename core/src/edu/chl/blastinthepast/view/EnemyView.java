@@ -3,9 +3,13 @@ package edu.chl.blastinthepast.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import edu.chl.blastinthepast.model.Enemy;
 import edu.chl.blastinthepast.utils.Position;
+import com.badlogic.gdx.math.Vector2;
+
+import javax.swing.*;
 
 /**
  * Created by jonas on 2015-04-23.
@@ -13,8 +17,13 @@ import edu.chl.blastinthepast.utils.Position;
 public class EnemyView {
     private Texture texture;
     private Sprite sprite;
+    private static final int DELAY = 2500;
     private Rectangle rectangle;
     private Enemy enemy;
+    private Timer timer;
+    private int movementSpeed;
+    private int health;
+    private Vector2 vector;
 
     EnemyView(Enemy newEnemy){
         texture = new Texture(Gdx.files.local("kim.png"));
@@ -53,6 +62,12 @@ public class EnemyView {
 
     public Position getPosition(){
         return enemy.getPosition();
+    }
+
+    public void draw(SpriteBatch batch) {
+        batch.begin();
+        sprite.draw(batch);
+        batch.end();
     }
 
 }

@@ -1,21 +1,22 @@
 package edu.chl.blastinthepast.controller;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import edu.chl.blastinthepast.model.BPModel;
 import edu.chl.blastinthepast.view.BPView;
 import edu.chl.blastinthepast.view.PlayState;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 /**
  * Created by Shif on 20/04/15.
  */
 public class BPController implements PropertyChangeListener {
-
     private BPModel model;
     private BPView view;
-    private InputHandler inputHandler;
+    //private InputHandler inputHandler;
 
     private BPController(BPModel model, BPView view) {
         this.model = model;
@@ -25,9 +26,6 @@ public class BPController implements PropertyChangeListener {
 
     private void init() {
         view.addListener(this);
-        inputHandler = new InputHandler();
-        inputHandler.addListener(this);
-        Gdx.input.setInputProcessor(inputHandler);
     }
 
     public static BPController create(BPModel model, BPView view) {
@@ -38,34 +36,27 @@ public class BPController implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         switch(evt.getPropertyName()) {
             case "west":
-                view.updatePlayerPos(0);
+                model.getPlayer().move("west", Gdx.graphics.getDeltaTime());
                 break;
             case "east":
-                view.updatePlayerPos(1);
+                model.getPlayer().move("east", Gdx.graphics.getDeltaTime());
                 break;
             case "north":
-                view.updatePlayerPos(2);
+                model.getPlayer().move("north", Gdx.graphics.getDeltaTime());
                 break;
             case "south":
-                view.updatePlayerPos(3);
+                model.getPlayer().move("south", Gdx.graphics.getDeltaTime());
                 break;
             case "shoot":
                 try {
-                    view.spawnProjectile();
+                    model.getPlayer().getWeapon().fire();
                 } catch (NullPointerException e) {
                     System.out.println(e.getMessage()); // player doesn't have a weapon or is out of bullets
                 }
                 break;
-            case "update":
-                update();
-                break;
             default:
                 break;
         }
-    }
-
-    private void update() {
-        inputHandler.checkForInput();
     }
 
 }

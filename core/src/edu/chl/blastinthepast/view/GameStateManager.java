@@ -1,6 +1,7 @@
 package edu.chl.blastinthepast.view;
 
 import edu.chl.blastinthepast.controller.GameState;
+import edu.chl.blastinthepast.model.BPModel;
 import edu.chl.blastinthepast.view.PlayState;
 
 /**
@@ -9,10 +10,12 @@ import edu.chl.blastinthepast.view.PlayState;
 public class GameStateManager {
 
     private GameState gameState;
+    private BPModel model;
     public static final int MENU = 0;
     public static final int PLAY = 1;
 
-    public GameStateManager() {
+    public GameStateManager(BPModel model) {
+        this.model=model;
         setState(PLAY);
     }
 
@@ -24,7 +27,7 @@ public class GameStateManager {
             // switch to menu state
         } else if (state == PLAY) {
             // switch to play state
-            gameState = new PlayState(this);
+            gameState = new PlayState(this, model);
         }
     }
 

@@ -6,7 +6,7 @@ import edu.chl.blastinthepast.utils.Position;
 /**
  * Created by Mattias on 15-04-21.
  */
-public class Enemy extends Actor {
+public class Enemy {
 
     private int health;
     private int movementSpeed;
