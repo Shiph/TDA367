@@ -60,6 +60,10 @@ public class BPModel {
         }
     }
 
+    public Array<Projectile> getProjectiles(){
+        return projectiles;
+    }
+
     public Player getPlayer(){
         return player;
     }

@@ -86,7 +86,19 @@ public class Player {
             case "south":
                 position.setY(y-movementSpeed*dt);
                 break;
-            default: break;
+        }
+    }
+
+    public void act(String action, float dt){
+        switch (action) {
+            case "shoot":
+                weapon.fire();
+                break;
+            case "reload":
+                weapon.reload();
+                break;
+            case "interact":
+                break;
         }
     }
 

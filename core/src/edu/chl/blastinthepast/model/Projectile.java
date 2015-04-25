@@ -66,9 +66,4 @@ public class Projectile {
         return position;
     }
 
-    public void calculatePosition() {
-        position.setX(position.getX() - (float) Math.cos(Math.toRadians(direction)) * speed * Gdx.graphics.getDeltaTime());
-        position.setX(position.getY() + (float) Math.cos(Math.toRadians(direction)) * speed * Gdx.graphics.getDeltaTime());
-    }
-
 }

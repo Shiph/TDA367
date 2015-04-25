@@ -12,6 +12,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
+import edu.chl.blastinthepast.model.Enemy;
+import edu.chl.blastinthepast.model.Projectile;
 
 
 /**
@@ -39,7 +41,6 @@ public class PlayState extends GameState {
         this.model=model;
         playerView = new PlayerView(model.getPlayer());
         enemyArray = new Array<EnemyView>();
-
         batch = new SpriteBatch();
         camera= new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -54,13 +55,22 @@ public class PlayState extends GameState {
     }
 
     private void addEnemies(){
-        for (EnemyView e : enemyArray) {
+        Array<Enemy> enemies=model.getEnemies();
+        for (Enemy e : enemies) {
+            enemyArray.add(new EnemyView(e));
+        }
+    }
 
+    private void addProjectiles(){
+        Array<Projectile> projectileArray=model.getProjectiles();
+        for (Projectile p: projectileArray){
+            projectiles.add(new ProjectileView(p));
         }
     }
 
     @Override
     public void update(float dt) {
+        model.update();
         camera.position.set(playerView.getRectangle().getX() + playerView.getRectangle().getWidth() / 2, playerView.getRectangle().getY() + playerView.getRectangle().getWidth() / 2, 0);
         camera.update();
         batch.setProjectionMatrix(camera.combined);

@@ -49,7 +49,8 @@ public class BPController implements PropertyChangeListener {
                 break;
             case "shoot":
                 try {
-                    model.getPlayer().getWeapon().fire();
+                    //model.getPlayer().act("shoot", Gdx.graphics.getDeltaTime());
+                    model.spawnProjectile();
                 } catch (NullPointerException e) {
                     System.out.println(e.getMessage()); // player doesn't have a weapon or is out of bullets
                 }

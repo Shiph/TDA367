@@ -42,6 +42,11 @@ public class ProjectileView {
         return sprite;
     }
 
+    private void updatePosition(){
+        sprite.setPosition(projectile.getPosition().getX(), projectile.getPosition().getY());
+        rectangle.setPosition(projectile.getPosition().getX(), projectile.getPosition().getY());
+    }
+
     /**
      *
      * @return the rectangle of the projectile.
@@ -50,6 +55,7 @@ public class ProjectileView {
         return rectangle;
     }
     public void draw(SpriteBatch batch) {
+        updatePosition();
         sprite.setRotation(projectile.getDirection());
         batch.begin();
         sprite.draw(batch);
