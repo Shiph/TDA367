@@ -22,7 +22,7 @@ public class BPView extends ApplicationAdapter implements PropertyChangeListener
 
 	@Override
 	public void create () {
-		inputHandler= new InputHandler();
+		inputHandler = new InputHandler();
 		inputHandler.addListener(this);
 		Gdx.input.setInputProcessor(inputHandler);
 		gsm = new GameStateManager(model);

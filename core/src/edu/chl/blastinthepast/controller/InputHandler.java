@@ -3,6 +3,7 @@ package edu.chl.blastinthepast.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import edu.chl.blastinthepast.view.GameStateManager;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -16,7 +17,7 @@ import java.beans.PropertyChangeSupport;
  *
  */
 public class InputHandler implements InputProcessor{
-    private int northKey, southKey, westKey, eastKey, shootKey, reloadKey, weapon1Key, weapon2Key, menuKey;
+    private int northKey, southKey, westKey, eastKey, shootKey, enterKey, reloadKey, weapon1Key, weapon2Key, menuKey, upKey, downKey, leftKey, rightKey;
     protected boolean north=false, south=false, west=false, east=false, shoot=false, menuIsUp=false;
     private PropertyChangeSupport pcs;
 
@@ -27,10 +28,16 @@ public class InputHandler implements InputProcessor{
         westKey=Input.Keys.A;
         eastKey=Input.Keys.D;
         shootKey=Input.Buttons.LEFT;
+        enterKey = Input.Keys.ENTER;
         reloadKey=Input.Keys.R;
         weapon1Key=Input.Keys.NUM_1;
         weapon2Key=Input.Keys.NUM_2;
         menuKey=Input.Keys.ESCAPE;
+        upKey = Input.Keys.UP;
+        downKey = Input.Keys.DOWN;
+        leftKey = Input.Keys.LEFT;
+        rightKey = Input.Keys.RIGHT;
+
     }
 
     @Override
@@ -53,6 +60,21 @@ public class InputHandler implements InputProcessor{
         }
         if (keycode==shootKey){
             shoot=true;
+        }
+        if (keycode==enterKey){
+            pcs.firePropertyChange("enter", null, true);
+        }
+        if (keycode==upKey){
+            pcs.firePropertyChange("up", null, true);
+        }
+        if (keycode==downKey){
+            pcs.firePropertyChange("down", null, true);
+        }
+        if (keycode==leftKey){
+            pcs.firePropertyChange("left", null, true);
+        }
+        if (keycode==rightKey){
+            pcs.firePropertyChange("right", null, true);
         }
         if (keycode==reloadKey){
             pcs.firePropertyChange("reload", null, true);
@@ -96,8 +118,7 @@ public class InputHandler implements InputProcessor{
     }
 
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button)
-    {
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (button==shootKey){
             shoot=true;
         }
@@ -105,8 +126,7 @@ public class InputHandler implements InputProcessor{
     }
 
     @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button)
-    {
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         if (button==shootKey){
             shoot=false;
         }
@@ -136,21 +156,20 @@ public class InputHandler implements InputProcessor{
      * Checks if movement and shoot keys are held down continuously
      * Should be called once during every render cycle
      */
-    public void checkForInput(){
-        if (north){
+    public void checkForInput() {
+        if (north) {
             pcs.firePropertyChange("north", null, true);
-        } else if (south){
+        } else if (south) {
             pcs.firePropertyChange("south", null, true);
         }
-        if (west){
+        if (west) {
             pcs.firePropertyChange("west", null, true);
-        } else if (east){
+        } else if (east) {
             pcs.firePropertyChange("east", null, true);
         }
-        if (shoot){
+        if (shoot) {
             pcs.firePropertyChange("shoot", null, true);
         }
     }
-
 
 }

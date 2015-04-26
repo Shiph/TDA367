@@ -32,8 +32,8 @@ public class PlayState extends GameState {
     private Sound wowSound;
     private Music gottaGoFaster;
 
-    public PlayState(GameStateManager gsc, BPModel model) {
-        super(gsc, model);
+    public PlayState(GameStateManager gsm, BPModel model) {
+        super(gsm, model);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class PlayState extends GameState {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         tiledMapRenderer.setView(camera);
-        tiledMapRenderer.setView(camera);
+        //calculateProjectilePos();
     }
 
     @Override

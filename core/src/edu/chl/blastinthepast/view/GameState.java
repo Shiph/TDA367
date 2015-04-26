@@ -1,7 +1,5 @@
-package edu.chl.blastinthepast.controller;
+package edu.chl.blastinthepast.view;
 
-import edu.chl.blastinthepast.model.BPModel;
-import edu.chl.blastinthepast.model.Player;
 import edu.chl.blastinthepast.view.GameStateManager;
 
 /**
@@ -11,12 +9,12 @@ public abstract class GameState {
 
     protected GameStateManager gsm;
 
-    protected GameState(GameStateManager gsm, BPModel model) {
+    protected GameState(GameStateManager gsm) {
         this.gsm = gsm;
-        init(model);
+        init();
     }
 
-    public abstract void init(BPModel model);
+    public abstract void init();
     public abstract void update(float dt);
     public abstract void draw();
     public abstract void handleInput();

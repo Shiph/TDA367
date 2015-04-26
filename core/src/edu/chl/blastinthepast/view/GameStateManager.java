@@ -1,8 +1,8 @@
 package edu.chl.blastinthepast.view;
 
-import edu.chl.blastinthepast.controller.GameState;
 import edu.chl.blastinthepast.model.BPModel;
-import edu.chl.blastinthepast.view.PlayState;
+import edu.chl.blastinthepast.view.MenuState;
+import edu.chl.blastinthepast.controller.GameState;
 
 /**
  * Created by Shif on 23/04/15.
@@ -16,7 +16,7 @@ public class GameStateManager {
 
     public GameStateManager(BPModel model) {
         this.model=model;
-        setState(PLAY);
+        setState(MENU);
     }
 
     public void setState(int state) {
@@ -24,7 +24,7 @@ public class GameStateManager {
             gameState.dispose();
         }
         if (state == MENU) {
-            // switch to menu state
+            gameState = new MenuState(this, model);
         } else if (state == PLAY) {
             // switch to play state
             gameState = new PlayState(this, model);
