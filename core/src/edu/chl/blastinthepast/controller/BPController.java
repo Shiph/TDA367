@@ -54,6 +54,11 @@ public class BPController implements PropertyChangeListener {
                 } catch (NullPointerException e) {
                     System.out.println(e.getMessage()); // player doesn't have a weapon or is out of bullets
                 }
+                break;
+            case "escape":
+                    view.getGameStateController().setState(0, false);
+                    view.getGameStateController().getGameState().draw();
+                break;
             case "enter":
                 if (view.getGameStateController().getGameState() instanceof MenuState) {
                     ((MenuState) view.getGameStateController().getGameState()).select();

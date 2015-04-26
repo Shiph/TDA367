@@ -11,23 +11,36 @@ public class GameStateManager {
 
     private GameState gameState;
     private BPModel model;
+    private MenuState menuState;
+    private PlayState playState;
     public static final int MENU = 0;
     public static final int PLAY = 1;
 
     public GameStateManager(BPModel model) {
-        this.model=model;
-        setState(MENU);
+        this.model = model;
+        setState(MENU, true);
     }
 
-    public void setState(int state) {
-        if(gameState!=null) {
+
+    public GameStateManager() {
+        setState(MENU, true);
+    }
+
+    public void setState(int state, boolean newGame) {
+        if (gameState != null) {
             gameState.dispose();
         }
-        if (state == MENU) {
-            gameState = new MenuState(this, model);
-        } else if (state == PLAY) {
-            // switch to play state
-            gameState = new PlayState(this, model);
+
+        if (state == MENU && newGame) {
+            menuState = new MenuState(this, model);
+            gameState = menuState;
+        } else if (state == MENU && !newGame) {
+            gameState = menuState;
+        } else if (state == PLAY && newGame) {
+            playState = new PlayState(this, model);
+            gameState = playState;
+        } else if (state == PLAY && !newGame) {
+            gameState = playState;
         }
     }
 

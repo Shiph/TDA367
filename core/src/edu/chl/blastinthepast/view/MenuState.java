@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import edu.chl.blastinthepast.controller.GameState;
 import edu.chl.blastinthepast.model.BPModel;
@@ -19,30 +21,40 @@ public class MenuState extends GameState {
     private BitmapFont font;
     private OrthographicCamera camera;
     private GameStateManager gsm;
-    private final String title = "Blast in the Past";
+    private final String title = "blast in the past";
     private int currentItem;
+    private Texture texture;
     private String[] menuItems;
+    private boolean inGame;
     private Music music;
+    private Sprite sprite;
 
     public MenuState(GameStateManager gsm, BPModel model) {
         super(gsm, model);
         this.gsm = gsm;
+        inGame = false;
+        currentItem = 2;
     }
 
     @Override
     public void init(BPModel model) {
+        texture = new Texture(Gdx.files.internal("menu.jpg"));
+        texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        sprite = new Sprite(texture);
+        sprite.setOrigin(0,0);
         camera = new OrthographicCamera();
         batch = new SpriteBatch();
-        music = Gdx.audio.newMusic(Gdx.files.internal("sanic.mp3"));
+        music = Gdx.audio.newMusic(Gdx.files.internal("menu.mp3"));
         music.play();
         music.setLooping(true);
         music.setVolume(0.2f);
-        titleFont = new BitmapFont();
+        titleFont = new BitmapFont(Gdx.files.internal("font.fnt"));
         font = new BitmapFont();
-        menuItems = new String[]{"Play", "Highscores", "Quit"};
+        menuItems = new String[]{"Resume", "Save game", "Load game", "New game", "Highscores", "Options", "Quit"};
     }
 
     public void update(float dt) {
+        music.play();
     }
 
     public void draw() {
@@ -50,20 +62,29 @@ public class MenuState extends GameState {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        titleFont.setColor(Color.WHITE);
+        sprite.draw(batch);
         float width = titleFont.getBounds(title).width;
-        titleFont.draw(batch, title, (Gdx.graphics.getWidth()-width) / 2, 300);
+        titleFont.draw(batch, title, (Gdx.graphics.getWidth()-width) / 2, 400);
 
-        for(int i = 0; i < menuItems.length; i++) {
-            width = font.getBounds(menuItems[i]).width;
-            if(currentItem == i) {
-                font.setColor(Color.RED);
-            } else {
-                font.setColor(Color.WHITE);
+        if(!inGame) {
+            for (int i = 2; i < menuItems.length; i++) {
+                if (currentItem == i) {
+                    font.setColor(Color.RED);
+                } else {
+                    font.setColor(Color.WHITE);
+                }
+                font.draw(batch, menuItems[i], Gdx.graphics.getWidth() / 2 - 30, 230 - 35 * i);
             }
-            font.draw(batch, menuItems[i], Gdx.graphics.getWidth()/2 - 50, 180-35 * i);
+        } else {
+            for (int i = 0; i < menuItems.length; i++) {
+                if (currentItem == i) {
+                    font.setColor(Color.RED);
+                } else {
+                    font.setColor(Color.WHITE);
+                }
+                font.draw(batch, menuItems[i], Gdx.graphics.getWidth() / 2 - 30, 230 - 35 * i);
+            }
         }
-
         batch.end();
     }
 
@@ -72,29 +93,44 @@ public class MenuState extends GameState {
 
     public void select() {
         if(currentItem == 0) {
-            if (gsm == null) System.out.println("gsm is null, yo");
-            gsm.setState(GameStateManager.PLAY);
+            gsm.setState(GameStateManager.PLAY, false);
         } else if(currentItem == 1) {
+            //gsm.setState(GameStateManager.SAVEGAME);
+        } else if (currentItem == 2) {
+            //gsm.setState(GameStateManager.LOADGAME);
+        } else if (currentItem == 3) {
+            inGame = true;
+            currentItem = 0;
+            gsm.setState(GameStateManager.PLAY, true);
+        } else if (currentItem == 4) {
             //gsm.setState(GameStateManager.HIGHSCORES);
-        } else if(currentItem == 2){
+        } else if (currentItem == 5) {
+            //gsm.setState(GameStateManager.OPTIONS);
+        } else if (currentItem == 6) {
             Gdx.app.exit();
         }
     }
 
     public void dispose() {
-        titleFont.dispose();
-        music.stop();
+        music.pause();
     }
 
     public void moveUp() {
-        if(currentItem > 0) {
-            currentItem--;
-            draw();
+        if (!inGame) {
+            if (currentItem > 2) {
+                currentItem--;
+                draw();
+            }
+        } else {
+            if (currentItem > 0) {
+                currentItem--;
+                draw();
+            }
         }
     }
 
     public void moveDown() {
-        if(currentItem < 2) {
+        if(currentItem < 6) {
             currentItem++;
             draw();
         }
