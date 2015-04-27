@@ -36,23 +36,33 @@ public class BPController implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         switch(evt.getPropertyName()) {
             case "west":
-                model.getPlayer().move("west", Gdx.graphics.getDeltaTime());
+                if(view.getGameStateController().getGameState() instanceof PlayState) {
+                    model.getPlayer().move("west", Gdx.graphics.getDeltaTime());
+                }
                 break;
             case "east":
-                model.getPlayer().move("east", Gdx.graphics.getDeltaTime());
+                if(view.getGameStateController().getGameState() instanceof PlayState) {
+                    model.getPlayer().move("east", Gdx.graphics.getDeltaTime());
+                }
                 break;
             case "north":
-                model.getPlayer().move("north", Gdx.graphics.getDeltaTime());
+                if(view.getGameStateController().getGameState() instanceof PlayState) {
+                    model.getPlayer().move("north", Gdx.graphics.getDeltaTime());
+                }
                 break;
             case "south":
-                model.getPlayer().move("south", Gdx.graphics.getDeltaTime());
+                if(view.getGameStateController().getGameState() instanceof PlayState) {
+                    model.getPlayer().move("south", Gdx.graphics.getDeltaTime());
+                }
                 break;
             case "shoot":
-                try {
-                    //model.getPlayer().act("shoot", Gdx.graphics.getDeltaTime());
-                    model.spawnProjectile();
-                } catch (NullPointerException e) {
-                    System.out.println(e.getMessage()); // player doesn't have a weapon or is out of bullets
+                if(view.getGameStateController().getGameState() instanceof PlayState) {
+                    try {
+                        //model.getPlayer().act("shoot", Gdx.graphics.getDeltaTime());
+                        model.spawnProjectile();
+                    } catch (NullPointerException e) {
+                        System.out.println(e.getMessage()); // player doesn't have a weapon or is out of bullets
+                    }
                 }
                 break;
             case "escape":
