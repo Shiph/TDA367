@@ -1,40 +1,20 @@
 package edu.chl.blastinthepast.model;
 
-import com.badlogic.gdx.math.Rectangle;
-import edu.chl.blastinthepast.model.Collidable;
-import edu.chl.blastinthepast.model.Weapon;
-
 /**
  * Created by Mattias on 15-04-23.
  */
-public interface Character extends Collidable {
+public interface Character {
 
-    /**
-     *  This is called upon from the controller which tells which direction the character should move.
-     */
-    public void move();
+    public void move(String direction, float dt);
 
-    /**
-     *
-     * @param newSpeed
-     */
     public void setMovementSpeed(int newSpeed);
 
-    /**
-     *
-     * @return
-     */
     public int getMovementSpeed();
 
-    /**
-     *
-     * @return
-     */
     public Weapon getWeapon();
 
-    @Override
-    public Rectangle getRectangle();
+    public int getHealth();
 
-    @Override
-    public void setRectangle(Rectangle rectangle);
+    public void setHealth(int newHealth);
+
 }

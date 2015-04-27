@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 
@@ -14,19 +15,19 @@ import java.util.Iterator;
  */
 public class Projectile {
 
-    private float direction = 0;
+    private Vector2 direction;
     private float speed = 500;
     private int damage = 100;
     private Position position;
 
-    public Projectile(float x, float y, float direction) {
-        this.direction = direction;
-        position=new Position(x, y);
+    public Projectile(float x, float y, Vector2 direction) {
+        this.direction = new Vector2(direction);
+        position = new Position(x, y);
     }
 
-    public Projectile(Position pos, float direction){
-        this.direction=direction;
-        position=new Position(pos);
+    public Projectile(Position pos, Vector2 direction){
+        this.direction= new Vector2(direction);
+        position = new Position(pos);
     }
 
     /**
@@ -46,7 +47,7 @@ public class Projectile {
      *
      * @return the direction of the projectile.
      */
-    public float getDirection() {
+    public Vector2 getDirection() {
         return direction;
     }
 
@@ -54,7 +55,7 @@ public class Projectile {
      *
      * @param direction the direction of the projectile.
      */
-    public void setDirection(float direction) {
+    public void setDirection(Vector2 direction) {
         this.direction = direction;
     }
 

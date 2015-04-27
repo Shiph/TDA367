@@ -1,8 +1,6 @@
 package edu.chl.blastinthepast.model;
 
-import com.badlogic.gdx.utils.Array;
-import edu.chl.blastinthepast.model.Weapon;
-
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -10,8 +8,8 @@ import java.util.LinkedList;
  */
 public class Inventory {
 
-    LinkedList<Array> allItems= new LinkedList<Array>();
-    Array<Weapon> weapons = new Array<Weapon>();
+    ArrayList<ArrayList> allItems = new ArrayList<ArrayList>();
+    ArrayList<Weapon> weapons = new ArrayList<Weapon>();
 
     public Inventory() {
         allItems.add(weapons);
@@ -38,11 +36,11 @@ public class Inventory {
      * Getter for the weapons in a players inventory.
      * @return all weapons in the inventory.
      */
-    public Array<Weapon> getWeapons() {
+    public ArrayList<Weapon> getWeapons() {
         return weapons;
     }
 
-    public LinkedList<Array> getAllItems() {
+    public ArrayList<?> getAllItems() {
         return allItems;
     }
 

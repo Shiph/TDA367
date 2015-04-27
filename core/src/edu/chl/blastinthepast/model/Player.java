@@ -1,22 +1,22 @@
 package edu.chl.blastinthepast.model;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.utils.Position;
+
+import java.util.ArrayList;
 
 /**
  * Created by Shif on 21/04/15.
  */
-public class Player {
+public class Player implements Character {
 
     private int health;
     private int movementSpeed;
-    private Array<Weapon> weaponArray;
+    private ArrayList<Weapon> weaponArray;
     private Weapon weapon;
     private boolean north, south, west, east = false;
     private Position position;
-    private float direction; //Placeholder until we have a Vector2
-    private Vector2 direction2=new Vector2(1,0);
+    private Vector2 direction = new Vector2(1,0);
 
     /**
      * Default constructor for Player with default movement speed and health.
@@ -29,10 +29,9 @@ public class Player {
      * Creates a new player character with texture, rectangle and sprite.
      */
     public Player(int movementSpeed, int health) {
-        position=new Position(0,0);
+        position = new Position(0,0);
         this.movementSpeed = movementSpeed;
         this.health = health;
-
         weapon = new Weapon(position, direction);
     }
 
@@ -58,6 +57,10 @@ public class Player {
         health = newHealth;
     }
 
+    public int getHealth() {
+        return health;
+    }
+
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
     }
@@ -70,6 +73,9 @@ public class Player {
         return position;
     }
 
+    public void setPosition(int x, int y) {
+        position.setPos(x,y);
+    }
 
     public void move(String direction, float dt) {
         System.out.println(direction);
@@ -80,10 +86,10 @@ public class Player {
                 position.setX(x-movementSpeed*dt);
                 break;
             case "east":
-                position.setX(x+movementSpeed*dt);
+                position.setX(x + movementSpeed * dt);
                 break;
             case "north":
-                position.setY(y+movementSpeed*dt);
+                position.setY(y + movementSpeed * dt);
                 break;
             case "south":
                 position.setY(y-movementSpeed*dt);
@@ -108,23 +114,19 @@ public class Player {
         weaponArray.add(weapon);
     }
 
-    public float getDirection(){
+    public Vector2 getDirection(){
         return direction;
     }
 
-    public void setDirection(Vector2 direction){
-        this.direction2=direction;
-    }
-
-    public Vector2 getDirection2(){
-        return direction2;
+    public void setDirection(float direction){
+        this.direction.setAngle(direction);
     }
 
     public void calculateDirection(Position mousePoint){
         Vector2 direction=new Vector2(mousePoint.getX()-position.getX(), mousePoint.getY()-position.getY());
         float length=direction.len();
         direction.scl(1/length);
-        setDirection(direction);
+        setDirection(direction.angle());
     }
 
 }

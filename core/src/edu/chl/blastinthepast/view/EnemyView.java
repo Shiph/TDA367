@@ -14,7 +14,7 @@ import javax.swing.*;
 /**
  * Created by jonas on 2015-04-23.
  */
-public class EnemyView {
+public class EnemyView implements CharacterView {
     private Texture texture;
     private Sprite sprite;
     private static final int DELAY = 2500;
@@ -52,6 +52,8 @@ public class EnemyView {
     public Rectangle getRectangle() {
         return rectangle;
     }
+
+    public void setRectangle(Rectangle rectangle) {}
 
     /**
      * @return the sprite of the player character.

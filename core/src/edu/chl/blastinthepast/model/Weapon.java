@@ -1,5 +1,6 @@
 package edu.chl.blastinthepast.model;
 
+import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Position;
 
 import java.awt.event.ActionEvent;
@@ -20,12 +21,11 @@ public class Weapon {
     private long latestShot=0;
     private boolean isReloading=false;
     private Timer reloadTimer;
-
     private Position position;
-    private float direction;
+    private Vector2 direction;
 
 
-    public Weapon(Position pos, float direction){
+    public Weapon(Position pos, Vector2 direction){
         //Here we create the reloading timer which will be used in the reload function
         ActionListener reloading=new ActionListener() {
             @Override
@@ -58,11 +58,11 @@ public class Weapon {
 
     public boolean hasAmmo() {
         long currentTime=System.currentTimeMillis();
-        if((currentTime - latestShot)>=fireRate && bulletsLeftInMagazine>0) {
+        if((currentTime - latestShot) >= fireRate && bulletsLeftInMagazine > 0) {
             latestShot = System.currentTimeMillis();
             bulletsLeftInMagazine--;
             return true;
-        } else if(totalBullets>0 && bulletsLeftInMagazine<=0 && !isReloading) {
+        } else if(totalBullets > 0 && bulletsLeftInMagazine <= 0 && !isReloading) {
             reload();
             return true;
         }

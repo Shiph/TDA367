@@ -7,7 +7,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import edu.chl.blastinthepast.model.Character;
+import edu.chl.blastinthepast.view.CharacterView;
 
 /**
  * Created by qwerty458 on 4/23/15.
@@ -17,13 +17,13 @@ public final class CollisionDetection {
     /**
      * Checks whether the attempted movement results in collision between the character and the rectangles int the CollisionObjectLayer in the map.
      * @param map The map which the player is moving in.
-     * @param character The character whose Rectangle is to be compared to the rectangles in the map.
+     * @param characterView The character whose Rectangle is to be compared to the rectangles in the map.
      * @return True if the player collides with a rectangle in the map, false if not.
      */
-    public boolean characterCollisionDetector(TiledMap map, Character character) {
+    public boolean characterCollisionDetector(TiledMap map, CharacterView characterView) {
         Array<Rectangle> rectangles = mapToRectangles(map);
         for(int i = rectangles.size; i != 0; i--) {
-            if (character.getRectangle().overlaps(rectangles.get(i))) {
+            if (characterView.getRectangle().overlaps(rectangles.get(i))) {
                 return true;
             }
         }

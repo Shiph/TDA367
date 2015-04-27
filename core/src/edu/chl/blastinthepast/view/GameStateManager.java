@@ -1,6 +1,7 @@
 package edu.chl.blastinthepast.view;
 
 import edu.chl.blastinthepast.model.BPModel;
+import edu.chl.blastinthepast.model.Player;
 import edu.chl.blastinthepast.view.MenuState;
 import edu.chl.blastinthepast.controller.GameState;
 
@@ -21,22 +22,17 @@ public class GameStateManager {
         setState(MENU, true);
     }
 
-
-    public GameStateManager() {
-        setState(MENU, true);
-    }
-
     public void setState(int state, boolean newGame) {
         if (gameState != null) {
             gameState.dispose();
         }
-
         if (state == MENU && newGame) {
             menuState = new MenuState(this, model);
             gameState = menuState;
         } else if (state == MENU && !newGame) {
             gameState = menuState;
         } else if (state == PLAY && newGame) {
+            model.newGame();
             playState = new PlayState(this, model);
             gameState = playState;
         } else if (state == PLAY && !newGame) {

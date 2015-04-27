@@ -12,10 +12,11 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.model.Enemy;
 import edu.chl.blastinthepast.model.Projectile;
 import edu.chl.blastinthepast.utils.Position;
+
+import java.util.ArrayList;
 
 
 /**
@@ -25,12 +26,12 @@ public class PlayState extends GameState {
 
     private BPModel model;
     private PlayerView playerView;
-    private Array<EnemyView> enemyArray;
+    private ArrayList<EnemyView> enemyArray;
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private TiledMapRenderer tiledMapRenderer;
     private TiledMap tiledMap;
-    private Array<ProjectileView> projectiles = new Array<ProjectileView>();
+    private ArrayList<ProjectileView> projectiles = new ArrayList<ProjectileView>();
     private Sound wowSound;
     private Music gottaGoFaster;
 
@@ -42,7 +43,7 @@ public class PlayState extends GameState {
     public void init(BPModel model) {
         this.model=model;
         playerView = new PlayerView(model.getPlayer());
-        enemyArray = new Array<EnemyView>();
+        enemyArray = new ArrayList<EnemyView>();
         batch = new SpriteBatch();
         camera= new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -56,7 +57,7 @@ public class PlayState extends GameState {
     }
 
     private void addEnemies(){
-        Array<Enemy> enemies=model.getEnemies();
+        ArrayList<Enemy> enemies=model.getEnemies();
         for (Enemy e : enemies) {
             enemyArray.add(new EnemyView(e));
         }
@@ -64,7 +65,7 @@ public class PlayState extends GameState {
 
     private void addProjectiles(){
         projectiles.clear();
-        Array<Projectile> projectileArray=model.getProjectiles();
+        ArrayList<Projectile> projectileArray  =model.getProjectiles();
         for (Projectile p: projectileArray){
             projectiles.add(new ProjectileView(p));
         }

@@ -2,22 +2,19 @@ package edu.chl.blastinthepast.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
-
-import java.awt.*;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
-import java.util.Vector;
 
 /**
  * Created by Shif on 20/04/15.
  */
 public class BPModel {
     private Player player;
-    private Array<Projectile> projectiles = new Array<Projectile>();
-    private Array<Enemy> enemies;
+    private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
+    private ArrayList<Enemy> enemies;
 
 
     public BPModel() {
@@ -36,8 +33,8 @@ public class BPModel {
         Iterator<Projectile> iter = projectiles.iterator();
         while(iter.hasNext()) {
             Projectile p = iter.next();
-            p.getPosition().setY(p.getPosition().getY() + ((float)Math.cos(Math.toRadians(p.getDirection()))) * p.getSpeed() * Gdx.graphics.getDeltaTime());
-            p.getPosition().setX(p.getPosition().getX() - ((float) Math.cos(Math.toRadians(p.getDirection()))) * p.getSpeed() * Gdx.graphics.getDeltaTime());
+            p.getPosition().setY(p.getPosition().getY() + ((float)Math.cos(Math.toRadians(p.getDirection().angle()))) * p.getSpeed() * Gdx.graphics.getDeltaTime());
+            p.getPosition().setX(p.getPosition().getX() - ((float)Math.cos(Math.toRadians(p.getDirection().angle()))) * p.getSpeed() * Gdx.graphics.getDeltaTime());
             if((p.getPosition().getY() < 0) || (p.getPosition().getY() > Constants.MAP_HEIGHT) ||
                     (p.getPosition().getX() > Constants.MAP_WIDTH) || (p.getPosition().getX() < 0)) {
                 iter.remove();
@@ -68,7 +65,11 @@ public class BPModel {
         }
     }
 
-    public Array<Projectile> getProjectiles(){
+    public void newGame() {
+        player = new Player();
+    }
+
+    public ArrayList<Projectile> getProjectiles(){
         return projectiles;
     }
 
@@ -76,7 +77,7 @@ public class BPModel {
         return player;
     }
 
-    public Array<Enemy> getEnemies(){
+    public ArrayList<Enemy> getEnemies(){
         return enemies;
     }
 
