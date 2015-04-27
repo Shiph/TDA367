@@ -55,4 +55,9 @@ public class GameStateManager {
     public GameState getGameState() {
         return gameState;
     }
+
+    public MenuState getMenuState() {
+        return menuState;
+    }
+
 }

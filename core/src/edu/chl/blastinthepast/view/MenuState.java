@@ -120,20 +120,32 @@ public class MenuState extends GameState {
             if (currentItem > 2) {
                 currentItem--;
                 draw();
+            } else {
+                currentItem = menuItems.length-1;
             }
         } else {
             if (currentItem > 0) {
                 currentItem--;
                 draw();
+            } else {
+                currentItem = menuItems.length-1;
             }
         }
     }
 
     public void moveDown() {
-        if(currentItem < 6) {
+        if(currentItem < menuItems.length-1) {
             currentItem++;
             draw();
+        } else if (inGame){
+            currentItem = 0;
+        } else {
+            currentItem = 2;
         }
+    }
+
+    public boolean isInGame() {
+        return inGame;
     }
 
 }
