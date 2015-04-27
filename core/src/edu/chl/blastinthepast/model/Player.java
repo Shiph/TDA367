@@ -1,5 +1,6 @@
 package edu.chl.blastinthepast.model;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.utils.Position;
 
@@ -15,6 +16,7 @@ public class Player {
     private boolean north, south, west, east = false;
     private Position position;
     private float direction; //Placeholder until we have a Vector2
+    private Vector2 direction2;
 
     /**
      * Default constructor for Player with default movement speed and health.
@@ -104,6 +106,25 @@ public class Player {
 
     public void addWeapon(Weapon weapon){
         weaponArray.add(weapon);
+    }
+
+    public float getDirection(){
+        return direction;
+    }
+
+    public void setDirection(Vector2 direction){
+        this.direction2=direction;
+    }
+
+    public Vector2 getDirection2(){
+        return direction2;
+    }
+
+    public void calculateDirection(Position mousePoint){
+        Vector2 direction=new Vector2(mousePoint.getX()-position.getX(), mousePoint.getY()-position.getY());
+        float length=direction.len();
+        direction.scl(1/length);
+        setDirection(direction);
     }
 
 }

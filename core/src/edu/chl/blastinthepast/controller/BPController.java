@@ -1,14 +1,13 @@
 package edu.chl.blastinthepast.controller;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import edu.chl.blastinthepast.model.BPModel;
+import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.view.BPView;
 import edu.chl.blastinthepast.view.PlayState;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 
 /**
  * Created by Shif on 20/04/15.
@@ -55,6 +54,15 @@ public class BPController implements PropertyChangeListener {
                     System.out.println(e.getMessage()); // player doesn't have a weapon or is out of bullets
                 }
                 break;
+            case "mouseMoved":
+                if (view.getGameStateController().getGameState() instanceof PlayState) {
+                    PlayState playState=(PlayState)view.getGameStateController().getGameState();
+                    if (evt.getNewValue() instanceof Position) {
+                        Position mouseScreenPos=(Position) evt.getNewValue();
+                        Position mouseWorldPos=playState.screenToWorldCoordinates(mouseScreenPos);
+                        model.getPlayer().calculateDirection(mouseWorldPos);
+                    }
+                }
             default:
                 break;
         }

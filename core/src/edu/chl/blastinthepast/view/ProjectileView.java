@@ -54,6 +54,7 @@ public class ProjectileView {
     public Rectangle getRectangle() {
         return rectangle;
     }
+
     public void draw(SpriteBatch batch) {
         updatePosition();
         sprite.setRotation(projectile.getDirection());

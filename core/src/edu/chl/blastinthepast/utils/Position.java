@@ -42,4 +42,8 @@ public class Position {
         x=pos.getX();
         y=pos.getY();
     }
+
+    public String toString(){
+        return "X: "+x+" Y: "+y;
+    }
 }

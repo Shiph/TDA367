@@ -86,4 +86,16 @@ public class Weapon {
         return projectile;
     }
 
+    public void setPosition(Position newPosition){
+        position.setPos(newPosition);
+    }
+
+    public void setPosition(int x, int y){
+        position.setPos(x, y);
+    }
+
+    public Position getPosition(){
+        return position;
+    }
+
 }

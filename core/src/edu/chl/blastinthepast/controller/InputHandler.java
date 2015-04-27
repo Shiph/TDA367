@@ -3,7 +3,9 @@ package edu.chl.blastinthepast.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import edu.chl.blastinthepast.utils.Position;
 
+import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -120,6 +122,8 @@ public class InputHandler implements InputProcessor{
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
+        Position p=new Position(screenX, screenY);
+        pcs.firePropertyChange("mouseMoved", null, p);
         return false;
     }
 

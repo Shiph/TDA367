@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import edu.chl.blastinthepast.controller.GameState;
 import edu.chl.blastinthepast.model.BPModel;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.model.Enemy;
 import edu.chl.blastinthepast.model.Projectile;
+import edu.chl.blastinthepast.utils.Position;
 
 
 /**
@@ -62,6 +64,7 @@ public class PlayState extends GameState {
     }
 
     private void addProjectiles(){
+        projectiles.clear();
         Array<Projectile> projectileArray=model.getProjectiles();
         for (Projectile p: projectileArray){
             projectiles.add(new ProjectileView(p));
@@ -75,7 +78,7 @@ public class PlayState extends GameState {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         tiledMapRenderer.setView(camera);
-        tiledMapRenderer.setView(camera);
+        addProjectiles();
     }
 
     @Override
@@ -106,6 +109,13 @@ public class PlayState extends GameState {
     private float getAimDirection() {
         return (float)(-Math.atan2(Gdx.input.getY() - (480-64-playerView.getRectangle().y + playerView.getRectangle().height/2),
                 Gdx.input.getX() - (playerView.getRectangle().x + playerView.getRectangle().width/2)) * (180/Math.PI)-90);
+    }
+
+    public Position screenToWorldCoordinates(Position screenCoordinates){
+        Vector3 screenCordinatesVector=new Vector3(screenCoordinates.getX(), screenCoordinates.getY(), 0);
+        Vector3 worldCoordinatesVector=camera.unproject(screenCordinatesVector);
+        Position worldCoordinates=new Position(worldCoordinatesVector.x, worldCoordinatesVector.y);
+        return worldCoordinates;
     }
 
 }

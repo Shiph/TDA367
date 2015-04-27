@@ -1,11 +1,15 @@
 package edu.chl.blastinthepast.model;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.utils.Constants;
+import edu.chl.blastinthepast.utils.Position;
 
+import java.awt.*;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.Vector;
 
 /**
  * Created by Shif on 20/04/15.
@@ -22,6 +26,7 @@ public class BPModel {
 
     public void update(){
         updateProjectilePos();
+        player.getWeapon().setPosition(player.getPosition());
     }
 
     /**
@@ -32,7 +37,7 @@ public class BPModel {
         while(iter.hasNext()) {
             Projectile p = iter.next();
             p.getPosition().setY(p.getPosition().getY() + ((float)Math.cos(Math.toRadians(p.getDirection()))) * p.getSpeed() * Gdx.graphics.getDeltaTime());
-            p.getPosition().setX(p.getPosition().getY() - ((float)Math.cos(Math.toRadians(p.getDirection()))) * p.getSpeed() * Gdx.graphics.getDeltaTime());
+            p.getPosition().setX(p.getPosition().getX() - ((float) Math.cos(Math.toRadians(p.getDirection()))) * p.getSpeed() * Gdx.graphics.getDeltaTime());
             if((p.getPosition().getY() < 0) || (p.getPosition().getY() > Constants.MAP_HEIGHT) ||
                     (p.getPosition().getX() > Constants.MAP_WIDTH) || (p.getPosition().getX() < 0)) {
                 iter.remove();
@@ -51,12 +56,15 @@ public class BPModel {
         }
     }
 
+    private void updateEnemyPos(){
+
+    }
+
     public void spawnProjectile() {
         if (player.getWeapon().hasAmmo()) {
             Projectile newProjectile = player.getWeapon().fire();
-            newProjectile.getPosition().setX(player.getPosition().getX());
-            newProjectile.getPosition().setY(player.getPosition().getY());
             projectiles.add(newProjectile);
+
         }
     }
 

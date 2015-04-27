@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.Player;
 import edu.chl.blastinthepast.utils.Constants;
 
@@ -52,16 +53,22 @@ public class PlayerView {
     }
 
     public void updatePosition(){
-        sprite.setPosition(player.getPosition().getX(), player.getPosition().getY());
+        sprite.setPosition(player.getPosition().getX()-32, player.getPosition().getY()-32);
         rectangle.setPosition(player.getPosition().getX(), player.getPosition().getY());
     }
 
     public void draw(SpriteBatch batch) {
         updatePosition();
+        rotate();
         batch.begin();
-        sprite.setRotation(0);
         sprite.draw(batch);
         batch.end();
+    }
+
+    public void rotate(){
+        Vector2 direction=player.getDirection2();
+        sprite.setOrigin(32, 32);
+        sprite.setRotation(direction.angle());
     }
 
     private float getAimDirection() {
