@@ -80,5 +80,4 @@ public class BPModel {
         return enemies;
     }
 
-
 }

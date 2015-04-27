@@ -11,10 +11,10 @@ import java.util.Objects;
  */
 public abstract class GameState {
 
-    protected GameStateManager gsc;
+    protected GameStateManager gsm;
 
-    protected GameState(GameStateManager gsc, BPModel model) {
-        this.gsc = gsc;
+    protected GameState(GameStateManager gsm, BPModel model) {
+        this.gsm = gsm;
         init(model);
     }
 

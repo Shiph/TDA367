@@ -16,7 +16,7 @@ public class Player {
     private boolean north, south, west, east = false;
     private Position position;
     private float direction; //Placeholder until we have a Vector2
-    private Vector2 direction2;
+    private Vector2 direction2=new Vector2(1,0);
 
     /**
      * Default constructor for Player with default movement speed and health.

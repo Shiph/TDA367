@@ -34,8 +34,8 @@ public class PlayState extends GameState {
     private Sound wowSound;
     private Music gottaGoFaster;
 
-    public PlayState(GameStateManager gsc, BPModel model) {
-        super(gsc, model);
+    public PlayState(GameStateManager gsm, BPModel model) {
+        super(gsm, model);
     }
 
     @Override
@@ -51,9 +51,8 @@ public class PlayState extends GameState {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         wowSound = Gdx.audio.newSound(Gdx.files.internal("wow.mp3"));
         gottaGoFaster = Gdx.audio.newMusic(Gdx.files.internal("sanic.mp3"));
-        gottaGoFaster.setVolume(0.5f);
+        gottaGoFaster.setVolume(0.2f);
         gottaGoFaster.setLooping(true);
-        gottaGoFaster.play();
     }
 
     private void addEnemies(){
@@ -79,6 +78,7 @@ public class PlayState extends GameState {
         batch.setProjectionMatrix(camera.combined);
         tiledMapRenderer.setView(camera);
         addProjectiles();
+        gottaGoFaster.play();
     }
 
     @Override
@@ -99,7 +99,7 @@ public class PlayState extends GameState {
 
     @Override
     public void dispose() {
-
+        gottaGoFaster.pause();
     }
 
     public PlayerView getPlayer() {

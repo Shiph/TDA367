@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import edu.chl.blastinthepast.model.BPModel;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.view.BPView;
+import edu.chl.blastinthepast.view.GameStateManager;
+import edu.chl.blastinthepast.view.MenuState;
 import edu.chl.blastinthepast.view.PlayState;
 
 import java.beans.PropertyChangeEvent;
@@ -15,7 +17,6 @@ import java.beans.PropertyChangeListener;
 public class BPController implements PropertyChangeListener {
     private BPModel model;
     private BPView view;
-    //private InputHandler inputHandler;
 
     private BPController(BPModel model, BPView view) {
         this.model = model;
@@ -33,25 +34,62 @@ public class BPController implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        GameState currentGameState = view.getGameStateController().getGameState();
+        GameStateManager gameStateManager = view.getGameStateController();
+
         switch(evt.getPropertyName()) {
             case "west":
-                model.getPlayer().move("west", Gdx.graphics.getDeltaTime());
+                if(currentGameState instanceof PlayState) {
+                    model.getPlayer().move("west", Gdx.graphics.getDeltaTime());
+                }
                 break;
             case "east":
-                model.getPlayer().move("east", Gdx.graphics.getDeltaTime());
+                if(currentGameState instanceof PlayState) {
+                    model.getPlayer().move("east", Gdx.graphics.getDeltaTime());
+                }
                 break;
             case "north":
-                model.getPlayer().move("north", Gdx.graphics.getDeltaTime());
+                if(currentGameState instanceof PlayState) {
+                    model.getPlayer().move("north", Gdx.graphics.getDeltaTime());
+                }
                 break;
             case "south":
-                model.getPlayer().move("south", Gdx.graphics.getDeltaTime());
+                if(currentGameState instanceof PlayState) {
+                    model.getPlayer().move("south", Gdx.graphics.getDeltaTime());
+                }
                 break;
             case "shoot":
-                try {
-                    //model.getPlayer().act("shoot", Gdx.graphics.getDeltaTime());
-                    model.spawnProjectile();
-                } catch (NullPointerException e) {
-                    System.out.println(e.getMessage()); // player doesn't have a weapon or is out of bullets
+                if(currentGameState instanceof PlayState) {
+                    try {
+                        //model.getPlayer().act("shoot", Gdx.graphics.getDeltaTime());
+                        model.spawnProjectile();
+                    } catch (NullPointerException e) {
+                        System.out.println(e.getMessage()); // player doesn't have a weapon or is out of bullets
+                    }
+                }
+                break;
+            case "escape":
+                    if (currentGameState instanceof PlayState) {
+                        gameStateManager.setState(GameStateManager.MENU, false);
+                        gameStateManager.getGameState().draw();
+                    } else if(currentGameState instanceof MenuState && gameStateManager.getMenuState().isInGame()) {
+                        gameStateManager.setState(GameStateManager.PLAY, false);
+                        gameStateManager.getGameState().draw();
+                    }
+                break;
+            case "enter":
+                if (currentGameState instanceof MenuState) {
+                    ((MenuState) gameStateManager.getGameState()).select();
+                }
+                break;
+            case "up":
+                if (currentGameState instanceof MenuState) {
+                    ((MenuState) gameStateManager.getGameState()).moveUp();
+                }
+                break;
+            case "down":
+                if (currentGameState instanceof MenuState) {
+                    ((MenuState) currentGameState).moveDown();
                 }
                 break;
             case "mouseMoved":
