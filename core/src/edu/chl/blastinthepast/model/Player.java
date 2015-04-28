@@ -16,7 +16,8 @@ public class Player implements Character {
     private Weapon weapon;
     private boolean north, south, west, east = false;
     private Position position;
-    private Vector2 direction = new Vector2(1,0);
+    private Vector2 aimDirection = new Vector2(1,0);
+    private String movementDirection;
 
     /**
      * Default constructor for Player with default movement speed and health.
@@ -32,7 +33,7 @@ public class Player implements Character {
         position = new Position(0,0);
         this.movementSpeed = movementSpeed;
         this.health = health;
-        weapon = new Weapon(position, direction);
+        weapon = new Weapon(position, aimDirection);
     }
 
 
@@ -74,16 +75,16 @@ public class Player implements Character {
     }
 
     public void setPosition(int x, int y) {
-        position.setPos(x,y);
+        position.setPos(x, y);
     }
 
-    public void move(String direction, float dt) {
-        //System.out.println(direction);
-        float x=position.getX();
-        float y=position.getY();
-        switch (direction) {
+    public void move(float dt) {
+        float x = position.getX();
+        float y = position.getY();
+        System.out.println("movement direction: " + movementDirection);
+        switch (movementDirection) {
             case "west":
-                position.setX(x-movementSpeed*dt);
+                position.setX(x - movementSpeed * dt);
                 break;
             case "east":
                 position.setX(x + movementSpeed * dt);
@@ -92,7 +93,7 @@ public class Player implements Character {
                 position.setY(y + movementSpeed * dt);
                 break;
             case "south":
-                position.setY(y-movementSpeed*dt);
+                position.setY(y - movementSpeed * dt);
                 break;
         }
     }
@@ -114,19 +115,22 @@ public class Player implements Character {
         weaponArray.add(weapon);
     }
 
-    public Vector2 getDirection(){
-        return direction;
+    public Vector2 getAimDirection(){
+        return aimDirection;
     }
 
-    public void setDirection(float direction){
-        this.direction.setAngle(direction);
+    public void setAimDirection(float aimDirection){
+        this.aimDirection.setAngle(aimDirection);
     }
 
     public void calculateDirection(Position mousePoint){
         Vector2 direction=new Vector2(mousePoint.getX()-position.getX(), mousePoint.getY()-position.getY());
         float length=direction.len();
         direction.scl(1/length);
-        setDirection(direction.angle());
+        setAimDirection(direction.angle());
     }
 
+    public void setMovementDirection(String movementDirection) {
+        this.movementDirection = movementDirection;
+    }
 }

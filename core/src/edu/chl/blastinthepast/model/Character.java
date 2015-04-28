@@ -5,7 +5,7 @@ package edu.chl.blastinthepast.model;
  */
 public interface Character {
 
-    public void move(String direction, float dt);
+    public void move(float dt);
 
     public void setMovementSpeed(int newSpeed);
 

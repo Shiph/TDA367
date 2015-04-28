@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.Player;
-import edu.chl.blastinthepast.utils.Constants;
 
 /**
  * Created by jonas on 2015-04-23.
@@ -70,7 +69,7 @@ public class PlayerView implements CharacterView {
     }
 
     public void rotate(){
-        direction = player.getDirection();
+        direction = player.getAimDirection();
         sprite.setOrigin(32, 32);
         sprite.setRotation(direction.angle());
     }

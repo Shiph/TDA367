@@ -26,7 +26,7 @@ public class BPModel {
         updateProjectilePos();
         player.getWeapon().setPosition(player.getPosition());
         for (Enemy e : enemies) {
-            e.move("walla", dt);
+            e.move(dt);
         }
     }
 

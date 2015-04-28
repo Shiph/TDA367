@@ -39,23 +39,12 @@ public class BPController implements PropertyChangeListener {
 
         switch(evt.getPropertyName()) {
             case "west":
-                if(currentGameState instanceof PlayState) {
-                    model.getPlayer().move("west", Gdx.graphics.getDeltaTime());
-                }
-                break;
             case "east":
-                if(currentGameState instanceof PlayState) {
-                    model.getPlayer().move("east", Gdx.graphics.getDeltaTime());
-                }
-                break;
             case "north":
-                if(currentGameState instanceof PlayState) {
-                    model.getPlayer().move("north", Gdx.graphics.getDeltaTime());
-                }
-                break;
             case "south":
                 if(currentGameState instanceof PlayState) {
-                    model.getPlayer().move("south", Gdx.graphics.getDeltaTime());
+                    model.getPlayer().setMovementDirection(evt.getPropertyName());
+                    model.getPlayer().move(Gdx.graphics.getDeltaTime());
                 }
                 break;
             case "shoot":

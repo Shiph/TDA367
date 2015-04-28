@@ -41,7 +41,7 @@ public class Enemy implements Character {
         t.start();
     }
 
-    public void move(String direction, float dt) {
+    public void move(float dt) {
         switch (movementDirection) {
             case 0: // move west
                 if (!(position.getX() > 0)) {
