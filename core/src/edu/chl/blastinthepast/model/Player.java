@@ -78,7 +78,7 @@ public class Player implements Character {
     }
 
     public void move(String direction, float dt) {
-        System.out.println(direction);
+        //System.out.println(direction);
         float x=position.getX();
         float y=position.getY();
         switch (direction) {

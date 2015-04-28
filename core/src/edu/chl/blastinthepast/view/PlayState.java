@@ -26,7 +26,7 @@ public class PlayState extends GameState {
 
     private BPModel model;
     private PlayerView playerView;
-    private ArrayList<EnemyView> enemyArray;
+    private ArrayList<EnemyView> enemies;
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private TiledMapRenderer tiledMapRenderer;
@@ -43,7 +43,7 @@ public class PlayState extends GameState {
     public void init(BPModel model) {
         this.model=model;
         playerView = new PlayerView(model.getPlayer());
-        enemyArray = new ArrayList<EnemyView>();
+        enemies = new ArrayList<EnemyView>();
         batch = new SpriteBatch();
         camera= new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -54,12 +54,13 @@ public class PlayState extends GameState {
         gottaGoFaster = Gdx.audio.newMusic(Gdx.files.internal("sanic.mp3"));
         gottaGoFaster.setVolume(0.2f);
         gottaGoFaster.setLooping(true);
+        addEnemies();
     }
 
     private void addEnemies(){
         ArrayList<Enemy> enemies=model.getEnemies();
         for (Enemy e : enemies) {
-            enemyArray.add(new EnemyView(e));
+            this.enemies.add(new EnemyView(e));
         }
     }
 
@@ -73,20 +74,23 @@ public class PlayState extends GameState {
 
     @Override
     public void update(float dt) {
-        model.update();
+        model.update(dt);
         camera.position.set(playerView.getRectangle().getX() + playerView.getRectangle().getWidth() / 2, playerView.getRectangle().getY() + playerView.getRectangle().getWidth() / 2, 0);
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         tiledMapRenderer.setView(camera);
         addProjectiles();
         gottaGoFaster.play();
+        for (EnemyView e : enemies) {
+            e.update();
+        }
     }
 
     @Override
     public void draw() {
         tiledMapRenderer.render();
         playerView.draw(batch);
-        for (EnemyView e : enemyArray) {
+        for (EnemyView e : enemies) {
             e.draw(batch);
         }
         for (ProjectileView p : projectiles) {

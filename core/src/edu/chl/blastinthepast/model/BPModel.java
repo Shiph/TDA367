@@ -14,16 +14,20 @@ import java.util.Random;
 public class BPModel {
     private Player player;
     private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
-    private ArrayList<Enemy> enemies;
+    private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
 
     public BPModel() {
         player=new Player();
+        spawnEnemies();
     }
 
-    public void update(){
+    public void update(float dt){
         updateProjectilePos();
         player.getWeapon().setPosition(player.getPosition());
+        for (Enemy e : enemies) {
+            e.move("walla", dt);
+        }
     }
 
     /**
@@ -51,10 +55,6 @@ public class BPModel {
             e.getPosition().setX(r.nextFloat() * 800);
             e.getPosition().setY(r.nextFloat() * 480);
         }
-    }
-
-    private void updateEnemyPos(){
-
     }
 
     public void spawnProjectile() {
