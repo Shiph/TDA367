@@ -14,6 +14,8 @@ import edu.chl.blastinthepast.view.CharacterView;
  */
 public final class CollisionDetection {
 
+
+
     /**
      * Checks whether the attempted movement results in collision between the character and the rectangles int the CollisionObjectLayer in the map.
      * @param map The map which the player is moving in.
