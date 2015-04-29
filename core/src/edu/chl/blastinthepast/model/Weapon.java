@@ -32,7 +32,7 @@ public class Weapon {
             public void actionPerformed(ActionEvent e) {
                 if(totalBullets >= MAGAZINE_CAPACITY) {
                     bulletsLeftInMagazine = MAGAZINE_CAPACITY;
-                    totalBullets -=MAGAZINE_CAPACITY;
+                    totalBullets -= MAGAZINE_CAPACITY;
                 }
                 else {
                     bulletsLeftInMagazine = totalBullets;
@@ -57,20 +57,20 @@ public class Weapon {
     }
 
     public boolean hasAmmo() {
-        long currentTime=System.currentTimeMillis();
-        if((currentTime - latestShot) >= fireRate && bulletsLeftInMagazine > 0) {
-            latestShot = System.currentTimeMillis();
-            bulletsLeftInMagazine--;
-            return true;
-        } else if(totalBullets > 0 && bulletsLeftInMagazine <= 0 && !isReloading) {
-            reload();
+        if(totalBullets > 0) {
             return true;
         }
         return false;
     }
 
     public Projectile fire() {
-        return new Projectile(position, direction);
+        long currentTime=System.currentTimeMillis();
+        if ((currentTime - latestShot) >= fireRate) {
+            latestShot = System.currentTimeMillis();
+            bulletsLeftInMagazine--;
+            return new Projectile(position, direction);
+        }
+        return null;
     }
 
     public void addAmmo(int amount) {
@@ -96,6 +96,25 @@ public class Weapon {
 
     public Position getPosition(){
         return position;
+    }
+
+    public Projectile pullTrigger() {
+        if (hasAmmo()) {
+            reloadIfNeeded();
+            if (isReloading) {
+                return null;
+            }
+            return fire();
+        } else {
+            return null;
+        }
+    }
+
+    private void reloadIfNeeded() {
+        if (!(bulletsLeftInMagazine > 0)) {
+            System.out.println("reloading...");
+            reload();
+        }
     }
 
 }

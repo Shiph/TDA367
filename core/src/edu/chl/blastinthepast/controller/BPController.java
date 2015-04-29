@@ -2,6 +2,7 @@ package edu.chl.blastinthepast.controller;
 
 import com.badlogic.gdx.Gdx;
 import edu.chl.blastinthepast.model.BPModel;
+import edu.chl.blastinthepast.model.Projectile;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.view.BPView;
 import edu.chl.blastinthepast.view.GameStateManager;
@@ -51,7 +52,12 @@ public class BPController implements PropertyChangeListener {
                 if(currentGameState instanceof PlayState) {
                     try {
                         //model.getPlayer().act("shoot", Gdx.graphics.getDeltaTime());
-                        model.spawnProjectile();
+                        Projectile p = model.getPlayer().getWeapon().pullTrigger();
+                        if (p != null) {
+                            model.addProjectile(p);
+                        } else {
+                            System.out.println("projectile is null");
+                        }
                     } catch (NullPointerException e) {
                         System.out.println(e.getMessage()); // player doesn't have a weapon or is out of bullets
                     }

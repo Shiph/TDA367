@@ -1,6 +1,5 @@
 package edu.chl.blastinthepast.model;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
@@ -23,8 +22,11 @@ public class BPModel {
     }
 
     public void update(float dt){
-        updateProjectilePos();
+        removeOldProjectiles();
         player.getWeapon().setPosition(player.getPosition());
+        for (Projectile p : projectiles) {
+            p.move(dt);
+        }
         for (Enemy e : enemies) {
             e.move(dt);
         }
@@ -33,12 +35,10 @@ public class BPModel {
     /**
      * Checks if a projectile is outside the map and if so removes it
      */
-    private void updateProjectilePos() {
+    private void removeOldProjectiles() {
         Iterator<Projectile> iter = projectiles.iterator();
         while(iter.hasNext()) {
             Projectile p = iter.next();
-            p.getPosition().setY(p.getPosition().getY() + ((float)Math.cos(Math.toRadians(p.getDirection().angle()))) * p.getSpeed() * Gdx.graphics.getDeltaTime());
-            p.getPosition().setX(p.getPosition().getX() - ((float)Math.cos(Math.toRadians(p.getDirection().angle()))) * p.getSpeed() * Gdx.graphics.getDeltaTime());
             if((p.getPosition().getY() < 0) || (p.getPosition().getY() > Constants.MAP_HEIGHT) ||
                     (p.getPosition().getX() > Constants.MAP_WIDTH) || (p.getPosition().getX() < 0)) {
                 iter.remove();
@@ -48,20 +48,12 @@ public class BPModel {
 
     private void spawnEnemies() {
         for (int i = 0; i < 5; i++) {
-            enemies.add(new Enemy());
+            enemies.add(new Enemy(player));
         }
         for (Enemy e : enemies) {
             Random r = new Random();
             e.getPosition().setX(r.nextFloat() * 800);
             e.getPosition().setY(r.nextFloat() * 480);
-        }
-    }
-
-    public void spawnProjectile() {
-        if (player.getWeapon().hasAmmo()) {
-            Projectile newProjectile = player.getWeapon().fire();
-            projectiles.add(newProjectile);
-
         }
     }
 
@@ -79,6 +71,11 @@ public class BPModel {
 
     public ArrayList<Enemy> getEnemies(){
         return enemies;
+    }
+
+    public void addProjectile(Projectile p) {
+        System.out.println("adding new projectile...");
+        projectiles.add(p);
     }
 
 }

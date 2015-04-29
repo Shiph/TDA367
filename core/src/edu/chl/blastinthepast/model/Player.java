@@ -81,7 +81,6 @@ public class Player implements Character {
     public void move(float dt) {
         float x = position.getX();
         float y = position.getY();
-        System.out.println("movement direction: " + movementDirection);
         switch (movementDirection) {
             case "west":
                 position.setX(x - movementSpeed * dt);

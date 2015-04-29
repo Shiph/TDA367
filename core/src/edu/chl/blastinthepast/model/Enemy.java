@@ -14,6 +14,7 @@ import java.util.Random;
  */
 public class Enemy implements Character {
 
+    private final Player player;
     private int health;
     private int movementSpeed;
     private Position position;
@@ -25,13 +26,14 @@ public class Enemy implements Character {
     /**
      * Default constructor for Enemy with default movement speed and health.
      */
-    public Enemy() {
-        this(150, 100);
+    public Enemy(Player player) {
+        this(150, 100, player);
     }
 
-    public Enemy(int movementSpeed, int health) {
+    public Enemy(int movementSpeed, int health, Player player) {
         this.movementSpeed = movementSpeed;
         this.health = health;
+        this.player = player;
         position = new Position(0,0);
         actionListener = new MyActionListener();
         Random r = new Random();
@@ -99,6 +101,16 @@ public class Enemy implements Character {
 
     public int getMovementSpeed() {
         return movementSpeed;
+    }
+    
+    public void update() {
+        if(isPlayerInRange()) {
+            //weapon.wallaBalla();
+        }
+    }
+
+    private boolean isPlayerInRange() {
+        return false;
     }
 
     private class MyActionListener implements ActionListener {

@@ -30,6 +30,11 @@ public class Projectile {
         position = new Position(pos);
     }
 
+    public void move(float dt) {
+        position.setY(position.getY() + ((float)Math.cos(Math.toRadians(direction.angle()))) * speed * dt);
+        position.setX(position.getX() - ((float)Math.cos(Math.toRadians(direction.angle()))) * speed * dt);
+    }
+
     /**
      *
      * @return the damage of the projectile.
