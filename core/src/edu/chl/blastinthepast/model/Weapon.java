@@ -111,7 +111,7 @@ public class Weapon {
     }
 
     private void reloadIfNeeded() {
-        if (!(bulletsLeftInMagazine > 0)) {
+        if (bulletsLeftInMagazine == 0) {
             System.out.println("reloading...");
             reload();
         }

@@ -31,8 +31,9 @@ public class Projectile {
     }
 
     public void move(float dt) {
-        position.setY(position.getY() + ((float)Math.cos(Math.toRadians(direction.angle()))) * speed * dt);
-        position.setX(position.getX() - ((float)Math.cos(Math.toRadians(direction.angle()))) * speed * dt);
+
+        position.setY(position.getY() + (float) Math.sin(direction.angleRad()) * speed * dt);
+        position.setX(position.getX() + (float)Math.cos(direction.angleRad()) * speed * dt);
     }
 
     /**
