@@ -2,12 +2,10 @@ package edu.chl.blastinthepast.controller;
 
 import com.badlogic.gdx.Gdx;
 import edu.chl.blastinthepast.model.BPModel;
+import edu.chl.blastinthepast.model.GameState;
 import edu.chl.blastinthepast.model.Projectile;
 import edu.chl.blastinthepast.utils.Position;
-import edu.chl.blastinthepast.view.BPView;
-import edu.chl.blastinthepast.view.GameStateManager;
-import edu.chl.blastinthepast.view.MenuState;
-import edu.chl.blastinthepast.view.PlayState;
+import edu.chl.blastinthepast.view.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -40,7 +38,13 @@ public class BPController implements PropertyChangeListener {
 
         switch(evt.getPropertyName()) {
             case "west":
+                if(currentGameState instanceof GameOverState) {
+                    ((GameOverState) currentGameState).moveLeft();
+                }
             case "east":
+                if(currentGameState instanceof GameOverState) {
+                    ((GameOverState) currentGameState).moveRight();
+                }
             case "north":
             case "south":
                 if(currentGameState instanceof PlayState) {
@@ -65,37 +69,53 @@ public class BPController implements PropertyChangeListener {
                 break;
             case "escape":
                     if (currentGameState instanceof PlayState) {
-                        gameStateManager.setState(GameStateManager.MENU, false);
+                        gameStateManager.setState(GameStateManager.INGAMEMENU, true);
                         gameStateManager.getGameState().draw();
-                    } else if(currentGameState instanceof MenuState && gameStateManager.getMenuState().isInGame()) {
-                        gameStateManager.setState(GameStateManager.PLAY, false);
+                    } else if (currentGameState instanceof InGameMenu) {
+                        gameStateManager.setState(GameStateManager.PLAY, true);
                         gameStateManager.getGameState().draw();
+                    } else if (currentGameState instanceof HighScoreState) {
+                        gameStateManager.setState(GameStateManager.MAINMENU, false);
                     }
                 break;
             case "enter":
-                if (currentGameState instanceof MenuState) {
-                    ((MenuState) gameStateManager.getGameState()).select();
+                if (currentGameState instanceof InGameMenu) {
+                    ((InGameMenu) currentGameState).select();
+                } else if (currentGameState instanceof MainMenu) {
+                    ((MainMenu) currentGameState).select();
+                } else if (currentGameState instanceof GameOverState) {
+                    ((GameOverState) currentGameState).select();
+                    gameStateManager.setState(GameStateManager.MAINMENU, false);
                 }
                 break;
             case "up":
-                if (currentGameState instanceof MenuState) {
-                    ((MenuState) gameStateManager.getGameState()).moveUp();
+                if (currentGameState instanceof InGameMenu) {
+                    ((InGameMenu) currentGameState).moveUp();
+                } else if (currentGameState instanceof MainMenu) {
+                    ((MainMenu) currentGameState).moveUp();
+                } else if (currentGameState instanceof GameOverState) {
+                    ((GameOverState) currentGameState).moveUp();
                 }
                 break;
             case "down":
-                if (currentGameState instanceof MenuState) {
-                    ((MenuState) currentGameState).moveDown();
+                if (currentGameState instanceof InGameMenu) {
+                    ((InGameMenu) currentGameState).moveDown();
+                } else if (currentGameState instanceof MainMenu) {
+                    ((MainMenu) currentGameState).moveDown();
+                } else if (currentGameState instanceof GameOverState) {
+                    ((GameOverState) currentGameState).moveDown();
                 }
                 break;
             case "mouseMoved":
                 if (view.getGameStateController().getGameState() instanceof PlayState) {
-                    PlayState playState=(PlayState)view.getGameStateController().getGameState();
+                    PlayState playState = (PlayState)view.getGameStateController().getGameState();
                     if (evt.getNewValue() instanceof Position) {
-                        Position mouseScreenPos=(Position) evt.getNewValue();
-                        Position mouseWorldPos=playState.screenToWorldCoordinates(mouseScreenPos);
+                        Position mouseScreenPos = (Position) evt.getNewValue();
+                        Position mouseWorldPos = playState.screenToWorldCoordinates(mouseScreenPos);
                         model.getPlayer().calculateDirection(mouseWorldPos);
                     }
                 }
+                break;
             default:
                 break;
         }

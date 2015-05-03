@@ -6,7 +6,8 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
-import edu.chl.blastinthepast.controller.GameState;
+import edu.chl.blastinthepast.model.GameState;
+import edu.chl.blastinthepast.controller.GameStateManager;
 import edu.chl.blastinthepast.model.BPModel;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
@@ -33,7 +34,7 @@ public class PlayState extends GameState {
     private TiledMap tiledMap;
     private ArrayList<ProjectileView> projectiles = new ArrayList<ProjectileView>();
     private Sound wowSound;
-    private Music gottaGoFaster;
+    private Music music;
 
     public PlayState(GameStateManager gsm, BPModel model) {
         super(gsm, model);
@@ -51,9 +52,9 @@ public class PlayState extends GameState {
         tiledMap = new TmxMapLoader().load("GrassTestMap1.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         wowSound = Gdx.audio.newSound(Gdx.files.internal("wow.mp3"));
-        gottaGoFaster = Gdx.audio.newMusic(Gdx.files.internal("sanic.mp3"));
-        gottaGoFaster.setVolume(0.2f);
-        gottaGoFaster.setLooping(true);
+        music = Gdx.audio.newMusic(Gdx.files.internal("sanic.mp3"));
+        music.setVolume(0.2f);
+        music.setLooping(true);
         addEnemies();
     }
 
@@ -80,7 +81,7 @@ public class PlayState extends GameState {
         batch.setProjectionMatrix(camera.combined);
         tiledMapRenderer.setView(camera);
         addProjectiles();
-        gottaGoFaster.play();
+        music.play();
         for (EnemyView e : enemies) {
             e.update();
         }
@@ -104,7 +105,7 @@ public class PlayState extends GameState {
 
     @Override
     public void dispose() {
-        gottaGoFaster.pause();
+        music.pause();
     }
 
     public PlayerView getPlayer() {
