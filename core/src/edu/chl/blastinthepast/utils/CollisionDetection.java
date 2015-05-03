@@ -54,27 +54,9 @@ public final class CollisionDetection {
         return false;
     }
 
+    //Belongs in ChestView/CollisionView
 
-
-    /**
-     * Checks whether the attempted movement results in collision between the character and the rectangles int the CollisionObjectLayer in the map.
-     * @param map The map which the player is moving in.
-     * @param characterView The character whose Rectangle is to be compared to the rectangles in the map.
-     * @return True if the player collides with a rectangle in the map, false if not.
-     */
     /*
-    public boolean characterCollisionDetector(TiledMap map, CharacterView characterView) {
-        Array<Rectangle> rectangles = mapToRectangles(map);
-        for(int i = rectangles.size; i != 0; i--) {
-            if (characterView.getRectangle().overlaps(rectangles.get(i))) {
-                return true;
-            }
-        }
-        return false;
-    }
-    */
-
-
     private Array<Rectangle> mapToRectangles(TiledMap map) {
         MapLayer objectLayer = map.getLayers().get("collisionObjectLayer");
         MapObjects objects = objectLayer.getObjects();
@@ -85,4 +67,5 @@ public final class CollisionDetection {
         }
         return rectangles;
     }
+    */
 }
