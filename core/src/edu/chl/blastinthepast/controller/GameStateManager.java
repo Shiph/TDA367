@@ -29,8 +29,9 @@ public class GameStateManager {
         this.model = model;
         mainMenu = new MainMenu(this, model);
         inGameMenu = new InGameMenu(this, model);
-        //gameOverState = new GameOverState(this, model);
         optionsState = new OptionsState(this, model);
+        highScoreState = new HighScoreState(this, model);
+        gameOverState = new GameOverState(this, model);
         setState(MAINMENU, false);
     }
 
@@ -66,7 +67,6 @@ public class GameStateManager {
                 //gameState = options;
                 break;
             case HIGHSCORES:
-                highScoreState = new HighScoreState(this, model);
                 gameState = highScoreState;
                 break;
             case GAMEOVER:

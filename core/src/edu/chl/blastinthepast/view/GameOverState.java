@@ -16,7 +16,6 @@ import edu.chl.blastinthepast.utils.HighScoreHandler;
 public class GameOverState extends GameState{
 
     private SpriteBatch batch;
-    private GameStateManager gsm;
     private boolean newHighScore;
     private OrthographicCamera camera;
     private final String title = "Game Over";
@@ -29,7 +28,6 @@ public class GameOverState extends GameState{
 
     public GameOverState(GameStateManager gsm, BPModel model) {
         super(gsm, model);
-        this.gsm = gsm;
     }
 
     public void init(BPModel model) {
@@ -60,9 +58,9 @@ public class GameOverState extends GameState{
             return;
         }
 
-        String s = "New High Score: " + HighScoreHandler.gameData.getTentativeScore();
-        width = font.getBounds(s).width;
-        font.draw(batch, s, (Gdx.graphics.getWidth() - width) / 2, 4 * Gdx.graphics.getHeight() / 5);
+        String newHighScore = "New High Score: " + HighScoreHandler.gameData.getTentativeScore();
+        width = font.getBounds(newHighScore).width;
+        font.draw(batch, newHighScore, (Gdx.graphics.getWidth() - width) / 2, 4 * Gdx.graphics.getHeight() / 5);
 
         for(int i = 0; i < newName.length; i++) {
             font.draw(batch, Character.toString(newName[i]), Gdx.graphics.getWidth() + 30 * i, 4 * Gdx.graphics.getHeight() / 7);
@@ -71,7 +69,7 @@ public class GameOverState extends GameState{
         batch.end();
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.line(Gdx.graphics.getWidth() + 30 * currentChar, 100, 4 * Gdx.graphics.getHeight() / 7 + 14 * currentChar, 100);
+        shapeRenderer.line(230 + 14 * currentChar, 100, 244 + 14 * currentChar, 100);
         shapeRenderer.end();
 
     }
@@ -108,7 +106,9 @@ public class GameOverState extends GameState{
     }
 
     public void moveLeft() {
-
+        if(currentChar > 0) {
+            currentChar--;
+        }
     }
 
     public void moveRight() {
@@ -117,10 +117,6 @@ public class GameOverState extends GameState{
         }
     }
 
-    public void dispose() {
-        if(currentChar > 0) {
-            currentChar--;
-        }
-    }
+    public void dispose() {}
 
 }
