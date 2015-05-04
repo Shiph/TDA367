@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.model.Enemy;
 import edu.chl.blastinthepast.utils.Position;
 import com.badlogic.gdx.math.Vector2;
@@ -18,7 +19,7 @@ public class EnemyView implements CharacterView {
     private Texture texture;
     private Sprite sprite;
     private static final int DELAY = 2500;
-    private Rectangle rectangle;
+    private Array<Rectangle> rectangle;
     private Enemy enemy;
     private Timer timer;
     private int movementSpeed;
@@ -28,13 +29,13 @@ public class EnemyView implements CharacterView {
     EnemyView(Enemy newEnemy){
         texture = new Texture(Gdx.files.local("kim.png"));
         sprite = new Sprite(texture);
-        rectangle = new Rectangle();
-        rectangle.x = 800/2 - 64/2;
-        rectangle.y = 480/2 - 64/2;
-        rectangle.height = 64;
-        rectangle.width = 64;
-        sprite.setX(rectangle.x);
-        sprite.setY(rectangle.y);
+        rectangle.set(0, new Rectangle());
+        rectangle.get(0).x = 800/2 - 64/2;
+        rectangle.get(0).y = 480/2 - 64/2;
+        rectangle.get(0).height = 64;
+        rectangle.get(0).width = 64;
+        sprite.setX(rectangle.get(0).x);
+        sprite.setY(rectangle.get(0).y);
         enemy=newEnemy;
     }
 
@@ -49,8 +50,13 @@ public class EnemyView implements CharacterView {
     /**
      * @return the rectangle of the player character.
      */
-    public Rectangle getRectangle() {
+    public Array<Rectangle> getRectangles() {
         return rectangle;
+    }
+
+    @Override
+    public void setRectangles(Array<Rectangle> rectangles) {
+
     }
 
     public void setRectangle(Rectangle rectangle) {}
@@ -74,6 +80,6 @@ public class EnemyView implements CharacterView {
 
     public void update() {
         sprite.setPosition(enemy.getPosition().getX() - 32, enemy.getPosition().getY() - 32);
-        rectangle.setPosition(enemy.getPosition().getX(), enemy.getPosition().getY());
+        rectangle.get(0).setPosition(enemy.getPosition().getX(), enemy.getPosition().getY());
     }
 }

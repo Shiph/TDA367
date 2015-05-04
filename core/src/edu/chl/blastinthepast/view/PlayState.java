@@ -76,7 +76,7 @@ public class PlayState extends GameState {
     @Override
     public void update(float dt) {
         model.update(dt);
-        camera.position.set(playerView.getRectangle().getX() + playerView.getRectangle().getWidth() / 2, playerView.getRectangle().getY() + playerView.getRectangle().getWidth() / 2, 0);
+        camera.position.set(playerView.getRectangles().get(0).getX() + playerView.getRectangles().get(0).getWidth() / 2, playerView.getRectangles().get(0).getY() + playerView.getRectangles().get(0).getWidth() / 2, 0);
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         tiledMapRenderer.setView(camera);
@@ -113,8 +113,8 @@ public class PlayState extends GameState {
     }
 
     private float getAimDirection() {
-        return (float)(-Math.atan2(Gdx.input.getY() - (480-64-playerView.getRectangle().y + playerView.getRectangle().height/2),
-                Gdx.input.getX() - (playerView.getRectangle().x + playerView.getRectangle().width/2)) * (180/Math.PI)-90);
+        return (float)(-Math.atan2(Gdx.input.getY() - (480-64-playerView.getRectangles().get(0).y + playerView.getRectangles().get(0).height/2),
+                Gdx.input.getX() - (playerView.getRectangles().get(0).x + playerView.getRectangles().get(0).width/2)) * (180/Math.PI)-90);
     }
 
     public Position screenToWorldCoordinates(Position screenCoordinates){
