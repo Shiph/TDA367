@@ -16,6 +16,7 @@ public class CollisionView implements Collidable {
 
     public CollisionView() {
         TiledMap tiledMap = new TideMapLoader().load("GrassTestMap1.tmx");
+        rectangle = new Array<Rectangle>();
         rectangle.addAll(mapToRectangles(tiledMap));
     }
 

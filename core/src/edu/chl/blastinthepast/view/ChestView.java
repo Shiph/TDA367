@@ -17,6 +17,7 @@ public class ChestView implements Collidable {
 
     public ChestView () {
         TiledMap tiledMap = new TideMapLoader().load("GrassTestMap1.tmx");
+        rectangle = new Array<Rectangle>();
         rectangle.addAll(mapToRectangles(tiledMap));
     }
 
