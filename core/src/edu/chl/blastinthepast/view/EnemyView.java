@@ -20,21 +20,18 @@ public class EnemyView implements CharacterView {
     private Texture texture;
     private Sprite sprite;
     private static final int DELAY = 2500;
-    private Array<Rectangle> rectangle;
+    private ArrayList<Rectangle> rectangle;
     private Enemy enemy;
     private Timer timer;
     private int movementSpeed;
     private int health;
     private Vector2 vector;
-    private WeaponView weaponView;
 
-    EnemyView(Enemy enemy){
+    EnemyView(Enemy newEnemy){
         this.enemy=enemy;
         texture = new Texture(Gdx.files.local("kim.png"));
         sprite = new Sprite(texture);
-        rectangle = new Array(true,1,Rectangle.class);
-        weaponView = new WeaponView(enemy.getWeapon());
-        rectangle.size = 1;
+        rectangle = new ArrayList<Rectangle>();
         rectangle.set(0, new Rectangle());
         rectangle.get(0).x = 800/2 - 64/2;
         rectangle.get(0).y = 480/2 - 64/2;

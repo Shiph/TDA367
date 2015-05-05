@@ -15,12 +15,12 @@ import java.util.ArrayList;
  * Created by qwerty458 on 5/4/15.
  */
 public class ChestView implements Collidable {
-    private Array<Rectangle> rectangle;
+    private ArrayList<Rectangle> rectangle;
     private Chest chest;
 
     public ChestView () {
         TiledMap tiledMap = new TideMapLoader().load("GrassTestMap1.tmx");
-        rectangle = new Array<Rectangle>();
+        rectangle = new ArrayList<Rectangle>();
         rectangle.addAll(mapToRectangles(tiledMap));
     }
 
@@ -34,11 +34,11 @@ public class ChestView implements Collidable {
 
     }
 
-    private Array<Rectangle> mapToRectangles(TiledMap map) {
+    private ArrayList<Rectangle> mapToRectangles(TiledMap map) {
         MapLayer objectLayer = map.getLayers().get("ChestObjectLayer");
         MapObjects objects = objectLayer.getObjects();
         Array<RectangleMapObject> rectangleObjects = objects.getByType(RectangleMapObject.class);
-        Array<Rectangle> rectangles = new Array<Rectangle>();
+        ArrayList<Rectangle> rectangles = new ArrayList<Rectangle>();
         for(int i = 0; i < rectangleObjects.size; i++) {
             rectangles.add(rectangleObjects.get(i).getRectangle());
         }

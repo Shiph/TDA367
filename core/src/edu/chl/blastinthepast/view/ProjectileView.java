@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class ProjectileView implements Collidable {
     private Texture texture;
     private Sprite sprite;
-    private Array<Rectangle> rectangle;
+    private ArrayList<Rectangle> rectangle;
     private Projectile projectile;
     //private Sound fireSound = Gdx.audio.newSound(Gdx.files.internal("wow.mp3"));
 
@@ -25,8 +25,7 @@ public class ProjectileView implements Collidable {
         projectile=newProjectile;
         texture = new Texture(Gdx.files.local("triforce.png"));
         sprite = new Sprite(texture);
-        rectangle = new Array(true,1,Rectangle.class);
-        rectangle.size = 1;
+        rectangle = new ArrayList<Rectangle>();
         rectangle.set(0, new Rectangle());
         rectangle.get(0).x = 800/2 - 64/2;
         rectangle.get(0).y = 480/2 - 64/2;

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class PlayerView implements CharacterView {
     private Texture texture;
     private Sprite sprite;
-    private Array<Rectangle> rectangle;
+    private ArrayList<Rectangle> rectangle;
     private Player player;
     private Vector2 direction;
     private WeaponView weaponView;
@@ -25,8 +25,7 @@ public class PlayerView implements CharacterView {
     public PlayerView(Player newPlayer){
         texture = new Texture(Gdx.files.local("sanic.png"));
         sprite = new Sprite(texture);
-        rectangle = new Array(true,1,Rectangle.class);
-        rectangle.size = 1;
+        rectangle = new ArrayList<Rectangle>();
         rectangle.set(0,new Rectangle());
         direction = new Vector2();
         rectangle.get(0).x = 800/2 - 64/2;
