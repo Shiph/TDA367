@@ -104,11 +104,13 @@ public final class CollisionDetection {
         }
     }
 
-    private ArrayList<ArrayList<Collidable>> ProjectilesVSCharacters {
+    private class ProjectilesVSCharacters {
         ArrayList<ArrayList<Collidable>> collision;
 
         private ProjectilesVSCharacters (PlayerView player, ArrayList<EnemyView> enemies, ArrayList<ProjectileView> projectiles) {
-
+            collision = new ArrayList<ArrayList<Collidable>>();
+            collision.addAll(projectilesVSPlayer(projectiles, player));
+            collision.addAll(projectilesVSEnemies(projectiles, enemies));
         }
 
         private ArrayList<ArrayList<Collidable>> projectilesVSPlayer (ArrayList<ProjectileView> projectiles, PlayerView player) {
@@ -121,7 +123,7 @@ public final class CollisionDetection {
             return false;
         }
 
-        private ArrayList<ArrayList<Collidable>> projectilesVSPlayer (ArrayList<ProjectileView> projectiles, ArrayList<EnemyView> enemies ) {
+        private ArrayList<ArrayList<Collidable>> projectilesVSEnemies (ArrayList<ProjectileView> projectiles, ArrayList<EnemyView> enemies ) {
             ArrayList<ArrayList<Collidable>> tCollision = new ArrayList<ArrayList<Collidable>>();
             for (ProjectileView p : projectiles) {
                 for (EnemyView e : enemies) {
@@ -136,5 +138,12 @@ public final class CollisionDetection {
 
     private static final class Resolve {
 
+    }
+
+    public static ArrayList<ArrayList<Collidable>> clean(final ArrayList<ArrayList<Collidable>> cs) {
+        for (ArrayList<ArrayList<Collidable>> aac : cs) {
+            aac.removeAll(Collections.singleton(null));
+        }
+        return cs;
     }
 }
