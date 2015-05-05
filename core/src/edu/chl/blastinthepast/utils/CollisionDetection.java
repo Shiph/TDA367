@@ -3,26 +3,34 @@ package edu.chl.blastinthepast.utils;
 
 import com.badlogic.gdx.math.Rectangle;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> master
 import edu.chl.blastinthepast.view.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
-=======
 import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.model.Enemy;
 import edu.chl.blastinthepast.view.*;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
 >>>>>>> hopefully fixed some shit
+=======
+>>>>>>> master
 
 /**
  * Created by qwerty458 on 4/23/15.
  */
 public final class CollisionDetection {
 
+<<<<<<< HEAD
     public void update (ArrayList<EnemyView> enemies, PlayerView player, ArrayList<ProjectileView> projectiles, ChestView chest, CollisionView collisions) {
 <<<<<<< HEAD
         
+    public void update(ArrayList<EnemyView> enemies, PlayerView player, ArrayList<ProjectileView> projectiles, ChestView chest, CollisionView collisions) {
+
     }
 
     public static ArrayList<ArrayList<Collidable>> collisionDetector(Collidable c1, Collidable c2) {
@@ -31,6 +39,7 @@ public final class CollisionDetection {
 
         ArrayList<Rectangle> r1 = new ArrayList<Rectangle>();
         ArrayList<Rectangle> r2 = new ArrayList<Rectangle>();
+<<<<<<< HEAD
 =======
         for(EnemyView e : enemies) {
         }
@@ -41,6 +50,8 @@ public final class CollisionDetection {
         Array<Rectangle> r1 = new Array<Rectangle>();
         Array<Rectangle> r2 = new Array<Rectangle>();
 >>>>>>> hopefully fixed some shit
+=======
+>>>>>>> master
 
         r1.addAll(c1.getRectangles());
         r2.addAll(c2.getRectangles());
@@ -162,62 +173,4 @@ public final class CollisionDetection {
     }
 
     */
-=======
-    private static final class Enemies {
-
-        private boolean enemiesVSChest(ArrayList<EnemyView> enemies, ChestView chest) {
-            for (EnemyView e : enemies) {
-                if (collisionDetector(e, chest)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private boolean enemiesVSCollisions(ArrayList<EnemyView> enemies, CollisionView collisions) {
-            for (EnemyView e : enemies) {
-                if (collisionDetector(e, collisions)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-    }
-
-    private static final class Player {
-
-        private boolean playerVSChest (PlayerView player, ChestView chest) {
-            return collisionDetector(player, chest);
-        }
-
-        private boolean playerVSCollision (PlayerView player, CollisionView collisions) {
-            return collisionDetector(player, collisions);
-        }
-    }
-
-    private static final class Projectiles {
-
-        private boolean projectilesVSPlayer (ArrayList<ProjectileView> projectiles, PlayerView player) {
-            for (ProjectileView p : projectiles) {
-                if (collisionDetector(p, player)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private boolean projectilesVSPlayer (ArrayList<ProjectileView> projectiles, Array<EnemyView> enemies ) {
-            return true;
-        }
-    }
-
-    private boolean enemiesVSPlayer (ArrayList < EnemyView > enemies, PlayerView player) {
-        for (EnemyView e : enemies) {
-            if (collisionDetector(e, player)) {
-                return true;
-            }
-        }
-        return false;
-    }
->>>>>>> hopefully fixed some shit
 }
