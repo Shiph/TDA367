@@ -74,7 +74,6 @@ public class BPModel {
     }
 
     public void addProjectile(Projectile p) {
-        System.out.println("adding new projectile...");
         projectiles.add(p);
     }
 

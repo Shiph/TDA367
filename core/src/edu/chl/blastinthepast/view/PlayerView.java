@@ -17,6 +17,7 @@ public class PlayerView implements CharacterView {
     private Rectangle rectangle;
     private Player player;
     private Vector2 direction;
+    private WeaponView weaponView;
 
     public PlayerView(Player newPlayer){
         texture = new Texture(Gdx.files.local("sanic.png"));
@@ -30,6 +31,7 @@ public class PlayerView implements CharacterView {
         sprite.setX(rectangle.x);
         sprite.setY(rectangle.y);
         player = newPlayer;
+        weaponView=new WeaponView(player.getWeapon());
     }
 
     /**
@@ -56,7 +58,7 @@ public class PlayerView implements CharacterView {
     }
 
     public void updatePosition(){
-        sprite.setPosition(player.getPosition().getX() - 32, player.getPosition().getY() - 32);
+        sprite.setPosition(player.getPosition().getX(), player.getPosition().getY());
         rectangle.setPosition(player.getPosition().getX(), player.getPosition().getY());
     }
 
@@ -66,6 +68,7 @@ public class PlayerView implements CharacterView {
         batch.begin();
         sprite.draw(batch);
         batch.end();
+        weaponView.draw(batch);
     }
 
     public void rotate(){

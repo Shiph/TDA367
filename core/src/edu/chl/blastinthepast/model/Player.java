@@ -105,7 +105,7 @@ public class Player implements Character {
             case "reload":
                 weapon.reload();
                 break;
-            case "interact":
+            case "use":
                 break;
         }
     }
@@ -127,8 +127,8 @@ public class Player implements Character {
         float length=direction.len();
         direction.scl(1/length);
         setAimDirection(direction.angle());
+        System.out.println(direction.angle());
     }
-
     public void setMovementDirection(String movementDirection) {
         this.movementDirection = movementDirection;
     }

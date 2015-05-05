@@ -112,9 +112,12 @@ public class Weapon {
 
     private void reloadIfNeeded() {
         if (bulletsLeftInMagazine == 0) {
-            System.out.println("reloading...");
             reload();
         }
+    }
+
+    public Vector2 getDirection(){
+        return direction;
     }
 
 }
