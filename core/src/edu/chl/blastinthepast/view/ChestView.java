@@ -1,6 +1,5 @@
 package edu.chl.blastinthepast.view;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -9,6 +8,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.model.Chest;
+
+import java.util.ArrayList;
 
 /**
  * Created by qwerty458 on 5/4/15.
@@ -24,12 +25,12 @@ public class ChestView implements Collidable {
     }
 
     @Override
-    public Array<Rectangle> getRectangles() {
+    public ArrayList<Rectangle> getRectangles() {
         return rectangle;
     }
 
     @Override
-    public void setRectangles(Array<Rectangle> rectangles) {
+    public void setRectangles(ArrayList<Rectangle> rectangles) {
 
     }
 

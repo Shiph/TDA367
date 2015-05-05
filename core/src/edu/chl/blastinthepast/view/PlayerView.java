@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.model.Player;
 
+import java.util.ArrayList;
+
 /**
  * Created by jonas on 2015-04-23.
  */
@@ -47,12 +49,12 @@ public class PlayerView implements CharacterView {
     /**
      * @return the rectangle of the player character.
      */
-    public Array<Rectangle> getRectangles() {
+    public ArrayList<Rectangle> getRectangles() {
         return rectangle;
     }
 
     @Override
-    public void setRectangles(Array<Rectangle> rectangles) {
+    public void setRectangles(ArrayList<Rectangle> rectangles) {
 
     }
 
