@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.model.Player;
 
 /**
@@ -14,7 +15,7 @@ import edu.chl.blastinthepast.model.Player;
 public class PlayerView implements CharacterView {
     private Texture texture;
     private Sprite sprite;
-    private Rectangle rectangle;
+    private Array<Rectangle> rectangle;
     private Player player;
     private Vector2 direction;
     private WeaponView weaponView;
@@ -22,14 +23,16 @@ public class PlayerView implements CharacterView {
     public PlayerView(Player newPlayer){
         texture = new Texture(Gdx.files.local("sanic.png"));
         sprite = new Sprite(texture);
-        rectangle = new Rectangle();
+        rectangle = new Array(true,1,Rectangle.class);
+        rectangle.size = 1;
+        rectangle.set(0,new Rectangle());
         direction = new Vector2();
-        rectangle.x = 800/2 - 64/2;
-        rectangle.y = 480/2 - 64/2;
-        rectangle.height = 64;
-        rectangle.width = 64;
-        sprite.setX(rectangle.x);
-        sprite.setY(rectangle.y);
+        rectangle.get(0).x = 800/2 - 64/2;
+        rectangle.get(0).y = 480/2 - 64/2;
+        rectangle.get(0).height = 64;
+        rectangle.get(0).width = 64;
+        sprite.setX(rectangle.get(0).x);
+        sprite.setY(rectangle.get(0).y);
         player = newPlayer;
         weaponView=new WeaponView(player.getWeapon());
     }
@@ -44,8 +47,13 @@ public class PlayerView implements CharacterView {
     /**
      * @return the rectangle of the player character.
      */
-    public Rectangle getRectangle() {
+    public Array<Rectangle> getRectangles() {
         return rectangle;
+    }
+
+    @Override
+    public void setRectangles(Array<Rectangle> rectangles) {
+
     }
 
     public void setRectangle(Rectangle rectangle) {}
@@ -59,7 +67,7 @@ public class PlayerView implements CharacterView {
 
     public void updatePosition(){
         sprite.setPosition(player.getPosition().getX(), player.getPosition().getY());
-        rectangle.setPosition(player.getPosition().getX(), player.getPosition().getY());
+        rectangle.get(0).setPosition(player.getPosition().getX(), player.getPosition().getY());
     }
 
     public void draw(SpriteBatch batch) {

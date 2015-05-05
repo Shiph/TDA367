@@ -6,7 +6,8 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
-import edu.chl.blastinthepast.controller.GameState;
+import edu.chl.blastinthepast.model.GameState;
+import edu.chl.blastinthepast.controller.GameStateManager;
 import edu.chl.blastinthepast.model.BPModel;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
@@ -33,7 +34,7 @@ public class PlayState extends GameState {
     private TiledMap tiledMap;
     private ArrayList<ProjectileView> projectiles = new ArrayList<ProjectileView>();
     private Sound wowSound;
-    private Music gottaGoFaster;
+    private Music music;
 
     public PlayState(GameStateManager gsm, BPModel model) {
         super(gsm, model);
@@ -51,9 +52,9 @@ public class PlayState extends GameState {
         tiledMap = new TmxMapLoader().load("GrassTestMap1.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         wowSound = Gdx.audio.newSound(Gdx.files.internal("wow.mp3"));
-        gottaGoFaster = Gdx.audio.newMusic(Gdx.files.internal("sanic.mp3"));
-        gottaGoFaster.setVolume(0.2f);
-        gottaGoFaster.setLooping(true);
+        music = Gdx.audio.newMusic(Gdx.files.internal("sanic.mp3"));
+        music.setVolume(0.2f);
+        music.setLooping(true);
         addEnemies();
     }
 
@@ -75,12 +76,12 @@ public class PlayState extends GameState {
     @Override
     public void update(float dt) {
         model.update(dt);
-        camera.position.set(playerView.getRectangle().getX() + playerView.getRectangle().getWidth() / 2, playerView.getRectangle().getY() + playerView.getRectangle().getWidth() / 2, 0);
+        camera.position.set(playerView.getRectangles().get(0).getX() + playerView.getRectangles().get(0).getWidth() / 2, playerView.getRectangles().get(0).getY() + playerView.getRectangles().get(0).getWidth() / 2, 0);
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         tiledMapRenderer.setView(camera);
         addProjectiles();
-        gottaGoFaster.play();
+        music.play();
         for (EnemyView e : enemies) {
             e.update();
         }
@@ -104,7 +105,7 @@ public class PlayState extends GameState {
 
     @Override
     public void dispose() {
-        gottaGoFaster.pause();
+        music.pause();
     }
 
     public PlayerView getPlayer() {
@@ -112,8 +113,8 @@ public class PlayState extends GameState {
     }
 
     private float getAimDirection() {
-        return (float)(-Math.atan2(Gdx.input.getY() - (480-64-playerView.getRectangle().y + playerView.getRectangle().height/2),
-                Gdx.input.getX() - (playerView.getRectangle().x + playerView.getRectangle().width/2)) * (180/Math.PI)-90);
+        return (float)(-Math.atan2(Gdx.input.getY() - (480-64-playerView.getRectangles().get(0).y + playerView.getRectangles().get(0).height/2),
+                Gdx.input.getX() - (playerView.getRectangles().get(0).x + playerView.getRectangles().get(0).width/2)) * (180/Math.PI)-90);
     }
 
     public Position screenToWorldCoordinates(Position screenCoordinates){
