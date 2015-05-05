@@ -76,4 +76,9 @@ public class EnemyView implements CharacterView {
         sprite.setPosition(enemy.getPosition().getX() - 32, enemy.getPosition().getY() - 32);
         rectangle.setPosition(enemy.getPosition().getX(), enemy.getPosition().getY());
     }
+
+    public void dispose() {
+        texture.dispose();
+    }
+
 }

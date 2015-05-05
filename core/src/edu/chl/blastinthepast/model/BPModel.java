@@ -3,14 +3,15 @@ package edu.chl.blastinthepast.model;
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Random;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.*;
 
 /**
  * Created by Shif on 20/04/15.
  */
-public class BPModel {
+public class BPModel implements Observer {
     private Player player;
     private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
     private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
@@ -23,11 +24,13 @@ public class BPModel {
 
     public void update(float dt){
         removeOldProjectiles();
-        player.getWeapon().setPosition(player.getPosition());
+        player.update();
+        //player.getWeapon().setPosition(player.getPosition());
         for (Projectile p : projectiles) {
             p.move(dt);
         }
         for (Enemy e : enemies) {
+            e.update();
             e.move(dt);
         }
     }
@@ -54,6 +57,7 @@ public class BPModel {
             Random r = new Random();
             e.getPosition().setX(r.nextFloat() * 800);
             e.getPosition().setY(r.nextFloat() * 480);
+            e.addObserver(this);
         }
     }
 
@@ -74,8 +78,14 @@ public class BPModel {
     }
 
     public void addProjectile(Projectile p) {
-        System.out.println("adding new projectile...");
         projectiles.add(p);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (arg instanceof Projectile) {
+            addProjectile((Projectile)arg);
+        }
     }
 
 }

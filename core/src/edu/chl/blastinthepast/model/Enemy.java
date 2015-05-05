@@ -1,18 +1,19 @@
 package edu.chl.blastinthepast.model;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Position;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
 import java.util.Random;
 
 
 /**
  * Created by Mattias on 15-04-21.
  */
-public class Enemy implements Character {
+public class Enemy extends Observable implements Character {
 
     private final Player player;
     private int health;
@@ -22,6 +23,9 @@ public class Enemy implements Character {
     private MyActionListener actionListener;
     private Timer t;
     private int movementDirection;
+    private Vector2 movementDirectionVector;
+    private Vector2 playerDirectionVector;
+    private int range = 500;
 
     /**
      * Default constructor for Enemy with default movement speed and health.
@@ -38,6 +42,9 @@ public class Enemy implements Character {
         actionListener = new MyActionListener();
         Random r = new Random();
         movementDirection = r.nextInt(4);
+        movementDirectionVector = new Vector2();
+        playerDirectionVector = new Vector2();
+        weapon = new Weapon(position, movementDirectionVector);
         t = new Timer(1000, actionListener);
         t.setRepeats(true);
         t.start();
@@ -50,6 +57,7 @@ public class Enemy implements Character {
                     movementDirection = 1;
                 } else {
                     position.setX(position.getX() - movementSpeed * dt);
+                    movementDirectionVector.set(position.getX() - range, position.getY());
                 }
                 break;
             case 1: // move east
@@ -57,6 +65,7 @@ public class Enemy implements Character {
                     movementDirection = 0;
                 } else {
                     position.setX(position.getX() + movementSpeed * dt);
+                    movementDirectionVector.set(position.getX() + range, position.getY());
                 }
                 break;
             case 2: // move north
@@ -64,6 +73,7 @@ public class Enemy implements Character {
                     movementDirection = 3;
                 } else {
                     position.setY(position.getY() + movementSpeed * dt);
+                    movementDirectionVector.set(position.getX(), position.getY() + range);
                 }
                 break;
             case 3: // move south
@@ -71,6 +81,7 @@ public class Enemy implements Character {
                     movementDirection = 1;
                 } else {
                     position.setY(position.getY() - movementSpeed * dt);
+                    movementDirectionVector.set(position.getX(), position.getY() - range);
                 }
                 break;
             default:
@@ -102,14 +113,20 @@ public class Enemy implements Character {
     public int getMovementSpeed() {
         return movementSpeed;
     }
-    
+
     public void update() {
+        weapon.setPosition(position);
         if(isPlayerInRange()) {
-            //weapon.wallaBalla();
+            setChanged();
+            notifyObservers(weapon.pullTrigger());
         }
     }
 
     private boolean isPlayerInRange() {
+        playerDirectionVector.set(player.getPosition().getX(), player.getPosition().getY());
+        if (Math.abs(playerDirectionVector.angle(movementDirectionVector)) < 100) {
+            return true;
+        }
         return false;
     }
 
@@ -120,6 +137,7 @@ public class Enemy implements Character {
             Random r = new Random();
             movementDirection = r.nextInt(4);
         }
+
     }
 
 }

@@ -63,4 +63,8 @@ public class ProjectileView {
         batch.end();
     }
 
+    public void dispose(){
+        texture.dispose();
+    }
+
 }
