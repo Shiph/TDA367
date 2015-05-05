@@ -34,7 +34,7 @@ public class PlayerView implements CharacterView {
         sprite.setX(rectangle.get(0).x);
         sprite.setY(rectangle.get(0).y);
         player = newPlayer;
-        weaponView=new WeaponView(player.getWeapon());
+        weaponView = new WeaponView(player.getWeapon());
     }
 
     /**
@@ -85,4 +85,8 @@ public class PlayerView implements CharacterView {
         sprite.setRotation(direction.angle());
     }
 
+    public void dispose() {
+        texture.dispose();
+    }
+    
 }

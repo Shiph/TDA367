@@ -97,10 +97,14 @@ public class Player implements Character {
         }
     }
 
+    public void update() {
+        weapon.setPosition(position);
+    }
+
     public void act(String action, float dt){
         switch (action) {
             case "shoot":
-                weapon.fire();
+                //weapon.fire();
                 break;
             case "reload":
                 weapon.reload();

@@ -63,7 +63,7 @@ public class Weapon {
         return false;
     }
 
-    public Projectile fire() {
+    private Projectile fire() {
         long currentTime=System.currentTimeMillis();
         if ((currentTime - latestShot) >= fireRate) {
             latestShot = System.currentTimeMillis();

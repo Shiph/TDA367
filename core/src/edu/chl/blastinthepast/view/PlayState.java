@@ -66,8 +66,11 @@ public class PlayState extends GameState {
     }
 
     private void addProjectiles(){
+        for (ProjectileView p : projectiles) {
+            p.dispose();
+        }
         projectiles.clear();
-        ArrayList<Projectile> projectileArray  =model.getProjectiles();
+        ArrayList<Projectile> projectileArray = model.getProjectiles();
         for (Projectile p: projectileArray){
             projectiles.add(new ProjectileView(p));
         }
@@ -81,7 +84,7 @@ public class PlayState extends GameState {
         batch.setProjectionMatrix(camera.combined);
         tiledMapRenderer.setView(camera);
         addProjectiles();
-        music.play();
+        //music.play();
         for (EnemyView e : enemies) {
             e.update();
         }
@@ -106,6 +109,13 @@ public class PlayState extends GameState {
     @Override
     public void dispose() {
         music.pause();
+        playerView.dispose();
+        for (ProjectileView p : projectiles) {
+            p.dispose();
+        }
+        for (EnemyView e : enemies) {
+            e.dispose();
+        }
     }
 
     public PlayerView getPlayer() {
