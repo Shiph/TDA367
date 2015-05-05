@@ -14,8 +14,7 @@ import java.util.ArrayList;
 public final class CollisionDetection {
 
     public void update (ArrayList<EnemyView> enemies, PlayerView player, ArrayList<ProjectileView> projectiles, ChestView chest, CollisionView collisions) {
-        for(EnemyView e : enemies) {
-        }
+
     }
 
     public static boolean collisionDetector(Collidable c1, Collidable c2) {
@@ -37,7 +36,12 @@ public final class CollisionDetection {
         return false;
     }
 
-    private static final class Enemies {
+    private static final class EnemiesVSEnvironment {
+        Collidable[][] collision;
+
+        private EnemiesVSEnvironment (ArrayList<EnemyView> enemies, ChestView chest, CollisionView collisions) {
+
+        }
 
         private boolean enemiesVSChest(ArrayList<EnemyView> enemies, ChestView chest) {
             for (EnemyView e : enemies) {
@@ -58,7 +62,12 @@ public final class CollisionDetection {
         }
     }
 
-    private static final class Player {
+    private static final class PlayerVSEnvironment {
+        Collidable[][] collision;
+
+        private PlayerVSEnvironment (PlayerView player, ChestView chest, CollisionView collisions) {
+
+        }
 
         private boolean playerVSChest (PlayerView player, ChestView chest) {
             return collisionDetector(player, chest);
@@ -69,7 +78,29 @@ public final class CollisionDetection {
         }
     }
 
-    private static final class Projectiles {
+    private static final class PlayerVSEnemies {
+        Collidable[][] collision;
+
+        private PlayerVSEnemies (PlayerView player, ArrayList<EnemyView>) {
+
+        }
+
+        private boolean playerVSEnemies(ArrayList<EnemyView> enemies, PlayerView player) {
+            for (EnemyView e : enemies) {
+                if (collisionDetector(e, player)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    private static final class ProjectilesVSCharacters {
+        Collidable[][] collision;
+
+        private ProjectilesVSCharacters (PlayerView player, ArrayList<EnemyView> enemies, ArrayList<ProjectileView> projectiles) {
+
+        }
 
         private boolean projectilesVSPlayer (ArrayList<ProjectileView> projectiles, PlayerView player) {
             for (ProjectileView p : projectiles) {
@@ -80,17 +111,15 @@ public final class CollisionDetection {
             return false;
         }
 
-        private boolean projectilesVSPlayer (ArrayList<ProjectileView> projectiles, Array<EnemyView> enemies ) {
-            return true;
-        }
-    }
-
-    private boolean enemiesVSPlayer (ArrayList < EnemyView > enemies, PlayerView player) {
-        for (EnemyView e : enemies) {
-            if (collisionDetector(e, player)) {
-                return true;
+        private boolean projectilesVSPlayer (ArrayList<ProjectileView> projectiles, ArrayList<EnemyView> enemies ) {
+            for (ProjectileView p : projectiles) {
+                for (EnemyView e : enemies) {
+                    if (collisionDetector(p, e)) {
+                        return true;
+                    }
+                }
             }
+            return false;
         }
-        return false;
     }
 }
