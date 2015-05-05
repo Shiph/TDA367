@@ -26,6 +26,7 @@ public class EnemyView implements CharacterView {
     private int movementSpeed;
     private int health;
     private Vector2 vector;
+    private WeaponView weaponView;
 
     EnemyView(Enemy newEnemy){
         this.enemy=enemy;
