@@ -58,12 +58,6 @@ public class ProjectileView implements Collidable {
     /**
      * @return the rectangle of the projectile.
      */
-<<<<<<< HEAD
-<<<<<<< HEAD
-    public ArrayList<Rectangle> getRectangles() {
-=======
-    public Array<Rectangle> getRectangles() {
->>>>>>> hopefully fixed some shit
     public ArrayList<Rectangle> getRectangles() {
         return rectangle;
     }
@@ -75,17 +69,6 @@ public class ProjectileView implements Collidable {
         batch.begin();
         sprite.draw(batch);
         batch.end();
-    }
-
-<<<<<<< HEAD
-    public void dispose(){
-        texture.dispose();
-    }
-
-<<<<<<< HEAD
-    @Override
-    public void setRectangles(ArrayList<Rectangle> rectangles) {
-
     }
 
     @Override

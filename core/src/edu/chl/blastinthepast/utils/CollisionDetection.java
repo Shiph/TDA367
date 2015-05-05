@@ -2,10 +2,6 @@ package edu.chl.blastinthepast.utils;
 
 
 import com.badlogic.gdx.math.Rectangle;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> master
 import edu.chl.blastinthepast.view.*;
 
 import java.util.ArrayList;
@@ -15,43 +11,21 @@ import edu.chl.blastinthepast.model.Enemy;
 import edu.chl.blastinthepast.view.*;
 
 import java.util.ArrayList;
-<<<<<<< HEAD
->>>>>>> hopefully fixed some shit
-=======
->>>>>>> master
 
 /**
  * Created by qwerty458 on 4/23/15.
  */
 public final class CollisionDetection {
-
-<<<<<<< HEAD
-    public void update (ArrayList<EnemyView> enemies, PlayerView player, ArrayList<ProjectileView> projectiles, ChestView chest, CollisionView collisions) {
-<<<<<<< HEAD
         
     public void update(ArrayList<EnemyView> enemies, PlayerView player, ArrayList<ProjectileView> projectiles, ChestView chest, CollisionView collisions) {
 
     }
 
     public static ArrayList<ArrayList<Collidable>> collisionDetector(Collidable c1, Collidable c2) {
-
         ArrayList<ArrayList<Collidable>> collision = new ArrayList<ArrayList<Collidable>>();
 
         ArrayList<Rectangle> r1 = new ArrayList<Rectangle>();
         ArrayList<Rectangle> r2 = new ArrayList<Rectangle>();
-<<<<<<< HEAD
-=======
-        for(EnemyView e : enemies) {
-        }
-    }
-
-    public static boolean collisionDetector(Collidable c1, Collidable c2) {
-
-        Array<Rectangle> r1 = new Array<Rectangle>();
-        Array<Rectangle> r2 = new Array<Rectangle>();
->>>>>>> hopefully fixed some shit
-=======
->>>>>>> master
 
         r1.addAll(c1.getRectangles());
         r2.addAll(c2.getRectangles());
@@ -95,7 +69,6 @@ public final class CollisionDetection {
         }
     }
 
-<<<<<<< HEAD
     private class PlayerVSEnvironment {
         ArrayList<ArrayList<Collidable>> collision;
 
