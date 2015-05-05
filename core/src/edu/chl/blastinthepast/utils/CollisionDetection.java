@@ -19,7 +19,6 @@ public final class CollisionDetection {
 
     public void update(ArrayList<EnemyView> enemies, PlayerView player, ArrayList<ProjectileView> projectiles, ChestView chest, CollisionView collisions) {
 
-
     }
 
     public static ArrayList<ArrayList<Collidable>> collisionDetector(Collidable c1, Collidable c2) {
@@ -87,55 +86,54 @@ public final class CollisionDetection {
             return collisionDetector(player, collisions);
         }
     }
+        private class PlayerVSEnemies {
+            ArrayList<ArrayList<Collidable>> collision;
 
-    private class PlayerVSEnemies {
-        ArrayList<ArrayList<Collidable>> collision;
+            private PlayerVSEnemies(PlayerView player, ArrayList<EnemyView> enemies) {
+                collision = new ArrayList<ArrayList<Collidable>>();
 
-        private PlayerVSEnemies(PlayerView player, ArrayList<EnemyView> enemies) {
-            collision = new ArrayList<ArrayList<Collidable>>();
-
-        }
-
-        private ArrayList<ArrayList<Collidable>> playerVSEnemies(ArrayList<EnemyView> enemies, PlayerView player) {
-            ArrayList<ArrayList<Collidable>> tCollision = new ArrayList<ArrayList<Collidable>>();
-            for (EnemyView e : enemies) {
-                tCollision.addAll(collisionDetector(e, player));
             }
-            return tCollision;
-        }
-    }
 
-    private class ProjectilesVSCharacters {
-        ArrayList<ArrayList<Collidable>> collision;
-
-        private ProjectilesVSCharacters(PlayerView player, ArrayList<EnemyView> enemies, ArrayList<ProjectileView> projectiles) {
-            collision = new ArrayList<ArrayList<Collidable>>();
-            collision.addAll(projectilesVSPlayer(projectiles, player));
-            collision.addAll(projectilesVSEnemies(projectiles, enemies));
-        }
-
-        private ArrayList<ArrayList<Collidable>> projectilesVSPlayer(ArrayList<ProjectileView> projectiles, PlayerView player) {
-            ArrayList<ArrayList<Collidable>> tCollision = new ArrayList<ArrayList<Collidable>>();
-            for (ProjectileView p : projectiles) {
-                tCollision.addAll(collisionDetector(p, player));
-            }
-            return tCollision;
-        }
-
-        private ArrayList<ArrayList<Collidable>> projectilesVSEnemies(ArrayList<ProjectileView> projectiles, ArrayList<EnemyView> enemies) {
-            ArrayList<ArrayList<Collidable>> tCollision = new ArrayList<ArrayList<Collidable>>();
-            for (ProjectileView p : projectiles) {
+            private ArrayList<ArrayList<Collidable>> playerVSEnemies(ArrayList<EnemyView> enemies, PlayerView player) {
+                ArrayList<ArrayList<Collidable>> tCollision = new ArrayList<ArrayList<Collidable>>();
                 for (EnemyView e : enemies) {
-                    tCollision.addAll(collisionDetector(p, e));
+                    tCollision.addAll(collisionDetector(e, player));
                 }
+                return tCollision;
             }
-            return tCollision;
         }
-    }
 
-    private static final class Resolve {
+        private class ProjectilesVSCharacters {
+            ArrayList<ArrayList<Collidable>> collision;
 
-    }
+            private ProjectilesVSCharacters(PlayerView player, ArrayList<EnemyView> enemies, ArrayList<ProjectileView> projectiles) {
+                collision = new ArrayList<ArrayList<Collidable>>();
+                collision.addAll(projectilesVSPlayer(projectiles, player));
+                collision.addAll(projectilesVSEnemies(projectiles, enemies));
+            }
+
+            private ArrayList<ArrayList<Collidable>> projectilesVSPlayer(ArrayList<ProjectileView> projectiles, PlayerView player) {
+                ArrayList<ArrayList<Collidable>> tCollision = new ArrayList<ArrayList<Collidable>>();
+                for (ProjectileView p : projectiles) {
+                    tCollision.addAll(collisionDetector(p, player));
+                }
+                return tCollision;
+            }
+
+            private ArrayList<ArrayList<Collidable>> projectilesVSEnemies(ArrayList<ProjectileView> projectiles, ArrayList<EnemyView> enemies) {
+                ArrayList<ArrayList<Collidable>> tCollision = new ArrayList<ArrayList<Collidable>>();
+                for (ProjectileView p : projectiles) {
+                    for (EnemyView e : enemies) {
+                        tCollision.addAll(collisionDetector(p, e));
+                    }
+                }
+                return tCollision;
+            }
+        }
+
+        private static final class Resolve {
+
+        }
 
     /*
 

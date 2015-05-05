@@ -72,7 +72,6 @@ public class ProjectileView implements Collidable {
         batch.end();
     }
 
-
     @Override
     public void setRectangles(ArrayList<Rectangle> rectangles) {
 
