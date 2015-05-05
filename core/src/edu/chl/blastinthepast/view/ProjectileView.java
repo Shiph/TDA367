@@ -25,14 +25,32 @@ public class ProjectileView implements Collidable {
         projectile=newProjectile;
         texture = new Texture(Gdx.files.local("triforce.png"));
         sprite = new Sprite(texture);
+<<<<<<< HEAD
         rectangle = new ArrayList<Rectangle>();
         rectangle.add(new Rectangle());
+=======
+<<<<<<< HEAD
+        rectangle = new ArrayList<Rectangle>();
+        rectangle.add(new Rectangle());
+        rectangle.get(0).height = 64;
+        rectangle.get(0).width = 64;
+        sprite.setX(rectangle.get(0).x);
+        sprite.setY(rectangle.get(0).y);
+        //fireSound.play();
+=======
+        rectangle = new ArrayList<Rectangle>;
+        rectangle.add(0, new Rectangle());
+>>>>>>> hopefully fixed some shit
         rectangle.get(0).x = 800/2 - 64/2;
         rectangle.get(0).y = 480/2 - 64/2;
         rectangle.get(0).height = 64;
         rectangle.get(0).width = 64;
         sprite.setX(rectangle.get(0).x);
         sprite.setY(rectangle.get(0).y);
+<<<<<<< HEAD
+=======
+>>>>>>> collision detection wip
+>>>>>>> hopefully fixed some shit
     }
     /**
      *
@@ -59,7 +77,11 @@ public class ProjectileView implements Collidable {
      *
      * @return the rectangle of the projectile.
      */
+<<<<<<< HEAD
     public ArrayList<Rectangle> getRectangles() {
+=======
+    public Array<Rectangle> getRectangles() {
+>>>>>>> hopefully fixed some shit
         return rectangle;
     }
 
@@ -72,12 +94,22 @@ public class ProjectileView implements Collidable {
         batch.end();
     }
 
+<<<<<<< HEAD
     public void dispose(){
         texture.dispose();
     }
 
+<<<<<<< HEAD
     @Override
     public void setRectangles(ArrayList<Rectangle> rectangles) {
 
     }
+=======
+=======
+    @Override
+    public void setRectangles(Array<Rectangle> rectangles) {
+
+    }
+>>>>>>> collision detection wip
+>>>>>>> hopefully fixed some shit
 }
