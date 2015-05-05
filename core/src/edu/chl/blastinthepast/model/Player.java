@@ -129,9 +129,8 @@ public class Player implements Character {
     public void calculateDirection(Position mousePoint){
         Vector2 direction=new Vector2(mousePoint.getX()-position.getX(), mousePoint.getY()-position.getY());
         float length=direction.len();
-        direction.scl(1/length);
+        direction.scl(1 / length);
         setAimDirection(direction.angle());
-        System.out.println(direction.angle());
     }
     public void setMovementDirection(String movementDirection) {
         this.movementDirection = movementDirection;

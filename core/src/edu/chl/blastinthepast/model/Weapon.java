@@ -68,6 +68,7 @@ public class Weapon {
         if ((currentTime - latestShot) >= fireRate) {
             latestShot = System.currentTimeMillis();
             bulletsLeftInMagazine--;
+            //System.out.println("weapon direction: " + direction.angle());
             return new Projectile(position, direction);
         }
         return null;

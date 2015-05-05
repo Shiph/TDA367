@@ -25,11 +25,14 @@ public class EnemyView implements CharacterView {
     private int movementSpeed;
     private int health;
     private Vector2 vector;
+    private WeaponView weaponView;
 
-    EnemyView(Enemy newEnemy){
+    EnemyView(Enemy enemy){
+        this.enemy=enemy;
         texture = new Texture(Gdx.files.local("kim.png"));
         sprite = new Sprite(texture);
         rectangle = new Array(true,1,Rectangle.class);
+        weaponView = new WeaponView(enemy.getWeapon());
         rectangle.size = 1;
         rectangle.set(0, new Rectangle());
         rectangle.get(0).x = 800/2 - 64/2;
@@ -38,7 +41,6 @@ public class EnemyView implements CharacterView {
         rectangle.get(0).width = 64;
         sprite.setX(rectangle.get(0).x);
         sprite.setY(rectangle.get(0).y);
-        enemy=newEnemy;
     }
 
 
@@ -78,11 +80,13 @@ public class EnemyView implements CharacterView {
         batch.begin();
         sprite.draw(batch);
         batch.end();
+        weaponView.draw(batch);
     }
 
     public void update() {
         sprite.setPosition(enemy.getPosition().getX() - 32, enemy.getPosition().getY() - 32);
         rectangle.get(0).setPosition(enemy.getPosition().getX(), enemy.getPosition().getY());
+        sprite.setRotation(enemy.getDirection().angle());
     }
 
     public void dispose() {

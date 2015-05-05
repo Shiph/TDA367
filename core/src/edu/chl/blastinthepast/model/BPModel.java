@@ -62,7 +62,6 @@ public class BPModel implements Observer {
     }
 
     public void newGame() {
-        player = new Player();
     }
 
     public ArrayList<Projectile> getProjectiles(){

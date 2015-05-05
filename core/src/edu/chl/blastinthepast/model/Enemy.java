@@ -15,7 +15,7 @@ import java.util.Random;
  */
 public class Enemy extends Observable implements Character {
 
-    private final Player player;
+    private Player player;
     private int health;
     private int movementSpeed;
     private Position position;
@@ -115,19 +115,45 @@ public class Enemy extends Observable implements Character {
     }
 
     public void update() {
+        playerDirectionVector.set(player.getPosition().getX() - position.getX(), player.getPosition().getY() - position.getY());
         weapon.setPosition(position);
         if(isPlayerInRange()) {
+            movementDirectionVector.set(playerDirectionVector);
             setChanged();
             notifyObservers(weapon.pullTrigger());
+        } else {
+            updateMovementDirectionVector(movementDirection);
+        }
+    }
+
+    private void updateMovementDirectionVector(int movementDirection) {
+        switch (movementDirection) {
+            case 0: // moving west
+                    movementDirectionVector.set(position.getX() - range, position.getY());
+                break;
+            case 1: // moving east
+                    movementDirectionVector.set(position.getX() + range, position.getY());
+                break;
+            case 2: // moving north
+                    movementDirectionVector.set(position.getX(), position.getY() + range);
+                break;
+            case 3: // moving south
+                    movementDirectionVector.set(position.getX(), position.getY() - range);
+                break;
+            default:
+                break;
         }
     }
 
     private boolean isPlayerInRange() {
-        playerDirectionVector.set(player.getPosition().getX(), player.getPosition().getY());
         if (Math.abs(playerDirectionVector.angle(movementDirectionVector)) < 100) {
             return true;
         }
         return false;
+    }
+
+    public Vector2 getDirection() {
+        return movementDirectionVector;
     }
 
     private class MyActionListener implements ActionListener {
