@@ -85,8 +85,4 @@ public class PlayerView implements CharacterView {
         sprite.setRotation(direction.angle());
     }
 
-    /*private float getAimDirection() {
-        return (float)(-Math.atan2(Gdx.input.getY() - (480-64-rectangle.y + rectangle.height/2),
-                Gdx.input.getX() - (rectangle.x + rectangle.width/2)) * (180/Math.PI)-90);
-    }*/
 }

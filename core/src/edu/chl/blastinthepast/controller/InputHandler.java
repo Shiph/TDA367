@@ -141,7 +141,10 @@ public class InputHandler implements InputProcessor{
     }
 
     @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
+    public boolean touchDragged(int screenX, int screenY, int pointer)
+    {
+        Position p=new Position(screenX, screenY);
+        pcs.firePropertyChange("mouseMoved", null, p);
         return false;
     }
 
