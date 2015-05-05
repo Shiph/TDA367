@@ -26,7 +26,7 @@ public class ProjectileView implements Collidable {
         texture = new Texture(Gdx.files.local("triforce.png"));
         sprite = new Sprite(texture);
         rectangle = new ArrayList<Rectangle>();
-        rectangle.set(0, new Rectangle());
+        rectangle.add(new Rectangle());
         rectangle.get(0).x = 800/2 - 64/2;
         rectangle.get(0).y = 480/2 - 64/2;
         rectangle.get(0).height = 64;

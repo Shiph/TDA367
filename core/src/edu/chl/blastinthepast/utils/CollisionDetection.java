@@ -2,14 +2,10 @@ package edu.chl.blastinthepast.utils;
 
 
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
-import edu.chl.blastinthepast.model.Enemy;
 import edu.chl.blastinthepast.view.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 /**
  * Created by qwerty458 on 4/23/15.
@@ -17,7 +13,7 @@ import java.util.List;
 public final class CollisionDetection {
 
     public void update (ArrayList<EnemyView> enemies, PlayerView player, ArrayList<ProjectileView> projectiles, ChestView chest, CollisionView collisions) {
-
+        
     }
 
     public static ArrayList<ArrayList<Collidable>> collisionDetector(Collidable c1, Collidable c2) {
@@ -116,23 +112,19 @@ public final class CollisionDetection {
         private ArrayList<ArrayList<Collidable>> projectilesVSPlayer (ArrayList<ProjectileView> projectiles, PlayerView player) {
             ArrayList<ArrayList<Collidable>> tCollision = new ArrayList<ArrayList<Collidable>>();
             for (ProjectileView p : projectiles) {
-                if (collisionDetector(p, player)) {
-                    return true;
-                }
+                tCollision.addAll(collisionDetector(p, player));
             }
-            return false;
+            return tCollision;
         }
 
         private ArrayList<ArrayList<Collidable>> projectilesVSEnemies (ArrayList<ProjectileView> projectiles, ArrayList<EnemyView> enemies ) {
             ArrayList<ArrayList<Collidable>> tCollision = new ArrayList<ArrayList<Collidable>>();
             for (ProjectileView p : projectiles) {
                 for (EnemyView e : enemies) {
-                    if (collisionDetector(p, e)) {
-                        return true;
-                    }
+                    tCollision.addAll(collisionDetector(p, e));
                 }
             }
-            return false;
+            return tCollision;
         }
     }
 
@@ -140,10 +132,14 @@ public final class CollisionDetection {
 
     }
 
+    /*
+
     public static ArrayList<ArrayList<Collidable>> clean(final ArrayList<ArrayList<Collidable>> cs) {
         for (ArrayList<ArrayList<Collidable>> aac : cs) {
             aac.removeAll(Collections.singleton(null));
         }
         return cs;
     }
+
+    */
 }
