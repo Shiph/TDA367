@@ -11,6 +11,7 @@ import edu.chl.blastinthepast.utils.Position;
 import com.badlogic.gdx.math.Vector2;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 /**
  * Created by jonas on 2015-04-23.
@@ -52,12 +53,12 @@ public class EnemyView implements CharacterView {
     /**
      * @return the rectangle of the player character.
      */
-    public Array<Rectangle> getRectangles() {
+    public ArrayList<Rectangle> getRectangles() {
         return rectangle;
     }
 
     @Override
-    public void setRectangles(Array<Rectangle> rectangles) {
+    public void setRectangles(ArrayList<Rectangle> rectangles) {
 
     }
 

@@ -17,52 +17,63 @@ public final class CollisionDetection {
 
     }
 
-    public static boolean collisionDetector(Collidable c1, Collidable c2) {
+    public static Collidable[][] collisionDetector(Collidable c1, Collidable c2) {
 
-        Array<Rectangle> r1 = new Array<Rectangle>();
-        Array<Rectangle> r2 = new Array<Rectangle>();
+        Collidable[][] collision = new Collidable[2][];
+
+        ArrayList<Rectangle> r1 = new ArrayList<Rectangle>();
+        ArrayList<Rectangle> r2 = new ArrayList<Rectangle>();
 
         r1.addAll(c1.getRectangles());
         r2.addAll(c2.getRectangles());
 
+        int r1c,r2c;
+        r1c = r2c = 0;
+
         //Checking for overlap between r1 and r2
-        for (int i = r1.size; i != 0; i--) {
-            for (int k = r2.size; i != 0; i--) {
-                if (r1.get(i).overlaps(r2.get(k))) {
-                    return true;
+        for (Rectangle r : r1) {
+            for (Rectangle rr : r2) {
+                if (r.overlaps(rr)) {
+                    collision[0][r1c] = r;
+                    collision[1][r2c] = rr;
                 }
+                r2c++;
             }
+            r1c++;
         }
-        return false;
+        return collision;
     }
 
-    private static final class EnemiesVSEnvironment {
+
+    private class EnemiesVSEnvironment {
         Collidable[][] collision;
 
         private EnemiesVSEnvironment (ArrayList<EnemyView> enemies, ChestView chest, CollisionView collisions) {
+            collision = new Collidable[2][];
 
         }
 
-        private boolean enemiesVSChest(ArrayList<EnemyView> enemies, ChestView chest) {
+        private EnemyView enemiesVSChest(ArrayList<EnemyView> enemies, ChestView chest) {
             for (EnemyView e : enemies) {
                 if (collisionDetector(e, chest)) {
-                    return true;
+                    return e;
                 }
             }
-            return false;
+            return null;
         }
 
-        private boolean enemiesVSCollisions(ArrayList<EnemyView> enemies, CollisionView collisions) {
-            for (EnemyView e : enemies) {
-                if (collisionDetector(e, collisions)) {
-                    return true;
+        private Object[][] enemiesVSCollisions(ArrayList<EnemyView> enemies, CollisionView collisions) {
+            Object[][] tempCollision = new Object[2][];
+            for (int i = enemies.size(); i >= 0; i--) {
+                if (collisionDetector(enemies, collisions)) {
+
                 }
             }
-            return false;
+            return null;
         }
     }
 
-    private static final class PlayerVSEnvironment {
+    private class PlayerVSEnvironment {
         Collidable[][] collision;
 
         private PlayerVSEnvironment (PlayerView player, ChestView chest, CollisionView collisions) {
@@ -78,10 +89,10 @@ public final class CollisionDetection {
         }
     }
 
-    private static final class PlayerVSEnemies {
+    private class PlayerVSEnemies {
         Collidable[][] collision;
 
-        private PlayerVSEnemies (PlayerView player, ArrayList<EnemyView>) {
+        private PlayerVSEnemies (PlayerView player, ArrayList<EnemyView> enemies) {
 
         }
 
@@ -95,7 +106,7 @@ public final class CollisionDetection {
         }
     }
 
-    private static final class ProjectilesVSCharacters {
+    private class ProjectilesVSCharacters {
         Collidable[][] collision;
 
         private ProjectilesVSCharacters (PlayerView player, ArrayList<EnemyView> enemies, ArrayList<ProjectileView> projectiles) {
@@ -121,5 +132,9 @@ public final class CollisionDetection {
             }
             return false;
         }
+    }
+
+    private static final class Resolve {
+
     }
 }

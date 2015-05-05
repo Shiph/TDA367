@@ -8,6 +8,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
+import java.util.ArrayList;
+
 /**
  * Created by qwerty458 on 5/4/15.
  */
@@ -21,12 +23,12 @@ public class CollisionView implements Collidable {
     }
 
     @Override
-    public Array<Rectangle> getRectangles() {
+    public ArrayList<Rectangle> getRectangles() {
         return rectangle;
     }
 
     @Override
-    public void setRectangles(Array<Rectangle> rectangles) {
+    public void setRectangles(ArrayList<Rectangle> rectangles) {
 
     }
 

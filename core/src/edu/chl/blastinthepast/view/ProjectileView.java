@@ -8,6 +8,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.model.Projectile;
 
+import java.util.ArrayList;
+
 /**
  * Created by jonas on 2015-04-23.
  */
@@ -56,7 +58,7 @@ public class ProjectileView implements Collidable {
      *
      * @return the rectangle of the projectile.
      */
-    public Array<Rectangle> getRectangles() {
+    public ArrayList<Rectangle> getRectangles() {
         return rectangle;
     }
 
@@ -69,7 +71,7 @@ public class ProjectileView implements Collidable {
     }
 
     @Override
-    public void setRectangles(Array<Rectangle> rectangles) {
+    public void setRectangles(ArrayList<Rectangle> rectangles) {
 
     }
 }
