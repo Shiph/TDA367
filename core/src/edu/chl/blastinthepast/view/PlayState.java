@@ -2,7 +2,6 @@ package edu.chl.blastinthepast.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
@@ -33,7 +32,6 @@ public class PlayState extends GameState {
     private TiledMapRenderer tiledMapRenderer;
     private TiledMap tiledMap;
     private ArrayList<ProjectileView> projectiles = new ArrayList<ProjectileView>();
-    private Sound wowSound;
     private Music music;
 
     public PlayState(GameStateManager gsm, BPModel model) {
@@ -51,7 +49,6 @@ public class PlayState extends GameState {
         camera.update();
         tiledMap = new TmxMapLoader().load("GrassTestMap1.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
-        wowSound = Gdx.audio.newSound(Gdx.files.internal("wow.mp3"));
         music = Gdx.audio.newMusic(Gdx.files.internal("sanic.mp3"));
         music.setVolume(0.2f);
         music.setLooping(true);
@@ -109,6 +106,8 @@ public class PlayState extends GameState {
     @Override
     public void dispose() {
         music.pause();
+        music.dispose();
+        batch.dispose();
         playerView.dispose();
         for (ProjectileView p : projectiles) {
             p.dispose();

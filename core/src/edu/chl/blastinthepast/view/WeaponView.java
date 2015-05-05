@@ -14,14 +14,12 @@ public class WeaponView {
     private Sprite sprite;
     private Weapon weapon;
 
-    public WeaponView(Weapon newWeapon)
-    {
+    public WeaponView(Weapon newWeapon) {
         weapon=newWeapon;
         texture= new Texture(Gdx.files.local("arrowWeapon.png"));
         sprite=new Sprite(texture);
         updateDirection();
         updatePosition();
-
     }
 
     public void updateDirection(){
@@ -30,7 +28,7 @@ public class WeaponView {
     }
 
     public void updatePosition(){
-        sprite.setPosition(weapon.getPosition().getX()+50, weapon.getPosition().getY()+25);
+        sprite.setPosition(weapon.getPosition().getX() + 50, weapon.getPosition().getY() + 25);
     }
 
     public void draw(SpriteBatch batch){
@@ -39,6 +37,10 @@ public class WeaponView {
         batch.begin();
         sprite.draw(batch);
         batch.end();
+    }
+
+    public void dispose() {
+        texture.dispose();
     }
 
 }

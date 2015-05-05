@@ -88,5 +88,5 @@ public class PlayerView implements CharacterView {
     public void dispose() {
         texture.dispose();
     }
-    
+
 }

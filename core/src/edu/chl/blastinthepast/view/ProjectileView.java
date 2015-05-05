@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import edu.chl.blastinthepast.model.Projectile;
+import com.badlogic.gdx.audio.Sound;
 
 /**
  * Created by jonas on 2015-04-23.
@@ -15,6 +16,7 @@ public class ProjectileView {
     private Sprite sprite;
     private Rectangle rectangle;
     private Projectile projectile;
+    //private Sound fireSound = Gdx.audio.newSound(Gdx.files.internal("wow.mp3"));
 
     public ProjectileView(Projectile newProjectile){
         projectile=newProjectile;
@@ -25,6 +27,7 @@ public class ProjectileView {
         rectangle.width = 64;
         sprite.setX(rectangle.x);
         sprite.setY(rectangle.y);
+        //fireSound.play();
     }
     /**
      *
@@ -65,6 +68,7 @@ public class ProjectileView {
 
     public void dispose(){
         texture.dispose();
+        //fireSound.dispose();
     }
 
 }
