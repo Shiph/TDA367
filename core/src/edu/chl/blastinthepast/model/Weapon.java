@@ -63,7 +63,7 @@ public class Weapon {
         return false;
     }
 
-    public Projectile fire() {
+    private Projectile fire() {
         long currentTime=System.currentTimeMillis();
         if ((currentTime - latestShot) >= fireRate) {
             latestShot = System.currentTimeMillis();
@@ -112,9 +112,12 @@ public class Weapon {
 
     private void reloadIfNeeded() {
         if (bulletsLeftInMagazine == 0) {
-            System.out.println("reloading...");
             reload();
         }
+    }
+
+    public Vector2 getDirection(){
+        return direction;
     }
 
 }

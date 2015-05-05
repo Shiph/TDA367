@@ -97,15 +97,19 @@ public class Player implements Character {
         }
     }
 
+    public void update() {
+        weapon.setPosition(position);
+    }
+
     public void act(String action, float dt){
         switch (action) {
             case "shoot":
-                weapon.fire();
+                //weapon.fire();
                 break;
             case "reload":
                 weapon.reload();
                 break;
-            case "interact":
+            case "use":
                 break;
         }
     }
@@ -127,8 +131,8 @@ public class Player implements Character {
         float length=direction.len();
         direction.scl(1/length);
         setAimDirection(direction.angle());
+        System.out.println(direction.angle());
     }
-
     public void setMovementDirection(String movementDirection) {
         this.movementDirection = movementDirection;
     }

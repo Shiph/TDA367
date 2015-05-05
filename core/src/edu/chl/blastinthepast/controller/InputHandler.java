@@ -16,7 +16,7 @@ import java.beans.PropertyChangeSupport;
  *
  */
 public class InputHandler implements InputProcessor{
-    private int northKey, southKey, westKey, eastKey, shootKey, enterKey, reloadKey, weapon1Key, weapon2Key, menuKey, upKey, downKey, leftKey, rightKey, escapeKey;
+    private int northKey, southKey, westKey, eastKey, shootKey, enterKey, reloadKey, weapon1Key, weapon2Key, menuKey, upKey, downKey, leftKey, rightKey, escapeKey, useKey;
     protected boolean north=false, south=false, west=false, east=false, shoot=false, menuIsUp=false;
     private PropertyChangeSupport pcs;
 
@@ -27,6 +27,7 @@ public class InputHandler implements InputProcessor{
         southKey=Input.Keys.S;
         westKey=Input.Keys.A;
         eastKey=Input.Keys.D;
+        useKey=Input.Keys.E;
         shootKey=Input.Buttons.LEFT;
         enterKey = Input.Keys.ENTER;
         reloadKey=Input.Keys.R;
@@ -92,6 +93,9 @@ public class InputHandler implements InputProcessor{
         if (keycode==escapeKey){
             pcs.firePropertyChange("escape", null, true);
         }
+        if (keycode==escapeKey){
+            pcs.firePropertyChange("use", null, true);
+        }
         return true;
     }
 
@@ -137,7 +141,10 @@ public class InputHandler implements InputProcessor{
     }
 
     @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
+    public boolean touchDragged(int screenX, int screenY, int pointer)
+    {
+        Position p=new Position(screenX, screenY);
+        pcs.firePropertyChange("mouseMoved", null, p);
         return false;
     }
 

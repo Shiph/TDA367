@@ -60,6 +60,7 @@ public class BPController implements PropertyChangeListener {
                         if (p != null) {
                             model.addProjectile(p);
                         } else {
+                            //??
                         }
                     } catch (NullPointerException e) {
                         System.out.println(e.getMessage()); // player doesn't have a weapon or is out of bullets
