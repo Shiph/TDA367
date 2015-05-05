@@ -61,6 +61,7 @@ public class ProjectileView {
     public void draw(SpriteBatch batch) {
         updatePosition();
         sprite.setRotation(projectile.getDirection().angle());
+        //System.out.println("projectile direction: " + sprite.getRotation());
         batch.begin();
         sprite.draw(batch);
         batch.end();
