@@ -8,12 +8,14 @@ import com.badlogic.gdx.maps.tiled.TideMapLoader;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import edu.chl.blastinthepast.model.Chest;
 
 /**
  * Created by qwerty458 on 5/4/15.
  */
 public class ChestView implements Collidable {
     private Array<Rectangle> rectangle;
+    private Chest chest;
 
     public ChestView () {
         TiledMap tiledMap = new TideMapLoader().load("GrassTestMap1.tmx");

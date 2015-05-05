@@ -16,7 +16,7 @@ public class WeaponView {
 
     public WeaponView(Weapon newWeapon) {
         weapon=newWeapon;
-        texture= new Texture(Gdx.files.local("arrowWeapon.png"));
+        texture= new Texture(Gdx.files.local("ak47.gif"));
         sprite=new Sprite(texture);
         updateDirection();
         updatePosition();
@@ -40,7 +40,7 @@ public class WeaponView {
     }
 
     public void dispose() {
-        texture.dispose();
+        //texture.dispose();
     }
 
 }

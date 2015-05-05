@@ -13,7 +13,6 @@ public class GameStateManager {
     private BPModel model;
     private MainMenu mainMenu;
     private HighScoreState highScoreState;
-    private OptionsState optionsState;
     private GameOverState gameOverState;
     private InGameMenu inGameMenu;
     private PlayState playState;
@@ -29,7 +28,6 @@ public class GameStateManager {
         this.model = model;
         mainMenu = new MainMenu(this, model);
         inGameMenu = new InGameMenu(this, model);
-        optionsState = new OptionsState(this, model);
         highScoreState = new HighScoreState(this, model);
         gameOverState = new GameOverState(this, model);
         setState(MAINMENU, false);

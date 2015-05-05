@@ -68,7 +68,6 @@ public class ProjectileView {
 
     public void dispose(){
         texture.dispose();
-        //fireSound.dispose();
     }
 
 }

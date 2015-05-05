@@ -1,24 +1,17 @@
 package edu.chl.blastinthepast.model;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
-
-import java.util.Iterator;
 
 /**
  * Created by Shif on 21/04/15.
  */
-public class Projectile {
+public abstract class Projectile {
 
-    private Vector2 direction;
-    private float speed = 500;
-    private int damage = 100;
-    private Position position;
+    protected Vector2 direction;
+    protected float speed;
+    protected int damage;
+    protected Position position;
 
     public Projectile(float x, float y, Vector2 direction) {
         this.direction = new Vector2(direction);

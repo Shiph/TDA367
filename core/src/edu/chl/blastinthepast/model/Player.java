@@ -33,7 +33,7 @@ public class Player implements Character {
         position = new Position(0,0);
         this.movementSpeed = movementSpeed;
         this.health = health;
-        weapon = new Weapon(position, aimDirection);
+        weapon = new AK47(position, aimDirection);
     }
 
 

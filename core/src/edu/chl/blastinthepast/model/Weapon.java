@@ -10,42 +10,43 @@ import javax.swing.Timer;
 /**
  * Created by Shif on 21/04/15.
  */
-public class Weapon {
+public abstract class Weapon {
 
-    private Projectile projectile;
-    private final int MAGAZINE_CAPACITY = 20;
-    private final int RELOAD_TIME = 1500; //Reload time in milliseconds
-    private int bulletsLeftInMagazine = 20;
-    private int totalBullets = 200;
-    private int fireRate = 100; //Time between shots in milliseconds
-    private long latestShot=0;
-    private boolean isReloading=false;
-    private Timer reloadTimer;
-    private Position position;
-    private Vector2 direction;
+    protected Projectile projectile;
+    protected int magazineCapacity;
+    protected int reloadTIme = 1500; //Reload time in milliseconds
+    protected int bulletsLeftInMagazine = 20;
+    protected int totalBullets = 200;
+    protected int fireRate; //Time between shots in milliseconds
+    protected long latestShot = 0;
+    protected boolean isReloading = false;
+    protected Timer reloadTimer;
+    protected Position position;
+    protected Vector2 direction;
 
+    public Weapon (Position pos, Vector2 direction, int reloadTime, int fireRate, int magazineCapacity) {
+        position = new Position(pos);
+        this.direction = direction;
+        this.fireRate = fireRate;
+        this.reloadTIme = reloadTime;
+        this.magazineCapacity = magazineCapacity;
 
-    public Weapon(Position pos, Vector2 direction){
-        //Here we create the reloading timer which will be used in the reload function
-        ActionListener reloading=new ActionListener() {
+        ActionListener reloading = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(totalBullets >= MAGAZINE_CAPACITY) {
-                    bulletsLeftInMagazine = MAGAZINE_CAPACITY;
-                    totalBullets -= MAGAZINE_CAPACITY;
-                }
-                else {
+                if(totalBullets >= magazineCapacity) {
+                    bulletsLeftInMagazine = magazineCapacity;
+                    totalBullets -= magazineCapacity;
+                } else {
                     bulletsLeftInMagazine = totalBullets;
                     totalBullets = 0;
                 }
                 isReloading=false;
             }
         };
-        reloadTimer=new Timer(RELOAD_TIME, reloading);
-        reloadTimer.setRepeats(false);
 
-        position=new Position(pos);
-        this.direction=direction;
+        reloadTimer = new Timer(reloadTime, reloading);
+        reloadTimer.setRepeats(false);
     }
 
     public void setFireRate(int newFireRate) {
@@ -63,22 +64,14 @@ public class Weapon {
         return false;
     }
 
-    private Projectile fire() {
-        long currentTime=System.currentTimeMillis();
-        if ((currentTime - latestShot) >= fireRate) {
-            latestShot = System.currentTimeMillis();
-            bulletsLeftInMagazine--;
-            return new Projectile(position, direction);
-        }
-        return null;
-    }
+    public abstract Projectile fire();
 
     public void addAmmo(int amount) {
         totalBullets += amount;
     }
 
     public void reload() {
-        isReloading=true;
+        isReloading = true;
         reloadTimer.start();
     }
 

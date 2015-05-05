@@ -100,13 +100,12 @@ public class PlayState extends GameState {
     }
 
     @Override
-    public void handleInput() {
-    }
+    public void handleInput() {}
 
     @Override
     public void dispose() {
         music.pause();
-        music.dispose();
+        /*music.dispose();
         batch.dispose();
         playerView.dispose();
         for (ProjectileView p : projectiles) {
@@ -114,7 +113,7 @@ public class PlayState extends GameState {
         }
         for (EnemyView e : enemies) {
             e.dispose();
-        }
+        }*/
     }
 
     public PlayerView getPlayer() {
