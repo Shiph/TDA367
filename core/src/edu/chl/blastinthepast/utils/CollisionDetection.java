@@ -24,18 +24,15 @@ public class CollisionDetection {
         collision.add(new ArrayList<Collidable>());
 
         addToCollision(new EnemiesVSEnvironment(enemies, player, chest, collisions).getCollision());
-
-        if (collision.size() > 0 && collision.get(0).size() > 0) {
-            System.out.println(collision);
-        }
+        addToCollision(new PlayerVSEnvironment(player, enemies, chest, collisions).getCollision());
 
         new Resolve(collision, Type.ENVIRONMENT);
 
-        collision.addAll(new PlayerVSEnvironment(player, enemies, chest, collisions).getCollision());
+        collision.clear();
+        collision.add(new ArrayList<Collidable>());
+        collision.add(new ArrayList<Collidable>());
 
-        new Resolve(collision, Type.ENVIRONMENT);
-
-        collision.addAll(new ProjectilesVSEverything(player, enemies, projectiles).getCollision());
+        addToCollision(new ProjectilesVSEverything(player, enemies, projectiles).getCollision());
 
         new Resolve(collision, Type.PROJECTILE);
     }
@@ -216,11 +213,13 @@ public class CollisionDetection {
         private void resolve_1_Enemies(ArrayList<ArrayList<Collidable>> collision) {
             //System.out.println("resolve_1");
             for (Collidable c : collision.get(0)) { //this is where shit goes wrong
-                System.out.println("collisionEVSE!!!");
-                ((EnemyView) c).setCollision();
-                System.out.println("setCollision");
-                ((EnemyView) c).update();
-                System.out.println("update_1");
+                if (c instanceof EnemyView) {
+                    System.out.println("collisionEVSE!!!");
+                    ((EnemyView) c).setCollision();
+                    System.out.println("setCollision");
+                    ((EnemyView) c).update();
+                    System.out.println("update_1");
+                }
             }
         }
 
