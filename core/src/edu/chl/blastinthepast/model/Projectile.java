@@ -6,7 +6,7 @@ import edu.chl.blastinthepast.utils.Position;
 /**
  * Created by Shif on 21/04/15.
  */
-public abstract class Projectile {
+public abstract class Projectile implements  ProjectileInterface{
 
     private Vector2 direction;
     private float speed;
