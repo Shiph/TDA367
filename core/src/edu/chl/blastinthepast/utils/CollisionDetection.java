@@ -18,6 +18,14 @@ import java.util.ArrayList;
 public final class CollisionDetection {
         
     public void update(ArrayList<EnemyView> enemies, PlayerView player, ArrayList<ProjectileView> projectiles, ChestView chest, CollisionView collisions) {
+        ArrayList<ArrayList<Collidable>> collision = new ArrayList<ArrayList<Collidable>>();
+
+        collision.addAll(new EnemiesVSEnvironment(enemies, chest, collisions).collision);
+        collision.addAll(new PlayerVSEnvironment(player, chest, collisions).collision);
+        collision.addAll(new PlayerVSEnemies(player, enemies).collision);
+        collision.addAll(new ProjectilesVSCharacters(player, enemies, projectiles).collision);
+
+        new Resolve(collision);
 
     }
 
@@ -133,6 +141,10 @@ public final class CollisionDetection {
     }
 
     private static final class Resolve {
+
+        private Resolve (ArrayList<ArrayList<Collidable>> collision) {
+
+        }
 
     }
 
