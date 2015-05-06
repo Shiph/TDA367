@@ -15,6 +15,7 @@ public class BPModel implements Observer {
     private Player player;
     private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
     private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+    private ArrayList<PowerUp> powerUps= new ArrayList<PowerUp>();
 
 
     public BPModel() {
@@ -84,6 +85,10 @@ public class BPModel implements Observer {
     public void update(Observable o, Object arg) {
         if (arg instanceof Projectile) {
             addProjectile((Projectile)arg);
+        }
+        if (arg instanceof PowerUp){
+            PowerUp powerUp=(PowerUp)arg;
+            powerUps.add(powerUp);
         }
     }
 

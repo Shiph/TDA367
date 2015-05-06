@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.model.Player;
+import edu.chl.blastinthepast.utils.GraphicalAssets;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,7 @@ public class PlayerView implements CharacterView {
     private boolean collision;
 
     public PlayerView(Player newPlayer){
-        texture = new Texture(Gdx.files.local("sanic.png"));
+        texture = GraphicalAssets.SANIC;
         sprite = new Sprite(texture);
         rectangle = new ArrayList<Rectangle>();
         rectangle.add(new Rectangle());

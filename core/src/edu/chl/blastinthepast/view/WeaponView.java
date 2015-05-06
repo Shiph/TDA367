@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import edu.chl.blastinthepast.model.Weapon;
+import edu.chl.blastinthepast.utils.GraphicalAssets;
 
 /**
  * Created by jonas on 2015-04-23.
@@ -16,7 +17,7 @@ public class WeaponView {
 
     public WeaponView(Weapon newWeapon) {
         weapon=newWeapon;
-        texture= new Texture(Gdx.files.local("ak47.gif"));
+        texture= GraphicalAssets.AK47;
         sprite=new Sprite(texture);
         updateDirection();
         updatePosition();

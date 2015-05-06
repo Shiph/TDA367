@@ -145,6 +145,7 @@ public class Player implements Character {
         direction.scl(1 / length);
         setAimDirection(direction.angle());
     }
+
     public void setMovementDirection(String movementDirection) {
         this.movementDirection = movementDirection;
     }

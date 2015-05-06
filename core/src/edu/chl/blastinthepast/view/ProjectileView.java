@@ -1,15 +1,13 @@
 package edu.chl.blastinthepast.view;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.model.Projectile;
-import com.badlogic.gdx.audio.Sound;
-
 import java.util.ArrayList;
+import edu.chl.blastinthepast.utils.GraphicalAssets;
 
 /**
  * Created by jonas on 2015-04-23.
@@ -21,9 +19,10 @@ public class ProjectileView implements Collidable {
     private Projectile projectile;
     //private Sound fireSound = Gdx.audio.newSound(Gdx.files.internal("wow.mp3"));
 
-    public ProjectileView(Projectile newProjectile) {
-        projectile = newProjectile;
-        texture = new Texture(Gdx.files.local("triforce.png"));
+
+    public ProjectileView(Projectile projectile){
+        this.projectile=projectile;
+        texture = GraphicalAssets.TRIFORCE_BULLET;
         sprite = new Sprite(texture);
         rectangle = new ArrayList<Rectangle>();
         rectangle.add(new Rectangle());
@@ -55,6 +54,10 @@ public class ProjectileView implements Collidable {
         rectangle.get(0).setPosition(projectile.getPosition().getX(), projectile.getPosition().getY());
     }
 
+    private void setRotation(){
+        sprite.setRotation(projectile.getDirection().angle());
+    }
+
     /**
      * @return the rectangle of the projectile.
      */
@@ -64,8 +67,7 @@ public class ProjectileView implements Collidable {
 
     public void draw(SpriteBatch batch) {
         updatePosition();
-        sprite.setRotation(projectile.getDirection().angle());
-        //System.out.println("projectile direction: " + sprite.getRotation());
+        setRotation();
         batch.begin();
         sprite.draw(batch);
         batch.end();

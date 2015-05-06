@@ -2,12 +2,12 @@ package edu.chl.blastinthepast.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
-import edu.chl.blastinthepast.model.GameState;
+import edu.chl.blastinthepast.model.*;
 import edu.chl.blastinthepast.controller.GameStateManager;
-import edu.chl.blastinthepast.model.BPModel;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -16,6 +16,7 @@ import edu.chl.blastinthepast.model.Enemy;
 import edu.chl.blastinthepast.model.Projectile;
 import edu.chl.blastinthepast.utils.CollisionDetection;
 import edu.chl.blastinthepast.utils.Position;
+import edu.chl.blastinthepast.utils.SoundAssets;
 
 import java.util.ArrayList;
 
@@ -35,6 +36,8 @@ public class PlayState extends GameState {
     private TiledMapRenderer tiledMapRenderer;
     private TiledMap tiledMap;
     private ArrayList<ProjectileView> projectiles = new ArrayList<ProjectileView>();
+    //private ArrayList<PowerUpView> powerUps= new ArrayList<PowerUpView>();
+    private Sound wowSound;
     private Music music;
 
     public PlayState(GameStateManager gsm, BPModel model) {
@@ -54,7 +57,8 @@ public class PlayState extends GameState {
         camera.update();
         tiledMap = new TmxMapLoader().load("GrassTestMap1.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
-        music = Gdx.audio.newMusic(Gdx.files.internal("sanic.mp3"));
+        wowSound = SoundAssets.WOW_SOUND;
+        music = SoundAssets.SANIC_THEME;
         music.setVolume(0.2f);
         music.setLooping(true);
         addEnemies();
@@ -68,9 +72,6 @@ public class PlayState extends GameState {
     }
 
     private void addProjectiles(){
-        for (ProjectileView p : projectiles) {
-            p.dispose();
-        }
         projectiles.clear();
         ArrayList<Projectile> projectileArray = model.getProjectiles();
         for (Projectile p: projectileArray){
@@ -85,7 +86,6 @@ public class PlayState extends GameState {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         tiledMapRenderer.setView(camera);
-        addProjectiles();
         //music.play();
         for (EnemyView e : enemies) {
             e.update();
@@ -95,6 +95,7 @@ public class PlayState extends GameState {
 
     @Override
     public void draw() {
+        addProjectiles();
         tiledMapRenderer.render();
         playerView.draw(batch);
         for (EnemyView e : enemies) {
