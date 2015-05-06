@@ -90,7 +90,7 @@ public class PlayState extends GameState {
         for (EnemyView e : enemies) {
             e.update();
         }
-        CollisionDetection.update(enemies, playerView, projectiles, chestView, collisionView);
+        new CollisionDetection(enemies, playerView, projectiles, chestView, collisionView);
     }
 
     @Override

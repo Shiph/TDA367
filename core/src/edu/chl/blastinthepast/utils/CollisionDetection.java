@@ -3,19 +3,20 @@ package edu.chl.blastinthepast.utils;
 
 import com.badlogic.gdx.math.Rectangle;
 import edu.chl.blastinthepast.view.*;
+import edu.chl.blastinthepast.model.*;
 
 import java.util.ArrayList;
 
 /**
  * Created by qwerty458 on 4/23/15.
  */
-public abstract class CollisionDetection {
+public class CollisionDetection {
 
     public enum Type {
         ENVIRONMENT, PROJECTILE
     }
 
-    public static void update(ArrayList<EnemyView> enemies, PlayerView player, ArrayList<ProjectileView> projectiles, ChestView chest, CollisionView collisions) {
+    public CollisionDetection (ArrayList<EnemyView> enemies, PlayerView player, ArrayList<ProjectileView> projectiles, ChestView chest, CollisionView collisions) {
         ArrayList<ArrayList<Collidable>> collision = new ArrayList<>(2);
         collision.add(new ArrayList<Collidable>());
         collision.add(new ArrayList<Collidable>());
@@ -31,7 +32,7 @@ public abstract class CollisionDetection {
     }
 
 
-    public static ArrayList<ArrayList<Collidable>> collisionDetector(Collidable c1, Collidable c2) {
+    public ArrayList<ArrayList<Collidable>> collisionDetector(Collidable c1, Collidable c2) {
         ArrayList<ArrayList<Collidable>> collision = new ArrayList<>(2);
         collision.add(new ArrayList<Collidable>());
         collision.add(new ArrayList<Collidable>());
@@ -55,7 +56,7 @@ public abstract class CollisionDetection {
     }
 
 
-    private static class EnemiesVSEnvironment {
+    private class EnemiesVSEnvironment {
         private ArrayList<ArrayList<Collidable>> collision;
 
         private EnemiesVSEnvironment(ArrayList<EnemyView> enemies, PlayerView player, ChestView chest, CollisionView collisions) {
@@ -91,7 +92,7 @@ public abstract class CollisionDetection {
 
     }
 
-    private static class PlayerVSEnvironment {
+    private class PlayerVSEnvironment {
         ArrayList<ArrayList<Collidable>> collision;
 
         private PlayerVSEnvironment(PlayerView player, ArrayList<EnemyView> enemies, ChestView chest, CollisionView collisions) {
@@ -118,7 +119,7 @@ public abstract class CollisionDetection {
         }
     }
 
-    private static class ProjectilesVSEverything {
+    private class ProjectilesVSEverything {
         ArrayList<ArrayList<Collidable>> collision;
 
         private ProjectilesVSEverything(PlayerView player, ArrayList<EnemyView> enemies, ArrayList<ProjectileView> projectiles) {
@@ -146,7 +147,7 @@ public abstract class CollisionDetection {
         }
     }
 
-    private static final class Resolve {
+    private class Resolve {
 
         private Resolve (ArrayList<ArrayList<Collidable>> collision, Type t) {
             if (t.equals(Type.ENVIRONMENT)) {
