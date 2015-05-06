@@ -3,7 +3,7 @@ package edu.chl.blastinthepast.utils;
 /**
  * Created by jonas on 2015-04-23.
  */
-public class Position {
+public class Position implements PositionInterface {
     private float x;
     private float y;
 
