@@ -2,6 +2,7 @@ package edu.chl.blastinthepast.model;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Position;
+import edu.chl.blastinthepast.utils.PositionInterface;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,7 +25,7 @@ public abstract class Weapon implements WeaponInterface {
     protected Position position;
     protected Vector2 direction;
 
-    public Weapon (Position pos, Vector2 direction, int reloadTime, int fireRate, final int magazineCapacity) {
+    public Weapon (PositionInterface pos, Vector2 direction, int reloadTime, int fireRate, final int magazineCapacity) {
         position = new Position(pos);
         this.direction = direction;
         this.fireRate = fireRate;

@@ -12,7 +12,7 @@ public class Position implements PositionInterface {
         this.y=y;
     }
 
-    public Position(Position pos){
+    public Position(PositionInterface pos){
         x=pos.getX();
         y=pos.getY();
     }
@@ -38,12 +38,12 @@ public class Position implements PositionInterface {
         this.y=y;
     }
 
-    public void setPos(Position pos){
+    public void setPos(PositionInterface pos){
         x=pos.getX();
         y=pos.getY();
     }
 
-    public boolean equals(Position pos) {
+    public boolean equals(PositionInterface pos) {
         return (pos.getX() == this.getX() && pos.getY() == this.getY());
     }
 
