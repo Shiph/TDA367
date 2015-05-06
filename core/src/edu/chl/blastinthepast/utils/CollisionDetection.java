@@ -163,7 +163,10 @@ public final class CollisionDetection {
             int i = 0;
             for (Collidable c : collision.get(0)) {
                 if (c instanceof ProjectileView) {
-                    ((CharacterView) collision.get(1).get(i)).hit((ProjectileView) c);
+                    if(collision.get(1).get(i) instanceof CharacterView) {
+                        ((CharacterView) collision.get(1).get(i)).hit((ProjectileView) c);
+                    }
+                    ((ProjectileView) c).dispose();
                 }
                 i++;
             }
