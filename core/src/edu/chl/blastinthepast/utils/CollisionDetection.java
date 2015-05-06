@@ -202,7 +202,7 @@ public class CollisionDetection {
 
     public class Resolve {
 
-        public Resolve (ArrayList<ArrayList<Collidable>> collisionR, Type t) {
+        public Resolve(ArrayList<ArrayList<Collidable>> collisionR, Type t) {
             if (t.equals(Type.ENVIRONMENT)) {
                 //System.out.println("ENVIRONMENT");
                 resolve_1_Enemies(collisionR);
@@ -213,19 +213,18 @@ public class CollisionDetection {
             }
         }
 
-        private void resolve_1_Enemies (ArrayList<ArrayList<Collidable>> collision) {
+        private void resolve_1_Enemies(ArrayList<ArrayList<Collidable>> collision) {
             //System.out.println("resolve_1");
             for (Collidable c : collision.get(0)) { //this is where shit goes wrong
                 System.out.println("collisionEVSE!!!");
-                if (c instanceof EnemyView) {
-                    ((EnemyView) c).setCollision();
-                    ((EnemyView) c).update();
-                    System.out.println("resolved_1");
-                }
+                ((EnemyView) c).setCollision();
+                System.out.println("setCollision");
+                ((EnemyView) c).update();
+                System.out.println("update_1");
             }
         }
 
-        private void resolve_2_Player (ArrayList<ArrayList<Collidable>> collision) {
+        private void resolve_2_Player(ArrayList<ArrayList<Collidable>> collision) {
             for (Collidable c : collision.get(0)) {
                 if (c instanceof PlayerView) {
                     ((PlayerView) c).setCollision();
@@ -235,7 +234,7 @@ public class CollisionDetection {
             }
         }
 
-        private void resolve_3_Projectiles (ArrayList<ArrayList<Collidable>> collision) {
+        private void resolve_3_Projectiles(ArrayList<ArrayList<Collidable>> collision) {
             int i = 0;
             //System.out.println(collisionEVSE.get(0).get(0));
             for (Collidable c : collision.get(0)) {
