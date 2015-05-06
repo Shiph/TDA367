@@ -28,10 +28,11 @@ public class EnemyView implements CharacterView {
     private Vector2 vector;
     private WeaponView weaponView;
 
-    EnemyView(Enemy newEnemy){
+    EnemyView(Enemy enemy){
         this.enemy=enemy;
         texture = new Texture(Gdx.files.local("kim.png"));
         sprite = new Sprite(texture);
+        weaponView = new WeaponView(enemy.getWeapon());
         rectangle = new ArrayList<Rectangle>();
         rectangle.add(new Rectangle());
         rectangle.get(0).x = 800/2 - 64/2;
