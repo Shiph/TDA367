@@ -19,9 +19,19 @@ public class WeaponTest {
 
     @Test
     public void testFire() {
-        Projectile projectile = new AK47Projectile(weapon.getPosition(), weapon.getDirection());
-        Projectile projectile2 = weapon.fire();
-        assertFalse(projectile == projectile2);
+        if(weapon.hasAmmo()) {
+            assertTrue(weapon.fire() != null);
+        } else {
+            assertTrue(weapon.fire() == null);
+        }
+    }
+
+    @Test
+    public void testReload() {
+        weapon.fire();
+        int amount = weapon.getbulletsLeftInMagazine();
+        weapon.reload();
+        assertTrue(weapon.getbulletsLeftInMagazine() > amount);
     }
 
     @Test
@@ -29,11 +39,6 @@ public class WeaponTest {
         int fireRate = weapon.getFireRate();
         weapon.setFireRate(320523);
         assertFalse(fireRate == weapon.getFireRate());
-    }
-
-    @Test
-    public void testHasAmmo() {
-        assertTrue(weapon.hasAmmo()); //Should be true when initialized.
     }
 
     @Test

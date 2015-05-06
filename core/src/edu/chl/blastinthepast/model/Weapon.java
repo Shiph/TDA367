@@ -96,6 +96,10 @@ public abstract class Weapon implements WeaponInterface {
         return position;
     }
 
+    public int getbulletsLeftInMagazine() {
+        return bulletsLeftInMagazine;
+    }
+
     public Projectile pullTrigger() {
         if (hasAmmo()) {
             reloadIfNeeded();
