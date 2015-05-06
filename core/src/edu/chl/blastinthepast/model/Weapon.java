@@ -34,13 +34,6 @@ public abstract class Weapon implements WeaponInterface {
         ActionListener reloading = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(totalBullets >= magazineCapacity) {
-                    bulletsLeftInMagazine = magazineCapacity;
-                    totalBullets -= magazineCapacity;
-                } else {
-                    bulletsLeftInMagazine = totalBullets;
-                    totalBullets = 0;
-                }
                 isReloading=false;
             }
         };
@@ -73,6 +66,17 @@ public abstract class Weapon implements WeaponInterface {
     public void reload() {
         isReloading = true;
         reloadTimer.start();
+        reloadWeapon();
+    }
+
+    private void reloadWeapon(){
+        if(totalBullets >= magazineCapacity) {
+            bulletsLeftInMagazine = magazineCapacity;
+            totalBullets -= magazineCapacity;
+        } else {
+            bulletsLeftInMagazine = totalBullets;
+            totalBullets = 0;
+        }
     }
 
     public Projectile getProjectile() {
