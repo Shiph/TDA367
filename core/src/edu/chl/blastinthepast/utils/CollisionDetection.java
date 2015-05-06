@@ -24,7 +24,6 @@ public class CollisionDetection {
         collision.addAll(new EnemiesVSEnvironment(enemies, player, chest, collisions).collision);
         //System.out.println(collision.get(0).get(0) + "enemies");
 
-
         new Resolve(collision, Type.ENVIRONMENT);
 
 
@@ -181,19 +180,25 @@ public class CollisionDetection {
     public class Resolve {
 
         public Resolve (ArrayList<ArrayList<Collidable>> collision, Type t) {
+            //System.out.println("resolve");
             if (t.equals(Type.ENVIRONMENT)) {
+                //System.out.println("ENVIRONMENT");
                 resolve_1_Enemies(collision);
                 resolve_2_Player(collision);
             } else if (t.equals(Type.PROJECTILE)) {
+                //System.out.println("PROJECTILE");
                 resolve_3_Projectiles(collision);
             }
         }
 
         private void resolve_1_Enemies (ArrayList<ArrayList<Collidable>> collision) {
-            for (Collidable c : collision.get(0)) {
+            //System.out.println("resolve_1");
+            for (Collidable c : collision.get(0)) { //this is where shit goes wrong
+                System.out.println("collision!!!");
                 if (c instanceof EnemyView) {
                     ((EnemyView) c).setCollision();
                     ((EnemyView) c).update();
+                    System.out.println("resolved_1");
                 }
             }
         }
@@ -203,6 +208,7 @@ public class CollisionDetection {
                 if (c instanceof PlayerView) {
                     ((PlayerView) c).setCollision();
                     ((PlayerView) c).updatePosition();
+                    System.out.println("resolved_2");
                 }
             }
         }
@@ -217,6 +223,7 @@ public class CollisionDetection {
                     if (collision.get(1).get(i) instanceof CharacterView) {
                         System.out.println("if-2");
                         ((CharacterView) collision.get(1).get(i)).hit((ProjectileView) c);
+                        System.out.println("resolved_3");
                     }
                     ((ProjectileView) c).dispose();
                 }
