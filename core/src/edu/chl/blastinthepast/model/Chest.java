@@ -5,7 +5,7 @@ import edu.chl.blastinthepast.utils.Position;
 /**
  * Created by Mattias on 15-05-05.
  */
-public class Chest {
+public class Chest implements ChestInterface {
     private boolean isOpen = false;
     private Weapon weapon;
     private final Position position;
