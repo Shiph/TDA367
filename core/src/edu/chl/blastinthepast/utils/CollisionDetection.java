@@ -221,7 +221,7 @@ public class CollisionDetection {
                     ((ProjectileView) c).dispose();
                 }
                 i++;
-            }
-        }
     }
+
+    */
 }
