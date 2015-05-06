@@ -74,6 +74,7 @@ public class PlayerView implements CharacterView {
 
     public void updatePosition(){
         if (!collision) {
+            player.setPrevPos(player.getPosition());
             sprite.setPosition(player.getPosition().getX(), player.getPosition().getY());
             rectangle.get(0).setPosition(player.getPosition().getX(), player.getPosition().getY());
         } else if (collision) {
