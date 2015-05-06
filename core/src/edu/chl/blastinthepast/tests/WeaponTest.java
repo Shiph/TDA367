@@ -8,7 +8,7 @@ import edu.chl.blastinthepast.model.Weapon;
 import edu.chl.blastinthepast.utils.Position;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 /**
  * Created by Mattias on 15-05-06.
@@ -22,6 +22,27 @@ public class WeaponTest {
         Projectile projectile = new AK47Projectile(weapon.getPosition(), weapon.getDirection());
         Projectile projectile2 = weapon.fire();
         assertFalse(projectile == projectile2);
+    }
+
+    @Test
+    public void testFireRate () {
+        int fireRate = weapon.getFireRate();
+        weapon.setFireRate(320523);
+        assertFalse(fireRate == weapon.getFireRate());
+    }
+
+    @Test
+    public void testHasAmmo() {
+        assertTrue(weapon.hasAmmo()); //Should be true when initialized.
+    }
+
+    @Test
+    public void testPosition() {
+        Position p = new Position(13,37);
+        weapon.setPosition(13,37);
+        assertFalse(p == weapon.getPosition());
+        p = weapon.getPosition();
+        assertTrue(p == weapon.getPosition());
     }
 
 }
