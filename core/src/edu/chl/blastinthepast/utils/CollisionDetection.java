@@ -48,7 +48,7 @@ public class CollisionDetection {
             for (Rectangle rr : r2) {
                 if (r.overlaps(rr)) {
                     collision.get(0).add(c1);
-                    collision.get(1).add(c1);
+                    collision.get(1).add(c2);
                 }
             }
         }
@@ -56,7 +56,7 @@ public class CollisionDetection {
     }
 
 
-    private class EnemiesVSEnvironment {
+    public class EnemiesVSEnvironment {
         private ArrayList<ArrayList<Collidable>> collision;
 
         private EnemiesVSEnvironment(ArrayList<EnemyView> enemies, PlayerView player, ChestView chest, CollisionView collisions) {
@@ -92,7 +92,7 @@ public class CollisionDetection {
 
     }
 
-    private class PlayerVSEnvironment {
+    public class PlayerVSEnvironment {
         ArrayList<ArrayList<Collidable>> collision;
 
         private PlayerVSEnvironment(PlayerView player, ArrayList<EnemyView> enemies, ChestView chest, CollisionView collisions) {
@@ -119,7 +119,7 @@ public class CollisionDetection {
         }
     }
 
-    private class ProjectilesVSEverything {
+    public class ProjectilesVSEverything {
         ArrayList<ArrayList<Collidable>> collision;
 
         private ProjectilesVSEverything(PlayerView player, ArrayList<EnemyView> enemies, ArrayList<ProjectileView> projectiles) {
@@ -147,7 +147,7 @@ public class CollisionDetection {
         }
     }
 
-    private class Resolve {
+    public class Resolve {
 
         private Resolve (ArrayList<ArrayList<Collidable>> collision, Type t) {
             if (t.equals(Type.ENVIRONMENT)) {
