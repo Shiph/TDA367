@@ -16,26 +16,26 @@ public class CollisionDetection {
         ENVIRONMENT, PROJECTILE
     }
 
-    private ArrayList<ArrayList<Collidable>> collision;
+    ArrayList<ArrayList<Collidable>> collision = new ArrayList<ArrayList<Collidable>>(2);
 
     public CollisionDetection (ArrayList<EnemyView> enemies, PlayerView player, ArrayList<ProjectileView> projectiles, ChestView chest, CollisionView collisions) {
-        collision = new ArrayList<ArrayList<Collidable>>(2);
+        ArrayList<ArrayList<Collidable>> collision = new ArrayList<ArrayList<Collidable>>(2);
         collision.add(new ArrayList<Collidable>());
         collision.add(new ArrayList<Collidable>());
 
-        addToCollision(new EnemiesVSEnvironment(enemies, player, chest, collisions).getCollision());
-
-        if (collision.size() > 0) {
-            System.out.println(collision);
-        }
+        collision.addAll(new EnemiesVSEnvironment(enemies, player, chest, collisions).getCollision());
+        //System.out.println(collisionEVSE.get(0).get(0) + "enemies");
 
         new Resolve(collision, Type.ENVIRONMENT);
 
+
         collision.addAll(new PlayerVSEnvironment(player, enemies, chest, collisions).getCollision());
+        //System.out.println(collisionEVSE.get(0).get(0) + "player");
 
         new Resolve(collision, Type.ENVIRONMENT);
 
         collision.addAll(new ProjectilesVSEverything(player, enemies, projectiles).getCollision());
+        //System.out.println(collisionEVSE.get(0).get(0) + "projectiles");
 
         new Resolve(collision, Type.PROJECTILE);
     }
@@ -75,19 +75,12 @@ public class CollisionDetection {
         return tCollision;
     }
 
-    public void addToCollision (ArrayList<ArrayList<Collidable>> c) {
-        for (int i = c.size()-1; i > -1 ; i--) {
-           // for (int k = c.get(0).size()-1; k > -1; k--)
-            collision.get(i).addAll(c.get(i));
-        }
-    }
-
 
     public class EnemiesVSEnvironment {
         private ArrayList<ArrayList<Collidable>> collisionEVSE;
 
         public EnemiesVSEnvironment(ArrayList<EnemyView> enemies, PlayerView player, ChestView chest, CollisionView collisions) {
-            collisionEVSE = new ArrayList<ArrayList<Collidable>>(2);
+            collisionEVSE = new ArrayList<ArrayList<Collidable>>();
             collisionEVSE.addAll(enemiesVSChest(enemies, chest));
             collisionEVSE.addAll(enemiesVSCollisions(enemies, collisions));
             collisionEVSE.addAll(enemiesVSPlayer(enemies, player));
@@ -136,7 +129,7 @@ public class CollisionDetection {
         ArrayList<ArrayList<Collidable>> collisionPVSE;
 
         public PlayerVSEnvironment(PlayerView player, ArrayList<EnemyView> enemies, ChestView chest, CollisionView collisions) {
-            collisionPVSE = new ArrayList<ArrayList<Collidable>>(2);
+            collisionPVSE = new ArrayList<ArrayList<Collidable>>();
             collisionPVSE.addAll(playerVSChest(player, chest));
             collisionPVSE.addAll(playerVSCollision(player, collisions));
             collisionPVSE.addAll(playerVSEnemies(player, enemies));
@@ -169,7 +162,7 @@ public class CollisionDetection {
         ArrayList<ArrayList<Collidable>> collisionPrVSEv;
 
         public ProjectilesVSEverything(PlayerView player, ArrayList<EnemyView> enemies, ArrayList<ProjectileView> projectiles) {
-            collisionPrVSEv = new ArrayList<ArrayList<Collidable>>(2);
+            collisionPrVSEv = new ArrayList<ArrayList<Collidable>>();
             collisionPrVSEv.addAll(projectilesVSPlayer(projectiles, player));
             collisionPrVSEv.addAll(projectilesVSEnemies(projectiles, enemies));
             collisionPrVSEv = clean(collisionPrVSEv);
@@ -203,6 +196,10 @@ public class CollisionDetection {
     public class Resolve {
 
         public Resolve (ArrayList<ArrayList<Collidable>> collisionR, Type t) {
+            //System.out.println("resolve");
+            if (collisionR.size() > 0 && collisionR.get(0).size() > 0) {
+                System.out.println(collisionR.get(0));
+            }
             if (t.equals(Type.ENVIRONMENT)) {
                 //System.out.println("ENVIRONMENT");
                 resolve_1_Enemies(collisionR);
