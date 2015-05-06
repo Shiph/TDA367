@@ -10,7 +10,9 @@ public interface PositionInterface {
     public void setX(float x);
     public void setY(float y);
     public void setPos(float x, float y);
-    public void setPos(Position pos);
+    public void setPos(PositionInterface pos);
     public String toString();
+    public boolean equals(PositionInterface pos);
+    public int hashCode();
 
 }

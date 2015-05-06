@@ -6,21 +6,22 @@ import edu.chl.blastinthepast.utils.Position;
 /**
  * Created by Shif on 21/04/15.
  */
-public abstract class Projectile implements  ProjectileInterface{
+public class Projectile implements  ProjectileInterface{
 
     private Vector2 direction;
     private float speed;
     private int damage;
     private Position position;
 
+    public Projectile(Position pos, Vector2 direction){
+        this(pos.getX(), pos.getY(), direction);
+    }
+
     public Projectile(float x, float y, Vector2 direction) {
         this.direction = new Vector2(direction);
         position = new Position(x, y);
-    }
-
-    public Projectile(Position pos, Vector2 direction){
-        this.direction= new Vector2(direction);
-        position = new Position(pos);
+        speed = 100;
+        damage = 100;
     }
 
     public void move(float dt) {
