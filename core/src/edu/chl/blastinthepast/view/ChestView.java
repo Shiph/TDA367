@@ -11,6 +11,8 @@ import edu.chl.blastinthepast.model.Chest;
 
 import java.util.ArrayList;
 
+import java.util.ArrayList;
+
 /**
  * Created by qwerty458 on 5/4/15.
  */
