@@ -20,10 +20,10 @@ public class AK47 extends Weapon {
     @Override
     public Projectile fire() {
         long currentTime = System.currentTimeMillis();
-        if ((currentTime - latestShot) >= fireRate) {
-            latestShot = System.currentTimeMillis();
-            bulletsLeftInMagazine--;
-            return new AK47Projectile(position, direction);
+        if ((currentTime - getLatestShot()) >= getFireRate()) {
+            setLatestShot(System.currentTimeMillis());
+            setBulletsLeftInMagazine(getbulletsLeftInMagazine()-1);
+            return new AK47Projectile(getPosition(), getDirection());
         }
         return null;
     }

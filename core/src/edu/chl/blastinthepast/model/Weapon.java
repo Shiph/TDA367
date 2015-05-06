@@ -11,19 +11,19 @@ import javax.swing.Timer;
 /**
  * Created by Shif on 21/04/15.
  */
-public abstract class Weapon implements WeaponInterface {
+public class Weapon implements WeaponInterface {
 
-    protected Projectile projectile;
-    protected int magazineCapacity;
-    protected int reloadTIme = 1500; //Reload time in milliseconds
-    protected int bulletsLeftInMagazine = 20;
-    protected int totalBullets = 200;
-    protected int fireRate; //Time between shots in milliseconds
-    protected long latestShot = 0;
-    protected boolean isReloading = false;
-    protected Timer reloadTimer;
-    protected Position position;
-    protected Vector2 direction;
+    private Projectile projectile;
+    private int magazineCapacity;
+    private int reloadTIme = 1500; //Reload time in milliseconds
+    private int bulletsLeftInMagazine = 20;
+    private int totalBullets = 200;
+    private int fireRate; //Time between shots in milliseconds
+    private long latestShot = 0;
+    private boolean isReloading = false;
+    private Timer reloadTimer;
+    private Position position;
+    private Vector2 direction;
 
     public Weapon (PositionInterface pos, Vector2 direction, int reloadTime, int fireRate, final int magazineCapacity) {
         position = new Position(pos);
@@ -58,7 +58,15 @@ public abstract class Weapon implements WeaponInterface {
         return false;
     }
 
-    public abstract Projectile fire();
+    public Projectile fire() {
+        long currentTime = System.currentTimeMillis();
+        if ((currentTime - latestShot) >= fireRate) {
+            latestShot = System.currentTimeMillis();
+            bulletsLeftInMagazine--;
+            return new Projectile(position, direction);
+        }
+        return null;
+    }
 
     public void addAmmo(int amount) {
         totalBullets += amount;
@@ -84,6 +92,14 @@ public abstract class Weapon implements WeaponInterface {
         return projectile;
     }
 
+    public void setLatestShot(long newValue) {
+        latestShot = newValue;
+    }
+
+    public long getLatestShot () {
+        return latestShot;
+    }
+
     public void setPosition(Position newPosition){
         position.setPos(newPosition);
     }
@@ -94,6 +110,10 @@ public abstract class Weapon implements WeaponInterface {
 
     public Position getPosition(){
         return position;
+    }
+
+    public void setBulletsLeftInMagazine(int newValue) {
+        bulletsLeftInMagazine = newValue;
     }
 
     public int getbulletsLeftInMagazine() {
