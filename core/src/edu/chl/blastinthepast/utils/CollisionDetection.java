@@ -214,14 +214,14 @@ public class CollisionDetection {
                 System.out.println("for");
                 if (c instanceof ProjectileView) {
                     System.out.println("if-1");
-                    if(collision.get(1).get(i) instanceof CharacterView) {
+                    if (collision.get(1).get(i) instanceof CharacterView) {
                         System.out.println("if-2");
                         ((CharacterView) collision.get(1).get(i)).hit((ProjectileView) c);
                     }
                     ((ProjectileView) c).dispose();
                 }
                 i++;
+            }
+        }
     }
-
-    */
 }
