@@ -158,27 +158,29 @@ public final class CollisionDetection {
         }
 
         private void resolve_1_Enemies (ArrayList<ArrayList<Collidable>> collision) {
-
+            for (Collidable c : collision.get(0)) {
+                if (c instanceof EnemyView) {
+                    ((EnemyView) c).setCollision();
+                }
+            }
         }
 
         private void resolve_2_Player (ArrayList<ArrayList<Collidable>> collision) {
-
+            for (Collidable c : collision.get(0)) {
+                if (c instanceof PlayerView) {
+                    ((PlayerView) c).setCollision();
+                }
+            }
         }
 
         private void resolve_3_Projectiles (ArrayList<ArrayList<Collidable>> collision) {
-
+            int i = 0;
+            for (Collidable c : collision.get(0)) {
+                if (c instanceof ProjectileView) {
+                    ((CharacterView) collision.get(1).get(i)).hit((ProjectileView) c);
+                }
+                i++;
+            }
         }
-
     }
-
-    /*
-
-    public static ArrayList<ArrayList<Collidable>> clean(final ArrayList<ArrayList<Collidable>> cs) {
-        for (ArrayList<ArrayList<Collidable>> aac : cs) {
-            aac.removeAll(Collections.singleton(null));
-        }
-        return cs;
-    }
-
-    */
 }
