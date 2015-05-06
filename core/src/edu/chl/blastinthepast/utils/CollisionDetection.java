@@ -17,7 +17,6 @@ public final class CollisionDetection {
 
         collision.addAll(new EnemiesVSEnvironment(enemies, player, chest, collisions).collision);
         collision.addAll(new PlayerVSEnvironment(player, enemies, chest, collisions).collision);
-        collision.addAll(new CharacterVSCharacter(player, enemies).collision);
         collision.addAll(new ProjectilesVSCharacters(player, enemies, projectiles).collision);
 
         new Resolve(collision);
@@ -106,19 +105,6 @@ public final class CollisionDetection {
             }
             return tCollision;
         }
-    }
-
-    private class CharacterVSCharacter {
-        ArrayList<ArrayList<Collidable>> collision;
-
-        private CharacterVSCharacter(PlayerView player, ArrayList<EnemyView> enemies) {
-            collision = new ArrayList<ArrayList<Collidable>>();
-
-        }
-
-
-
-
     }
 
     private class ProjectilesVSCharacters {
