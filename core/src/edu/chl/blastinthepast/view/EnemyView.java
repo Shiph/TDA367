@@ -38,6 +38,8 @@ public class EnemyView implements CharacterView {
         rectangle.get(0).width = 64;
         sprite.setX(rectangle.get(0).x);
         sprite.setY(rectangle.get(0).y);
+        collision = false;
+
     }
 
     /**

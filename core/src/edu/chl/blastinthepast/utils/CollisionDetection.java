@@ -25,7 +25,7 @@ public class CollisionDetection {
 
         addToCollision(new EnemiesVSEnvironment(enemies, player, chest, collisions).getCollision());
 
-        if (collision.size() > 0) {
+        if (collision.size() > 0 && collision.get(0).size() > 0) {
             System.out.println(collision);
         }
 
