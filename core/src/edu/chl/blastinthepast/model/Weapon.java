@@ -10,7 +10,7 @@ import javax.swing.Timer;
 /**
  * Created by Shif on 21/04/15.
  */
-public abstract class Weapon {
+public abstract class Weapon implements WeaponInterface {
 
     protected Projectile projectile;
     protected int magazineCapacity;
@@ -103,7 +103,7 @@ public abstract class Weapon {
         }
     }
 
-    private void reloadIfNeeded() {
+    public void reloadIfNeeded() {
         if (bulletsLeftInMagazine == 0) {
             reload();
         }
