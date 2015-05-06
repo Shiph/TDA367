@@ -16,6 +16,7 @@ public class Player implements Character {
     private Weapon weapon;
     private boolean north, south, west, east = false;
     private Position position;
+    private Position prevPos;
     private Vector2 aimDirection = new Vector2(1,0);
     private String movementDirection;
 
@@ -74,8 +75,20 @@ public class Player implements Character {
         return position;
     }
 
+    public Position getPrevPos() {
+        return prevPos;
+    }
+
+    public void setPrevPos (Position prevPos) {
+        this.prevPos = prevPos;
+    }
+
     public void setPosition(int x, int y) {
         position.setPos(x, y);
+    }
+
+    public void setPosition (Position position) {
+        this.position = position;
     }
 
     public void move(float dt) {
