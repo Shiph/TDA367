@@ -17,9 +17,10 @@ public class CollisionView implements Environment {
     private ArrayList<Rectangle> rectangle;
 
     public CollisionView() {
-        TiledMap tiledMap = new TideMapLoader().load("GrassTestMap1.tmx");
         rectangle = new ArrayList<Rectangle>();
-        rectangle.addAll(mapToRectangles(tiledMap));
+
+        //No CollisionObjectLayer exists in the map yet.
+        //rectangle.addAll(mapToRectangles(new TideMapLoader().load("GrassTestMap1.tmx"););
     }
 
     @Override
