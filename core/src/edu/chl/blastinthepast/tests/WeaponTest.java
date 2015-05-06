@@ -2,7 +2,6 @@ package edu.chl.blastinthepast.tests;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.AK47;
-import edu.chl.blastinthepast.model.AK47Projectile;
 import edu.chl.blastinthepast.model.Projectile;
 import edu.chl.blastinthepast.model.Weapon;
 import edu.chl.blastinthepast.utils.Position;
@@ -20,7 +19,7 @@ public class WeaponTest {
     @Test
     public void testFire() {
         if(weapon.hasAmmo()) {
-            assertTrue(weapon.fire() != null);
+            assertTrue(weapon.fire() instanceof Projectile);
         } else {
             assertTrue(weapon.fire() == null);
         }
