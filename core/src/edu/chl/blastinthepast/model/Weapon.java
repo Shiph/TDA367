@@ -15,7 +15,7 @@ public class Weapon implements WeaponInterface {
 
     private Projectile projectile;
     private int magazineCapacity;
-    private int reloadTIme = 1500; //Reload time in milliseconds
+    private int reloadTime; //Reload time in milliseconds
     private int bulletsLeftInMagazine = 20;
     private int totalBullets = 200;
     private int fireRate; //Time between shots in milliseconds
@@ -25,11 +25,15 @@ public class Weapon implements WeaponInterface {
     private Position position;
     private Vector2 direction;
 
+    public Weapon (PositionInterface pos, Vector2 direction) {
+        this(pos, direction, 1500, 100, 20);
+    }
+
     public Weapon (PositionInterface pos, Vector2 direction, int reloadTime, int fireRate, final int magazineCapacity) {
         position = new Position(pos);
         this.direction = direction;
         this.fireRate = fireRate;
-        this.reloadTIme = reloadTime;
+        this.reloadTime = reloadTime;
         this.magazineCapacity = magazineCapacity;
 
         ActionListener reloading = new ActionListener() {

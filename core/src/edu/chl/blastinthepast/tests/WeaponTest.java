@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
  */
 public class WeaponTest {
 
-    Weapon weapon = new AK47(new MockPosition(), new Vector2());
+    Weapon weapon = new Weapon(new MockPosition(), new Vector2());
 
     @Test
     public void testFire() {
