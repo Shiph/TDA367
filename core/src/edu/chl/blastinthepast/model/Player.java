@@ -148,4 +148,6 @@ public class Player implements Character {
     public void setMovementDirection(String movementDirection) {
         this.movementDirection = movementDirection;
     }
+
+    public String getMovementDirection(){return movementDirection;}
 }
