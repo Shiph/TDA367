@@ -6,15 +6,12 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
-import edu.chl.blastinthepast.model.GameState;
+import edu.chl.blastinthepast.model.*;
 import edu.chl.blastinthepast.controller.GameStateManager;
-import edu.chl.blastinthepast.model.BPModel;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import edu.chl.blastinthepast.model.Enemy;
-import edu.chl.blastinthepast.model.Projectile;
 import edu.chl.blastinthepast.utils.Position;
 
 import java.util.ArrayList;
@@ -33,6 +30,7 @@ public class PlayState extends GameState {
     private TiledMapRenderer tiledMapRenderer;
     private TiledMap tiledMap;
     private ArrayList<ProjectileView> projectiles = new ArrayList<ProjectileView>();
+    //private ArrayList<PowerUpView> powerUps= new ArrayList<PowerUpView>();
     private Sound wowSound;
     private Music music;
 
@@ -66,13 +64,11 @@ public class PlayState extends GameState {
     }
 
     private void addProjectiles(){
-        for (ProjectileView p : projectiles) {
-            p.dispose();
-        }
-        projectiles.clear();
         ArrayList<Projectile> projectileArray = model.getProjectiles();
+        ProjectileView v=new ProjectileView();
         for (Projectile p: projectileArray){
-            projectiles.add(new ProjectileView(p));
+            v.setProjectile(p);
+            v.draw(batch);
         }
     }
 
@@ -83,11 +79,11 @@ public class PlayState extends GameState {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         tiledMapRenderer.setView(camera);
-        addProjectiles();
         //music.play();
         for (EnemyView e : enemies) {
             e.update();
         }
+
     }
 
     @Override
@@ -97,9 +93,10 @@ public class PlayState extends GameState {
         for (EnemyView e : enemies) {
             e.draw(batch);
         }
-        for (ProjectileView p : projectiles) {
+        /**for (ProjectileView p : projectiles) {
             p.draw(batch);
-        }
+        }*/
+        addProjectiles();
     }
 
     @Override

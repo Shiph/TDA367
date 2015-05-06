@@ -16,8 +16,7 @@ public class ProjectileView {
     private Rectangle rectangle;
     private Projectile projectile;
 
-    public ProjectileView(Projectile newProjectile){
-        projectile=newProjectile;
+    public ProjectileView(){
         texture = new Texture(Gdx.files.local("triforce.png"));
         sprite = new Sprite(texture);
         rectangle = new Rectangle();
@@ -42,9 +41,17 @@ public class ProjectileView {
         return sprite;
     }
 
+    public void setProjectile(Projectile newProjectile){
+        projectile = newProjectile;
+    }
+
     private void updatePosition(){
         sprite.setPosition(projectile.getPosition().getX(), projectile.getPosition().getY());
         rectangle.setPosition(projectile.getPosition().getX(), projectile.getPosition().getY());
+    }
+
+    private void setRotation(){
+        sprite.setRotation(projectile.getDirection().angle());
     }
 
     /**
@@ -57,7 +64,7 @@ public class ProjectileView {
 
     public void draw(SpriteBatch batch) {
         updatePosition();
-        sprite.setRotation(projectile.getDirection().angle());
+        setRotation();
         batch.begin();
         sprite.draw(batch);
         batch.end();
