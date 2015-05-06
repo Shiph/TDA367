@@ -6,7 +6,7 @@ import java.util.LinkedList;
 /**
  * Created by Mattias on 15-04-23.
  */
-public class Inventory {
+public class Inventory implements InventoryInterface {
 
     ArrayList<ArrayList> allItems = new ArrayList<ArrayList>();
     ArrayList<Weapon> weapons = new ArrayList<Weapon>();

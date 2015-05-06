@@ -8,10 +8,10 @@ import edu.chl.blastinthepast.utils.Position;
  */
 public abstract class Projectile {
 
-    protected Vector2 direction;
-    protected float speed;
-    protected int damage;
-    protected Position position;
+    private Vector2 direction;
+    private float speed;
+    private int damage;
+    private Position position;
 
     public Projectile(float x, float y, Vector2 direction) {
         this.direction = new Vector2(direction);
@@ -24,7 +24,6 @@ public abstract class Projectile {
     }
 
     public void move(float dt) {
-
         position.setY(position.getY() + (float) Math.sin(direction.angleRad()) * speed * dt);
         position.setX(position.getX() + (float)Math.cos(direction.angleRad()) * speed * dt);
     }
@@ -41,6 +40,9 @@ public abstract class Projectile {
         damage = newDamage;
     }
 
+    public void setSpeed(int newSpeed) {
+        speed = newSpeed;
+    }
 
     /**
      *
