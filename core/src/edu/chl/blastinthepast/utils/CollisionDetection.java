@@ -2,7 +2,6 @@ package edu.chl.blastinthepast.utils;
 
 
 import com.badlogic.gdx.math.Rectangle;
-import edu.chl.blastinthepast.model.Player;
 import edu.chl.blastinthepast.view.*;
 
 import java.util.ArrayList;
@@ -15,15 +14,17 @@ public final class CollisionDetection {
     public enum Type {
         ENVIRONMENT, PROJECTILE
     }
-        
+
     public void update(ArrayList<EnemyView> enemies, PlayerView player, ArrayList<ProjectileView> projectiles, ChestView chest, CollisionView collisions) {
         ArrayList<ArrayList<Collidable>> collision = new ArrayList<ArrayList<Collidable>>();
 
         collision.addAll(new EnemiesVSEnvironment(enemies, player, chest, collisions).collision);
         collision.addAll(new PlayerVSEnvironment(player, enemies, chest, collisions).collision);
-        collision.addAll(new ProjectilesVSCharacters(player, enemies, projectiles).collision);
 
         new Resolve(collision, Type.ENVIRONMENT);
+
+        collision.clear();
+        collision.addAll(new ProjectilesVSEverything(player, enemies, projectiles).collision);
 
         new Resolve(collision, Type.PROJECTILE);
     }
@@ -114,10 +115,10 @@ public final class CollisionDetection {
         }
     }
 
-    private class ProjectilesVSCharacters {
+    private class ProjectilesVSEverything {
         ArrayList<ArrayList<Collidable>> collision;
 
-        private ProjectilesVSCharacters (PlayerView player, ArrayList<EnemyView> enemies, ArrayList<ProjectileView> projectiles) {
+        private ProjectilesVSEverything(PlayerView player, ArrayList<EnemyView> enemies, ArrayList<ProjectileView> projectiles) {
             collision = new ArrayList<ArrayList<Collidable>>();
             collision.addAll(projectilesVSPlayer(projectiles, player));
             collision.addAll(projectilesVSEnemies(projectiles, enemies));
@@ -157,6 +158,7 @@ public final class CollisionDetection {
             for (Collidable c : collision.get(0)) {
                 if (c instanceof EnemyView) {
                     ((EnemyView) c).setCollision();
+                    ((EnemyView) c).update();
                 }
             }
         }
@@ -165,6 +167,7 @@ public final class CollisionDetection {
             for (Collidable c : collision.get(0)) {
                 if (c instanceof PlayerView) {
                     ((PlayerView) c).setCollision();
+                    ((PlayerView) c).updatePosition();
                 }
             }
         }
