@@ -69,7 +69,7 @@ public class PlayerView implements CharacterView {
 
     @Override
     public void hit(ProjectileView projectile) {
-
+        System.out.println("Player hit!");
     }
 
     public void updatePosition(){

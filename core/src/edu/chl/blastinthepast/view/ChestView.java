@@ -20,7 +20,9 @@ public class ChestView implements Environment {
 
     public ChestView () {
         rectangle = new ArrayList<Rectangle>();
-        rectangle.addAll(mapToRectangles(new TideMapLoader().load("GrassTestMap1.tmx")));
+
+        //No ChestObjectLayer exists in the map yet.
+        //rectangle.addAll(mapToRectangles(new TideMapLoader().load("GrassTestMap1.tmx")));
     }
 
     @Override
