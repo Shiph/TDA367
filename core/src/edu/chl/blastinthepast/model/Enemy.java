@@ -19,6 +19,7 @@ public class Enemy extends Observable implements Character {
     protected int health;
     protected int movementSpeed;
     protected Position position;
+    protected Position prevPos;
     protected Weapon weapon;
     protected MyActionListener actionListener;
     protected Timer timer;
@@ -104,6 +105,18 @@ public class Enemy extends Observable implements Character {
 
     public Position getPosition(){
         return position;
+    }
+
+    public void setPosition (Position position) {
+        this.position = position;
+    }
+
+    public Position getPrevPos(){
+        return prevPos;
+    }
+
+    public void setPrevPos (Position prevPos) {
+        this.prevPos = prevPos;
     }
 
     public Weapon getWeapon() {

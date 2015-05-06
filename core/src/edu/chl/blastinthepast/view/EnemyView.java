@@ -93,8 +93,12 @@ public class EnemyView implements CharacterView {
         if (!collision) {
             sprite.setPosition(enemy.getPosition().getX() - 32, enemy.getPosition().getY() - 32);
             rectangle.get(0).setPosition(enemy.getPosition().getX(), enemy.getPosition().getY());
+        } else if (collision) {
+            enemy.setPosition(enemy.getPrevPos());
+            sprite.setPosition(enemy.getPosition().getX() - 32, enemy.getPosition().getY() - 32);
+            rectangle.get(0).setPosition(enemy.getPosition().getX(), enemy.getPosition().getY());
+            collision = false;
         }
-        collision = false;
         sprite.setRotation(enemy.getDirection().angle());
     }
 
