@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import edu.chl.blastinthepast.utils.Position;
+import edu.chl.blastinthepast.utils.SoundAssets;
 
 import java.util.ArrayList;
 
@@ -49,8 +50,8 @@ public class PlayState extends GameState {
         camera.update();
         tiledMap = new TmxMapLoader().load("GrassTestMap1.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
-        wowSound = Gdx.audio.newSound(Gdx.files.internal("wow.mp3"));
-        music = Gdx.audio.newMusic(Gdx.files.internal("sanic.mp3"));
+        wowSound = SoundAssets.WOW_SOUND;
+        music = SoundAssets.SANIC_THEME;
         music.setVolume(0.2f);
         music.setLooping(true);
         addEnemies();
@@ -64,11 +65,10 @@ public class PlayState extends GameState {
     }
 
     private void addProjectiles(){
+        projectiles.clear();
         ArrayList<Projectile> projectileArray = model.getProjectiles();
-        ProjectileView v=new ProjectileView();
         for (Projectile p: projectileArray){
-            v.setProjectile(p);
-            v.draw(batch);
+            projectiles.add(new ProjectileView(p));
         }
     }
 
@@ -88,15 +88,15 @@ public class PlayState extends GameState {
 
     @Override
     public void draw() {
+        addProjectiles();
         tiledMapRenderer.render();
         playerView.draw(batch);
         for (EnemyView e : enemies) {
             e.draw(batch);
         }
-        /**for (ProjectileView p : projectiles) {
+        for (ProjectileView p : projectiles) {
             p.draw(batch);
-        }*/
-        addProjectiles();
+        }
     }
 
     @Override

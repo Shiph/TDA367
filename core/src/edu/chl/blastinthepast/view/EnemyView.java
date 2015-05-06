@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.model.Enemy;
+import edu.chl.blastinthepast.utils.GraphicalAssets;
 import edu.chl.blastinthepast.utils.Position;
 import com.badlogic.gdx.math.Vector2;
 
@@ -21,13 +22,9 @@ public class EnemyView implements CharacterView {
     private static final int DELAY = 2500;
     private Array<Rectangle> rectangle;
     private Enemy enemy;
-    private Timer timer;
-    private int movementSpeed;
-    private int health;
-    private Vector2 vector;
 
     EnemyView(Enemy newEnemy){
-        texture = new Texture(Gdx.files.local("kim.png"));
+        texture = GraphicalAssets.KIM;
         sprite = new Sprite(texture);
         rectangle = new Array(true,1,Rectangle.class);
         rectangle.size = 1;

@@ -1,11 +1,11 @@
 package edu.chl.blastinthepast.view;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import edu.chl.blastinthepast.model.Projectile;
+import edu.chl.blastinthepast.utils.GraphicalAssets;
 
 /**
  * Created by jonas on 2015-04-23.
@@ -16,8 +16,9 @@ public class ProjectileView {
     private Rectangle rectangle;
     private Projectile projectile;
 
-    public ProjectileView(){
-        texture = new Texture(Gdx.files.local("triforce.png"));
+    public ProjectileView(Projectile projectile){
+        this.projectile=projectile;
+        texture = GraphicalAssets.TRIFORCE_BULLET;
         sprite = new Sprite(texture);
         rectangle = new Rectangle();
         rectangle.height = 64;
@@ -39,10 +40,6 @@ public class ProjectileView {
      */
     public Sprite getSprite() {
         return sprite;
-    }
-
-    public void setProjectile(Projectile newProjectile){
-        projectile = newProjectile;
     }
 
     private void updatePosition(){

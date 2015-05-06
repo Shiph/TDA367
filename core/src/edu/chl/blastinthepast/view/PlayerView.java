@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.model.Player;
+import edu.chl.blastinthepast.utils.GraphicalAssets;
 
 /**
  * Created by jonas on 2015-04-23.
@@ -21,7 +22,7 @@ public class PlayerView implements CharacterView {
     private WeaponView weaponView;
 
     public PlayerView(Player newPlayer){
-        texture = new Texture(Gdx.files.local("sanic.png"));
+        texture = GraphicalAssets.SANIC;
         sprite = new Sprite(texture);
         rectangle = new Array(true,1,Rectangle.class);
         rectangle.size = 1;
