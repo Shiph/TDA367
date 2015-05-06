@@ -19,24 +19,35 @@ public class PlayerTest {
 
     @Before
     public void before(){
-        System.out.println("hejhej");
         player=new Player();
     }
 
     @Test
     public void testCalculateDirection(){
-        System.out.println("bajbaj");
-        player.setPosition(0, 0);
         player.calculateDirection(new Position(1, 1));
-        Vector2 v=new Vector2(1, 1);
+        Vector2 v = new Vector2(1, 1);
         v.scl(1 / v.len());
         assertTrue(player.getAimDirection().equals(v));
     }
 
-    @After
-    public void after(){
-        System.out.println("hejdå");
-        player=new Player();
+    @Test
+    public void testMove(){
+        player.setPosition(0, 0);
+        player.setMovementDirection("north");
+        player.move(200f);
+        assertTrue(player.getPosition().getY()>0);
+        player.setPosition(0, 0);
+        player.setMovementDirection("south");
+        player.move(200f);
+        assertTrue(player.getPosition().getY()<0);
+        player.setPosition(0, 0);
+        player.setMovementDirection("west");
+        player.move(200f);
+        assertTrue(player.getPosition().getX()<0);
+        player.setPosition(0, 0);
+        player.setMovementDirection("east");
+        player.move(200f);
+        assertTrue(player.getPosition().getX()>0);
     }
 
 
