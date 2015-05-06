@@ -11,6 +11,10 @@ import java.util.ArrayList;
  * Created by qwerty458 on 4/23/15.
  */
 public final class CollisionDetection {
+
+    public enum Type {
+        ENVIRONMENT, PROJECTILE
+    }
         
     public void update(ArrayList<EnemyView> enemies, PlayerView player, ArrayList<ProjectileView> projectiles, ChestView chest, CollisionView collisions) {
         ArrayList<ArrayList<Collidable>> collision = new ArrayList<ArrayList<Collidable>>();
@@ -19,8 +23,11 @@ public final class CollisionDetection {
         collision.addAll(new PlayerVSEnvironment(player, enemies, chest, collisions).collision);
         collision.addAll(new ProjectilesVSCharacters(player, enemies, projectiles).collision);
 
-        new Resolve(collision);
+        new Resolve(collision, Type.ENVIRONMENT);
+
+        new Resolve(collision, Type.PROJECTILE);
     }
+
 
     public static ArrayList<ArrayList<Collidable>> collisionDetector(Collidable c1, Collidable c2) {
         ArrayList<ArrayList<Collidable>> collision = new ArrayList<ArrayList<Collidable>>();
@@ -137,10 +144,13 @@ public final class CollisionDetection {
 
     private static final class Resolve {
 
-        private Resolve (ArrayList<ArrayList<Collidable>> collision) {
-            resolve_1_Enemies(collision);
-            resolve_2_Player(collision);
-            resolve_3_Projectiles(collision);
+        private Resolve (ArrayList<ArrayList<Collidable>> collision, Type t) {
+            if (t.equals(Type.ENVIRONMENT)) {
+                resolve_1_Enemies(collision);
+                resolve_2_Player(collision);
+            } else if (t.equals(Type.PROJECTILE)) {
+                resolve_3_Projectiles(collision);
+            }
         }
 
         private void resolve_1_Enemies (ArrayList<ArrayList<Collidable>> collision) {

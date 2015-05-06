@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by qwerty458 on 5/4/15.
  */
-public class CollisionView implements Collidable {
+public class CollisionView implements Environment {
     private ArrayList<Rectangle> rectangle;
 
     public CollisionView() {

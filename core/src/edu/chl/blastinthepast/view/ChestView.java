@@ -14,7 +14,7 @@ import java.util.ArrayList;
 /**
  * Created by qwerty458 on 5/4/15.
  */
-public class ChestView implements Collidable {
+public class ChestView implements Environment {
     private ArrayList<Rectangle> rectangle;
     private Chest chest;
 
