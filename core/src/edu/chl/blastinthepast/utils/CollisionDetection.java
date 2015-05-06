@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import edu.chl.blastinthepast.view.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by qwerty458 on 4/23/15.
@@ -16,16 +17,24 @@ public class CollisionDetection {
     }
 
     public CollisionDetection (ArrayList<EnemyView> enemies, PlayerView player, ArrayList<ProjectileView> projectiles, ChestView chest, CollisionView collisions) {
-        ArrayList<ArrayList<Collidable>> collision = new ArrayList<>(2);
+        ArrayList<ArrayList<Collidable>> collision = new ArrayList<ArrayList<Collidable>>(2);
         collision.add(new ArrayList<Collidable>());
         collision.add(new ArrayList<Collidable>());
 
         collision.addAll(new EnemiesVSEnvironment(enemies, player, chest, collisions).collision);
+        //System.out.println(collision.get(0).get(0) + "enemies");
+
+
+        new Resolve(collision, Type.ENVIRONMENT);
+
+
         collision.addAll(new PlayerVSEnvironment(player, enemies, chest, collisions).collision);
+        //System.out.println(collision.get(0).get(0) + "player");
 
         new Resolve(collision, Type.ENVIRONMENT);
 
         collision.addAll(new ProjectilesVSEverything(player, enemies, projectiles).collision);
+        //System.out.println(collision.get(0).get(0) + "projectiles");
 
         new Resolve(collision, Type.PROJECTILE);
     }
@@ -54,15 +63,30 @@ public class CollisionDetection {
         return collision;
     }
 
+    public ArrayList<ArrayList<Collidable>> clean (ArrayList<ArrayList<Collidable>> c) {
+        ArrayList<ArrayList<Collidable>> tCollision = new ArrayList<ArrayList<Collidable>>();
+        for (ArrayList<Collidable> e : c) {
+            e.removeAll(Collections.singleton(null));
+            if (e.size() > 0) {
+                tCollision.add(e);
+            }
+        }
+        return tCollision;
+    }
+
 
     public class EnemiesVSEnvironment {
         private ArrayList<ArrayList<Collidable>> collision;
 
-        private EnemiesVSEnvironment(ArrayList<EnemyView> enemies, PlayerView player, ChestView chest, CollisionView collisions) {
+        public EnemiesVSEnvironment(ArrayList<EnemyView> enemies, PlayerView player, ChestView chest, CollisionView collisions) {
             collision = new ArrayList<ArrayList<Collidable>>();
             collision.addAll(enemiesVSChest(enemies, chest));
             collision.addAll(enemiesVSCollisions(enemies, collisions));
             collision.addAll(enemiesVSPlayer(enemies, player));
+            collision = clean(collision);
+            if (collision.size() > 0 && collision.get(0).size() > 0) {
+                System.out.println(collision);
+            }
         }
 
         private ArrayList<ArrayList<Collidable>> enemiesVSChest(ArrayList<EnemyView> enemies, ChestView chest) {
@@ -70,6 +94,7 @@ public class CollisionDetection {
             for (EnemyView e : enemies) {
                 tCollision.addAll(collisionDetector(e, chest));
             }
+            tCollision = clean(tCollision);
             return tCollision;
         }
 
@@ -78,6 +103,7 @@ public class CollisionDetection {
             for (EnemyView e : enemies) {
                 tCollision.addAll(collisionDetector(e, collisions));
             }
+            tCollision = clean(tCollision);
             return tCollision;
         }
 
@@ -86,6 +112,7 @@ public class CollisionDetection {
             for (EnemyView e : enemies) {
                 tCollision.addAll(collisionDetector(e, player));
             }
+            tCollision = clean(tCollision);
             return tCollision;
         }
 
@@ -94,11 +121,12 @@ public class CollisionDetection {
     public class PlayerVSEnvironment {
         ArrayList<ArrayList<Collidable>> collision;
 
-        private PlayerVSEnvironment(PlayerView player, ArrayList<EnemyView> enemies, ChestView chest, CollisionView collisions) {
+        public PlayerVSEnvironment(PlayerView player, ArrayList<EnemyView> enemies, ChestView chest, CollisionView collisions) {
             collision = new ArrayList<ArrayList<Collidable>>();
             collision.addAll(playerVSChest(player, chest));
             collision.addAll(playerVSCollision(player, collisions));
             collision.addAll(playerVSEnemies(player, enemies));
+            collision = clean(collision);
         }
 
         private ArrayList<ArrayList<Collidable>> playerVSChest (PlayerView player, ChestView chest) {
@@ -114,6 +142,7 @@ public class CollisionDetection {
             for (EnemyView e : enemies) {
                 tCollision.addAll(collisionDetector(player, e));
             }
+            tCollision = clean(tCollision);
             return tCollision;
         }
     }
@@ -121,10 +150,11 @@ public class CollisionDetection {
     public class ProjectilesVSEverything {
         ArrayList<ArrayList<Collidable>> collision;
 
-        private ProjectilesVSEverything(PlayerView player, ArrayList<EnemyView> enemies, ArrayList<ProjectileView> projectiles) {
+        public ProjectilesVSEverything(PlayerView player, ArrayList<EnemyView> enemies, ArrayList<ProjectileView> projectiles) {
             collision = new ArrayList<ArrayList<Collidable>>();
             collision.addAll(projectilesVSPlayer(projectiles, player));
             collision.addAll(projectilesVSEnemies(projectiles, enemies));
+            collision = clean(collision);
         }
 
         private ArrayList<ArrayList<Collidable>> projectilesVSPlayer (ArrayList<ProjectileView> projectiles, PlayerView player) {
@@ -132,6 +162,7 @@ public class CollisionDetection {
             for (ProjectileView p : projectiles) {
                 tCollision.addAll(collisionDetector(p, player));
             }
+            tCollision = clean(tCollision);
             return tCollision;
         }
 
@@ -142,13 +173,14 @@ public class CollisionDetection {
                     tCollision.addAll(collisionDetector(p, e));
                 }
             }
+            tCollision = clean(tCollision);
             return tCollision;
         }
     }
 
     public class Resolve {
 
-        private Resolve (ArrayList<ArrayList<Collidable>> collision, Type t) {
+        public Resolve (ArrayList<ArrayList<Collidable>> collision, Type t) {
             if (t.equals(Type.ENVIRONMENT)) {
                 resolve_1_Enemies(collision);
                 resolve_2_Player(collision);
@@ -177,9 +209,13 @@ public class CollisionDetection {
 
         private void resolve_3_Projectiles (ArrayList<ArrayList<Collidable>> collision) {
             int i = 0;
+            //System.out.println(collision.get(0).get(0));
             for (Collidable c : collision.get(0)) {
+                System.out.println("for");
                 if (c instanceof ProjectileView) {
+                    System.out.println("if-1");
                     if(collision.get(1).get(i) instanceof CharacterView) {
+                        System.out.println("if-2");
                         ((CharacterView) collision.get(1).get(i)).hit((ProjectileView) c);
                     }
                     ((ProjectileView) c).dispose();
