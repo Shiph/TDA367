@@ -21,6 +21,7 @@ public class PlayerView implements CharacterView {
     private Player player;
     private Vector2 direction;
     private WeaponView weaponView;
+    private boolean collision;
 
     public PlayerView(Player newPlayer){
         texture = new Texture(Gdx.files.local("sanic.png"));
@@ -66,9 +67,22 @@ public class PlayerView implements CharacterView {
         return sprite;
     }
 
+    @Override
+    public void hit(ProjectileView projectile) {
+        System.out.println("Player hit!");
+    }
+
     public void updatePosition(){
-        sprite.setPosition(player.getPosition().getX(), player.getPosition().getY());
-        rectangle.get(0).setPosition(player.getPosition().getX(), player.getPosition().getY());
+        if (!collision) {
+            sprite.setPosition(player.getPosition().getX(), player.getPosition().getY());
+            rectangle.get(0).setPosition(player.getPosition().getX(), player.getPosition().getY());
+        } else if (collision) {
+            player.setPosition(player.getPrevPos());
+            sprite.setPosition(player.getPosition().getX(), player.getPosition().getY());
+            rectangle.get(0).setPosition(player.getPosition().getX(), player.getPosition().getY());
+            collision = false;
+        }
+
     }
 
     public void draw(SpriteBatch batch) {
@@ -80,10 +94,14 @@ public class PlayerView implements CharacterView {
         weaponView.draw(batch);
     }
 
-    public void rotate(){
+    public void rotate () {
         direction = player.getAimDirection();
         sprite.setOrigin(32, 32);
         sprite.setRotation(direction.angle());
+    }
+
+    public void setCollision () {
+        collision = true;
     }
 
     public void dispose() {

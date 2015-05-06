@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import edu.chl.blastinthepast.model.Enemy;
 import edu.chl.blastinthepast.model.Projectile;
+import edu.chl.blastinthepast.utils.CollisionDetection;
 import edu.chl.blastinthepast.utils.Position;
 
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ public class PlayState extends GameState {
     private BPModel model;
     private PlayerView playerView;
     private ArrayList<EnemyView> enemies;
+    private ChestView chestView;
+    private CollisionView collisionView;
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private TiledMapRenderer tiledMapRenderer;
@@ -41,6 +44,8 @@ public class PlayState extends GameState {
     @Override
     public void init(BPModel model) {
         this.model=model;
+        chestView = new ChestView();
+        collisionView = new CollisionView();
         playerView = new PlayerView(model.getPlayer());
         enemies = new ArrayList<EnemyView>();
         batch = new SpriteBatch();
@@ -85,6 +90,7 @@ public class PlayState extends GameState {
         for (EnemyView e : enemies) {
             e.update();
         }
+        new CollisionDetection(enemies, playerView, projectiles, chestView, collisionView);
     }
 
     @Override

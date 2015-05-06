@@ -24,7 +24,7 @@ public abstract class Weapon implements WeaponInterface {
     protected Position position;
     protected Vector2 direction;
 
-    public Weapon (Position pos, Vector2 direction, int reloadTime, int fireRate, int magazineCapacity) {
+    public Weapon (Position pos, Vector2 direction, int reloadTime, int fireRate, final int magazineCapacity) {
         position = new Position(pos);
         this.direction = direction;
         this.fireRate = fireRate;

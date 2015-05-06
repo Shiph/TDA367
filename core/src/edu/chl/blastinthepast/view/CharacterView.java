@@ -17,4 +17,6 @@ public interface CharacterView extends Collidable {
 
     public Sprite getSprite();
 
+    public void hit(ProjectileView projectile);
+
 }

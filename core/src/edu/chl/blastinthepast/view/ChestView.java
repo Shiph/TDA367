@@ -14,14 +14,15 @@ import java.util.ArrayList;
 /**
  * Created by qwerty458 on 5/4/15.
  */
-public class ChestView implements Collidable {
+public class ChestView implements Environment {
     private ArrayList<Rectangle> rectangle;
     private Chest chest;
 
     public ChestView () {
-        TiledMap tiledMap = new TideMapLoader().load("GrassTestMap1.tmx");
         rectangle = new ArrayList<Rectangle>();
-        rectangle.addAll(mapToRectangles(tiledMap));
+
+        //No ChestObjectLayer exists in the map yet.
+        //rectangle.addAll(mapToRectangles(new TideMapLoader().load("GrassTestMap1.tmx")));
     }
 
     @Override
