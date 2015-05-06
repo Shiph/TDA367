@@ -40,6 +40,7 @@ public class WeaponTest {
     public void testPosition() {
         Position p = new Position(13,37);
         weapon.setPosition(13,37);
+        assertTrue(p.equals(weapon.getPosition()));
         assertFalse(p == weapon.getPosition());
         p = weapon.getPosition();
         assertTrue(p == weapon.getPosition());

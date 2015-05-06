@@ -43,6 +43,14 @@ public class Position {
         y=pos.getY();
     }
 
+    public boolean equals(Position pos) {
+        return (pos.getX() == this.getX() && pos.getY() == this.getY());
+    }
+
+    public int hashCode() {
+        return (int)(x * 509 + y * 643);
+    }
+
     public String toString(){
         return "X: "+x+" Y: "+y;
     }
