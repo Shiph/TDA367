@@ -19,15 +19,13 @@ public class CollisionDetection {
     ArrayList<ArrayList<Collidable>> collision;
 
     public CollisionDetection () {
-        ArrayList<ArrayList<Collidable>> collision = new ArrayList<>(2);
-        collision.add(new ArrayList<Collidable>());
-        collision.add(new ArrayList<Collidable>());
+        clearAndInitializeCollision();
     }
 
     public CollisionDetection (ArrayList<EnemyView> enemies, PlayerView player, ArrayList<ProjectileView> projectiles, ChestView chest, CollisionView collisions) {
-        ArrayList<ArrayList<Collidable>> collision = new ArrayList<>(2);
-        collision.add(new ArrayList<Collidable>());
-        collision.add(new ArrayList<Collidable>());
+        new EnemyCD(enemies, player, chest, collisions);
+        new PlayerCD(player, enemies, chest, collisions);
+        new ProjectileCD(player, enemies, projectiles);
     }
 
 
@@ -65,15 +63,15 @@ public class CollisionDetection {
         return tCollision;
     }
 
-    public void addToCollision (ArrayList<ArrayList<Collidable>> c) {
-        if (c.size() > 0) {
-            for (int i = 0; i < 2; i++) {
-                collision.get(i).addAll(c.get(i));
-            }
-        }
+    public void clearAndInitializeCollision () {
+        collision.clear();
+        ArrayList<ArrayList<Collidable>> collision = new ArrayList<>(2);
+        collision.add(new ArrayList<Collidable>());
+        collision.add(new ArrayList<Collidable>());
     }
 
-    public class Resolve {
+        /*
+    class Resolve {
 
         public Resolve(ArrayList<ArrayList<Collidable>> collisionR, Type t) {
             if (t.equals(Type.ENVIRONMENT)) {
@@ -122,4 +120,5 @@ public class CollisionDetection {
             }
         }
     }
+    */
 }
