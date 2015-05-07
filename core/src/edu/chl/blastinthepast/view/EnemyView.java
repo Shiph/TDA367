@@ -77,7 +77,7 @@ public class EnemyView implements CharacterView {
 
     @Override
     public void hit(ProjectileView projectile) {
-        System.out.println("Enemy hit!");
+        System.out.println(this);
     }
 
     public Position getPosition(){

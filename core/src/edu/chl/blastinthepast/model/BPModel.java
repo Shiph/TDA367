@@ -75,7 +75,7 @@ public class BPModel implements Observer {
     }
 
     private void spawnEnemies() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 1; i++) {
             enemies.add(new Enemy(player));
         }
         for (Enemy e : enemies) {

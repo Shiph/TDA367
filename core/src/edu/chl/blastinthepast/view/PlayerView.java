@@ -77,7 +77,7 @@ public class PlayerView implements CharacterView {
 
     @Override
     public void hit(ProjectileView projectile) {
-        System.out.println("Player hit!");
+        System.out.println(this);
     }
 
     public void updatePosition(){
