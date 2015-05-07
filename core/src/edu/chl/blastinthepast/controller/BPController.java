@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import edu.chl.blastinthepast.model.BPModel;
 import edu.chl.blastinthepast.model.GameState;
 import edu.chl.blastinthepast.model.Projectile;
+import edu.chl.blastinthepast.model.ProjectileInterface;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.view.*;
 
@@ -56,7 +57,7 @@ public class BPController implements PropertyChangeListener {
                 if(currentGameState instanceof PlayState) {
                     try {
                         //model.getPlayer().act("shoot", Gdx.graphics.getDeltaTime());
-                        Projectile p = model.getPlayer().getWeapon().pullTrigger();
+                        ProjectileInterface p = model.getPlayer().getWeapon().pullTrigger();
                         if (p != null) {
                             model.addProjectile(p);
                         } else {

@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.model.Projectile;
 import com.badlogic.gdx.audio.Sound;
+import edu.chl.blastinthepast.model.ProjectileInterface;
 
 import java.util.ArrayList;
 
@@ -18,11 +19,11 @@ public class ProjectileView implements Collidable {
     private Texture texture;
     private Sprite sprite;
     private ArrayList<Rectangle> rectangle;
-    private Projectile projectile;
+    private ProjectileInterface projectile;
     //private Sound fireSound = Gdx.audio.newSound(Gdx.files.internal("wow.mp3"));
 
-    public ProjectileView(Projectile newProjectile) {
-        projectile = newProjectile;
+    public ProjectileView(ProjectileInterface projectile) {
+        this.projectile = projectile;
         texture = new Texture(Gdx.files.local("triforce.png"));
         sprite = new Sprite(texture);
         rectangle = new ArrayList<Rectangle>();

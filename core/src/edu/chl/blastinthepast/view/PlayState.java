@@ -5,15 +5,12 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
-import edu.chl.blastinthepast.model.GameState;
+import edu.chl.blastinthepast.model.*;
 import edu.chl.blastinthepast.controller.GameStateManager;
-import edu.chl.blastinthepast.model.BPModel;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import edu.chl.blastinthepast.model.Enemy;
-import edu.chl.blastinthepast.model.Projectile;
 import edu.chl.blastinthepast.utils.CollisionDetection;
 import edu.chl.blastinthepast.utils.Position;
 
@@ -72,8 +69,8 @@ public class PlayState extends GameState {
             p.dispose();
         }
         projectiles.clear();
-        ArrayList<Projectile> projectileArray = model.getProjectiles();
-        for (Projectile p: projectileArray){
+        ArrayList<ProjectileInterface> projectileArray = model.getProjectiles();
+        for (ProjectileInterface p: projectileArray){
             projectiles.add(new ProjectileView(p));
         }
     }

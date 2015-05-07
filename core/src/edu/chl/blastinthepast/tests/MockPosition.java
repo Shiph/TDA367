@@ -11,6 +11,15 @@ public class MockPosition implements PositionInterface {
     private float x;
     private float y;
 
+    public MockPosition(){
+        this(0,0);
+    }
+
+    public MockPosition(float x, float y) {
+        this.x = x;
+        this.y = y;
+    }
+
     @Override
     public float getX() {
         return 0;
@@ -45,7 +54,7 @@ public class MockPosition implements PositionInterface {
 
     @Override
     public boolean equals(PositionInterface pos) {
-        return false;
+        return (pos.getX() == x && pos.getY() == y);
     }
 
     @Override
