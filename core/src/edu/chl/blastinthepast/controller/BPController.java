@@ -1,41 +1,52 @@
 package edu.chl.blastinthepast.controller;
 
+import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import edu.chl.blastinthepast.model.BPModel;
-import edu.chl.blastinthepast.model.GameState;
-import edu.chl.blastinthepast.model.Projectile;
 import edu.chl.blastinthepast.model.ProjectileInterface;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.view.*;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 /**
  * Created by Shif on 20/04/15.
  */
-public class BPController implements PropertyChangeListener {
+public class BPController extends ApplicationAdapter implements PropertyChangeListener {
+
     private BPModel model;
-    private BPView view;
+    private InputHandler inputHandler;
+    private GameStateManager gsm;
 
-    private BPController(BPModel model, BPView view) {
+    private BPController(BPModel model) {
         this.model = model;
-        this.view = view;
-        init();
     }
 
-    private void init() {
-        view.addListener(this);
+    @Override
+    public void render () {
+        inputHandler.checkForInput();
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        gsm.update(Gdx.graphics.getDeltaTime());
+        gsm.draw();
     }
 
-    public static BPController create(BPModel model, BPView view) {
-        return new BPController(model, view);
+    @Override
+    public void create() {
+        inputHandler = new InputHandler();
+        inputHandler.addListener(this);
+        Gdx.input.setInputProcessor(inputHandler);
+        gsm = new GameStateManager(model);
+    }
+
+    public static BPController create(BPModel model) {
+        return new BPController(model);
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        GameState currentGameState = view.getGameStateController().getGameState();
-        GameStateManager gameStateManager = view.getGameStateController();
+        GameState currentGameState = gsm.getGameState();
 
         switch(evt.getPropertyName()) {
             case "west":
@@ -70,13 +81,13 @@ public class BPController implements PropertyChangeListener {
                 break;
             case "escape":
                     if (currentGameState instanceof PlayState) {
-                        gameStateManager.setState(GameStateManager.INGAMEMENU, true);
-                        gameStateManager.getGameState().draw();
+                        gsm.setState(GameStateManager.INGAMEMENU, true);
+                        gsm.getGameState().draw();
                     } else if (currentGameState instanceof InGameMenu) {
-                        gameStateManager.setState(GameStateManager.PLAY, true);
-                        gameStateManager.getGameState().draw();
+                        gsm.setState(GameStateManager.PLAY, true);
+                        gsm.getGameState().draw();
                     } else if (currentGameState instanceof HighScoreState) {
-                        gameStateManager.setState(GameStateManager.MAINMENU, false);
+                        gsm.setState(GameStateManager.MAINMENU, false);
                     }
                 break;
             case "enter":
@@ -86,7 +97,7 @@ public class BPController implements PropertyChangeListener {
                     ((MainMenu) currentGameState).select();
                 } else if (currentGameState instanceof GameOverState) {
                     ((GameOverState) currentGameState).select();
-                    gameStateManager.setState(GameStateManager.MAINMENU, false);
+                    gsm.setState(GameStateManager.MAINMENU, false);
                 }
                 break;
             case "up":
@@ -108,8 +119,8 @@ public class BPController implements PropertyChangeListener {
                 }
                 break;
             case "mouseMoved":
-                if (view.getGameStateController().getGameState() instanceof PlayState) {
-                    PlayState playState = (PlayState)view.getGameStateController().getGameState();
+                if (gsm.getGameState() instanceof PlayState) {
+                    PlayState playState = (PlayState)gsm.getGameState();
                     if (evt.getNewValue() instanceof Position) {
                         Position mouseScreenPos = (Position) evt.getNewValue();
                         Position mouseWorldPos = playState.screenToWorldCoordinates(mouseScreenPos);

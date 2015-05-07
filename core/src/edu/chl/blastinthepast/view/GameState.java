@@ -1,6 +1,5 @@
-package edu.chl.blastinthepast.model;
+package edu.chl.blastinthepast.view;
 
-import edu.chl.blastinthepast.controller.GameStateManager;
 import edu.chl.blastinthepast.model.BPModel;
 
 /**
