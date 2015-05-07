@@ -12,10 +12,6 @@ import java.util.Collections;
  */
 public class CollisionDetection {
 
-    public enum Type {
-        ENVIRONMENT, PROJECTILE
-    }
-
     protected ArrayList<ArrayList<Collidable>> collision;
 
     public CollisionDetection () {
@@ -63,7 +59,7 @@ public class CollisionDetection {
         return tCollision;
     }
 
-    public void clearAndInitializeCollision () {
+    void clearAndInitializeCollision () {
         if (collision == null) {
             collision = new ArrayList<>(2);
             collision.add(new ArrayList<Collidable>());
@@ -73,6 +69,12 @@ public class CollisionDetection {
             collision.get(1).clear();
         }
     }
+
+
+    /*
+        This method is meant to resolve the effects of the collisions, and MUST be implemented in inheriting CD classes.
+     */
+    void resolve(){}
 
         /*
     class Resolve {

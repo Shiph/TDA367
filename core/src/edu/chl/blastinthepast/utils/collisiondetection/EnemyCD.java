@@ -14,12 +14,10 @@ public class EnemyCD extends CollisionDetection {
         collision.addAll(enemiesVSChest(enemies, chest));
         collision.addAll(enemiesVSCollisions(enemies, collisions));
         collision.addAll(enemiesVSPlayer(enemies, player));
-        collision = clean(collision);
-            /*
-            if (collisionEVSE.size() > 0 && collisionEVSE.get(0).size() > 0) {
-                System.out.println(collisionEVSE);
-            }
-            */
+        //collision = clean(collision);
+        if (!collision.get(0).isEmpty()) {
+            System.out.println("Enemy" + collision);
+        }
     }
 
     public ArrayList<ArrayList<Collidable>> getCollision () {
