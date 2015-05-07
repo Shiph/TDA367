@@ -10,16 +10,12 @@ import java.util.ArrayList;
 /**
  * Created by qwerty458 on 5/7/15.
  */
-public class Projectiles extends CollisionDetection {
+public class ProjectileCD extends CollisionDetection {
 
-    public Projectiles(PlayerView player, ArrayList<EnemyView> enemies, ArrayList<ProjectileView> projectiles) {
+    public ProjectileCD(PlayerView player, ArrayList<EnemyView> enemies, ArrayList<ProjectileView> projectiles) {
         collision.addAll(projectilesVSPlayer(projectiles, player));
         collision.addAll(projectilesVSEnemies(projectiles, enemies));
         collision = clean(collision);
-    }
-
-    public ArrayList<ArrayList<Collidable>> getCollision () {
-        return collision;
     }
 
     private ArrayList<ArrayList<Collidable>> projectilesVSPlayer (ArrayList<ProjectileView> projectiles, PlayerView player) {
