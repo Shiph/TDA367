@@ -6,9 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import edu.chl.blastinthepast.controller.GameStateManager;
 import edu.chl.blastinthepast.model.BPModel;
-import edu.chl.blastinthepast.model.GameState;
 
 /**
  * Created by MattiasJ on 2015-05-03.

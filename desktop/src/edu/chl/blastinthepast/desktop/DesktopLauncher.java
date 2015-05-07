@@ -17,7 +17,7 @@ public class DesktopLauncher {
 		BPModel model = new BPModel();
 		BPView view = new BPView(model);
 		BPController controller = BPController.create(model, view);
-		new LwjglApplication(view, config);
+		new LwjglApplication(controller, config);
 	}
 
 }
