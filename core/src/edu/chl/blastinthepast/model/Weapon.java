@@ -3,7 +3,6 @@ package edu.chl.blastinthepast.model;
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;

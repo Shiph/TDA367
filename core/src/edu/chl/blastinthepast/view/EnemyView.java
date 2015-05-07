@@ -27,7 +27,7 @@ public class EnemyView implements CharacterView {
     private boolean collision;
 
     EnemyView(Enemy enemy){
-        this.enemy=enemy;
+        this.enemy = enemy;
         texture = GraphicalAssets.KIM;
         sprite = new Sprite(texture);
         weaponView = new WeaponView(enemy.getWeapon());
@@ -40,7 +40,6 @@ public class EnemyView implements CharacterView {
         sprite.setX(rectangle.get(0).x);
         sprite.setY(rectangle.get(0).y);
     }
-
 
     /**
      * @return the texture of the player character.

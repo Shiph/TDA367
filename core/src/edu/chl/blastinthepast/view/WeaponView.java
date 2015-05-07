@@ -11,19 +11,20 @@ import edu.chl.blastinthepast.utils.GraphicalAssets;
  * Created by jonas on 2015-04-23.
  */
 public class WeaponView {
+
     private Texture texture;
     private Sprite sprite;
     private Weapon weapon;
 
     public WeaponView(Weapon newWeapon) {
-        weapon=newWeapon;
+        weapon = newWeapon;
         texture= GraphicalAssets.AK47;
-        sprite=new Sprite(texture);
+        sprite = new Sprite(texture);
         updateDirection();
         updatePosition();
     }
 
-    public void updateDirection(){
+    public void updateDirection() {
         sprite.setOrigin(-25, 0);
         sprite.setRotation(weapon.getDirection().angle());
     }
