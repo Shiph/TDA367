@@ -3,6 +3,7 @@ package edu.chl.blastinthepast.model;
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
+import edu.chl.blastinthepast.view.ProjectileView;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -124,6 +125,14 @@ public class BPModel implements Observer {
 
     public void addProjectile(ProjectileInterface p) {
         projectiles.add(p);
+    }
+
+    public void removeProjectile(Projectile pp) {
+        for (Projectile p : projectiles) {
+            if (p == pp) {
+                projectiles.remove(pp);
+            }
+        }
     }
 
     @Override
