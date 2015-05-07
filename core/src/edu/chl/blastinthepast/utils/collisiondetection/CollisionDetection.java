@@ -1,8 +1,9 @@
-package edu.chl.blastinthepast.utils;
+package edu.chl.blastinthepast.utils.collisiondetection;
 
 
 import com.badlogic.gdx.math.Rectangle;
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import edu.chl.blastinthepast.model.BPModel;
 import edu.chl.blastinthepast.view.*;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class CollisionDetection {
 
         new Resolve(collision, Type.ENVIRONMENT);
 
-        collision.clear();
+        collision = new ArrayList<ArrayList<Collidable>>(2);
         collision.add(new ArrayList<Collidable>());
         collision.add(new ArrayList<Collidable>());
 
@@ -169,6 +170,8 @@ public class CollisionDetection {
 
         public ProjectilesVSEverything(PlayerView player, ArrayList<EnemyView> enemies, ArrayList<ProjectileView> projectiles) {
             collisionPrVSEv = new ArrayList<ArrayList<Collidable>>(2);
+            collisionPrVSEv.add(new ArrayList<Collidable>());
+            collisionPrVSEv.add(new ArrayList<Collidable>());
             collisionPrVSEv.addAll(projectilesVSPlayer(projectiles, player));
             collisionPrVSEv.addAll(projectilesVSEnemies(projectiles, enemies));
             collisionPrVSEv = clean(collisionPrVSEv);
@@ -189,14 +192,16 @@ public class CollisionDetection {
             for (ArrayList<Collidable> e : tCD) {
                 for (Collidable c : e) {
                     if (c instanceof ProjectileView) {
-                        tCollision.get(1).add(c);
-                    } else if (c instanceof PlayerView) {
                         tCollision.get(0).add(c);
+                    } else if (c instanceof PlayerView) {
+                        tCollision.get(1).add(c);
                     }
                 }
             }
-
             tCollision = clean(tCollision);
+            if (tCollision.size() > 0) {
+                System.out.println(tCollision);
+            }
             return tCollision;
         }
 
@@ -215,14 +220,16 @@ public class CollisionDetection {
             for (ArrayList<Collidable> e : tCD) {
                 for (Collidable c : e) {
                     if (c instanceof ProjectileView) {
-                        tCollision.get(1).add(c);
-                    } else if (c instanceof EnemyView) {
                         tCollision.get(0).add(c);
+                    } else if (c instanceof EnemyView) {
+                        tCollision.get(1).add(c);
                     }
                 }
             }
-
             tCollision = clean(tCollision);
+            if (tCollision.size() > 0) {
+                System.out.println(tCollision);
+            }
             return tCollision;
         }
     }
@@ -262,12 +269,15 @@ public class CollisionDetection {
         private void resolve_3_Projectiles(ArrayList<ArrayList<Collidable>> collision) {
             int i = 0;
             //System.out.println(collisionEVSE.get(0).get(0));
-            for (Collidable c : collision.get(1)) {
+            for (Collidable c : collision.get(0)) {
+                System.out.println("for_1");
                 if (c instanceof ProjectileView) {
+                    System.out.println("if_1");
                     if (collision.get(1).get(i) instanceof CharacterView) {
-                        ((CharacterView) collision.get(0).get(i)).hit((ProjectileView) c);
+                        System.out.println("if_2");
+                        ((CharacterView) collision.get(1).get(i)).hit((ProjectileView) c);
                     }
-                    ((ProjectileView) c).dispose();
+                    removeProjectile(((ProjectileView) c).getProjectile());
                 }
                 i++;
             }
