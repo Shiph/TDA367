@@ -1,11 +1,11 @@
 package edu.chl.blastinthepast.tests;
 
 import com.badlogic.gdx.math.Vector2;
-import edu.chl.blastinthepast.model.AK47;
 import edu.chl.blastinthepast.model.Projectile;
 import edu.chl.blastinthepast.model.Weapon;
-import edu.chl.blastinthepast.utils.Position;
 import org.junit.Before;
+import edu.chl.blastinthepast.model.WeaponInterface;
+import edu.chl.blastinthepast.utils.PositionInterface;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -15,10 +15,11 @@ import static org.junit.Assert.*;
  */
 public class WeaponTest {
 
-    Weapon weapon;
+    // creating a new weapon with 100 reload time, 100 fire rate, and 100 magazine capacity
+    WeaponInterface weapon;
 
     @Before
-    public void before(){
+    public void before() {
         weapon = new Weapon(new MockPosition(), new Vector2(), new MockPosition());
     }
 
@@ -48,7 +49,7 @@ public class WeaponTest {
 
     @Test
     public void testPosition() {
-        Position p = new Position(13,37);
+        PositionInterface p = new MockPosition(13,37);
         weapon.setPosition(13,37);
         assertTrue(p.equals(weapon.getPosition()));
         assertFalse(p == weapon.getPosition());

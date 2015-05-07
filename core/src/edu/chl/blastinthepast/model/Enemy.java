@@ -15,18 +15,18 @@ import java.util.Random;
  */
 public class Enemy extends Observable implements Character {
 
-    protected final Player player;
-    protected int health;
-    protected int movementSpeed;
-    protected Position position;
-    protected Position prevPos;
-    protected Weapon weapon;
-    protected MyActionListener actionListener;
-    protected Timer timer;
-    protected int movementDirection;
-    protected Vector2 movementDirectionVector;
-    protected Vector2 playerDirectionVector;
-    protected int range = 500;
+    private final Player player;
+    private int health;
+    private int movementSpeed;
+    private Position position;
+    private Position prevPos;
+    private Weapon weapon;
+    private MyActionListener actionListener;
+    private Timer timer;
+    private int movementDirection;
+    private Vector2 movementDirectionVector;
+    private Vector2 playerDirectionVector;
+    private int range = 500;
 
     /**
      * Default constructor for Enemy with default movement speed and health.
@@ -99,12 +99,20 @@ public class Enemy extends Observable implements Character {
         health = newHealth;
     }
 
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
+
     public int getHealth() {
         return health;
     }
 
     public Position getPosition(){
         return position;
+    }
+
+    public int getMovementDirection() {
+        return movementDirection;
     }
 
     public void setPosition (Position position) {

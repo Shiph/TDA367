@@ -3,7 +3,6 @@ package edu.chl.blastinthepast.model;
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
@@ -64,7 +63,7 @@ public class Weapon implements WeaponInterface {
         return false;
     }
 
-    public Projectile fire() {
+    public ProjectileInterface fire() {
         long currentTime = System.currentTimeMillis();
         if ((currentTime - latestShot) >= fireRate) {
             latestShot = System.currentTimeMillis();
@@ -106,8 +105,8 @@ public class Weapon implements WeaponInterface {
         return latestShot;
     }
 
-    public void setPosition(Position newPosition){
-        position.setPos(newPosition);
+    public void setPosition(PositionInterface position){
+        this.position.setPos(position);
     }
 
     public void setPosition(int x, int y){
@@ -126,7 +125,7 @@ public class Weapon implements WeaponInterface {
         return bulletsLeftInMagazine;
     }
 
-    public Projectile pullTrigger() {
+    public ProjectileInterface pullTrigger() {
         if (hasAmmo()) {
             reloadIfNeeded();
             if (isReloading) {
@@ -150,6 +149,12 @@ public class Weapon implements WeaponInterface {
 
     public PositionInterface getOffset(){
         return offset;
+    }
+
+    public Position getPosWithOffset(){
+        Vector2 v2=new Vector2(getDirection());
+        v2.scl(getOffset().getX(), getOffset().getY());
+        return new Position(position.getX()+v2.x, position.getY()+v2.y);
     }
 
 }

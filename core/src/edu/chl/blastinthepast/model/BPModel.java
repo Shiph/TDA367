@@ -13,37 +13,49 @@ import java.util.*;
  * Created by Shif on 20/04/15.
  */
 public class BPModel implements Observer {
+
     private Player player;
-    private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
+    private ArrayList<ProjectileInterface> projectiles = new ArrayList<ProjectileInterface>();
     private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+    private Boss boss;
     private ArrayList<PowerUp> powerUps= new ArrayList<PowerUp>();
 
 
     public BPModel() {
         player=new Player();
+        spawnBoss();
         spawnEnemies();
+    }
+
+    public void spawnBoss() {
+        boss = new Boss(player);
+        boss.getPosition().setX(500);
+        boss.getPosition().setY(500);
+        boss.addObserver(this);
     }
 
     public void update(float dt){
         removeOldProjectiles();
         removeDeadEnemies();
         player.update();
-        for (Projectile p : projectiles) {
+        for (ProjectileInterface p : projectiles) {
             p.move(dt);
         }
         for (Enemy e : enemies) {
             e.update();
             e.move(dt);
         }
+        boss.update();
+        boss.move(dt);
     }
 
     /**
      * Checks if a projectile is outside the map and if so removes it
      */
     private void removeOldProjectiles() {
-        Iterator<Projectile> iter = projectiles.iterator();
+        Iterator<ProjectileInterface> iter = projectiles.iterator();
         while(iter.hasNext()) {
-            Projectile p = iter.next();
+            ProjectileInterface p = iter.next();
             if((p.getPosition().getY() < 0) || (p.getPosition().getY() > Constants.MAP_HEIGHT) ||
                     (p.getPosition().getX() > Constants.MAP_WIDTH) || (p.getPosition().getX() < 0)) {
                 iter.remove();
@@ -94,7 +106,7 @@ public class BPModel implements Observer {
     public void newGame() {
     }
 
-    public ArrayList<Projectile> getProjectiles(){
+    public ArrayList<ProjectileInterface> getProjectiles(){
         return projectiles;
     }
 
@@ -102,11 +114,15 @@ public class BPModel implements Observer {
         return player;
     }
 
+    public Boss getBoss() {
+        return boss;
+    }
+
     public ArrayList<Enemy> getEnemies(){
         return enemies;
     }
 
-    public void addProjectile(Projectile p) {
+    public void addProjectile(ProjectileInterface p) {
         projectiles.add(p);
     }
 

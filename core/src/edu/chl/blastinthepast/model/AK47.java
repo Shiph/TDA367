@@ -23,10 +23,7 @@ public class AK47 extends Weapon {
         if ((currentTime - getLatestShot()) >= getFireRate()) {
             setLatestShot(System.currentTimeMillis());
             setBulletsLeftInMagazine(getbulletsLeftInMagazine()-1);
-            Vector2 v2=new Vector2(getDirection());
-            System.out.println(v2);
-            v2.scl(getOffset().getX(), getOffset().getY());
-            return new AK47Projectile(new Position(getPosition().getX()+v2.x, getPosition().getY()+v2.y), getDirection());
+            return new AK47Projectile(getPosWithOffset(), getDirection());
         }
         return null;
     }

@@ -7,13 +7,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import edu.chl.blastinthepast.model.*;
-import edu.chl.blastinthepast.controller.GameStateManager;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import edu.chl.blastinthepast.model.Enemy;
-import edu.chl.blastinthepast.model.Projectile;
 import edu.chl.blastinthepast.utils.CollisionDetection;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.SoundAssets;
@@ -30,6 +27,7 @@ public class PlayState extends GameState{
 
     private BPModel model;
     private PlayerView playerView;
+    private BossView bossView;
     private ArrayList<EnemyView> enemies;
     private ChestView chestView;
     private CollisionView collisionView;
@@ -53,6 +51,7 @@ public class PlayState extends GameState{
         chestView = new ChestView();
         collisionView = new CollisionView();
         playerView = new PlayerView(model.getPlayer());
+        bossView = new BossView(model.getBoss());
         enemies = new ArrayList<EnemyView>();
         batch = new SpriteBatch();
         camera= new OrthographicCamera();
@@ -65,6 +64,7 @@ public class PlayState extends GameState{
         music.setVolume(0.2f);
         music.setLooping(true);
         pcs=new PropertyChangeSupport(this);
+        music.play();
         addEnemies();
     }
 
@@ -78,8 +78,8 @@ public class PlayState extends GameState{
 
     private void addProjectiles(){
         projectiles.clear();
-        ArrayList<Projectile> projectileArray = model.getProjectiles();
-        for (Projectile p: projectileArray){
+        ArrayList<ProjectileInterface> projectileArray = model.getProjectiles();
+        for (ProjectileInterface p: projectileArray){
             projectiles.add(new ProjectileView(p));
         }
     }
@@ -95,7 +95,11 @@ public class PlayState extends GameState{
         /*for (EnemyView e : enemies) {
             e.update();
         }*/
+        bossView.update();
         new CollisionDetection(enemies, playerView, projectiles, chestView, collisionView);
+        if(!music.isPlaying()) {
+            music.play();
+        }
     }
 
     @Override
@@ -104,6 +108,7 @@ public class PlayState extends GameState{
         addEnemies();
         tiledMapRenderer.render();
         playerView.draw(batch);
+        bossView.draw(batch);
         for (EnemyView e : enemies) {
             e.draw(batch);
         }
@@ -133,15 +138,6 @@ public class PlayState extends GameState{
     @Override
     public void dispose() {
         music.pause();
-        /*music.dispose();
-        batch.dispose();
-        playerView.dispose();
-        for (ProjectileView p : projectiles) {
-            p.dispose();
-        }
-        for (EnemyView e : enemies) {
-            e.dispose();
-        }*/
     }
 
     public PlayerView getPlayer() {
