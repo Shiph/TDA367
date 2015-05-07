@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class ProjectileCD extends CollisionDetection {
 
     public ProjectileCD(PlayerView player, ArrayList<EnemyView> enemies, ArrayList<ProjectileView> projectiles) {
+        super();
         collision.addAll(projectilesVSPlayer(projectiles, player));
         collision.addAll(projectilesVSEnemies(projectiles, enemies));
         collision = clean(collision);

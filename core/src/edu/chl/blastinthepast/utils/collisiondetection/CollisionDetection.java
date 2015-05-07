@@ -16,7 +16,7 @@ public class CollisionDetection {
         ENVIRONMENT, PROJECTILE
     }
 
-    ArrayList<ArrayList<Collidable>> collision;
+    protected ArrayList<ArrayList<Collidable>> collision;
 
     public CollisionDetection () {
         clearAndInitializeCollision();
@@ -64,10 +64,14 @@ public class CollisionDetection {
     }
 
     public void clearAndInitializeCollision () {
-        collision.clear();
-        ArrayList<ArrayList<Collidable>> collision = new ArrayList<>(2);
-        collision.add(new ArrayList<Collidable>());
-        collision.add(new ArrayList<Collidable>());
+        if (collision == null) {
+            collision = new ArrayList<>(2);
+            collision.add(new ArrayList<Collidable>());
+            collision.add(new ArrayList<Collidable>());
+        } else {
+            collision.get(0).clear();
+            collision.get(1).clear();
+        }
     }
 
         /*
