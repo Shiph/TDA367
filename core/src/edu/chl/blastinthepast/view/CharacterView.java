@@ -3,6 +3,7 @@ package edu.chl.blastinthepast.view;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
+import edu.chl.blastinthepast.model.Character;
 
 import java.util.ArrayList;
 
@@ -16,6 +17,8 @@ public interface CharacterView extends Collidable {
     public Texture getTexture();
 
     public Sprite getSprite();
+
+    public Character getCharacter();
 
     public void hit(ProjectileView projectile);
 

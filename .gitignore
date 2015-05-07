@@ -33,3 +33,7 @@ build/
 
 ## Gitinspector
 gitinspector/
+
+## Stan
+.project
+.stan

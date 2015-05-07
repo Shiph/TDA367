@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.model.Projectile;
 import java.util.ArrayList;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
@@ -80,5 +79,9 @@ public class ProjectileView implements Collidable {
 
     public void dispose() {
         texture.dispose();
+    }
+
+    public Projectile getProjectile(){
+        return projectile;
     }
 }

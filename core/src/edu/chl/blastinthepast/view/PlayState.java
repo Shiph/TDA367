@@ -18,13 +18,15 @@ import edu.chl.blastinthepast.utils.CollisionDetection;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.SoundAssets;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 
 /**
  * Created by Shif on 23/04/15.
  */
-public class PlayState extends GameState {
+public class PlayState extends GameState{
 
     private BPModel model;
     private PlayerView playerView;
@@ -39,6 +41,7 @@ public class PlayState extends GameState {
     //private ArrayList<PowerUpView> powerUps= new ArrayList<PowerUpView>();
     private Sound wowSound;
     private Music music;
+    private PropertyChangeSupport pcs;
 
     public PlayState(GameStateManager gsm, BPModel model) {
         super(gsm, model);
@@ -61,13 +64,15 @@ public class PlayState extends GameState {
         music = SoundAssets.SANIC_THEME;
         music.setVolume(0.2f);
         music.setLooping(true);
+        pcs=new PropertyChangeSupport(this);
         addEnemies();
     }
 
     private void addEnemies(){
-        ArrayList<Enemy> enemies=model.getEnemies();
-        for (Enemy e : enemies) {
-            this.enemies.add(new EnemyView(e));
+        enemies.clear();
+        ArrayList<Enemy> enemyArrayList=model.getEnemies();
+        for (Enemy e : enemyArrayList) {
+            enemies.add(new EnemyView(e));
         }
     }
 
@@ -87,15 +92,16 @@ public class PlayState extends GameState {
         batch.setProjectionMatrix(camera.combined);
         tiledMapRenderer.setView(camera);
         //music.play();
-        for (EnemyView e : enemies) {
+        /*for (EnemyView e : enemies) {
             e.update();
-        }
+        }*/
         new CollisionDetection(enemies, playerView, projectiles, chestView, collisionView);
     }
 
     @Override
     public void draw() {
         addProjectiles();
+        addEnemies();
         tiledMapRenderer.render();
         playerView.draw(batch);
         for (EnemyView e : enemies) {
@@ -103,6 +109,21 @@ public class PlayState extends GameState {
         }
         for (ProjectileView p : projectiles) {
             p.draw(batch);
+        }
+        checkIfHit();
+    }
+
+    public void checkIfHit(){
+        for (ProjectileView p: projectiles){
+            for (EnemyView e: enemies){
+                if (e.getRectangles().get(0).overlaps(p.getRectangles().get(0))){
+                    pcs.firePropertyChange("characterHit", p.getProjectile(), e.getCharacter());
+                }
+
+            }
+            if (playerView.getRectangles().get(0).overlaps(p.getRectangles().get(0))){
+                pcs.firePropertyChange("characterHit", p.getProjectile(), playerView.getCharacter());
+            }
         }
     }
 
@@ -138,5 +159,16 @@ public class PlayState extends GameState {
         Position worldCoordinates=new Position(worldCoordinatesVector.x, worldCoordinatesVector.y);
         return worldCoordinates;
     }
+
+    public boolean addListener(PropertyChangeListener pcl) {
+        for (int i=0; i<pcs.getPropertyChangeListeners().length; i++){
+            if (pcs.getPropertyChangeListeners()[i]==pcl){
+                return false;
+            }
+        }
+        pcs.addPropertyChangeListener(pcl);
+        return true;
+    }
+
 
 }

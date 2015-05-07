@@ -5,6 +5,7 @@ import edu.chl.blastinthepast.model.AK47;
 import edu.chl.blastinthepast.model.Projectile;
 import edu.chl.blastinthepast.model.Weapon;
 import edu.chl.blastinthepast.utils.Position;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -14,7 +15,12 @@ import static org.junit.Assert.*;
  */
 public class WeaponTest {
 
-    Weapon weapon = new Weapon(new MockPosition(), new Vector2());
+    Weapon weapon;
+
+    @Before
+    public void before(){
+        weapon = new Weapon(new MockPosition(), new Vector2());
+    }
 
     @Test
     public void testFire() {

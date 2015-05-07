@@ -1,9 +1,8 @@
 package edu.chl.blastinthepast.controller;
 
 import com.badlogic.gdx.Gdx;
-import edu.chl.blastinthepast.model.BPModel;
-import edu.chl.blastinthepast.model.GameState;
-import edu.chl.blastinthepast.model.Projectile;
+import edu.chl.blastinthepast.model.*;
+import edu.chl.blastinthepast.model.Character;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.view.*;
 
@@ -35,6 +34,10 @@ public class BPController implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         GameState currentGameState = view.getGameStateController().getGameState();
         GameStateManager gameStateManager = view.getGameStateController();
+        if (currentGameState instanceof PlayState){
+            PlayState playState = (PlayState) currentGameState;
+            playState.addListener(this);
+        }
 
         switch(evt.getPropertyName()) {
             case "west":
@@ -116,9 +119,17 @@ public class BPController implements PropertyChangeListener {
                     }
                 }
                 break;
+            case "characterHit": //Temporary collision detection
+                if (evt.getOldValue() instanceof Projectile && evt.getNewValue() instanceof Character){
+                    Character c=(Character)evt.getNewValue();
+                    Projectile p = (Projectile) evt.getOldValue();
+                    model.collision(c, p);
+                }
             default:
                 break;
         }
     }
+
+
 
 }

@@ -6,6 +6,7 @@ import edu.chl.blastinthepast.utils.Position;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.temporal.ChronoField;
 import java.util.*;
 
 /**
@@ -25,8 +26,8 @@ public class BPModel implements Observer {
 
     public void update(float dt){
         removeOldProjectiles();
+        removeDeadEnemies();
         player.update();
-        //player.getWeapon().setPosition(player.getPosition());
         for (Projectile p : projectiles) {
             p.move(dt);
         }
@@ -50,6 +51,17 @@ public class BPModel implements Observer {
         }
     }
 
+    private void removeDeadEnemies(){
+        Iterator<Enemy> iter= enemies.iterator();
+        while (iter.hasNext()){
+            Enemy e=iter.next();
+            if (e.getHealth()<=0){
+                System.out.println("Ded");
+                iter.remove();
+            }
+        }
+    }
+
     private void spawnEnemies() {
         for (int i = 0; i < 5; i++) {
             enemies.add(new Enemy(player));
@@ -60,6 +72,23 @@ public class BPModel implements Observer {
             e.getPosition().setY(r.nextFloat() * 480);
             e.addObserver(this);
         }
+    }
+
+    public void collision(Object o1, Object o2){ //temporary collision detection
+        if ((o1 instanceof Character && o2 instanceof Projectile)){
+            Character character=(Character) o1;
+            Projectile projectile = (Projectile) o2;
+            hit(character, projectile);
+        } else if (o2 instanceof Character && o1 instanceof Projectile){
+            Character character=(Character) o2;
+            Projectile projectile = (Projectile) o1;
+            hit(character, projectile);
+        }
+    }
+
+    public void hit(Character character, Projectile projectile){ //collision for bullets
+        character.setHealth(character.getHealth()-projectile.getDamage());
+        projectiles.remove(projectile);
     }
 
     public void newGame() {

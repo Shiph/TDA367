@@ -7,7 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import edu.chl.blastinthepast.model.Player;
+import edu.chl.blastinthepast.model.*;
+import edu.chl.blastinthepast.model.Character;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 
 import java.util.ArrayList;
@@ -66,6 +67,11 @@ public class PlayerView implements CharacterView {
      */
     public Sprite getSprite() {
         return sprite;
+    }
+
+    @Override
+    public Character getCharacter() {
+        return player;
     }
 
     @Override

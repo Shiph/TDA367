@@ -1,17 +1,16 @@
 package edu.chl.blastinthepast.view;
 
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
-import edu.chl.blastinthepast.model.Enemy;
+
+import edu.chl.blastinthepast.model.*;
+import edu.chl.blastinthepast.model.Character;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 import edu.chl.blastinthepast.utils.Position;
-import com.badlogic.gdx.math.Vector2;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 /**
@@ -71,6 +70,11 @@ public class EnemyView implements CharacterView {
     }
 
     @Override
+    public Character getCharacter() {
+        return enemy;
+    }
+
+    @Override
     public void hit(ProjectileView projectile) {
         System.out.println("Enemy hit!");
     }
@@ -80,6 +84,8 @@ public class EnemyView implements CharacterView {
     }
 
     public void draw(SpriteBatch batch) {
+        updatePosition();
+        sprite.setRotation(enemy.getDirection().angle());
         batch.begin();
         sprite.draw(batch);
         batch.end();
@@ -105,6 +111,11 @@ public class EnemyView implements CharacterView {
 
     public void dispose() {
         texture.dispose();
+    }
+
+    public void updatePosition(){
+        sprite.setPosition(enemy.getPosition().getX(), enemy.getPosition().getY());
+        rectangle.get(0).setPosition(enemy.getPosition().getX(), enemy.getPosition().getY());
     }
 
 }

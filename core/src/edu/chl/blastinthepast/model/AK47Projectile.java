@@ -11,7 +11,7 @@ public class AK47Projectile extends Projectile {
     public AK47Projectile(Position pos, Vector2 direction) {
         super(pos, direction);
         setSpeed(400);
-        setDamage(1337);
+        setDamage(10);
     }
 
 }
