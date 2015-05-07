@@ -7,7 +7,6 @@ import edu.chl.blastinthepast.model.BPModel;
 import edu.chl.blastinthepast.model.ProjectileInterface;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.view.*;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -17,13 +16,11 @@ import java.beans.PropertyChangeListener;
 public class BPController extends ApplicationAdapter implements PropertyChangeListener {
 
     private BPModel model;
-    private BPView view;
     private InputHandler inputHandler;
     private GameStateManager gsm;
 
-    private BPController(BPModel model, BPView view) {
+    private BPController(BPModel model) {
         this.model = model;
-        this.view = view;
     }
 
     @Override
@@ -37,15 +34,14 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
 
     @Override
     public void create() {
-        view.addListener(this);
         inputHandler = new InputHandler();
         inputHandler.addListener(this);
         Gdx.input.setInputProcessor(inputHandler);
         gsm = new GameStateManager(model);
     }
 
-    public static BPController create(BPModel model, BPView view) {
-        return new BPController(model, view);
+    public static BPController create(BPModel model) {
+        return new BPController(model);
     }
 
     @Override
