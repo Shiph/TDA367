@@ -62,7 +62,7 @@ public class Weapon implements WeaponInterface {
         return false;
     }
 
-    public Projectile fire() {
+    public ProjectileInterface fire() {
         long currentTime = System.currentTimeMillis();
         if ((currentTime - latestShot) >= fireRate) {
             latestShot = System.currentTimeMillis();
@@ -104,8 +104,8 @@ public class Weapon implements WeaponInterface {
         return latestShot;
     }
 
-    public void setPosition(Position newPosition){
-        position.setPos(newPosition);
+    public void setPosition(PositionInterface position){
+        this.position.setPos(position);
     }
 
     public void setPosition(int x, int y){
@@ -124,7 +124,7 @@ public class Weapon implements WeaponInterface {
         return bulletsLeftInMagazine;
     }
 
-    public Projectile pullTrigger() {
+    public ProjectileInterface pullTrigger() {
         if (hasAmmo()) {
             reloadIfNeeded();
             if (isReloading) {

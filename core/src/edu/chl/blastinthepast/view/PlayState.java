@@ -12,8 +12,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import edu.chl.blastinthepast.model.Enemy;
-import edu.chl.blastinthepast.model.Projectile;
 import edu.chl.blastinthepast.utils.CollisionDetection;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.SoundAssets;
@@ -73,8 +71,8 @@ public class PlayState extends GameState {
 
     private void addProjectiles(){
         projectiles.clear();
-        ArrayList<Projectile> projectileArray = model.getProjectiles();
-        for (Projectile p: projectileArray){
+        ArrayList<ProjectileInterface> projectileArray = model.getProjectiles();
+        for (ProjectileInterface p: projectileArray){
             projectiles.add(new ProjectileView(p));
         }
     }
