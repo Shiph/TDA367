@@ -25,7 +25,7 @@ public class PlayerView implements CharacterView {
     private boolean collision;
 
     public PlayerView(Player newPlayer){
-        texture = GraphicalAssets.SANIC;
+        texture = GraphicalAssets.CHARACTERDOWN;
         sprite = new Sprite(texture);
         rectangle = new ArrayList<Rectangle>();
         rectangle.add(new Rectangle());
@@ -83,12 +83,27 @@ public class PlayerView implements CharacterView {
             rectangle.get(0).setPosition(player.getPosition().getX(), player.getPosition().getY());
             collision = false;
         }
-
+        try {
+            switch (player.getMovementDirection()) {
+                case "west":
+                    sprite.setTexture(GraphicalAssets.CHARACTERLEFT);
+                    break;
+                case "east":
+                    sprite.setTexture(GraphicalAssets.CHARACTERRIGHT);
+                    break;
+                case "north":
+                    sprite.setTexture(GraphicalAssets.CHARACTERUP);
+                    break;
+                case "south":
+                    sprite.setTexture(GraphicalAssets.CHARACTERDOWN);
+                    break;
+            }
+        } catch (NullPointerException e) {}
     }
 
     public void draw(SpriteBatch batch) {
         updatePosition();
-        rotate();
+        //rotate();
         batch.begin();
         sprite.draw(batch);
         batch.end();

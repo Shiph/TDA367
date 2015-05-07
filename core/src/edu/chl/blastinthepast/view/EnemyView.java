@@ -28,7 +28,7 @@ public class EnemyView implements CharacterView {
 
     EnemyView(Enemy enemy){
         this.enemy = enemy;
-        texture = GraphicalAssets.KIM;
+        texture = GraphicalAssets.ENEMYDOWN;
         sprite = new Sprite(texture);
         weaponView = new WeaponView(enemy.getWeapon());
         rectangle = new ArrayList<Rectangle>();
@@ -95,7 +95,27 @@ public class EnemyView implements CharacterView {
             rectangle.get(0).setPosition(enemy.getPosition().getX(), enemy.getPosition().getY());
             collision = false;
         }
-        sprite.setRotation(enemy.getDirection().angle());
+        updateDirection();
+        //sprite.setRotation(enemy.getDirection().angle());
+    }
+
+    public void updateDirection() {
+        try {
+            switch (enemy.getMovementDirection()) {
+                case 0:
+                    sprite.setTexture(GraphicalAssets.ENEMYLEFT);
+                    break;
+                case 1:
+                    sprite.setTexture(GraphicalAssets.ENEMYRIGHT);
+                    break;
+                case 2:
+                    sprite.setTexture(GraphicalAssets.ENEMYUP);
+                    break;
+                case 3:
+                    sprite.setTexture(GraphicalAssets.ENEMYDOWN);
+                    break;
+            }
+        } catch (NullPointerException e) {}
     }
 
     public void setCollision () {

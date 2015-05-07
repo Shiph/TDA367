@@ -111,6 +111,10 @@ public class Enemy extends Observable implements Character {
         return position;
     }
 
+    public int getMovementDirection() {
+        return movementDirection;
+    }
+
     public void setPosition (Position position) {
         this.position = position;
     }

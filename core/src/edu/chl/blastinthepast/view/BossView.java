@@ -8,8 +8,32 @@ import edu.chl.blastinthepast.utils.GraphicalAssets;
  */
 public class BossView extends EnemyView {
 
+    private Boss boss;
+
+
     public BossView(Boss boss) {
         super(boss);
-        getSprite().setTexture(GraphicalAssets.DONKIM);
+        this.boss = boss;
+        getSprite().setTexture(GraphicalAssets.BOSSDOWN);
+    }
+
+    @Override
+    public void updateDirection() {
+        try {
+            switch (boss.getMovementDirection()) {
+                case 0:
+                    getSprite().setTexture(GraphicalAssets.BOSSLEFT);
+                    break;
+                case 1:
+                    getSprite().setTexture(GraphicalAssets.BOSSRIGHT);
+                    break;
+                case 2:
+                    getSprite().setTexture(GraphicalAssets.BOSSUP);
+                    break;
+                case 3:
+                    getSprite().setTexture(GraphicalAssets.BOSSDOWN);
+                    break;
+            }
+        } catch (NullPointerException e) {}
     }
 }

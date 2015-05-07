@@ -91,6 +91,9 @@ public class PlayState extends GameState {
         }
         bossView.update();
         new CollisionDetection(enemies, playerView, projectiles, chestView, collisionView);
+        if(!music.isPlaying()) {
+            music.play();
+        }
     }
 
     @Override
