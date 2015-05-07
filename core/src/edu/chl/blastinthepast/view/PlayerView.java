@@ -38,6 +38,7 @@ public class PlayerView implements CharacterView {
         sprite.setY(rectangle.get(0).y);
         player = newPlayer;
         weaponView = new WeaponView(player.getWeapon());
+        collision = false;
     }
 
     /**
@@ -70,20 +71,20 @@ public class PlayerView implements CharacterView {
 
     @Override
     public void hit(ProjectileView projectile) {
-        System.out.println("Player hit!");
+        System.out.println(this);
     }
 
     public void updatePosition(){
         if (!collision) {
+            player.setPrevPos(player.getPosition());
             sprite.setPosition(player.getPosition().getX(), player.getPosition().getY());
             rectangle.get(0).setPosition(player.getPosition().getX(), player.getPosition().getY());
         } else if (collision) {
             player.setPosition(player.getPrevPos());
             sprite.setPosition(player.getPosition().getX(), player.getPosition().getY());
             rectangle.get(0).setPosition(player.getPosition().getX(), player.getPosition().getY());
-            collision = false;
+            setCollision();
         }
-
     }
 
     public void draw(SpriteBatch batch) {
@@ -102,7 +103,7 @@ public class PlayerView implements CharacterView {
     }
 
     public void setCollision () {
-        collision = true;
+        collision ^= true;
     }
 
     public void dispose() {

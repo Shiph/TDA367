@@ -11,7 +11,9 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import edu.chl.blastinthepast.utils.CollisionDetection;
+import edu.chl.blastinthepast.model.Enemy;
+import edu.chl.blastinthepast.model.Projectile;
+import edu.chl.blastinthepast.utils.collisiondetection.CollisionDetection;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.SoundAssets;
 

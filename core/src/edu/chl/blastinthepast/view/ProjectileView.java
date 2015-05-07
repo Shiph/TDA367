@@ -67,6 +67,10 @@ public class ProjectileView implements Collidable {
         return rectangle;
     }
 
+    public Projectile getProjectile () {
+        return projectile;
+    }
+
     public void draw(SpriteBatch batch) {
         updatePosition();
         setRotation();
