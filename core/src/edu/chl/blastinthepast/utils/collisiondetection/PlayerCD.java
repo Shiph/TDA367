@@ -14,7 +14,10 @@ public class PlayerCD extends CollisionDetection {
         collision.addAll(playerVSChest(player, chest));
         collision.addAll(playerVSCollision(player, collisions));
         collision.addAll(playerVSEnemies(player, enemies));
-        collision = clean(collision);
+        //collision = clean(collision);
+        if (!collision.get(0).isEmpty()) {
+            System.out.println("Player" + collision);
+        }
     }
 
     public ArrayList<ArrayList<Collidable>> getCollision () {

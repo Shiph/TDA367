@@ -16,7 +16,10 @@ public class ProjectileCD extends CollisionDetection {
         super();
         collision.addAll(projectilesVSPlayer(projectiles, player));
         collision.addAll(projectilesVSEnemies(projectiles, enemies));
-        collision = clean(collision);
+        //collision = clean(collision);
+        if (!collision.get(0).isEmpty()) {
+            System.out.println("Projectile" + collision);
+        }
     }
 
     private ArrayList<ArrayList<Collidable>> projectilesVSPlayer (ArrayList<ProjectileView> projectiles, PlayerView player) {
@@ -30,9 +33,9 @@ public class ProjectileCD extends CollisionDetection {
         for (ArrayList<Collidable> e : tCD) {
             for (Collidable c : e) {
                 if (c instanceof ProjectileView) {
-                    tCollision.get(0).add(c);
+                    tCollision.get(0).addAll((ArrayList<Collidable>) c);
                 } else if (c instanceof PlayerView) {
-                    tCollision.get(1).add(c);
+                    tCollision.get(1).addAll((ArrayList<Collidable>) c);
                 }
             }
         }
@@ -65,9 +68,11 @@ public class ProjectileCD extends CollisionDetection {
             }
         }
         tCollision = clean(tCollision);
+        /*
         if (tCollision.size() > 0) {
             System.out.println(tCollision);
         }
+        */
         return tCollision;
     }
 }
