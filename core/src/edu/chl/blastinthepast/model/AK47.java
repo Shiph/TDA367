@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 public class AK47 extends Weapon {
 
     public AK47(PositionInterface position, Vector2 direction) {
-        super(position, direction, 1000, 100, 20);
+        super(position, direction, 1000, 100, 20, new Position(120, 120));
     }
 
     @Override
@@ -23,7 +23,10 @@ public class AK47 extends Weapon {
         if ((currentTime - getLatestShot()) >= getFireRate()) {
             setLatestShot(System.currentTimeMillis());
             setBulletsLeftInMagazine(getbulletsLeftInMagazine()-1);
-            return new AK47Projectile(getPosition(), getDirection());
+            Vector2 v2=new Vector2(getDirection());
+            System.out.println(v2);
+            v2.scl(getOffset().getX(), getOffset().getY());
+            return new AK47Projectile(new Position(getPosition().getX()+v2.x, getPosition().getY()+v2.y), getDirection());
         }
         return null;
     }

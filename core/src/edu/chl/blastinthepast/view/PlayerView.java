@@ -81,8 +81,8 @@ public class PlayerView implements CharacterView {
 
     public void updatePosition(){
         if (!collision) {
-            sprite.setPosition(player.getPosition().getX(), player.getPosition().getY());
-            rectangle.get(0).setPosition(player.getPosition().getX(), player.getPosition().getY());
+            sprite.setPosition(player.getPosition().getX()-sprite.getWidth()/2, player.getPosition().getY()-sprite.getWidth()/2);
+            rectangle.get(0).setPosition(player.getPosition().getX()-sprite.getWidth()/2, player.getPosition().getY() -sprite.getHeight()/2);
         } else if (collision) {
             player.setPosition(player.getPrevPos());
             sprite.setPosition(player.getPosition().getX(), player.getPosition().getY());
@@ -103,7 +103,7 @@ public class PlayerView implements CharacterView {
 
     public void rotate () {
         direction = player.getAimDirection();
-        sprite.setOrigin(32, 32);
+        sprite.setOriginCenter();
         sprite.setRotation(direction.angle());
     }
 

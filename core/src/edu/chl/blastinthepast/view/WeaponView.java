@@ -24,12 +24,12 @@ public class WeaponView {
     }
 
     public void updateDirection(){
-        sprite.setOrigin(-25, 0);
+        sprite.setOrigin(0, 0);
         sprite.setRotation(weapon.getDirection().angle());
     }
 
     public void updatePosition(){
-        sprite.setPosition(weapon.getPosition().getX() + 50, weapon.getPosition().getY() + 25);
+        sprite.setPosition(weapon.getPosition().getX(), weapon.getPosition().getY());
     }
 
     public void draw(SpriteBatch batch){

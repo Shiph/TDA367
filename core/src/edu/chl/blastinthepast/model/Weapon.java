@@ -24,17 +24,19 @@ public class Weapon implements WeaponInterface {
     private Timer reloadTimer;
     private Position position;
     private Vector2 direction;
+    private Position offset;
 
-    public Weapon (PositionInterface pos, Vector2 direction) {
-        this(pos, direction, 1500, 100, 20);
+    public Weapon (PositionInterface pos, Vector2 direction, PositionInterface offset) {
+        this(pos, direction, 1500, 100, 20, offset);
     }
 
-    public Weapon (PositionInterface pos, Vector2 direction, int reloadTime, int fireRate, final int magazineCapacity) {
+    public Weapon (PositionInterface pos, Vector2 direction, int reloadTime, int fireRate, final int magazineCapacity, PositionInterface offset) {
         position = new Position(pos);
         this.direction = direction;
         this.fireRate = fireRate;
         this.reloadTime = reloadTime;
         this.magazineCapacity = magazineCapacity;
+        this.offset= new Position(offset);
 
         ActionListener reloading = new ActionListener() {
             @Override
@@ -67,7 +69,7 @@ public class Weapon implements WeaponInterface {
         if ((currentTime - latestShot) >= fireRate) {
             latestShot = System.currentTimeMillis();
             bulletsLeftInMagazine--;
-            return new Projectile(position, direction);
+            return new Projectile(new Position(position.getX()+offset.getX(), position.getY()+offset.getY()), direction);
         }
         return null;
     }
@@ -144,6 +146,10 @@ public class Weapon implements WeaponInterface {
 
     public Vector2 getDirection(){
         return direction;
+    }
+
+    public PositionInterface getOffset(){
+        return offset;
     }
 
 }

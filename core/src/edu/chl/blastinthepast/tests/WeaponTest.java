@@ -19,7 +19,7 @@ public class WeaponTest {
 
     @Before
     public void before(){
-        weapon = new Weapon(new MockPosition(), new Vector2());
+        weapon = new Weapon(new MockPosition(), new Vector2(), new MockPosition());
     }
 
     @Test

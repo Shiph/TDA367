@@ -94,12 +94,12 @@ public class EnemyView implements CharacterView {
 
     public void update() {
         if (!collision) {
-            sprite.setPosition(enemy.getPosition().getX() - 32, enemy.getPosition().getY() - 32);
-            rectangle.get(0).setPosition(enemy.getPosition().getX(), enemy.getPosition().getY());
+            sprite.setPosition(enemy.getPosition().getX()-sprite.getWidth()/2, enemy.getPosition().getY() - sprite.getHeight()/2);
+            rectangle.get(0).setPosition(enemy.getPosition().getX()-sprite.getWidth()/2, enemy.getPosition().getY()-sprite.getHeight()/2);
         } else if (collision) {
             enemy.setPosition(enemy.getPrevPos());
-            sprite.setPosition(enemy.getPosition().getX() - 32, enemy.getPosition().getY() - 32);
-            rectangle.get(0).setPosition(enemy.getPosition().getX(), enemy.getPosition().getY());
+            sprite.setPosition(enemy.getPosition().getX()-sprite.getWidth()/2, enemy.getPosition().getY() - sprite.getHeight()/2);
+            rectangle.get(0).setPosition(enemy.getPosition().getX()-sprite.getWidth()/2, enemy.getPosition().getY()-sprite.getHeight()/2);
             collision = false;
         }
         sprite.setRotation(enemy.getDirection().angle());
@@ -114,8 +114,7 @@ public class EnemyView implements CharacterView {
     }
 
     public void updatePosition(){
-        sprite.setPosition(enemy.getPosition().getX(), enemy.getPosition().getY());
-        rectangle.get(0).setPosition(enemy.getPosition().getX(), enemy.getPosition().getY());
+        sprite.setPosition(enemy.getPosition().getX()-sprite.getWidth()/2, enemy.getPosition().getY() - sprite.getHeight()/2);
+        rectangle.get(0).setPosition(enemy.getPosition().getX()-sprite.getWidth()/2, enemy.getPosition().getY()-sprite.getHeight()/2);
     }
-
 }
