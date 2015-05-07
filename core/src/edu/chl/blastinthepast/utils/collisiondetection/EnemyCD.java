@@ -7,10 +7,9 @@ import java.util.ArrayList;
 /**
  * Created by qwerty458 on 5/7/15.
  */
-public class Enemies extends CollisionDetection {
+public class EnemyCD extends CollisionDetection {
 
-    public Enemies(ArrayList<EnemyView> enemies, PlayerView player, ChestView chest, CollisionView collisions) {
-        collision = new ArrayList<ArrayList<Collidable>>(2);
+    public EnemyCD(ArrayList<EnemyView> enemies, PlayerView player, ChestView chest, CollisionView collisions) {
         collision.addAll(enemiesVSChest(enemies, chest));
         collision.addAll(enemiesVSCollisions(enemies, collisions));
         collision.addAll(enemiesVSPlayer(enemies, player));
