@@ -116,7 +116,7 @@ public class CollisionDetection {
                         System.out.println("if_2");
                         ((CharacterView) collision.get(1).get(i)).hit((ProjectileView) c);
                     }
-                    removeProjectile(((ProjectileView) c).getProjectile());
+                    //removeProjectile(((ProjectileView) c).getProjectile());
                 }
                 i++;
             }
