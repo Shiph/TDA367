@@ -89,6 +89,9 @@ public class PlayerView implements CharacterView {
             rectangle.get(0).setPosition(player.getPosition().getX(), player.getPosition().getY());
             collision = false;
         }
+    }
+
+    public void updateDirection() {
         try {
             switch (player.getMovementDirection()) {
                 case "west":
@@ -109,6 +112,7 @@ public class PlayerView implements CharacterView {
 
     public void draw(SpriteBatch batch) {
         updatePosition();
+        updateDirection();
         //rotate();
         batch.begin();
         sprite.draw(batch);
