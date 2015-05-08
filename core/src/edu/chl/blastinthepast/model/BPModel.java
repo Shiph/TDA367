@@ -2,6 +2,8 @@ package edu.chl.blastinthepast.model;
 
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
+import edu.chl.blastinthepast.view.Collidable;
+import edu.chl.blastinthepast.view.Environment;
 import edu.chl.blastinthepast.view.ProjectileView;
 
 import java.beans.PropertyChangeEvent;

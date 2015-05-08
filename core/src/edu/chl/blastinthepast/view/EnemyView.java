@@ -6,9 +6,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import edu.chl.blastinthepast.model.Enemy;
+import edu.chl.blastinthepast.model.*;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 import edu.chl.blastinthepast.utils.Position;
+import edu.chl.blastinthepast.model.Character;
 
 import java.util.ArrayList;
 

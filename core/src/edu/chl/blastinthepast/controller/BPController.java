@@ -147,7 +147,7 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                 if(evt.getOldValue() instanceof Projectile && evt.getNewValue() instanceof Environment) {
                     Projectile p = (Projectile) evt.getOldValue();
                     Environment e = (Environment) evt.getNewValue();
-                    model.collision(p, e);
+                    model.collision(p,e);
                 }
             default:
                 break;
