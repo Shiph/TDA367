@@ -1,13 +1,7 @@
 package edu.chl.blastinthepast.model;
 
-import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Constants;
-import edu.chl.blastinthepast.utils.Position;
-import edu.chl.blastinthepast.view.ProjectileView;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.time.temporal.ChronoField;
 import java.util.*;
 
 /**
