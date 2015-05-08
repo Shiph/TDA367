@@ -1,9 +1,6 @@
-package edu.chl.blastinthepast.utils.collisiondetection;
+package edu.chl.blastinthepast.collisiondetection;
 
-import edu.chl.blastinthepast.view.Collidable;
-import edu.chl.blastinthepast.view.EnemyView;
-import edu.chl.blastinthepast.view.PlayerView;
-import edu.chl.blastinthepast.view.ProjectileView;
+import edu.chl.blastinthepast.view.*;
 
 import java.util.ArrayList;
 
@@ -74,5 +71,24 @@ public class ProjectileCD extends CollisionDetection {
         }
         */
         return tCollision;
+    }
+
+    void resolve () {
+        int i = 0;
+        //System.out.println(collisionEVSE.get(0).get(0));
+        for (Collidable c : collision.get(0)) {
+            System.out.println("for_1");
+            if (c instanceof ProjectileView) {
+                System.out.println("if_1");
+                if (collision.get(1).get(i) instanceof CharacterView) {
+                    System.out.println("if_2");
+                    pcs.firePropertyChange("characterHit", ((ProjectileView) c).getProjectile(), collision.get(1).get(i));
+                } else if (collision.get(1).get(i) instanceof Environment) {
+                    pcs.firePropertyChange("environmentHit", ((ProjectileView) c).getProjectile(), collision.get(1).get(i));
+                }
+
+            }
+            i++;
+        }
     }
 }

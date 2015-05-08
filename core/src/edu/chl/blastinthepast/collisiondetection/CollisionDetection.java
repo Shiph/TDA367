@@ -1,9 +1,10 @@
-package edu.chl.blastinthepast.utils.collisiondetection;
+package edu.chl.blastinthepast.collisiondetection;
 
 
 import com.badlogic.gdx.math.Rectangle;
 import edu.chl.blastinthepast.view.*;
 
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -12,10 +13,12 @@ import java.util.Collections;
  */
 public class CollisionDetection {
 
+    PropertyChangeSupport pcs;
     protected ArrayList<ArrayList<Collidable>> collision;
 
     public CollisionDetection () {
         clearAndInitializeCollision();
+        pcs = new PropertyChangeSupport(this);
     }
 
     public CollisionDetection (ArrayList<EnemyView> enemies, PlayerView player, ArrayList<ProjectileView> projectiles, ChestView chest, CollisionView collisions) {
@@ -90,41 +93,7 @@ public class CollisionDetection {
             }
         }
 
-        private void resolve_1_Enemies(ArrayList<ArrayList<Collidable>> collision) {
-            //System.out.println("resolve_1");
-            for (Collidable c : collision.get(0)) { //this is where shit goes wrong
-                if (c instanceof EnemyView) {
-                    ((EnemyView) c).setCollision();
-                    ((EnemyView) c).update();
-                }
-            }
-        }
 
-        private void resolve_2_Player(ArrayList<ArrayList<Collidable>> collision) {
-            for (Collidable c : collision.get(0)) {
-                if (c instanceof PlayerView) {
-                    ((PlayerView) c).setCollision();
-                    ((PlayerView) c).updatePosition();
-                }
-            }
-        }
-
-        private void resolve_3_Projectiles(ArrayList<ArrayList<Collidable>> collision) {
-            int i = 0;
-            //System.out.println(collisionEVSE.get(0).get(0));
-            for (Collidable c : collision.get(0)) {
-                System.out.println("for_1");
-                if (c instanceof ProjectileView) {
-                    System.out.println("if_1");
-                    if (collision.get(1).get(i) instanceof CharacterView) {
-                        System.out.println("if_2");
-                        ((CharacterView) collision.get(1).get(i)).hit((ProjectileView) c);
-                    }
-                    //removeProjectile(((ProjectileView) c).getProjectile());
-                }
-                i++;
-            }
-        }
     }
     */
 }

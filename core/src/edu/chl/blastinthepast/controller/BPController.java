@@ -137,11 +137,17 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                     }
                 }
                 break;
-            case "characterHit": //Temporary collision detection
-                if (evt.getOldValue() instanceof Projectile && evt.getNewValue() instanceof Character){
-                    Character c=(Character)evt.getNewValue();
+            case "characterHit":
+                if (evt.getOldValue() instanceof Projectile && evt.getNewValue() instanceof CharacterView) {
                     Projectile p = (Projectile) evt.getOldValue();
-                    model.collision(c, p);
+                    CharacterView c=(CharacterView)evt.getNewValue();
+                    model.collision(p, c);
+                }
+            case "environmentHit":
+                if(evt.getOldValue() instanceof Projectile && evt.getNewValue() instanceof Environment) {
+                    Projectile p = (Projectile) evt.getOldValue();
+                    Environment e = (Environment) evt.getNewValue();
+                    model.collision(p, e);
                 }
             default:
                 break;
