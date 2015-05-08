@@ -22,4 +22,6 @@ public interface CharacterView extends Collidable {
 
     public void hit(ProjectileView projectile);
 
+    public void setCollision();
+
 }

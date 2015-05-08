@@ -125,7 +125,7 @@ public class EnemyView implements CharacterView {
     }
 
     public void setCollision () {
-        collision ^= true;
+        collision = true;
     }
 
     public void dispose() {
