@@ -2,7 +2,6 @@ package edu.chl.blastinthepast.tests;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.*;
-import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
 
 /**
@@ -61,7 +60,7 @@ public class MockWeapon implements WeaponInterface {
 
     @Override
     public void setPosition(int x, int y) {
-        position.setPos(x, y);
+        position.setPosition(x, y);
     }
 
     @Override

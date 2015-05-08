@@ -14,14 +14,14 @@ public class Projectile implements  ProjectileInterface{
     private Position position;
 
     public Projectile(Position pos, Vector2 direction){
-        this(pos.getX(), pos.getY(), direction);
+        this(pos, direction, 100, 5);
     }
 
-    public Projectile(float x, float y, Vector2 direction) {
+    public Projectile(Position pos, Vector2 direction, int speed, int damage) {
         this.direction = new Vector2(direction);
-        position = new Position(x, y);
-        speed = 100;
-        damage = 100;
+        position = pos;
+        this.speed = speed;
+        this.damage = damage;
     }
 
     public void move(float dt) {

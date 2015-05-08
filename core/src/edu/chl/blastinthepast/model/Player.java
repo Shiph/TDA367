@@ -84,7 +84,7 @@ public class Player implements Character {
     }
 
     public void setPosition(int x, int y) {
-        position.setPos(x, y);
+        position.setPosition(x, y);
     }
 
     public void setPosition (Position position) {

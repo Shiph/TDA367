@@ -41,13 +41,13 @@ public class MockPosition implements PositionInterface {
     }
 
     @Override
-    public void setPos(float x, float y) {
+    public void setPosition(float x, float y) {
         this.x = x;
         this.y = y;
     }
 
     @Override
-    public void setPos(PositionInterface pos) {
+    public void setPosition(PositionInterface pos) {
         x = pos.getX();
         y = pos.getY();
     }
