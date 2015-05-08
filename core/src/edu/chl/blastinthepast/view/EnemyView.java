@@ -84,7 +84,6 @@ public class EnemyView implements CharacterView {
 
     public void draw(SpriteBatch batch) {
         updatePosition();
-        sprite.setRotation(enemy.getDirection().angle());
         batch.begin();
         sprite.draw(batch);
         batch.end();
@@ -102,7 +101,6 @@ public class EnemyView implements CharacterView {
             collision = false;
         }
         updateDirection();
-        //sprite.setRotation(enemy.getDirection().angle());
     }
 
     public void updateDirection() {
@@ -136,4 +134,5 @@ public class EnemyView implements CharacterView {
         sprite.setPosition(enemy.getPosition().getX()-sprite.getWidth()/2, enemy.getPosition().getY() - sprite.getHeight()/2);
         rectangle.get(0).setPosition(enemy.getPosition().getX()-sprite.getWidth()/2, enemy.getPosition().getY()-sprite.getHeight()/2);
     }
+    
 }
