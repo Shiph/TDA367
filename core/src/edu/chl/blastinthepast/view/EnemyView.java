@@ -5,9 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-
-import edu.chl.blastinthepast.model.*;
-import edu.chl.blastinthepast.model.Character;
+import com.badlogic.gdx.utils.Array;
+import edu.chl.blastinthepast.model.Enemy;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 import edu.chl.blastinthepast.utils.Position;
 
