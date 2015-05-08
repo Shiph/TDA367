@@ -76,6 +76,7 @@ public class PlayState extends GameState{
         for (Enemy e : enemyArrayList) {
             enemies.add(new EnemyView(e));
         }
+        enemies.add(bossView);
     }
 
     private void addProjectiles(){
