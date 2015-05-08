@@ -38,6 +38,8 @@ public class EnemyView implements CharacterView {
         rectangle.get(0).width = 64;
         sprite.setX(rectangle.get(0).x);
         sprite.setY(rectangle.get(0).y);
+        collision = false;
+
     }
 
     /**
@@ -75,7 +77,7 @@ public class EnemyView implements CharacterView {
 
     @Override
     public void hit(ProjectileView projectile) {
-        System.out.println("Enemy hit!");
+        System.out.println(this);
     }
 
     public Position getPosition(){
@@ -123,7 +125,7 @@ public class EnemyView implements CharacterView {
     }
 
     public void setCollision () {
-        collision = true;
+        collision ^= true;
     }
 
     public void dispose() {
