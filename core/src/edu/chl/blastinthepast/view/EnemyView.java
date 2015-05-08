@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 import edu.chl.blastinthepast.model.*;
 import edu.chl.blastinthepast.model.Character;
+import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 import edu.chl.blastinthepast.utils.Position;
 
@@ -32,12 +33,12 @@ public class EnemyView implements CharacterView {
         weaponView = new WeaponView(enemy.getWeapon());
         rectangle = new ArrayList<Rectangle>();
         rectangle.add(new Rectangle());
-        rectangle.get(0).x = 800/2 - 64/2;
-        rectangle.get(0).y = 480/2 - 64/2;
-        rectangle.get(0).height = 64;
-        rectangle.get(0).width = 64;
-        sprite.setX(rectangle.get(0).x);
-        sprite.setY(rectangle.get(0).y);
+        //rectangle.get(0).x = Constants.CAMERA_WIDTH/2 - 64/2;
+        //rectangle.get(0).y = Constants.CAMERA_HEIGHT/2 - 64/2;
+        rectangle.get(0).height = getSprite().getHeight();
+        rectangle.get(0).width = getSprite().getWidth();
+        //sprite.setX(rectangle.get(0).x);
+        //sprite.setY(rectangle.get(0).y);
     }
 
     /**

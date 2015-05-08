@@ -7,4 +7,6 @@ public class Constants {
     public static final int MAP_WIDTH=1024;
     public static final int MAP_HEIGHT=1024;
     public static final int POWER_UP_SIZE=64;
+    public static final int CAMERA_WIDTH=800;
+    public static final int CAMERA_HEIGHT=480;
 }

@@ -31,12 +31,12 @@ public class PlayerView implements CharacterView {
         rectangle = new ArrayList<Rectangle>();
         rectangle.add(new Rectangle());
         direction = new Vector2();
-        rectangle.get(0).x = 800/2 - 64/2;
-        rectangle.get(0).y = 480/2 - 64/2;
-        rectangle.get(0).height = 64;
-        rectangle.get(0).width = 64;
-        sprite.setX(rectangle.get(0).x);
-        sprite.setY(rectangle.get(0).y);
+        //rectangle.get(0).x = 800/2 - 64/2;
+        //rectangle.get(0).y = 480/2 - 64/2;
+        rectangle.get(0).height = sprite.getHeight();
+        rectangle.get(0).width = sprite.getWidth();
+        //sprite.setX(rectangle.get(0).x);
+        //sprite.setY(rectangle.get(0).y);
         player = newPlayer;
         weaponView = new WeaponView(player.getWeapon());
     }
