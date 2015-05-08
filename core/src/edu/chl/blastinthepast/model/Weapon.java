@@ -15,8 +15,8 @@ public class Weapon implements WeaponInterface {
     private Projectile projectile;
     private int magazineCapacity;
     private int reloadTime; //Reload time in milliseconds
-    private int bulletsLeftInMagazine = 20;
-    private int totalBullets = 200;
+    private int bulletsLeftInMagazine;
+    private int totalBullets;
     private int fireRate; //Time between shots in milliseconds
     private long latestShot = 0;
     private boolean isReloading = false;
@@ -26,17 +26,18 @@ public class Weapon implements WeaponInterface {
     private Position offset;
 
     public Weapon (PositionInterface pos, Vector2 direction, PositionInterface offset) {
-        this(pos, direction, 1500, 100, 20, offset);
+        this(pos, direction, 1500, 100, 20, 150, offset);
     }
 
-    public Weapon (PositionInterface pos, Vector2 direction, int reloadTime, int fireRate, final int magazineCapacity, PositionInterface offset) {
+    public Weapon (PositionInterface pos, Vector2 direction, int reloadTime, int fireRate, final int magazineCapacity, int totalBullets, PositionInterface offset) {
         position = new Position(pos);
         this.direction = direction;
         this.fireRate = fireRate;
         this.reloadTime = reloadTime;
         this.magazineCapacity = magazineCapacity;
         this.offset= new Position(offset);
-
+        this.totalBullets = totalBullets;
+        bulletsLeftInMagazine = 20;
         ActionListener reloading = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -56,11 +57,12 @@ public class Weapon implements WeaponInterface {
         return fireRate;
     }
 
+    public int getMagazineCapacity() {
+        return magazineCapacity;
+    }
+
     public boolean hasAmmo() {
-        if(totalBullets > 0) {
-            return true;
-        }
-        return false;
+        return (totalBullets > 0);
     }
 
     public ProjectileInterface fire() {
@@ -74,7 +76,11 @@ public class Weapon implements WeaponInterface {
     }
 
     public void addAmmo(int amount) {
-        totalBullets += amount;
+        if(amount + bulletsLeftInMagazine <= magazineCapacity) {
+            totalBullets += amount;
+        } else {
+            totalBullets += magazineCapacity - bulletsLeftInMagazine;
+        }
     }
 
     public void reload() {
@@ -123,6 +129,10 @@ public class Weapon implements WeaponInterface {
 
     public int getbulletsLeftInMagazine() {
         return bulletsLeftInMagazine;
+    }
+
+    public int getTotalBullets() {
+        return totalBullets;
     }
 
     public ProjectileInterface pullTrigger() {

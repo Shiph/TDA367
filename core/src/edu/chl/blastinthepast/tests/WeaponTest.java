@@ -15,36 +15,31 @@ import static org.junit.Assert.*;
  */
 public class WeaponTest {
 
-    // creating a new weapon with 100 reload time, 100 fire rate, and 100 magazine capacity
-    WeaponInterface weapon;
-
     @Before
     public void before() {
         weapon = new Weapon(new MockPosition(), new Vector2(), new MockPosition());
     }
+    Weapon weapon = new Weapon(new MockPosition(), new Vector2(0,0), new MockPosition());
 
     @Test
     public void testFire() {
-        if(weapon.hasAmmo()) {
-            assertTrue(weapon.fire() instanceof Projectile);
-        } else {
-            assertTrue(weapon.fire() == null);
+        for(int i = 0; i< weapon.getMagazineCapacity(); i++) { //Empties the magazine
+            weapon.fire();
         }
+        assertTrue(weapon.fire() == null); //Should return null if there's no bullets left in magazine.
     }
 
     @Test
     public void testReload() {
-        weapon.fire();
-        int amount = weapon.getbulletsLeftInMagazine();
         weapon.reload();
-        assertTrue(weapon.getbulletsLeftInMagazine() > amount);
+        assertTrue(weapon.getbulletsLeftInMagazine() == weapon.getMagazineCapacity());
     }
 
     @Test
-    public void testFireRate () {
-        int fireRate = weapon.getFireRate();
-        weapon.setFireRate(320523);
-        assertFalse(fireRate == weapon.getFireRate());
+    public void testAddAmmo() {
+        //Tests that you can't add more ammo than the magazine can "hold".
+        weapon.addAmmo(420);
+        assertTrue(weapon.getTotalBullets() == weapon.getMagazineCapacity());
     }
 
     @Test
