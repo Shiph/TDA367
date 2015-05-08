@@ -98,7 +98,7 @@ public class BPModel implements Observer {
     }
 
     public void removeProjectile(Projectile pp) {
-        for (Projectile p : projectiles) {
+        for (ProjectileInterface p : projectiles) {
             if (p == pp) {
                 projectiles.remove(pp);
             }
