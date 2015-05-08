@@ -82,8 +82,4 @@ public class ProjectileView implements Collidable {
     public void dispose() {
         texture.dispose();
     }
-
-    public ProjectileInterface getProjectile(){
-        return projectile;
-    }
 }
