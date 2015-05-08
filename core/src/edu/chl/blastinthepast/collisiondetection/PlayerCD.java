@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.utils.collisiondetection;
+package edu.chl.blastinthepast.collisiondetection;
 
 import edu.chl.blastinthepast.view.*;
 
@@ -39,5 +39,14 @@ public class PlayerCD extends CollisionDetection {
         }
         tCollision = clean(tCollision);
         return tCollision;
+    }
+
+    void resolve () {
+        for (Collidable c : collision.get(0)) {
+            if (c instanceof PlayerView) {
+                ((PlayerView) c).setCollision();
+                ((PlayerView) c).updatePosition();
+            }
+        }
     }
 }

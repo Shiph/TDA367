@@ -1,6 +1,8 @@
 package edu.chl.blastinthepast.model;
 
 import edu.chl.blastinthepast.utils.Constants;
+import edu.chl.blastinthepast.view.Collidable;
+import edu.chl.blastinthepast.view.Environment;
 
 import java.util.*;
 
@@ -81,20 +83,20 @@ public class BPModel implements Observer {
         }
     }
 
-    public void collision(Object o1, Object o2){ //temporary collision detection
-        if ((o1 instanceof Character && o2 instanceof Projectile)){
-            Character character=(Character) o1;
-            Projectile projectile = (Projectile) o2;
-            hit(character, projectile);
-        } else if (o2 instanceof Character && o1 instanceof Projectile){
-            Character character=(Character) o2;
-            Projectile projectile = (Projectile) o1;
-            hit(character, projectile);
+    public void collision(Projectile p, Collidable c) { //temporary collision detection
+        if ((p instanceof Projectile && c instanceof Character)) {
+            hit(p,(Character) c);
+        } else if (p instanceof Projectile && c instanceof Environment) {
+            hit(p,(Environment) c);
         }
     }
 
-    public void hit(Character character, Projectile projectile){ //collision for bullets
+    public void hit(Projectile projectile, Character character) { //collision for bullets + characters
         character.setHealth(character.getHealth()-projectile.getDamage());
+        projectiles.remove(projectile);
+    }
+
+    public void hit(Projectile projectile, Environment environment) { //Collision for bullets + environment
         projectiles.remove(projectile);
     }
 

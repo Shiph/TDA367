@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.utils.collisiondetection;
+package edu.chl.blastinthepast.collisiondetection;
 
 import edu.chl.blastinthepast.view.*;
 
@@ -18,6 +18,8 @@ public class EnemyCD extends CollisionDetection {
         if (!collision.get(0).isEmpty()) {
             System.out.println("Enemy" + collision);
         }
+
+        resolve();
     }
 
     public ArrayList<ArrayList<Collidable>> getCollision () {
@@ -49,6 +51,15 @@ public class EnemyCD extends CollisionDetection {
         }
         tCollision = clean(tCollision);
         return tCollision;
+    }
+
+    void resolve() {
+        for (Collidable c : collision.get(0)) { //this is where shit goes wrong
+            if (c instanceof EnemyView) {
+                ((EnemyView) c).setCollision();
+                ((EnemyView) c).update();
+            }
+        }
     }
 
 }
