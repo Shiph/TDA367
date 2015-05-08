@@ -97,14 +97,6 @@ public class BPModel implements Observer {
         projectiles.add(p);
     }
 
-    public void removeProjectile(Projectile pp) {
-        for (ProjectileInterface p : projectiles) {
-            if (p == pp) {
-                projectiles.remove(pp);
-            }
-        }
-    }
-
     @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof Projectile) {
@@ -115,5 +107,4 @@ public class BPModel implements Observer {
             powerUps.add(powerUp);
         }
     }
-
 }

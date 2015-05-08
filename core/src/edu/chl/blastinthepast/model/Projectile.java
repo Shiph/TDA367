@@ -12,6 +12,7 @@ public class Projectile implements  ProjectileInterface{
     private float speed;
     private int damage;
     private Position position;
+    private Character origin;
 
     public Projectile(Position pos, Vector2 direction){
         this(pos.getX(), pos.getY(), direction);
@@ -69,6 +70,11 @@ public class Projectile implements  ProjectileInterface{
         return position;
     }
 
+    public Character getOrigin () {
+        return origin;
+    }
 
-
+    public void setOrigin (Character origin) {
+        this.origin = origin;
+    }
 }

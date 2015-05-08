@@ -68,11 +68,9 @@ public class ProjectileCD extends CollisionDetection {
             }
         }
         tCollision = clean(tCollision);
-        /*
         if (tCollision.size() > 0) {
             System.out.println(tCollision);
         }
-        */
         return tCollision;
     }
 }
