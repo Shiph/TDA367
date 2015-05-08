@@ -67,7 +67,7 @@ public class ProjectileView implements Collidable {
     }
 
     public Projectile getProjectile () {
-        return projectile;
+        return (Projectile) projectile;
     }
 
     public void draw(SpriteBatch batch) {
