@@ -1,6 +1,7 @@
 package edu.chl.blastinthepast.model;
 
 import com.badlogic.gdx.math.Vector2;
+import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 
 import javax.swing.*;
@@ -62,7 +63,7 @@ public class Enemy extends Observable implements Character {
                 }
                 break;
             case 1: // move east
-                if (!(position.getX() < 800)) {
+                if (!(position.getX() < Constants.MAP_WIDTH)) {
                     movementDirection = 0;
                 } else {
                     position.setX(position.getX() + movementSpeed * dt);
@@ -70,7 +71,7 @@ public class Enemy extends Observable implements Character {
                 }
                 break;
             case 2: // move north
-                if (!(position.getY() < 480)) {
+                if (!(position.getY() < Constants.MAP_HEIGHT)) {
                     movementDirection = 3;
                 } else {
                     position.setY(position.getY() + movementSpeed * dt);

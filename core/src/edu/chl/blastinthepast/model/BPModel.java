@@ -1,6 +1,7 @@
 package edu.chl.blastinthepast.model;
 
 import com.badlogic.gdx.math.Vector2;
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.view.ProjectileView;
@@ -73,16 +74,29 @@ public class BPModel implements Observer {
                 iter.remove();
             }
         }
+        if (enemies.size()<1){
+            spawnEnemies();
+        }
     }
 
     private void spawnEnemies() {
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 100; i++) {
             enemies.add(new Enemy(player));
         }
         for (Enemy e : enemies) {
             Random r = new Random();
-            e.getPosition().setX(r.nextFloat() * 800);
-            e.getPosition().setY(r.nextFloat() * 480);
+            float x=r.nextFloat()*Constants.MAP_WIDTH;
+            float y=r.nextFloat()*Constants.MAP_HEIGHT;
+            while (x<=player.getPosition().getX()+Constants.CAMERA_WIDTH && //Makes enemies spawn outside the players view
+                    x>=player.getPosition().getX()-Constants.CAMERA_WIDTH){
+                while (y<=player.getPosition().getY()+Constants.CAMERA_HEIGHT &&
+                        y>=player.getPosition().getY()-Constants.CAMERA_HEIGHT){
+                    y=r.nextFloat()*Constants.MAP_HEIGHT;
+                }
+                x=r.nextFloat()*Constants.MAP_WIDTH;
+            }
+            e.getPosition().setX(x);
+            e.getPosition().setY(y);
             e.addObserver(this);
         }
     }
