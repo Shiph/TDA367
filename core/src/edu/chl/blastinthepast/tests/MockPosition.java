@@ -1,6 +1,5 @@
 package edu.chl.blastinthepast.tests;
 
-import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
 
 /**
@@ -22,12 +21,12 @@ public class MockPosition implements PositionInterface {
 
     @Override
     public float getX() {
-        return 0;
+        return x;
     }
 
     @Override
     public float getY() {
-        return 0;
+        return y;
     }
 
     @Override
@@ -60,6 +59,11 @@ public class MockPosition implements PositionInterface {
     @Override
     public int hashCode() {
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        return "X: "+x+" Y: "+y;
     }
 
 }

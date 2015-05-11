@@ -2,6 +2,7 @@ package edu.chl.blastinthepast.model;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Position;
+import edu.chl.blastinthepast.utils.PositionInterface;
 
 import java.util.ArrayList;
 
@@ -71,7 +72,7 @@ public class Player implements Character {
         return weapon;
     }
 
-    public Position getPosition(){
+    public PositionInterface getPosition(){
         return position;
     }
 

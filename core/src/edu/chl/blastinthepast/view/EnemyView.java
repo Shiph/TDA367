@@ -11,6 +11,7 @@ import edu.chl.blastinthepast.model.Character;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 import edu.chl.blastinthepast.utils.Position;
+import edu.chl.blastinthepast.utils.PositionInterface;
 
 import java.util.ArrayList;
 
@@ -80,7 +81,7 @@ public class EnemyView implements CharacterView {
         System.out.println(this);
     }
 
-    public Position getPosition(){
+    public PositionInterface getPosition(){
         return enemy.getPosition();
     }
 
