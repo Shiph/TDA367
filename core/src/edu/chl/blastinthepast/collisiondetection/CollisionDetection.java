@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.utils.collisiondetection;
+package edu.chl.blastinthepast.collisiondetection;
 
 
 import com.badlogic.gdx.math.Rectangle;

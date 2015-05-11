@@ -9,20 +9,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import edu.chl.blastinthepast.model.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import edu.chl.blastinthepast.model.Enemy;
-import edu.chl.blastinthepast.model.Projectile;
 import edu.chl.blastinthepast.utils.Constants;
-import edu.chl.blastinthepast.utils.collisiondetection.CollisionDetection;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.SoundAssets;
 
-import java.awt.event.ContainerAdapter;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
@@ -114,7 +110,7 @@ public class PlayState extends GameState{
             e.update();
         }*/
         bossView.update();
-        new CollisionDetection(enemies, playerView, projectiles, chestView, collisionView);
+        //new CollisionDetection(enemies, playerView, projectiles, chestView, collisionView);
         if(!music.isPlaying()) {
             music.play();
         }
