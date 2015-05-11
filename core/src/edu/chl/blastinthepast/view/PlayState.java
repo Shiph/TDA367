@@ -4,8 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import edu.chl.blastinthepast.model.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
@@ -13,10 +16,12 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import edu.chl.blastinthepast.model.Enemy;
 import edu.chl.blastinthepast.model.Projectile;
+import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.collisiondetection.CollisionDetection;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.SoundAssets;
 
+import java.awt.event.ContainerAdapter;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
@@ -42,6 +47,9 @@ public class PlayState extends GameState{
     private Sound wowSound;
     private Music music;
     private PropertyChangeSupport pcs;
+    private Label label;
+    private Label.LabelStyle labelStyle;
+    private BitmapFont font;
 
     public PlayState(GameStateManager gsm, BPModel model) {
         super(gsm, model);
@@ -65,6 +73,10 @@ public class PlayState extends GameState{
         music = SoundAssets.SANIC_THEME;
         music.setVolume(0.2f);
         music.setLooping(true);
+        font = new BitmapFont();
+        labelStyle = new Label.LabelStyle();
+        labelStyle.font = font;
+        label = new Label("ammo", labelStyle);
         pcs=new PropertyChangeSupport(this);
         music.play();
         addEnemies();
@@ -103,6 +115,8 @@ public class PlayState extends GameState{
         if(!music.isPlaying()) {
             music.play();
         }
+        label.setPosition(camera.position.x - Constants.CAMERA_WIDTH/2 + 10, camera.position.y - Constants.CAMERA_HEIGHT/2 + 10);
+        label.setText(model.getPlayer().getWeapon().getTotalBullets() + "/" + model.getPlayer().getWeapon().getbulletsLeftInMagazine());
     }
 
     @Override
@@ -119,6 +133,9 @@ public class PlayState extends GameState{
             p.draw(batch);
         }
         checkIfHit();
+        batch.begin();
+        label.draw(batch, 1);
+        batch.end();
     }
 
     public void checkIfHit(){
