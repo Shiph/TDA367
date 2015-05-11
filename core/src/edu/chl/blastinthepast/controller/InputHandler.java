@@ -16,8 +16,9 @@ import java.beans.PropertyChangeSupport;
  *
  */
 public class InputHandler implements InputProcessor{
-    private int northKey, southKey, westKey, eastKey, shootKey, enterKey, reloadKey, weapon1Key, weapon2Key, menuKey, upKey, downKey, leftKey, rightKey, escapeKey, useKey;
-    protected boolean north=false, south=false, west=false, east=false, shoot=false, menuIsUp=false;
+    private int northKey, southKey, westKey, eastKey, shootKey, enterKey, reloadKey, weapon1Key, weapon2Key,
+            menuKey, upKey, downKey, leftKey, rightKey, escapeKey, useKey;
+    protected boolean menuIsUp=false;
     private PropertyChangeSupport pcs;
 
     public InputHandler(){
@@ -43,24 +44,17 @@ public class InputHandler implements InputProcessor{
 
     @Override
     public boolean keyDown(int keycode) {
-        if (keycode==northKey){
-            north=true;
-            south=false;
+        if (keycode==northKey) {
+            pcs.firePropertyChange("north", null, true);
         }
-        if (keycode==southKey){
-            south=true;
-            north=false;
+        if (keycode==southKey) {
+            pcs.firePropertyChange("south", null, true);
         }
-        if (keycode==westKey){
-            west=true;
-            east=false;
+        if (keycode==westKey) {
+            pcs.firePropertyChange("west", null, true);
         }
-        if (keycode==eastKey){
-            east=true;
-            west=false;
-        }
-        if (keycode==shootKey){
-            shoot=true;
+        if (keycode==eastKey) {
+            pcs.firePropertyChange("east", null, true);
         }
         if (keycode==enterKey){
             pcs.firePropertyChange("enter", null, true);
@@ -101,20 +95,17 @@ public class InputHandler implements InputProcessor{
 
     @Override
     public boolean keyUp(int keycode) {
-        if (keycode==northKey){
-            north=false;
+        if (keycode==northKey) {
+            pcs.firePropertyChange("north", null, false);
         }
-        if (keycode==southKey){
-            south=false;
+        if (keycode==southKey) {
+            pcs.firePropertyChange("south", null, false);
         }
-        if (keycode==westKey){
-            west=false;
+        if (keycode==westKey) {
+            pcs.firePropertyChange("west", null, false);
         }
-        if (keycode==eastKey){
-            east=false;
-        }
-        if (keycode==shootKey){
-            shoot=false;
+        if (keycode==eastKey) {
+            pcs.firePropertyChange("east", null, false);
         }
         return false;
     }
@@ -127,7 +118,7 @@ public class InputHandler implements InputProcessor{
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (button==shootKey){
-            shoot=true;
+            pcs.firePropertyChange("shoot", null, true);
         }
         return false;
     }
@@ -135,7 +126,7 @@ public class InputHandler implements InputProcessor{
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         if (button==shootKey){
-            shoot=false;
+            pcs.firePropertyChange("shoot", null, false);
         }
         return false;
     }
@@ -162,26 +153,6 @@ public class InputHandler implements InputProcessor{
 
     public void addListener(PropertyChangeListener pcl) {
         pcs.addPropertyChangeListener(pcl);
-    }
-
-    /**
-     * Checks if movement and shoot keys are held down continuously
-     * Should be called once during every render cycle
-     */
-    public void checkForInput() {
-        if (north) {
-            pcs.firePropertyChange("north", null, true);
-        } else if (south) {
-            pcs.firePropertyChange("south", null, true);
-        }
-        if (west) {
-            pcs.firePropertyChange("west", null, true);
-        } else if (east) {
-            pcs.firePropertyChange("east", null, true);
-        }
-        if (shoot) {
-            pcs.firePropertyChange("shoot", null, true);
-        }
     }
 
 }

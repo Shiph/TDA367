@@ -2,24 +2,25 @@ package edu.chl.blastinthepast.model;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Position;
+import javafx.beans.InvalidationListener;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 /**
  * Created by Shif on 21/04/15.
  */
-public class Player implements Character {
+public class Player extends Observable implements Character {
 
     private int health;
     private int movementSpeed;
     private ArrayList<Weapon> weaponArray;
     private Weapon weapon;
-    private boolean north, south, west, east = false;
+    private boolean north, south, west, east, shooting;
     private Position position;
     private Position prevPos;
     private Vector2 aimDirection = new Vector2(1,0);
-    private String movementDirection;
-
+    private ArrayList<ProjectileInterface> projectiles;
     /**
      * Default constructor for Player with default movement speed and health.
      */
@@ -35,6 +36,7 @@ public class Player implements Character {
         this.movementSpeed = movementSpeed;
         this.health = health;
         weapon = new AK47(position, aimDirection);
+        projectiles=new ArrayList<ProjectileInterface>();
     }
 
 
@@ -94,37 +96,43 @@ public class Player implements Character {
     public void move(float dt) {
         float x = position.getX();
         float y = position.getY();
-        switch (movementDirection) {
-            case "west":
-                position.setX(x - movementSpeed * dt);
-                break;
-            case "east":
-                position.setX(x + movementSpeed * dt);
-                break;
-            case "north":
-                position.setY(y + movementSpeed * dt);
-                break;
-            case "south":
-                position.setY(y - movementSpeed * dt);
-                break;
+        if (west) {
+            position.setX(x - movementSpeed * dt);
+        }
+        if (east) {
+            position.setX(x + movementSpeed * dt);
+        }
+        if (north) {
+            position.setY(y + movementSpeed * dt);
+        }
+        if (south) {
+            position.setY(y - movementSpeed * dt);
         }
     }
 
-    public void update() {
+    public void update(float dt) {
         weapon.setPosition(position);
+        move(dt);
+        if (shooting) {
+            shoot();
+        }
     }
 
-    public void act(String action, float dt){
-        switch (action) {
-            case "shoot":
-                //weapon.fire();
-                break;
-            case "reload":
-                weapon.reload();
-                break;
-            case "use":
-                break;
-        }
+    public void isShooting(boolean shoot){
+        shooting=shoot;
+    }
+
+    public void shoot(){
+        setChanged();
+        notifyObservers(weapon.pullTrigger());
+    }
+
+    public void reload(){
+        weapon.reload();
+    }
+
+    public void use(){
+
     }
 
     public void addWeapon(Weapon weapon){
@@ -146,9 +154,41 @@ public class Player implements Character {
         setAimDirection(direction.angle());
     }
 
-    public void setMovementDirection(String movementDirection) {
-        this.movementDirection = movementDirection;
+    public void setMovementDirection(String movementDirection){
+        switch (movementDirection) {
+            case "north":
+                north = !north;
+                break;
+            case "south":
+                south = !south;
+                break;
+            case "west":
+                west = !west;
+                break;
+            case "east":
+                east = !east;
+                break;
+        }
     }
 
-    public String getMovementDirection(){return movementDirection;}
+    public boolean isMovingNorth(){
+        return north;
+    }
+
+    public boolean isMovingSouth(){
+        return south;
+    }
+
+    public boolean isMovingWest(){
+        return west;
+    }
+
+    public boolean isMovingEast(){
+        return east;
+    }
+
+    public ArrayList<ProjectileInterface> getProjectiles(){
+        return projectiles;
+    }
+
 }

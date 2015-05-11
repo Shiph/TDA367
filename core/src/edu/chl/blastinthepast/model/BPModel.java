@@ -21,10 +21,12 @@ public class BPModel implements Observer {
     private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     private Boss boss;
     private ArrayList<PowerUp> powerUps= new ArrayList<PowerUp>();
+    private ArrayList<Character> characters;
 
 
     public BPModel() {
         player=new Player();
+        player.addObserver(this);
         spawnBoss();
         spawnEnemies();
     }
@@ -37,9 +39,9 @@ public class BPModel implements Observer {
     }
 
     public void update(float dt){
-        removeOldProjectiles();
+        removeProjectiles();
         removeDeadEnemies();
-        player.update();
+        player.update(dt);
         for (ProjectileInterface p : projectiles) {
             p.move(dt);
         }
@@ -52,9 +54,9 @@ public class BPModel implements Observer {
     }
 
     /**
-     * Checks if a projectile is outside the map and if so removes it
+     * Checks if a projectile is outside the map and if so, it is removed
      */
-    private void removeOldProjectiles() {
+    private void removeProjectiles() {
         Iterator<ProjectileInterface> iter = projectiles.iterator();
         while(iter.hasNext()) {
             ProjectileInterface p = iter.next();
@@ -80,7 +82,7 @@ public class BPModel implements Observer {
     }
 
     private void spawnEnemies() {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             enemies.add(new Enemy(player));
         }
         for (Enemy e : enemies) {
@@ -151,7 +153,7 @@ public class BPModel implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (arg instanceof Projectile) {
+        if (arg instanceof Projectile && o instanceof Character) {
             addProjectile((Projectile)arg);
         }
         if (arg instanceof PowerUp){
