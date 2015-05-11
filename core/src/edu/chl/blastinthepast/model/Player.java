@@ -24,14 +24,14 @@ public class Player implements Character {
      * Default constructor for Player with default movement speed and health.
      */
     public Player() {
-        this(200, 100);
+        this(200, 100, new Position(0,0));
     }
 
     /**
      * Creates a new player character with texture, rectangle and sprite.
      */
-    public Player(int movementSpeed, int health) {
-        position = new Position(0,0);
+    public Player(int movementSpeed, int health, Position position) {
+        this.position = position;
         this.movementSpeed = movementSpeed;
         this.health = health;
         weapon = new AK47(position, aimDirection);

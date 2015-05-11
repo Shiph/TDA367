@@ -31,14 +31,15 @@ public class Enemy extends Observable implements Character {
     /**
      * Default constructor for Enemy with default movement speed and health.
      */
-    public Enemy(Player player) {
-        this(150, 100, player);
+    public Enemy(Player player, Position position) {
+        this(150, 100, position, player);
     }
 
-    public Enemy(int movementSpeed, int health, Player player) {
+    public Enemy(int movementSpeed, int health, Position position, Player player) {
         this.movementSpeed = movementSpeed;
         this.health = health;
         this.player = player;
+        this.position = position;
         position = new Position(0,0);
         actionListener = new MyActionListener();
         Random r = new Random();

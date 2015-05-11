@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.view.ProjectileView;
+import javafx.geometry.Pos;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -29,9 +30,7 @@ public class BPModel implements Observer {
     }
 
     public void spawnBoss() {
-        boss = new Boss(player);
-        boss.getPosition().setX(500);
-        boss.getPosition().setY(500);
+        boss = new Boss(player, new Position(500, 500));
         boss.addObserver(this);
     }
 
@@ -76,14 +75,10 @@ public class BPModel implements Observer {
     }
 
     private void spawnEnemies() {
-        for (int i = 0; i < 1; i++) {
-            enemies.add(new Enemy(player));
-        }
-        for (Enemy e : enemies) {
-            Random r = new Random();
-            e.getPosition().setX(r.nextFloat() * 800);
-            e.getPosition().setY(r.nextFloat() * 480);
-            e.addObserver(this);
+        Random r = new Random();
+        for (int i = 0; i < 5; i++) {
+            Position pos = new Position(Constants.MAP_WIDTH * r.nextFloat(), Constants.MAP_HEIGHT * r.nextFloat());
+            enemies.add(new Enemy(player, pos));
         }
     }
 

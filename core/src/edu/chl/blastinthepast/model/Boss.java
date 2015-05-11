@@ -7,12 +7,12 @@ import edu.chl.blastinthepast.utils.Position;
  */
 public class Boss extends Enemy {
 
-    public Boss(Player player) {
-        this(200, 1000, player);
+    public Boss(Player player, Position position) {
+        this(200, 1000, position, player);
     }
 
-    public Boss(int movementSpeed, int health, Player player) {
-        super(movementSpeed, health, player);
+    public Boss(int movementSpeed, int health, Position position, Player player) {
+        super(movementSpeed, health, position, player);
     }
 
 }
