@@ -45,4 +45,8 @@ public class WeaponView {
         //texture.dispose();
     }
 
+    public Texture getTexture() {
+        return texture;
+    }
+
 }

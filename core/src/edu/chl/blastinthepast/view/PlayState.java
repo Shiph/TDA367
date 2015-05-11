@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import edu.chl.blastinthepast.model.*;
@@ -47,9 +48,10 @@ public class PlayState extends GameState{
     private Sound wowSound;
     private Music music;
     private PropertyChangeSupport pcs;
-    private Label label;
+    private Label ammoLabel;
     private Label.LabelStyle labelStyle;
     private BitmapFont font;
+    private Image weaponImage;
 
     public PlayState(GameStateManager gsm, BPModel model) {
         super(gsm, model);
@@ -76,7 +78,8 @@ public class PlayState extends GameState{
         font = new BitmapFont();
         labelStyle = new Label.LabelStyle();
         labelStyle.font = font;
-        label = new Label("ammo", labelStyle);
+        ammoLabel = new Label("ammo", labelStyle);
+        weaponImage = new Image(playerView.getWeaponView().getTexture());
         pcs=new PropertyChangeSupport(this);
         music.play();
         addEnemies();
@@ -115,8 +118,9 @@ public class PlayState extends GameState{
         if(!music.isPlaying()) {
             music.play();
         }
-        label.setPosition(camera.position.x - Constants.CAMERA_WIDTH/2 + 10, camera.position.y - Constants.CAMERA_HEIGHT/2 + 10);
-        label.setText(model.getPlayer().getWeapon().getTotalBullets() + "/" + model.getPlayer().getWeapon().getbulletsLeftInMagazine());
+        ammoLabel.setPosition(camera.position.x - Constants.CAMERA_WIDTH/2 + 10, camera.position.y - Constants.CAMERA_HEIGHT/2 + 10);
+        weaponImage.setPosition(ammoLabel.getX(), ammoLabel.getY() + ammoLabel.getHeight());
+        ammoLabel.setText(model.getPlayer().getWeapon().getTotalBullets() + "/" + model.getPlayer().getWeapon().getbulletsLeftInMagazine());
     }
 
     @Override
@@ -134,7 +138,8 @@ public class PlayState extends GameState{
         }
         checkIfHit();
         batch.begin();
-        label.draw(batch, 1);
+        ammoLabel.draw(batch, 1);
+        weaponImage.draw(batch, 1);
         batch.end();
     }
 
