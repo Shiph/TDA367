@@ -22,13 +22,13 @@ public abstract class ProjectileView implements Collidable {
     private Sprite sprite;
     private ArrayList<Rectangle> rectangle;
     private ProjectileInterface projectile;
-    //private Sound fireSound = Gdx.audio.newSound(Gdx.files.internal("wow.mp3"));
 
-    public ProjectileView(ProjectileInterface projectile, Texture texture){
+    public ProjectileView(ProjectileInterface projectile, Texture texture, Sound sound){
         this.projectile=projectile;
         this.texture = texture;
         sprite = new Sprite(texture);
         rectangle = new ArrayList<Rectangle>();
+        sound.play();
         rectangle.add(new Rectangle());
         rectangle.get(0).x = Constants.CAMERA_WIDTH / 2 - sprite.getWidth() / 2;
         rectangle.get(0).y = Constants.CAMERA_HEIGHT / 2 - sprite.getHeight() / 2;

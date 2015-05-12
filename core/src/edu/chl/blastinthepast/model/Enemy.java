@@ -140,7 +140,7 @@ public class Enemy extends Observable implements Character {
         return movementSpeed;
     }
 
-    public void update() {
+    public void update(float dt) {
         playerDirectionVector.set(player.getPosition().getX() - position.getX(), player.getPosition().getY() - position.getY());
         weapon.setPosition(position);
         if(isPlayerInRange()) {
@@ -154,6 +154,8 @@ public class Enemy extends Observable implements Character {
         } else {
             updateMovementDirectionVector(movementDirection);
         }
+        move(dt);
+
     }
 
     private void updateMovementDirectionVector(int movementDirection) {

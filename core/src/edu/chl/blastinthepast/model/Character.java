@@ -28,4 +28,6 @@ public interface Character {
 
     public PositionInterface getPosition();
 
+    public void update(float dt);
+
 }

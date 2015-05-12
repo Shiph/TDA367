@@ -49,8 +49,7 @@ public class BPModel extends Observable implements Observer {
             p.move(dt);
         }
         for (Enemy e : enemies) {
-            e.update();
-            e.move(dt);
+            e.update(dt);
         }
     }
 

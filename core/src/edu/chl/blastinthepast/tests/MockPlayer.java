@@ -62,4 +62,9 @@ public class MockPlayer implements Character {
         return position;
     }
 
+    @Override
+    public void update(float dt) {
+
+    }
+
 }
