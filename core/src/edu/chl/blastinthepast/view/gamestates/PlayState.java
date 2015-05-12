@@ -142,7 +142,7 @@ public class PlayState extends GameState implements Observer{
     public void checkIfHit(){
         for (ProjectileView p: projectiles.values()){
             for (CharacterView c: characters.values()){
-                if (c.getRectangles().get(0).overlaps(p.getRectangles().get(0)) && !(c.getCharacter().getProjectiles().contains(p.getProjectile()))){
+                if (c.getRectangles().get(0).overlaps(p.getRectangles().get(0))){
                     pcs.firePropertyChange("characterHit", p.getProjectile(), c.getCharacter());
                 }
             }

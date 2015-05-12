@@ -1,15 +1,8 @@
 package edu.chl.blastinthepast.model;
 
 import com.badlogic.gdx.math.Vector2;
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
-import edu.chl.blastinthepast.view.ProjectileView;
-import javafx.geometry.Pos;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.time.temporal.ChronoField;
 import java.util.*;
 
 /**
@@ -42,6 +35,7 @@ public class BPModel extends Observable implements Observer {
     public void spawnBoss() {
         boss = new Boss(player, new Position(500, 500));
         boss.addObserver(this);
+        enemies.add(boss);
         characters.add(boss);
         setChanged();
         notifyObservers(boss);
@@ -58,20 +52,16 @@ public class BPModel extends Observable implements Observer {
             e.update();
             e.move(dt);
         }
-        boss.update();
-        boss.move(dt);
     }
 
     /**
      * Checks if a projectile is outside the map and if so, it is removed
      */
     private void removeProjectiles() {
-        HashMap<Character, ArrayList<ProjectileInterface>> projectileMap=new HashMap<Character, ArrayList<ProjectileInterface>>();
         for (Character c: characters) {
             Iterator<ProjectileInterface> iter = c.getProjectiles().iterator();
             while (iter.hasNext()) {
                 ProjectileInterface p = iter.next();
-                p.getDamage();
                 if ((p.getPosition().getY() < 0) || (p.getPosition().getY() > Constants.MAP_HEIGHT) ||
                         (p.getPosition().getX() > Constants.MAP_WIDTH) || (p.getPosition().getX() < 0)) {
                     iter.remove();
@@ -81,14 +71,6 @@ public class BPModel extends Observable implements Observer {
                 }
             }
         }
-        /*Iterator<ProjectileInterface> iter = projectiles.iterator();
-        while(iter.hasNext()) {
-            ProjectileInterface p = iter.next();
-            if((p.getPosition().getY() < 0) || (p.getPosition().getY() > Constants.MAP_HEIGHT) ||
-                    (p.getPosition().getX() > Constants.MAP_WIDTH) || (p.getPosition().getX() < 0)) {
-                iter.remove();
-            }
-        }*/
     }
 
     private void removeDeadEnemies(){
@@ -98,6 +80,7 @@ public class BPModel extends Observable implements Observer {
             if (e.getHealth()<=0) {
                 iter.remove();
                 characters.remove(e);
+                enemies.remove(e);
                 setChanged();
                 notifyObservers(e);
             }
@@ -146,11 +129,14 @@ public class BPModel extends Observable implements Observer {
     }
 
     public void hit(Character character, ProjectileInterface projectile){ //collision for bullets
-        character.setHealth(character.getHealth()-projectile.getDamage());
-        projectiles.remove(projectile);
-        character.getProjectiles().remove(projectile);
-        setChanged();
-        notifyObservers(projectile);
+        if (!character.getProjectiles().contains(projectile)) {
+            System.out.println("Collision");
+            character.setHealth(character.getHealth() - projectile.getDamage());
+            projectiles.remove(projectile);
+            character.getProjectiles().remove(projectile);
+            setChanged();
+            notifyObservers(projectile);
+        }
     }
 
     public void newGame() {
