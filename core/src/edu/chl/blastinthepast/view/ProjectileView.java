@@ -9,7 +9,10 @@ import com.badlogic.gdx.audio.Sound;
 import edu.chl.blastinthepast.model.ProjectileInterface;
 
 import java.util.ArrayList;
+
+import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
+import edu.chl.blastinthepast.utils.SoundAssets;
 
 /**
  * Created by jonas on 2015-04-23.
@@ -27,13 +30,12 @@ public class ProjectileView implements Collidable {
         sprite = new Sprite(texture);
         rectangle = new ArrayList<Rectangle>();
         rectangle.add(new Rectangle());
-        rectangle.get(0).x = 800 / 2 - 64 / 2;
-        rectangle.get(0).y = 480 / 2 - 64 / 2;
+        rectangle.get(0).x = Constants.CAMERA_WIDTH / 2 - sprite.getWidth() / 2;
+        rectangle.get(0).y = Constants.CAMERA_HEIGHT / 2 - sprite.getHeight() / 2;
         rectangle.get(0).height = 64;
         rectangle.get(0).width = 64;
         sprite.setX(rectangle.get(0).x);
         sprite.setY(rectangle.get(0).y);
-        //fireSound.play();
     }
 
     /**

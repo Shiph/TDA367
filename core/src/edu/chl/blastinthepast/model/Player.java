@@ -2,6 +2,7 @@ package edu.chl.blastinthepast.model;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Position;
+import edu.chl.blastinthepast.utils.PositionInterface;
 import javafx.beans.InvalidationListener;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class Player extends Observable implements Character {
     private ArrayList<Weapon> weaponArray;
     private Weapon weapon;
     private boolean north, south, west, east, shooting;
-    private Position position;
+    private PositionInterface position;
     private Position prevPos;
     private Vector2 aimDirection = new Vector2(1,0);
     private ArrayList<ProjectileInterface> projectiles;
@@ -25,18 +26,19 @@ public class Player extends Observable implements Character {
      * Default constructor for Player with default movement speed and health.
      */
     public Player() {
-        this(200, 100);
+        this(200, 100, new Position(0,0));
     }
 
     /**
      * Creates a new player character with texture, rectangle and sprite.
      */
-    public Player(int movementSpeed, int health) {
+    public Player(int movementSpeed, int health, PositionInterface pos) {
         position = new Position(0,0);
         this.movementSpeed = movementSpeed;
         this.health = health;
         weapon = new AK47(position, aimDirection);
         projectiles=new ArrayList<ProjectileInterface>();
+        position=pos;
     }
 
 
@@ -73,7 +75,7 @@ public class Player extends Observable implements Character {
         return weapon;
     }
 
-    public Position getPosition(){
+    public PositionInterface getPosition(){
         return position;
     }
 
@@ -123,20 +125,12 @@ public class Player extends Observable implements Character {
     }
 
     public void shoot(){
-        setChanged();
-        notifyObservers(weapon.pullTrigger());
-    }
-
-    public void reload(){
-        weapon.reload();
-    }
-
-    public void use(){
-
-    }
-
-    public void addWeapon(Weapon weapon){
-        weaponArray.add(weapon);
+        ProjectileInterface p=weapon.pullTrigger();
+        if (p!=null){
+            projectiles.add(p);
+            setChanged();
+            notifyObservers(p);
+        }
     }
 
     public Vector2 getAimDirection(){

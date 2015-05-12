@@ -29,6 +29,7 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
     public void render () {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        model.update(Gdx.graphics.getDeltaTime());
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.draw();
     }
@@ -75,7 +76,6 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
             case "shoot":
                 if(currentGameState instanceof PlayState) {
                     if (evt.getNewValue() instanceof Boolean) {
-                        System.out.println("fds");
                         boolean b = (boolean) evt.getNewValue();
                         model.getPlayer().isShooting(b);
                     }

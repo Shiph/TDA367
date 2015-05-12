@@ -14,7 +14,7 @@ import java.util.*;
 /**
  * Created by Shif on 20/04/15.
  */
-public class BPModel implements Observer {
+public class BPModel extends Observable implements Observer {
 
     private Player player;
     private ArrayList<ProjectileInterface> projectiles = new ArrayList<ProjectileInterface>();
@@ -25,8 +25,12 @@ public class BPModel implements Observer {
 
 
     public BPModel() {
+        characters= new ArrayList<Character>();
         player=new Player();
+        setChanged();
+        notifyObservers(player);
         player.addObserver(this);
+        characters.add(player);
         spawnBoss();
         spawnEnemies();
     }
@@ -36,6 +40,9 @@ public class BPModel implements Observer {
         boss.getPosition().setX(500);
         boss.getPosition().setY(500);
         boss.addObserver(this);
+        characters.add(boss);
+        setChanged();
+        notifyObservers(boss);
     }
 
     public void update(float dt){
@@ -57,23 +64,40 @@ public class BPModel implements Observer {
      * Checks if a projectile is outside the map and if so, it is removed
      */
     private void removeProjectiles() {
-        Iterator<ProjectileInterface> iter = projectiles.iterator();
+        HashMap<Character, ArrayList<ProjectileInterface>> projectileMap=new HashMap<Character, ArrayList<ProjectileInterface>>();
+        for (Character c: characters) {
+            Iterator<ProjectileInterface> iter = c.getProjectiles().iterator();
+            while (iter.hasNext()) {
+                ProjectileInterface p = iter.next();
+                p.getDamage();
+                if ((p.getPosition().getY() < 0) || (p.getPosition().getY() > Constants.MAP_HEIGHT) ||
+                        (p.getPosition().getX() > Constants.MAP_WIDTH) || (p.getPosition().getX() < 0)) {
+                    iter.remove();
+                    c.getProjectiles().remove(p);
+                    setChanged();
+                    notifyObservers(p);
+                }
+            }
+        }
+        /*Iterator<ProjectileInterface> iter = projectiles.iterator();
         while(iter.hasNext()) {
             ProjectileInterface p = iter.next();
             if((p.getPosition().getY() < 0) || (p.getPosition().getY() > Constants.MAP_HEIGHT) ||
                     (p.getPosition().getX() > Constants.MAP_WIDTH) || (p.getPosition().getX() < 0)) {
                 iter.remove();
             }
-        }
+        }*/
     }
 
     private void removeDeadEnemies(){
         Iterator<Enemy> iter= enemies.iterator();
         while (iter.hasNext()){
             Enemy e=iter.next();
-            if (e.getHealth()<=0){
-                System.out.println("Ded");
+            if (e.getHealth()<=0) {
                 iter.remove();
+                characters.remove(e);
+                setChanged();
+                notifyObservers(e);
             }
         }
         if (enemies.size()<1){
@@ -83,7 +107,11 @@ public class BPModel implements Observer {
 
     private void spawnEnemies() {
         for (int i = 0; i < 10; i++) {
-            enemies.add(new Enemy(player));
+            Enemy e=new Enemy(player);
+            enemies.add(e);
+            characters.add(e);
+            setChanged();
+            notifyObservers(e);
         }
         for (Enemy e : enemies) {
             Random r = new Random();
@@ -108,16 +136,19 @@ public class BPModel implements Observer {
             Character character=(Character) o1;
             Projectile projectile = (Projectile) o2;
             hit(character, projectile);
-        } else if (o2 instanceof Character && o1 instanceof Projectile){
+        } else if (o2 instanceof Character && o1 instanceof ProjectileInterface){
             Character character=(Character) o2;
-            Projectile projectile = (Projectile) o1;
+            ProjectileInterface projectile = (ProjectileInterface) o1;
             hit(character, projectile);
         }
     }
 
-    public void hit(Character character, Projectile projectile){ //collision for bullets
+    public void hit(Character character, ProjectileInterface projectile){ //collision for bullets
         character.setHealth(character.getHealth()-projectile.getDamage());
         projectiles.remove(projectile);
+        character.getProjectiles().remove(projectile);
+        setChanged();
+        notifyObservers(projectile);
     }
 
     public void newGame() {
@@ -141,25 +172,23 @@ public class BPModel implements Observer {
 
     public void addProjectile(ProjectileInterface p) {
         projectiles.add(p);
-    }
-
-    public void removeProjectile(Projectile pp) {
-        for (ProjectileInterface p : projectiles) {
-            if (p == pp) {
-                projectiles.remove(pp);
-            }
-        }
+        setChanged();
+        notifyObservers(p);
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        if (arg instanceof Projectile && o instanceof Character) {
-            addProjectile((Projectile)arg);
+        if (arg instanceof ProjectileInterface && o instanceof Character) {
+            addProjectile((ProjectileInterface) arg);
         }
         if (arg instanceof PowerUp){
             PowerUp powerUp=(PowerUp)arg;
             powerUps.add(powerUp);
         }
+    }
+
+    public ArrayList<Character> getCharacters(){
+        return characters;
     }
 
 }

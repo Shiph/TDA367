@@ -7,6 +7,7 @@ import edu.chl.blastinthepast.utils.Position;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
 
@@ -28,6 +29,7 @@ public class Enemy extends Observable implements Character {
     private Vector2 movementDirectionVector;
     private Vector2 playerDirectionVector;
     private int range = 500;
+    private ArrayList<ProjectileInterface> projectiles;
 
     /**
      * Default constructor for Enemy with default movement speed and health.
@@ -50,6 +52,7 @@ public class Enemy extends Observable implements Character {
         timer = new Timer(1000, actionListener);
         timer.setRepeats(true);
         timer.start();
+        projectiles=new ArrayList<ProjectileInterface>();
     }
 
     public void move(float dt) {
@@ -141,8 +144,12 @@ public class Enemy extends Observable implements Character {
         weapon.setPosition(position);
         if(isPlayerInRange()) {
             movementDirectionVector.set(playerDirectionVector);
-            setChanged();
-            notifyObservers(weapon.pullTrigger());
+            ProjectileInterface p=weapon.pullTrigger();
+            if (p!=null){
+                projectiles.add(p);
+                setChanged();
+                notifyObservers(p);
+            }
         } else {
             updateMovementDirectionVector(movementDirection);
         }
@@ -186,6 +193,10 @@ public class Enemy extends Observable implements Character {
             movementDirection = r.nextInt(4);
         }
 
+    }
+
+    public ArrayList<ProjectileInterface> getProjectiles(){
+        return projectiles;
     }
 
 }

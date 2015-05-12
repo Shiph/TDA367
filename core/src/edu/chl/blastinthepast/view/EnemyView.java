@@ -84,6 +84,7 @@ public class EnemyView implements CharacterView {
         return enemy.getPosition();
     }
 
+    @Override
     public void draw(SpriteBatch batch) {
         updatePosition();
         batch.begin();

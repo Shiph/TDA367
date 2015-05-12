@@ -2,10 +2,12 @@ package edu.chl.blastinthepast.view;
 
 import edu.chl.blastinthepast.model.BPModel;
 
+
+
 /**
  * Created by Shif on 23/04/15.
  */
-public abstract class GameState {
+public abstract class GameState{
 
     protected GameStateManager gsm;
 

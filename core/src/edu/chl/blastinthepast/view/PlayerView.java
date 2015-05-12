@@ -104,6 +104,7 @@ public class PlayerView implements CharacterView {
         }
     }
 
+    @Override
     public void draw(SpriteBatch batch) {
         updatePosition();
         updateDirection();
