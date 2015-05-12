@@ -162,7 +162,10 @@ public class Weapon implements WeaponInterface {
 
     public Position getPosWithOffset(){
         Vector2 v2=new Vector2(getDirection());
+        v2.scl(1/v2.len());
         v2.scl(getOffset().getX(), getOffset().getY());
+        //v2.scl(5, 5);
+        System.out.println(v2);
         return new Position(position.getX()+v2.x, position.getY()+v2.y);
     }
 

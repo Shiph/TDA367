@@ -130,7 +130,6 @@ public class BPModel extends Observable implements Observer {
 
     public void hit(Character character, ProjectileInterface projectile){ //collision for bullets
         if (!character.getProjectiles().contains(projectile)) {
-            System.out.println("Collision");
             character.setHealth(character.getHealth() - projectile.getDamage());
             projectiles.remove(projectile);
             character.getProjectiles().remove(projectile);

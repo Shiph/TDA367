@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 public class AK47 extends Weapon {
 
     public AK47(PositionInterface position, Vector2 direction) {
-        super(position, direction, 1000, 100, 20, 200, new Position(30, 30));
+        super(position, direction, 1000, 100, 20, 200, new Position(60, 60));
     }
 
     @Override
