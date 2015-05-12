@@ -37,12 +37,9 @@ public class Player extends Observable implements Character {
         this.health = health;
         weaponArray = new ArrayList<Weapon>();
         weapon = new AK47(position, aimDirection);
-<<<<<<< HEAD
         weaponArray.add(weapon);
-=======
-        projectiles=new ArrayList<ProjectileInterface>();
+        projectiles = new ArrayList<ProjectileInterface>();
         position=pos;
->>>>>>> master
     }
 
 
@@ -69,6 +66,10 @@ public class Player extends Observable implements Character {
 
     public int getHealth() {
         return health;
+    }
+
+    public void addWeapon(Weapon weapon) {
+        weaponArray.add(weapon);
     }
 
     public void setWeapon(Weapon weapon) {

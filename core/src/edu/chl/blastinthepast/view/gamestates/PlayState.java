@@ -21,6 +21,7 @@ import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.SoundAssets;
 import edu.chl.blastinthepast.view.*;
 import edu.chl.blastinthepast.view.characterviews.BossView;
+import edu.chl.blastinthepast.view.characterviews.CharacterView;
 import edu.chl.blastinthepast.view.characterviews.EnemyView;
 import edu.chl.blastinthepast.view.characterviews.PlayerView;
 
@@ -43,7 +44,7 @@ public class PlayState extends GameState implements Observer{
     private OrthographicCamera camera;
     private TiledMapRenderer tiledMapRenderer;
     private TiledMap tiledMap;
-    //private ArrayList<PowerUpView> powerUps= new ArrayList<PowerUpView>();
+    //private ArrayList<PowerUpView> powerUps = new ArrayList<PowerUpView>();
     private Sound wowSound;
     private Music music;
     private PropertyChangeSupport pcs;
@@ -62,16 +63,13 @@ public class PlayState extends GameState implements Observer{
 
     @Override
     public void init(BPModel model) {
-        this.model=model;
-<<<<<<< HEAD:core/src/edu/chl/blastinthepast/view/gamestates/PlayState.java
+        this.model = model;
         chestView = new ChestView(model.getChest());
-=======
         model.addObserver(this);
         characters = new HashMap <Character, CharacterView>();
         removeChar= new ArrayList<Character>();
         removeProj = new ArrayList<ProjectileInterface>();
-        chestView = new ChestView();
->>>>>>> master:core/src/edu/chl/blastinthepast/view/PlayState.java
+        chestView = new ChestView(model.getChest());
         collisionView = new CollisionView();
         playerView = new PlayerView(model.getPlayer());
         batch = new SpriteBatch();
@@ -109,11 +107,7 @@ public class PlayState extends GameState implements Observer{
 
     @Override
     public void update(float dt) {
-<<<<<<< HEAD:core/src/edu/chl/blastinthepast/view/gamestates/PlayState.java
-        model.update(dt);
         chestView.update();
-=======
->>>>>>> master:core/src/edu/chl/blastinthepast/view/PlayState.java
         camera.position.set(playerView.getRectangles().get(0).getX() + playerView.getRectangles().get(0).getWidth() / 2, playerView.getRectangles().get(0).getY() + playerView.getRectangles().get(0).getWidth() / 2, 0);
         camera.update();
         batch.setProjectionMatrix(camera.combined);
@@ -130,16 +124,9 @@ public class PlayState extends GameState implements Observer{
     @Override
     public void draw() {
         tiledMapRenderer.render();
-<<<<<<< HEAD:core/src/edu/chl/blastinthepast/view/gamestates/PlayState.java
-        playerView.draw(batch);
-        bossView.draw(batch);
         chestView.draw(batch);
-        for (EnemyView e : enemies) {
-            e.draw(batch);
-=======
         for (CharacterView c : characters.values()) {
             c.draw(batch);
->>>>>>> master:core/src/edu/chl/blastinthepast/view/PlayState.java
         }
         for (ProjectileView p : projectiles.values()) {
             p.draw(batch);
