@@ -1,6 +1,8 @@
 package edu.chl.blastinthepast.collisiondetection;
 
 import edu.chl.blastinthepast.view.*;
+import edu.chl.blastinthepast.view.characterviews.EnemyView;
+import edu.chl.blastinthepast.view.characterviews.PlayerView;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.view;
+package edu.chl.blastinthepast.view.characterviews;
 
 
 import com.badlogic.gdx.graphics.Texture;
@@ -8,10 +8,11 @@ import com.badlogic.gdx.math.Rectangle;
 
 import edu.chl.blastinthepast.model.*;
 import edu.chl.blastinthepast.model.Character;
-import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
-import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
+import edu.chl.blastinthepast.view.AK47View;
+import edu.chl.blastinthepast.view.ProjectileView;
+import edu.chl.blastinthepast.view.WeaponView;
 
 import java.util.ArrayList;
 
@@ -27,11 +28,11 @@ public class EnemyView implements CharacterView {
     private WeaponView weaponView;
     private boolean collision;
 
-    EnemyView(Enemy enemy){
+    public EnemyView(Enemy enemy) {
         this.enemy = enemy;
         texture = GraphicalAssets.ENEMYDOWN;
         sprite = new Sprite(texture);
-        weaponView = new WeaponView(enemy.getWeapon());
+        weaponView = new AK47View(enemy.getWeapon());
         rectangle = new ArrayList<Rectangle>();
         rectangle.add(new Rectangle());
         //rectangle.get(0).x = Constants.CAMERA_WIDTH/2 - 64/2;

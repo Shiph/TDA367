@@ -39,7 +39,6 @@ public class InputHandler implements InputProcessor{
         downKey = Input.Keys.DOWN;
         leftKey = Input.Keys.LEFT;
         rightKey = Input.Keys.RIGHT;
-
     }
 
     @Override
@@ -87,7 +86,7 @@ public class InputHandler implements InputProcessor{
         if (keycode==escapeKey){
             pcs.firePropertyChange("escape", null, true);
         }
-        if (keycode==escapeKey){
+        if (keycode == useKey){
             pcs.firePropertyChange("use", null, true);
         }
         return true;

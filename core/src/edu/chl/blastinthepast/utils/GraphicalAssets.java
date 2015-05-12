@@ -21,4 +21,7 @@ public class GraphicalAssets {
     public static final Texture BOSSDOWN = new Texture(Gdx.files.local("bossdown.png"));
     public static final Texture TRIFORCE_BULLET = new Texture(Gdx.files.local("triforce.png"));
     public static final Texture AK47 = new Texture(Gdx.files.local("ak47.gif"));
+    public static final Texture CHESTOPEN = new Texture (Gdx.files.local("chestopen.jpg"));
+    public static final Texture CHESTCLOSED = new Texture (Gdx.files.local("chestclosed.jpg"));
+
 }

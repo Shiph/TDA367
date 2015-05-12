@@ -7,7 +7,7 @@ import edu.chl.blastinthepast.utils.Position;
  */
 public interface ChestInterface {
 
-    public Weapon open();
+    public Weapon open(Character character);
     public boolean isOpened();
     public Position getPosition();
 

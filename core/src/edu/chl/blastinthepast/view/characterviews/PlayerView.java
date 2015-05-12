@@ -1,15 +1,16 @@
-package edu.chl.blastinthepast.view;
+package edu.chl.blastinthepast.view.characterviews;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.model.*;
 import edu.chl.blastinthepast.model.Character;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
+import edu.chl.blastinthepast.view.AK47View;
+import edu.chl.blastinthepast.view.ProjectileView;
+import edu.chl.blastinthepast.view.WeaponView;
 
 import java.util.ArrayList;
 
@@ -38,7 +39,7 @@ public class PlayerView implements CharacterView {
         //sprite.setX(rectangle.get(0).x);
         //sprite.setY(rectangle.get(0).y);
         player = newPlayer;
-        weaponView = new WeaponView(player.getWeapon());
+        weaponView = new AK47View(player.getWeapon());
         collision = false;
     }
 

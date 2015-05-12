@@ -1,19 +1,21 @@
-package edu.chl.blastinthepast.view;
+package edu.chl.blastinthepast.view.gamestates;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import edu.chl.blastinthepast.model.BPModel;
+import edu.chl.blastinthepast.utils.Constants;
 
 /**
  * Created by MattiasJ on 2015-05-03.
  */
-public class MainMenu extends GameState {
+public class InGameMenu extends GameState {
     private SpriteBatch batch;
     private BitmapFont titleFont;
     private BitmapFont font;
@@ -21,12 +23,13 @@ public class MainMenu extends GameState {
     private GameStateManager gsm;
     private final String title = "blast in the past";
     private int currentItem;
-    private Texture texture;
     private String[] menuItems;
-    private Music music;
     private Sprite sprite;
+    private ImageButton soundButton;
+    private Texture soundTexture;
+    private Sprite soundSprite;
 
-    public MainMenu(GameStateManager gsm, BPModel model) {
+    public InGameMenu (GameStateManager gsm, BPModel model) {
         super(gsm, model);
         this.gsm = gsm;
         currentItem = 0;
@@ -34,43 +37,39 @@ public class MainMenu extends GameState {
 
     @Override
     public void init(BPModel model) {
-        texture = new Texture(Gdx.files.internal("menu.jpg"));
-        texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        sprite = new Sprite(texture);
+        sprite = new Sprite();
         sprite.setOrigin(0,0);
         camera = new OrthographicCamera();
         batch = new SpriteBatch();
-        music = Gdx.audio.newMusic(Gdx.files.internal("menu.mp3"));
-        music.play();
-        music.setLooping(true);
-        music.setVolume(0.4f);
         titleFont = new BitmapFont(Gdx.files.internal("font.fnt"));
         font = new BitmapFont();
-        menuItems = new String[]{"New game", "Load game", "Highscores", "Options", "Quit"};
+        menuItems = new String[]{"Continue", "Save game", "Options", "Exit to main menu"};
+        soundTexture = new Texture(Gdx.files.internal("sound.png"));
+        soundSprite = new Sprite(soundTexture);
+        soundButton = new ImageButton(new SpriteDrawable(soundSprite));
+        soundButton.setSize(24, 24);
+        soundButton.setPosition(Constants.CAMERA_WIDTH - 40, 20);
     }
 
-    public void update(float dt) {
-        music.play();
-    }
+    public void update(float dt) {}
 
     public void draw() {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        sprite.draw(batch);
         float width = titleFont.getBounds(title).width;
-        titleFont.draw(batch, title, (Gdx.graphics.getWidth() - width) / 2, 4 * Gdx.graphics.getHeight() / 5);
+        titleFont.draw(batch, title, (Gdx.graphics.getWidth() - width) / 2, 400);
 
-            for (int i = 0; i < menuItems.length; i++) {
-                if (currentItem == i) {
-                    font.setColor(Color.RED);
-                } else {
-                    font.setColor(Color.WHITE);
-                }
-                font.draw(batch, menuItems[i], Gdx.graphics.getWidth() / 2 - 30, 170 - 35 * i);
+        for (int i = 0; i < menuItems.length; i++) {
+            if (currentItem == i) {
+                font.setColor(Color.RED);
+            } else {
+                font.setColor(Color.WHITE);
             }
-
+            font.draw(batch, menuItems[i], Gdx.graphics.getWidth() / 2 - 30, 140 - 35 * i);
+        }
+        soundButton.draw(batch, 1);
         batch.end();
     }
 
@@ -79,20 +78,18 @@ public class MainMenu extends GameState {
 
     public void select() {
         if(currentItem == 0) {
-            gsm.setState(GameStateManager.PLAY, false);
+            gsm.setState(GameStateManager.PLAY, true);
         } else if (currentItem == 1) {
             //gsm.setState(GameStateManager.SAVES);
         } else if (currentItem == 2) {
-            gsm.setState(GameStateManager.HIGHSCORES, false);
+            //gsm.setState(GameStateManager.OPTIONS, true);
         } else if (currentItem == 3) {
-            //gsm.setState(GameStateManager.OPTIONS, false);
-        } else if (currentItem == 4) {
-            Gdx.app.exit();
+            gsm.setState(GameStateManager.MAINMENU, false);
         }
     }
 
     public void dispose() {
-        music.stop();
+        currentItem = 0;
     }
 
     public void moveUp() {

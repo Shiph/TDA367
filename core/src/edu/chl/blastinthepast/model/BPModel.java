@@ -20,12 +20,15 @@ public class BPModel extends Observable implements Observer {
     private Player player;
     private ArrayList<ProjectileInterface> projectiles = new ArrayList<ProjectileInterface>();
     private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-    private Boss boss;
-    private ArrayList<PowerUp> powerUps= new ArrayList<PowerUp>();
     private ArrayList<Character> characters;
+    private Boss boss;
+    private Chest chest;
+    private ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
 
 
     public BPModel() {
+        player = new Player();
+        chest = new Chest(new AK47(new Position(300,300), new Vector2()));
         characters= new ArrayList<Character>();
         player=new Player();
         setChanged();
@@ -163,6 +166,10 @@ public class BPModel extends Observable implements Observer {
 
     public Boss getBoss() {
         return boss;
+    }
+
+    public Chest getChest() {
+        return chest;
     }
 
     public ArrayList<Enemy> getEnemies(){

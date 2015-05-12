@@ -57,6 +57,11 @@ public class MockPosition implements PositionInterface {
     }
 
     @Override
+    public boolean overlaps(PositionInterface pos) {
+        return false;
+    }
+
+    @Override
     public int hashCode() {
         return 0;
     }
