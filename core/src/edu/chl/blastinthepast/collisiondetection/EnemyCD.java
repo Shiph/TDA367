@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.utils.collisiondetection;
+package edu.chl.blastinthepast.collisiondetection;
 
 import edu.chl.blastinthepast.view.*;
 

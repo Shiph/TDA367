@@ -34,10 +34,11 @@ public class Weapon implements WeaponInterface {
         this.direction = direction;
         this.fireRate = fireRate;
         this.reloadTime = reloadTime;
+        this.totalBullets = totalBullets - magazineCapacity;
         this.magazineCapacity = magazineCapacity;
+        bulletsLeftInMagazine = magazineCapacity;
         this.offset= new Position(offset);
-        this.totalBullets = totalBullets;
-        bulletsLeftInMagazine = 20;
+
         ActionListener reloading = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -62,7 +63,7 @@ public class Weapon implements WeaponInterface {
     }
 
     public boolean hasAmmo() {
-        return (totalBullets > 0);
+        return ((totalBullets + bulletsLeftInMagazine) > 0);
     }
 
     public ProjectileInterface fire() {
@@ -76,10 +77,8 @@ public class Weapon implements WeaponInterface {
     }
 
     public void addAmmo(int amount) {
-        if(amount + bulletsLeftInMagazine <= magazineCapacity) {
+        if(amount > 0) {
             totalBullets += amount;
-        } else {
-            totalBullets += magazineCapacity - bulletsLeftInMagazine;
         }
     }
 
@@ -91,8 +90,8 @@ public class Weapon implements WeaponInterface {
 
     private void reloadWeapon(){
         if(totalBullets >= magazineCapacity) {
+            totalBullets -= (magazineCapacity - bulletsLeftInMagazine);
             bulletsLeftInMagazine = magazineCapacity;
-            totalBullets -= magazineCapacity;
         } else {
             bulletsLeftInMagazine = totalBullets;
             totalBullets = 0;
@@ -112,11 +111,11 @@ public class Weapon implements WeaponInterface {
     }
 
     public void setPosition(PositionInterface position){
-        this.position.setPos(position);
+        this.position.setPosition(position);
     }
 
     public void setPosition(int x, int y){
-        position.setPos(x, y);
+        position.setPosition(x, y);
     }
 
     public Position getPosition(){
@@ -142,9 +141,8 @@ public class Weapon implements WeaponInterface {
                 return null;
             }
             return fire();
-        } else {
-            return null;
         }
+            return null;
     }
 
     public void reloadIfNeeded() {

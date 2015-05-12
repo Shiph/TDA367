@@ -3,10 +3,16 @@ package edu.chl.blastinthepast.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import edu.chl.blastinthepast.model.BPModel;
+import edu.chl.blastinthepast.utils.Constants;
 
 /**
  * Created by MattiasJ on 2015-05-03.
@@ -21,6 +27,9 @@ public class InGameMenu extends GameState {
     private int currentItem;
     private String[] menuItems;
     private Sprite sprite;
+    private ImageButton soundButton;
+    private Texture soundTexture;
+    private Sprite soundSprite;
 
     public InGameMenu (GameStateManager gsm, BPModel model) {
         super(gsm, model);
@@ -37,6 +46,11 @@ public class InGameMenu extends GameState {
         titleFont = new BitmapFont(Gdx.files.internal("font.fnt"));
         font = new BitmapFont();
         menuItems = new String[]{"Continue", "Save game", "Options", "Exit to main menu"};
+        soundTexture = new Texture(Gdx.files.internal("sound.png"));
+        soundSprite = new Sprite(soundTexture);
+        soundButton = new ImageButton(new SpriteDrawable(soundSprite));
+        soundButton.setSize(24, 24);
+        soundButton.setPosition(Constants.CAMERA_WIDTH - 40, 20);
     }
 
     public void update(float dt) {}
@@ -57,6 +71,7 @@ public class InGameMenu extends GameState {
             }
             font.draw(batch, menuItems[i], Gdx.graphics.getWidth() / 2 - 30, 140 - 35 * i);
         }
+        soundButton.draw(batch, 1);
         batch.end();
     }
 

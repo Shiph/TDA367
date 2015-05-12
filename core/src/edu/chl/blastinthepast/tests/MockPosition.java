@@ -1,6 +1,5 @@
 package edu.chl.blastinthepast.tests;
 
-import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
 
 /**
@@ -22,12 +21,12 @@ public class MockPosition implements PositionInterface {
 
     @Override
     public float getX() {
-        return 0;
+        return x;
     }
 
     @Override
     public float getY() {
-        return 0;
+        return y;
     }
 
     @Override
@@ -41,13 +40,13 @@ public class MockPosition implements PositionInterface {
     }
 
     @Override
-    public void setPos(float x, float y) {
+    public void setPosition(float x, float y) {
         this.x = x;
         this.y = y;
     }
 
     @Override
-    public void setPos(PositionInterface pos) {
+    public void setPosition(PositionInterface pos) {
         x = pos.getX();
         y = pos.getY();
     }
@@ -60,6 +59,11 @@ public class MockPosition implements PositionInterface {
     @Override
     public int hashCode() {
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        return "X: "+x+" Y: "+y;
     }
 
 }

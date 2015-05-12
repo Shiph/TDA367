@@ -5,6 +5,7 @@ import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.view.ProjectileView;
+import javafx.geometry.Pos;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -36,9 +37,7 @@ public class BPModel extends Observable implements Observer {
     }
 
     public void spawnBoss() {
-        boss = new Boss(player);
-        boss.getPosition().setX(500);
-        boss.getPosition().setY(500);
+        boss = new Boss(player, new Position(500, 500));
         boss.addObserver(this);
         characters.add(boss);
         setChanged();
@@ -107,7 +106,7 @@ public class BPModel extends Observable implements Observer {
 
     private void spawnEnemies() {
         for (int i = 0; i < 10; i++) {
-            Enemy e=new Enemy(player);
+            Enemy e = new Enemy(player, new Position(0, 0));
             enemies.add(e);
             characters.add(e);
             setChanged();
@@ -115,15 +114,15 @@ public class BPModel extends Observable implements Observer {
         }
         for (Enemy e : enemies) {
             Random r = new Random();
-            float x=r.nextFloat()*Constants.MAP_WIDTH;
-            float y=r.nextFloat()*Constants.MAP_HEIGHT;
-            while (x<=player.getPosition().getX()+Constants.CAMERA_WIDTH && //Makes enemies spawn outside the players view
-                    x>=player.getPosition().getX()-Constants.CAMERA_WIDTH){
-                while (y<=player.getPosition().getY()+Constants.CAMERA_HEIGHT &&
-                        y>=player.getPosition().getY()-Constants.CAMERA_HEIGHT){
-                    y=r.nextFloat()*Constants.MAP_HEIGHT;
+            float x = r.nextFloat() * Constants.MAP_WIDTH;
+            float y = r.nextFloat() * Constants.MAP_HEIGHT;
+            while (x <= player.getPosition().getX() + Constants.CAMERA_WIDTH && //Makes enemies spawn outside the players view
+                    x >= player.getPosition().getX() - Constants.CAMERA_WIDTH) {
+                while (y <= player.getPosition().getY() + Constants.CAMERA_HEIGHT &&
+                        y >= player.getPosition().getY() - Constants.CAMERA_HEIGHT) {
+                    y = r.nextFloat() * Constants.MAP_HEIGHT;
                 }
-                x=r.nextFloat()*Constants.MAP_WIDTH;
+                x = r.nextFloat() * Constants.MAP_WIDTH;
             }
             e.getPosition().setX(x);
             e.getPosition().setY(y);

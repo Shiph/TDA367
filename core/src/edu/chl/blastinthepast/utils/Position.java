@@ -25,6 +25,10 @@ public class Position implements PositionInterface {
         return y;
     }
 
+    public Position getPosition () {
+        return new Position(x,y);
+    }
+
     public void setX(float x){
         this.x=x;
     }
@@ -33,14 +37,14 @@ public class Position implements PositionInterface {
         this.y=y;
     }
 
-    public void setPos(float x, float y){
+    public void setPosition(float x, float y){
         this.x=x;
         this.y=y;
     }
 
-    public void setPos(PositionInterface pos){
-        x=pos.getX();
-        y=pos.getY();
+    public void setPosition(PositionInterface pos){
+        x = pos.getX();
+        y = pos.getY();
     }
 
     public boolean equals(PositionInterface pos) {

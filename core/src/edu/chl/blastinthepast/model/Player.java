@@ -3,7 +3,6 @@ package edu.chl.blastinthepast.model;
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
-import javafx.beans.InvalidationListener;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -33,7 +32,7 @@ public class Player extends Observable implements Character {
      * Creates a new player character with texture, rectangle and sprite.
      */
     public Player(int movementSpeed, int health, PositionInterface pos) {
-        position = new Position(0,0);
+        position = new Position(pos);
         this.movementSpeed = movementSpeed;
         this.health = health;
         weapon = new AK47(position, aimDirection);
@@ -88,7 +87,7 @@ public class Player extends Observable implements Character {
     }
 
     public void setPosition(int x, int y) {
-        position.setPos(x, y);
+        position.setPosition(x, y);
     }
 
     public void setPosition (Position position) {

@@ -3,6 +3,7 @@ package edu.chl.blastinthepast.model;
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
+import edu.chl.blastinthepast.utils.PositionInterface;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -17,12 +18,12 @@ import java.util.Random;
  */
 public class Enemy extends Observable implements Character {
 
-    private final Player player;
+    private final Character player;
     private int health;
     private int movementSpeed;
-    private Position position;
+    private PositionInterface position;
     private Position prevPos;
-    private Weapon weapon;
+    private WeaponInterface weapon;
     private MyActionListener actionListener;
     private Timer timer;
     private int movementDirection;
@@ -34,15 +35,15 @@ public class Enemy extends Observable implements Character {
     /**
      * Default constructor for Enemy with default movement speed and health.
      */
-    public Enemy(Player player) {
-        this(150, 100, player);
+    public Enemy(Character player, PositionInterface position) {
+        this(150, 100, position, player);
     }
 
-    public Enemy(int movementSpeed, int health, Player player) {
+    public Enemy(int movementSpeed, int health, PositionInterface position, Character player) {
         this.movementSpeed = movementSpeed;
         this.health = health;
         this.player = player;
-        position = new Position(0,0);
+        this.position = position;
         actionListener = new MyActionListener();
         Random r = new Random();
         movementDirection = r.nextInt(4);
@@ -103,7 +104,7 @@ public class Enemy extends Observable implements Character {
         health = newHealth;
     }
 
-    public void setWeapon(Weapon weapon) {
+    public void setWeapon(WeaponInterface weapon) {
         this.weapon = weapon;
     }
 
@@ -111,7 +112,7 @@ public class Enemy extends Observable implements Character {
         return health;
     }
 
-    public Position getPosition(){
+    public PositionInterface getPosition(){
         return position;
     }
 
@@ -119,7 +120,7 @@ public class Enemy extends Observable implements Character {
         return movementDirection;
     }
 
-    public void setPosition (Position position) {
+    public void setPosition (PositionInterface position) {
         this.position = position;
     }
 
@@ -131,7 +132,7 @@ public class Enemy extends Observable implements Character {
         this.prevPos = prevPos;
     }
 
-    public Weapon getWeapon() {
+    public WeaponInterface getWeapon() {
         return weapon;
     };
 

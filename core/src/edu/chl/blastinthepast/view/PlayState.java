@@ -4,9 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.ArrayMap;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import edu.chl.blastinthepast.model.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
@@ -14,8 +16,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import edu.chl.blastinthepast.model.Character;
 import edu.chl.blastinthepast.model.Enemy;
-import edu.chl.blastinthepast.model.Projectile;
-import edu.chl.blastinthepast.utils.collisiondetection.CollisionDetection;
+import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.SoundAssets;
 
@@ -46,6 +47,10 @@ public class PlayState extends GameState implements Observer{
     private HashMap <Character, CharacterView> characters;
     private ArrayList <Character> removeChar;
     private ArrayList <ProjectileInterface> removeProj;
+    private Label ammoLabel;
+    private Label.LabelStyle labelStyle;
+    private BitmapFont font;
+    private Image weaponImage;
 
     public PlayState(GameStateManager gsm, BPModel model) {
         super(gsm, model);
@@ -71,6 +76,11 @@ public class PlayState extends GameState implements Observer{
         music = SoundAssets.SANIC_THEME;
         music.setVolume(0.2f);
         music.setLooping(true);
+        font = new BitmapFont();
+        labelStyle = new Label.LabelStyle();
+        labelStyle.font = font;
+        ammoLabel = new Label("ammo", labelStyle);
+        weaponImage = new Image(playerView.getWeaponView().getTexture());
         pcs=new PropertyChangeSupport(this);
         music.play();
         for (Character c : model.getCharacters()){
@@ -99,6 +109,9 @@ public class PlayState extends GameState implements Observer{
         if(!music.isPlaying()) {
             music.play();
         }
+        ammoLabel.setPosition(camera.position.x - Constants.CAMERA_WIDTH/2 + 10, camera.position.y - Constants.CAMERA_HEIGHT/2 + 10);
+        weaponImage.setPosition(ammoLabel.getX(), ammoLabel.getY() + ammoLabel.getHeight());
+        ammoLabel.setText(model.getPlayer().getWeapon().getTotalBullets() + "/" + model.getPlayer().getWeapon().getbulletsLeftInMagazine());
     }
 
     @Override
@@ -112,6 +125,10 @@ public class PlayState extends GameState implements Observer{
         }
         checkIfHit();
         removeObjects();
+        batch.begin();
+        ammoLabel.draw(batch, 1);
+        weaponImage.draw(batch, 1);
+        batch.end();
     }
 
     public void checkIfHit(){

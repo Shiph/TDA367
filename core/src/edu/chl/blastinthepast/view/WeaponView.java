@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import edu.chl.blastinthepast.model.Weapon;
+import edu.chl.blastinthepast.model.WeaponInterface;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 
 /**
@@ -14,9 +15,9 @@ public class WeaponView {
 
     private Texture texture;
     private Sprite sprite;
-    private Weapon weapon;
+    private WeaponInterface weapon;
 
-    public WeaponView(Weapon newWeapon) {
+    public WeaponView(WeaponInterface newWeapon) {
         weapon = newWeapon;
         texture= GraphicalAssets.AK47;
         sprite = new Sprite(texture);
@@ -45,6 +46,7 @@ public class WeaponView {
         //texture.dispose();
     }
 
-
-
+    public Texture getTexture() {
+        return texture;
+    }
 }

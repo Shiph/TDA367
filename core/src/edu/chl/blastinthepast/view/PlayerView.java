@@ -129,4 +129,7 @@ public class PlayerView implements CharacterView {
         //texture.dispose();
     }
 
+    public WeaponView getWeaponView() {
+        return weaponView;
+    }
 }

@@ -3,11 +3,7 @@ package edu.chl.blastinthepast.tests;
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.Projectile;
 import edu.chl.blastinthepast.model.Weapon;
-import org.junit.Before;
-import edu.chl.blastinthepast.model.WeaponInterface;
-import edu.chl.blastinthepast.utils.PositionInterface;
 import org.junit.Test;
-
 import static org.junit.Assert.*;
 
 /**
@@ -15,41 +11,36 @@ import static org.junit.Assert.*;
  */
 public class WeaponTest {
 
-    @Before
-    public void before() {
-        weapon = new Weapon(new MockPosition(), new Vector2(), new MockPosition());
-    }
-    Weapon weapon = new Weapon(new MockPosition(), new Vector2(0,0), new MockPosition());
+    Weapon weapon = new Weapon(new MockPosition(), new Vector2(0,0), 0, 0, 20, 150, new MockPosition());
 
+    /**
+     * Tests that the pull trigger-method returns an instance of a projectile, which it should unless you're out of ammo.
+     * We can presume that the weapon actually has ammo and thus a projectile to return since the weapon instance was just initialized.
+     */
     @Test
-    public void testFire() {
-        for(int i = 0; i< weapon.getMagazineCapacity(); i++) { //Empties the magazine
-            weapon.fire();
-        }
-        assertTrue(weapon.fire() == null); //Should return null if there's no bullets left in magazine.
+    public void testPullTrigger() {
+        assertTrue(weapon.pullTrigger() instanceof Projectile);
     }
 
+    /**
+     * Checks if the magazine reloads the amount that the magazine can hold.
+     * In this case we know that there is enough bullets to fill the magazine.
+     */
     @Test
     public void testReload() {
         weapon.reload();
         assertTrue(weapon.getbulletsLeftInMagazine() == weapon.getMagazineCapacity());
     }
 
+    /**
+     * Tests that after the weapon has fired all of its ammo it should also accordingly have no ammo left in the magazine.
+     */
     @Test
-    public void testAddAmmo() {
-        //Tests that you can't add more ammo than the magazine can "hold".
-        weapon.addAmmo(420);
-        assertTrue(weapon.getTotalBullets() == weapon.getMagazineCapacity());
-    }
-
-    @Test
-    public void testPosition() {
-        PositionInterface p = new MockPosition(13,37);
-        weapon.setPosition(13,37);
-        assertTrue(p.equals(weapon.getPosition()));
-        assertFalse(p == weapon.getPosition());
-        p = weapon.getPosition();
-        assertTrue(p == weapon.getPosition());
+    public void testHasAmmo() {
+        while(weapon.hasAmmo()) {
+            weapon.pullTrigger();
+        }
+        assertTrue(weapon.getbulletsLeftInMagazine() == 0);
     }
 
 }
