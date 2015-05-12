@@ -5,6 +5,8 @@ import edu.chl.blastinthepast.model.Character;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
 
+import java.util.ArrayList;
+
 /**
  * Created by Shif on 11/05/15.
  */
@@ -43,6 +45,11 @@ public class MockPlayer implements Character {
     @Override
     public void setHealth(int newHealth) {
         this.health = newHealth;
+    }
+
+    @Override
+    public ArrayList<ProjectileInterface> getProjectiles() {
+        return null;
     }
 
     @Override

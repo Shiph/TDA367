@@ -2,6 +2,7 @@ package edu.chl.blastinthepast.view.characterviews;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import edu.chl.blastinthepast.model.Character;
 import edu.chl.blastinthepast.view.Collidable;
@@ -23,5 +24,8 @@ public interface CharacterView extends Collidable {
     public Character getCharacter();
 
     public void hit(ProjectileView projectile);
+
+    public void draw(SpriteBatch batch);
+
 
 }

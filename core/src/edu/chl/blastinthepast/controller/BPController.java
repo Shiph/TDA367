@@ -28,9 +28,9 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
 
     @Override
     public void render () {
-        inputHandler.checkForInput();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        model.update(Gdx.graphics.getDeltaTime());
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.draw();
     }
@@ -76,16 +76,9 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                 break;
             case "shoot":
                 if(currentGameState instanceof PlayState) {
-                    try {
-                        //model.getPlayer().act("shoot", Gdx.graphics.getDeltaTime());
-                        ProjectileInterface p = model.getPlayer().getWeapon().pullTrigger();
-                        if (p != null) {
-                            model.addProjectile(p);
-                        } else {
-                            //??
-                        }
-                    } catch (NullPointerException e) {
-                        System.out.println(e.getMessage()); // player doesn't have a weapon or is out of bullets
+                    if (evt.getNewValue() instanceof Boolean) {
+                        boolean b = (boolean) evt.getNewValue();
+                        model.getPlayer().isShooting(b);
                     }
                 }
                 break;

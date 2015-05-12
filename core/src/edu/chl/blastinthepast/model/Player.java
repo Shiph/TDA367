@@ -5,22 +5,22 @@ import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 /**
  * Created by Shif on 21/04/15.
  */
-public class Player implements Character {
+public class Player extends Observable implements Character {
 
     private int health;
     private int movementSpeed;
     private ArrayList<Weapon> weaponArray;
     private Weapon weapon;
-    private boolean north, south, west, east = false;
-    private Position position;
+    private boolean north, south, west, east, shooting;
+    private PositionInterface position;
     private Position prevPos;
     private Vector2 aimDirection = new Vector2(1,0);
-    private String movementDirection;
-
+    private ArrayList<ProjectileInterface> projectiles;
     /**
      * Default constructor for Player with default movement speed and health.
      */
@@ -31,13 +31,18 @@ public class Player implements Character {
     /**
      * Creates a new player character with texture, rectangle and sprite.
      */
-    public Player(int movementSpeed, int health, Position position) {
-        this.position = position;
+    public Player(int movementSpeed, int health, PositionInterface pos) {
+        position = new Position(pos);
         this.movementSpeed = movementSpeed;
         this.health = health;
         weaponArray = new ArrayList<Weapon>();
         weapon = new AK47(position, aimDirection);
+<<<<<<< HEAD
         weaponArray.add(weapon);
+=======
+        projectiles=new ArrayList<ProjectileInterface>();
+        position=pos;
+>>>>>>> master
     }
 
 
@@ -97,41 +102,39 @@ public class Player implements Character {
     public void move(float dt) {
         float x = position.getX();
         float y = position.getY();
-        switch (movementDirection) {
-            case "west":
-                position.setX(x - movementSpeed * dt);
-                break;
-            case "east":
-                position.setX(x + movementSpeed * dt);
-                break;
-            case "north":
-                position.setY(y + movementSpeed * dt);
-                break;
-            case "south":
-                position.setY(y - movementSpeed * dt);
-                break;
+        if (west) {
+            position.setX(x - movementSpeed * dt);
+        }
+        if (east) {
+            position.setX(x + movementSpeed * dt);
+        }
+        if (north) {
+            position.setY(y + movementSpeed * dt);
+        }
+        if (south) {
+            position.setY(y - movementSpeed * dt);
         }
     }
 
-    public void update() {
+    public void update(float dt) {
         weapon.setPosition(position);
-    }
-
-    public void act(String action, float dt){
-        switch (action) {
-            case "shoot":
-                //weapon.fire();
-                break;
-            case "reload":
-                weapon.reload();
-                break;
-            case "use":
-                break;
+        move(dt);
+        if (shooting) {
+            shoot();
         }
     }
 
-    public void addWeapon(Weapon weapon){
-        weaponArray.add(weapon);
+    public void isShooting(boolean shoot){
+        shooting=shoot;
+    }
+
+    public void shoot(){
+        ProjectileInterface p=weapon.pullTrigger();
+        if (p!=null){
+            projectiles.add(p);
+            setChanged();
+            notifyObservers(p);
+        }
     }
 
     public Vector2 getAimDirection(){
@@ -149,9 +152,41 @@ public class Player implements Character {
         setAimDirection(direction.angle());
     }
 
-    public void setMovementDirection(String movementDirection) {
-        this.movementDirection = movementDirection;
+    public void setMovementDirection(String movementDirection){
+        switch (movementDirection) {
+            case "north":
+                north = !north;
+                break;
+            case "south":
+                south = !south;
+                break;
+            case "west":
+                west = !west;
+                break;
+            case "east":
+                east = !east;
+                break;
+        }
     }
 
-    public String getMovementDirection(){return movementDirection;}
+    public boolean isMovingNorth(){
+        return north;
+    }
+
+    public boolean isMovingSouth(){
+        return south;
+    }
+
+    public boolean isMovingWest(){
+        return west;
+    }
+
+    public boolean isMovingEast(){
+        return east;
+    }
+
+    public ArrayList<ProjectileInterface> getProjectiles(){
+        return projectiles;
+    }
+
 }

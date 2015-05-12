@@ -1,5 +1,8 @@
 package edu.chl.blastinthepast.model;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import java.util.ArrayList;
 import edu.chl.blastinthepast.utils.PositionInterface;
 
 /**
@@ -18,6 +21,8 @@ public interface Character {
     public int getHealth();
 
     public void setHealth(int newHealth);
+
+    public ArrayList<ProjectileInterface> getProjectiles();
 
     public PositionInterface getPosition();
 

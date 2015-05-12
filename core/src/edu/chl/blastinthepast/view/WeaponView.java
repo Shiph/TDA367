@@ -49,5 +49,4 @@ public abstract class WeaponView {
     public Texture getTexture() {
         return texture;
     }
-
 }

@@ -1,12 +1,14 @@
 package edu.chl.blastinthepast.model;
 
 import com.badlogic.gdx.math.Vector2;
+import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
 
@@ -28,6 +30,7 @@ public class Enemy extends Observable implements Character {
     private Vector2 movementDirectionVector;
     private Vector2 playerDirectionVector;
     private int range = 500;
+    private ArrayList<ProjectileInterface> projectiles;
 
     /**
      * Default constructor for Enemy with default movement speed and health.
@@ -50,6 +53,7 @@ public class Enemy extends Observable implements Character {
         timer = new Timer(1000, actionListener);
         timer.setRepeats(true);
         timer.start();
+        projectiles=new ArrayList<ProjectileInterface>();
     }
 
     public void move(float dt) {
@@ -63,7 +67,7 @@ public class Enemy extends Observable implements Character {
                 }
                 break;
             case 1: // move east
-                if (!(position.getX() < 800)) {
+                if (!(position.getX() < Constants.MAP_WIDTH)) {
                     movementDirection = 0;
                 } else {
                     position.setX(position.getX() + movementSpeed * dt);
@@ -71,7 +75,7 @@ public class Enemy extends Observable implements Character {
                 }
                 break;
             case 2: // move north
-                if (!(position.getY() < 480)) {
+                if (!(position.getY() < Constants.MAP_HEIGHT)) {
                     movementDirection = 3;
                 } else {
                     position.setY(position.getY() + movementSpeed * dt);
@@ -141,8 +145,12 @@ public class Enemy extends Observable implements Character {
         weapon.setPosition(position);
         if(isPlayerInRange()) {
             movementDirectionVector.set(playerDirectionVector);
-            setChanged();
-            notifyObservers(weapon.pullTrigger());
+            ProjectileInterface p=weapon.pullTrigger();
+            if (p!=null){
+                projectiles.add(p);
+                setChanged();
+                notifyObservers(p);
+            }
         } else {
             updateMovementDirectionVector(movementDirection);
         }
@@ -186,6 +194,10 @@ public class Enemy extends Observable implements Character {
             movementDirection = r.nextInt(4);
         }
 
+    }
+
+    public ArrayList<ProjectileInterface> getProjectiles(){
+        return projectiles;
     }
 
 }

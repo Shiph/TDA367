@@ -94,24 +94,18 @@ public class PlayerView implements CharacterView {
     }
 
     public void updateDirection() {
-        try {
-            switch (player.getMovementDirection()) {
-                case "west":
-                    sprite.setTexture(GraphicalAssets.CHARACTERLEFT);
-                    break;
-                case "east":
-                    sprite.setTexture(GraphicalAssets.CHARACTERRIGHT);
-                    break;
-                case "north":
-                    sprite.setTexture(GraphicalAssets.CHARACTERUP);
-                    break;
-                case "south":
-                    sprite.setTexture(GraphicalAssets.CHARACTERDOWN);
-                    break;
-            }
-        } catch (NullPointerException e) {}
+        if (player.isMovingWest()) {
+            sprite.setTexture(GraphicalAssets.CHARACTERLEFT);
+        } else if (player.isMovingEast()) {
+            sprite.setTexture(GraphicalAssets.CHARACTERRIGHT);
+        } else if (player.isMovingNorth()){
+            sprite.setTexture(GraphicalAssets.CHARACTERUP);
+        } else if (player.isMovingSouth()) {
+            sprite.setTexture(GraphicalAssets.CHARACTERDOWN);
+        }
     }
 
+    @Override
     public void draw(SpriteBatch batch) {
         updatePosition();
         updateDirection();
