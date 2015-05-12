@@ -21,4 +21,16 @@ public class PositionTest {
         assertFalse(pos == position);
     }
 
+    @Test
+    public void testOverlaps() {
+        Position pos = new Position(-10,-10);
+        assertTrue(pos.overlaps(position));
+
+        pos.setPosition(100,100);
+        assertFalse(pos.overlaps(position));
+
+        pos.setPosition(position.getPosition());
+        assertTrue(pos.overlaps(position));
+    }
+
 }

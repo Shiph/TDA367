@@ -25,5 +25,6 @@ public interface WeaponInterface {
     public Vector2 getDirection();
     public int getbulletsLeftInMagazine();
     public void reload();
+    public int getTotalBullets();
 
 }
