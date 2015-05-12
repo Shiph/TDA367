@@ -13,8 +13,8 @@ public class Projectile implements  ProjectileInterface{
     private int damage;
     private Position position;
 
-    public Projectile(Position pos, Vector2 direction){
-        this(pos, direction, 100, 5);
+    public Projectile(Position pos, Vector2 direction) {
+        this(pos, direction, 10, 5);
     }
 
     public Projectile(Position pos, Vector2 direction, int speed, int damage) {

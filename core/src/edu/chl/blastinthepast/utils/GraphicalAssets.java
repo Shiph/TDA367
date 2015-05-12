@@ -26,5 +26,6 @@ public class GraphicalAssets {
     public static final Texture CHESTCLOSED = new Texture (Gdx.files.local("chestclosed.jpg"));
     public static final Texture SOUND = new Texture(Gdx.files.local("sound.png"));
     public static final Texture SOUND_OFF = new Texture(Gdx.files.local("sound_off.png"));
+    public static final Texture MAGNUM = new Texture(Gdx.files.local("magnum.png"));
 
 }

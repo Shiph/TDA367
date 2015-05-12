@@ -116,7 +116,7 @@ public class PlayState extends GameState implements Observer{
         if(!music.isPlaying()) {
             music.play();
         }
-        ammoLabel.setPosition(camera.position.x - Constants.CAMERA_WIDTH/2 + 10, camera.position.y - Constants.CAMERA_HEIGHT/2 + 10);
+        ammoLabel.setPosition(camera.position.x - Constants.CAMERA_WIDTH / 2 + 10, camera.position.y - Constants.CAMERA_HEIGHT / 2 + 10);
         weaponImage.setPosition(ammoLabel.getX(), ammoLabel.getY() + ammoLabel.getHeight());
         ammoLabel.setText(model.getPlayer().getWeapon().getTotalBullets() + "/" + model.getPlayer().getWeapon().getbulletsLeftInMagazine());
     }
@@ -186,7 +186,11 @@ public class PlayState extends GameState implements Observer{
                     removeProj.add((ProjectileInterface) arg);
                 }
             } else {
-                projectiles.put((ProjectileInterface)arg, new ProjectileView((ProjectileInterface)arg));
+                if (arg instanceof AK47Projectile) {
+                    projectiles.put((ProjectileInterface) arg, new AK47ProjectileView((ProjectileInterface) arg));
+                } else if (arg instanceof MagnumProjectile) {
+                    projectiles.put((ProjectileInterface) arg, new MagnumProjectileView((ProjectileInterface) arg));
+                }
             }
         }
         if (arg instanceof Character){
