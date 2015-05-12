@@ -89,15 +89,15 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                 }
                 break;
             case "escape":
-                    if (currentGameState instanceof PlayState) {
-                        gsm.setState(GameStateManager.INGAMEMENU, true);
-                        gsm.getGameState().draw();
-                    } else if (currentGameState instanceof InGameMenu) {
-                        gsm.setState(GameStateManager.PLAY, true);
-                        gsm.getGameState().draw();
-                    } else if (currentGameState instanceof HighScoreState) {
-                        gsm.setState(GameStateManager.MAINMENU, false);
-                    }
+                if (currentGameState instanceof PlayState) {
+                    gsm.setState(GameStateManager.IN_GAME_MENU, true);
+                    gsm.getGameState().draw();
+                } else if (currentGameState instanceof InGameMenu) {
+                    gsm.setState(GameStateManager.PLAY, true);
+                    gsm.getGameState().draw();
+                } else if (currentGameState instanceof HighScoreState) {
+                    gsm.setState(GameStateManager.MAIN_MENU, false);
+                }
                 break;
             case "enter":
                 if (currentGameState instanceof InGameMenu) {
@@ -106,7 +106,7 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                     ((MainMenu) currentGameState).select();
                 } else if (currentGameState instanceof GameOverState) {
                     ((GameOverState) currentGameState).select();
-                    gsm.setState(GameStateManager.MAINMENU, false);
+                    gsm.setState(GameStateManager.MAIN_MENU, false);
                 }
                 break;
             case "up":
@@ -143,6 +143,16 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                     Projectile p = (Projectile) evt.getOldValue();
                     model.collision(c, p);
                 }
+                break;
+            case "space":
+                if (gsm.getGameState() instanceof InGameMenu) {
+                    ((InGameMenu)gsm.getGameState()).toggleSoundSprite();
+                    gsm.getPlayState().toggleSound();
+                } else if (gsm.getGameState() instanceof PlayState) {
+                    gsm.getPlayState().toggleSound();
+                    gsm.getInGameMenu().toggleSoundSprite();
+                }
+                break;
             default:
                 break;
         }

@@ -188,4 +188,12 @@ public class PlayState extends GameState{
     }
 
 
+    public void toggleSound() {
+        if (music.getVolume() == 0) {
+            music.setVolume(0.2f);
+        } else {
+            music.setVolume(0);
+        }
+    }
+
 }
