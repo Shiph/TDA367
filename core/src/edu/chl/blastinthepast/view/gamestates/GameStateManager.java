@@ -14,9 +14,9 @@ public class GameStateManager {
     private GameOverState gameOverState;
     private InGameMenu inGameMenu;
     private PlayState playState;
-    public static final int MAINMENU = 0;
+    public static final int MAIN_MENU = 0;
     public static final int PLAY = 1;
-    public static final int INGAMEMENU = 2;
+    public static final int IN_GAME_MENU = 2;
     public static final int SAVES = 3;
     public static final int OPTIONS = 4;
     public static final int HIGHSCORES = 5;
@@ -28,7 +28,7 @@ public class GameStateManager {
         inGameMenu = new InGameMenu(this, model);
         highScoreState = new HighScoreState(this, model);
         gameOverState = new GameOverState(this, model);
-        setState(MAINMENU, false);
+        setState(MAIN_MENU, false);
     }
 
     public void setState(int state, boolean inGame) {
@@ -36,10 +36,10 @@ public class GameStateManager {
             gameState.dispose();
         }
         switch(state) {
-            case MAINMENU:
+            case MAIN_MENU:
                 gameState = mainMenu;
                 break;
-            case INGAMEMENU:
+            case IN_GAME_MENU:
                 gameState = inGameMenu;
                 break;
             case PLAY:
@@ -81,6 +81,14 @@ public class GameStateManager {
 
     public GameState getGameState() {
         return gameState;
+    }
+
+    public PlayState getPlayState() {
+        return playState;
+    }
+
+    public InGameMenu getInGameMenu() {
+        return inGameMenu;
     }
 
 }

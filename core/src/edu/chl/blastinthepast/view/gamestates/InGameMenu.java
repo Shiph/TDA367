@@ -7,15 +7,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import edu.chl.blastinthepast.model.BPModel;
 import edu.chl.blastinthepast.utils.Constants;
+import edu.chl.blastinthepast.utils.GraphicalAssets;
 
 /**
  * Created by MattiasJ on 2015-05-03.
  */
 public class InGameMenu extends GameState {
+
     private SpriteBatch batch;
     private BitmapFont titleFont;
     private BitmapFont font;
@@ -25,9 +27,11 @@ public class InGameMenu extends GameState {
     private int currentItem;
     private String[] menuItems;
     private Sprite sprite;
-    private ImageButton soundButton;
+    private Label soundTextLabel;
+    private Label.LabelStyle soundTextLabelStyle;
+    private boolean soundOn = true;
+    private Image soundImage;
     private Texture soundTexture;
-    private Sprite soundSprite;
 
     public InGameMenu (GameStateManager gsm, BPModel model) {
         super(gsm, model);
@@ -44,14 +48,19 @@ public class InGameMenu extends GameState {
         titleFont = new BitmapFont(Gdx.files.internal("font.fnt"));
         font = new BitmapFont();
         menuItems = new String[]{"Continue", "Save game", "Options", "Exit to main menu"};
-        soundTexture = new Texture(Gdx.files.internal("sound.png"));
-        soundSprite = new Sprite(soundTexture);
-        soundButton = new ImageButton(new SpriteDrawable(soundSprite));
-        soundButton.setSize(24, 24);
-        soundButton.setPosition(Constants.CAMERA_WIDTH - 40, 20);
+        soundTexture = GraphicalAssets.SOUND;
+        soundImage = new Image(soundTexture);
+        soundImage.setSize(24, 24);
+        soundImage.setPosition(Constants.CAMERA_WIDTH - 40, 20);
+        soundTextLabelStyle = new Label.LabelStyle();
+        soundTextLabelStyle.font = font;
+        soundTextLabel = new Label("Press SPACE to toggle sound", soundTextLabelStyle);
+        soundTextLabel.setPosition(soundImage.getX() - 200, soundImage.getY());
     }
 
-    public void update(float dt) {}
+    @Override
+    public void update(float dt) {
+    }
 
     public void draw() {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -69,10 +78,12 @@ public class InGameMenu extends GameState {
             }
             font.draw(batch, menuItems[i], Gdx.graphics.getWidth() / 2 - 30, 140 - 35 * i);
         }
-        soundButton.draw(batch, 1);
+        soundImage.draw(batch, 1);
+        soundTextLabel.draw(batch, 1);
         batch.end();
     }
 
+    @Override
     public void handleInput() {
     }
 
@@ -84,10 +95,11 @@ public class InGameMenu extends GameState {
         } else if (currentItem == 2) {
             //gsm.setState(GameStateManager.OPTIONS, true);
         } else if (currentItem == 3) {
-            gsm.setState(GameStateManager.MAINMENU, false);
+            gsm.setState(GameStateManager.MAIN_MENU, false);
         }
     }
 
+    @Override
     public void dispose() {
         currentItem = 0;
     }
@@ -108,6 +120,22 @@ public class InGameMenu extends GameState {
             draw();
         } else {
             currentItem = 0;
+        }
+    }
+
+    public void toggleSoundSprite() {
+        if (soundOn) {
+            soundTexture = GraphicalAssets.SOUND_OFF;
+            soundImage = new Image(soundTexture);
+            soundImage.setSize(24, 24);
+            soundImage.setPosition(Constants.CAMERA_WIDTH - 40, 20);
+            soundOn = false;
+        } else {
+            soundTexture = GraphicalAssets.SOUND;
+            soundImage = new Image(soundTexture);
+            soundImage.setSize(24, 24);
+            soundImage.setPosition(Constants.CAMERA_WIDTH - 40, 20);
+            soundOn = true;
         }
     }
 

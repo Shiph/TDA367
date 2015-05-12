@@ -178,7 +178,6 @@ public class PlayState extends GameState implements Observer{
         return true;
     }
 
-
     @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof ProjectileInterface){
@@ -220,4 +219,13 @@ public class PlayState extends GameState implements Observer{
             projIter.remove();
         }
     }
+
+    public void toggleSound() {
+        if (music.getVolume() == 0) {
+            music.setVolume(0.2f);
+        } else {
+            music.setVolume(0);
+        }
+    }
+
 }
