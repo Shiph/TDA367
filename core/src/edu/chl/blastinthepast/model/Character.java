@@ -18,6 +18,8 @@ public interface Character {
 
     public WeaponInterface getWeapon();
 
+    public void setWeapon (WeaponInterface weapon);
+
     public int getHealth();
 
     public void setHealth(int newHealth);

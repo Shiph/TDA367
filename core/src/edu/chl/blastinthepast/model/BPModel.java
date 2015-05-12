@@ -21,7 +21,7 @@ public class BPModel extends Observable implements Observer {
 
     public BPModel() {
         player = new Player();
-        chest = new Chest(new AK47(new Position(300,300), new Vector2()));
+        chest = new Chest(new Magnum(new Position(300,300), new Vector2()));
         characters = new ArrayList<Character>();
         player = new Player();
         setChanged();

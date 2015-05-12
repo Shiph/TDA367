@@ -14,7 +14,7 @@ public class MockPlayer implements Character {
 
     public PositionInterface position = new Position(0,0);
     public int movementSpeed = 100;
-    public MockWeapon weapon;
+    public WeaponInterface weapon;
     private int health = 100;
 
     @Override
@@ -35,6 +35,11 @@ public class MockPlayer implements Character {
     @Override
     public WeaponInterface getWeapon() {
         return weapon;
+    }
+
+    @Override
+    public void setWeapon(WeaponInterface weapon) {
+        this.weapon = weapon;
     }
 
     @Override

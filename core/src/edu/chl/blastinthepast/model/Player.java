@@ -3,7 +3,6 @@ package edu.chl.blastinthepast.model;
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
-
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -14,13 +13,14 @@ public class Player extends Observable implements Character {
 
     private int health;
     private int movementSpeed;
-    private ArrayList<Weapon> weaponArray;
-    private Weapon weapon;
+    private ArrayList<WeaponInterface> weaponArray;
+    private WeaponInterface weapon;
     private boolean north, south, west, east, shooting;
     private PositionInterface position;
     private Position prevPos;
     private Vector2 aimDirection = new Vector2(1,0);
     private ArrayList<ProjectileInterface> projectiles;
+
     /**
      * Default constructor for Player with default movement speed and health.
      */
@@ -35,7 +35,7 @@ public class Player extends Observable implements Character {
         position = new Position(pos);
         this.movementSpeed = movementSpeed;
         this.health = health;
-        weaponArray = new ArrayList<Weapon>();
+        weaponArray = new ArrayList<WeaponInterface>();
         weapon = new AK47(position, aimDirection);
         weaponArray.add(weapon);
         projectiles = new ArrayList<ProjectileInterface>();
@@ -68,15 +68,16 @@ public class Player extends Observable implements Character {
         return health;
     }
 
-    public void addWeapon(Weapon weapon) {
+    public void addWeapon(WeaponInterface weapon) {
         weaponArray.add(weapon);
+        setWeapon(weapon);
     }
 
-    public void setWeapon(Weapon weapon) {
+    public void setWeapon(WeaponInterface weapon) {
         this.weapon = weapon;
     }
 
-    public Weapon getWeapon() {
+    public WeaponInterface getWeapon() {
         return weapon;
     }
 

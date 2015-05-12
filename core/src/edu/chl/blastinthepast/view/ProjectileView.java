@@ -17,16 +17,16 @@ import edu.chl.blastinthepast.utils.SoundAssets;
 /**
  * Created by jonas on 2015-04-23.
  */
-public class ProjectileView implements Collidable {
+public abstract class ProjectileView implements Collidable {
     private Texture texture;
     private Sprite sprite;
     private ArrayList<Rectangle> rectangle;
     private ProjectileInterface projectile;
     //private Sound fireSound = Gdx.audio.newSound(Gdx.files.internal("wow.mp3"));
 
-    public ProjectileView(ProjectileInterface projectile){
+    public ProjectileView(ProjectileInterface projectile, Texture texture){
         this.projectile=projectile;
-        texture = GraphicalAssets.TRIFORCE_BULLET;
+        this.texture = texture;
         sprite = new Sprite(texture);
         rectangle = new ArrayList<Rectangle>();
         rectangle.add(new Rectangle());

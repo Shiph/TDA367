@@ -89,6 +89,11 @@ public class MockWeapon implements WeaponInterface {
     }
 
     @Override
+    public int getTotalBullets() {
+        return 0;
+    }
+
+    @Override
     public int getbulletsLeftInMagazine() {
         return bulletsInMag;
     }
