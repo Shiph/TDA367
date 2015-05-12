@@ -5,7 +5,7 @@ import edu.chl.blastinthepast.utils.Position;
 /**
  * Created by Mattias on 15-05-05.
  */
-public class Chest implements ChestInterface {
+public class Chest implements ChestInterface{
     private boolean isOpen = false;
     private Weapon weapon;
     private final Position position;
@@ -15,8 +15,8 @@ public class Chest implements ChestInterface {
         position = weapon.getPosition();
     }
 
-    public Weapon open() {
-        if(!isOpened()) {
+    public Weapon open(Character character) {
+        if(!isOpened() && character.getPosition().overlaps(position)) {
             isOpen = true;
             return weapon;
         }

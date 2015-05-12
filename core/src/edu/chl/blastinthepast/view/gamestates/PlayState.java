@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.view;
+package edu.chl.blastinthepast.view.gamestates;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -18,6 +18,10 @@ import edu.chl.blastinthepast.model.Enemy;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.SoundAssets;
+import edu.chl.blastinthepast.view.*;
+import edu.chl.blastinthepast.view.characterviews.BossView;
+import edu.chl.blastinthepast.view.characterviews.EnemyView;
+import edu.chl.blastinthepast.view.characterviews.PlayerView;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -56,7 +60,7 @@ public class PlayState extends GameState{
     @Override
     public void init(BPModel model) {
         this.model=model;
-        chestView = new ChestView();
+        chestView = new ChestView(model.getChest());
         collisionView = new CollisionView();
         playerView = new PlayerView(model.getPlayer());
         bossView = new BossView(model.getBoss());
@@ -101,6 +105,7 @@ public class PlayState extends GameState{
     @Override
     public void update(float dt) {
         model.update(dt);
+        chestView.update();
         camera.position.set(playerView.getRectangles().get(0).getX() + playerView.getRectangles().get(0).getWidth() / 2, playerView.getRectangles().get(0).getY() + playerView.getRectangles().get(0).getWidth() / 2, 0);
         camera.update();
         batch.setProjectionMatrix(camera.combined);
@@ -126,6 +131,7 @@ public class PlayState extends GameState{
         tiledMapRenderer.render();
         playerView.draw(batch);
         bossView.draw(batch);
+        chestView.draw(batch);
         for (EnemyView e : enemies) {
             e.draw(batch);
         }

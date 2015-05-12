@@ -8,7 +8,8 @@ import com.badlogic.gdx.graphics.GL20;
 import edu.chl.blastinthepast.model.BPModel;
 import edu.chl.blastinthepast.model.ProjectileInterface;
 import edu.chl.blastinthepast.utils.Position;
-import edu.chl.blastinthepast.view.*;
+import edu.chl.blastinthepast.view.gamestates.*;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -128,7 +129,7 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                 }
                 break;
             case "mouseMoved":
-                if (gsm.getGameState() instanceof PlayState) {
+                if (currentGameState instanceof PlayState) {
                     PlayState playState = (PlayState)gsm.getGameState();
                     if (evt.getNewValue() instanceof Position) {
                         Position mouseScreenPos = (Position) evt.getNewValue();
@@ -143,6 +144,13 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                     Projectile p = (Projectile) evt.getOldValue();
                     model.collision(c, p);
                 }
+            case "use":
+                if(currentGameState instanceof PlayState) {
+                    if(!model.getChest().isOpened()) {
+                        model.getPlayer().addWeapon(model.getChest().open(model.getPlayer()));
+                    }
+                }
+                break;
             default:
                 break;
         }

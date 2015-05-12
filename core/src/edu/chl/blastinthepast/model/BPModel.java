@@ -20,11 +20,13 @@ public class BPModel implements Observer {
     private ArrayList<ProjectileInterface> projectiles = new ArrayList<ProjectileInterface>();
     private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     private Boss boss;
-    private ArrayList<PowerUp> powerUps= new ArrayList<PowerUp>();
+    private Chest chest;
+    private ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
 
 
     public BPModel() {
-        player=new Player();
+        player = new Player();
+        chest = new Chest(new AK47(new Position(300,300), new Vector2()));
         spawnBoss();
         spawnEnemies();
     }
@@ -112,6 +114,10 @@ public class BPModel implements Observer {
 
     public Boss getBoss() {
         return boss;
+    }
+
+    public Chest getChest() {
+        return chest;
     }
 
     public ArrayList<Enemy> getEnemies(){

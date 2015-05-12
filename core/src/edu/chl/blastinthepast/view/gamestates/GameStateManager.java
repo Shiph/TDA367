@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.view;
+package edu.chl.blastinthepast.view.gamestates;
 
 import edu.chl.blastinthepast.model.BPModel;
 

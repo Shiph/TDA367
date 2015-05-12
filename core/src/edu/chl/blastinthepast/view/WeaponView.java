@@ -11,7 +11,7 @@ import edu.chl.blastinthepast.utils.GraphicalAssets;
 /**
  * Created by jonas on 2015-04-23.
  */
-public class WeaponView {
+public abstract class WeaponView {
 
     private Texture texture;
     private Sprite sprite;

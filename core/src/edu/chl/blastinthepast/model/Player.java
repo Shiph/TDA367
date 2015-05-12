@@ -35,7 +35,9 @@ public class Player implements Character {
         this.position = position;
         this.movementSpeed = movementSpeed;
         this.health = health;
+        weaponArray = new ArrayList<Weapon>();
         weapon = new AK47(position, aimDirection);
+        weaponArray.add(weapon);
     }
 
 

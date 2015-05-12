@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.view;
+package edu.chl.blastinthepast.view.characterviews;
 
 import edu.chl.blastinthepast.model.Boss;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
