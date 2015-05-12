@@ -17,9 +17,9 @@ public abstract class WeaponView {
     private Sprite sprite;
     private WeaponInterface weapon;
 
-    public WeaponView(WeaponInterface newWeapon) {
+    public WeaponView(WeaponInterface newWeapon, Texture weaponTexture) {
         weapon = newWeapon;
-        texture= GraphicalAssets.AK47;
+        texture = weaponTexture;
         sprite = new Sprite(texture);
         updateDirection();
         updatePosition();
@@ -40,6 +40,10 @@ public abstract class WeaponView {
         batch.begin();
         sprite.draw(batch);
         batch.end();
+    }
+
+    public Sprite getSprite() {
+        return sprite;
     }
 
     public void dispose() {

@@ -137,6 +137,7 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                     Projectile p = (Projectile) evt.getOldValue();
                     model.collision(c, p);
                 }
+                break;
             case "use":
                 if(currentGameState instanceof PlayState) {
                     if(!model.getChest().isOpened()) {
