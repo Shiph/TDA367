@@ -147,7 +147,6 @@ public class Enemy extends Observable implements Character {
             movementDirectionVector.set(playerDirectionVector);
             ProjectileInterface p=weapon.pullTrigger();
             if (p!=null){
-                System.out.println(weapon.getPosition());
                 projectiles.add(p);
                 setChanged();
                 notifyObservers(p);
