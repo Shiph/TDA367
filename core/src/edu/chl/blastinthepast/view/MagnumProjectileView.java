@@ -10,7 +10,7 @@ import edu.chl.blastinthepast.utils.SoundAssets;
 public class MagnumProjectileView extends ProjectileView {
 
     public MagnumProjectileView(ProjectileInterface projectile) {
-        super(projectile, GraphicalAssets.MAGNUM, SoundAssets.WOW_SOUND);
+        super(projectile, GraphicalAssets.TRIFORCE_BULLET, SoundAssets.WOW_SOUND);
     }
 
 }

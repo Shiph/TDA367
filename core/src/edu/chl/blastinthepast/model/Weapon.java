@@ -1,5 +1,6 @@
 package edu.chl.blastinthepast.model;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
@@ -24,10 +25,6 @@ public class Weapon implements WeaponInterface {
     private Position position;
     private Vector2 direction;
     private Position offset;
-
-    public Weapon (PositionInterface pos, Vector2 direction, PositionInterface offset) {
-        this(pos, direction, 1500, 100, 20, 150, offset);
-    }
 
     public Weapon (PositionInterface pos, Vector2 direction, int reloadTime, int fireRate, final int magazineCapacity, int totalBullets, PositionInterface offset) {
         position = new Position(pos);

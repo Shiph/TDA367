@@ -17,11 +17,8 @@ public class Chest implements ChestInterface{
     }
 
     public WeaponInterface open(Character character) {
-        if(!isOpen && character.getPosition().overlaps(position)) {
             isOpen = true;
             return weapon;
-        }
-        return null;
     }
 
     public boolean isOpened() {

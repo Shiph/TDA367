@@ -28,4 +28,9 @@ public class AK47 extends Weapon {
         return null;
     }
 
+    @Override
+    public String toString() {
+        return "AK47";
+    }
+
 }

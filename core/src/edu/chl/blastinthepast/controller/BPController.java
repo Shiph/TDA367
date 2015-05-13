@@ -140,7 +140,7 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                 break;
             case "use":
                 if(currentGameState instanceof PlayState) {
-                    if (!model.getChest().isOpened()) {
+                    if (!model.getChest().isOpened() && model.getPlayer().getPosition().overlaps(model.getChest().getPosition())) {
                         model.getPlayer().addWeapon(model.getChest().open(model.getPlayer()));
                     }
                 }

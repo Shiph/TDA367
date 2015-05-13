@@ -69,8 +69,21 @@ public class Player extends Observable implements Character {
     }
 
     public void addWeapon(WeaponInterface weapon) {
-        weaponArray.add(weapon);
-        setWeapon(weapon);
+        WeaponInterface newWeapon;
+        switch(weapon.toString()) {
+            case "AK47":
+                newWeapon = new AK47(position,aimDirection);
+                weaponArray.add(newWeapon);
+                setWeapon(newWeapon);
+                break;
+            case "Magnum":
+                newWeapon = new Magnum(position,aimDirection);
+                weaponArray.add(newWeapon);
+                setWeapon(newWeapon);
+                break;
+            default:
+                break;
+        }
     }
 
     public void setWeapon(WeaponInterface weapon) {
