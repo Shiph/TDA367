@@ -44,6 +44,9 @@ public class BPModel extends Observable implements Observer {
     public void update(float dt){
         removeProjectiles();
         removeDeadEnemies();
+        if (enemies.size()<1){
+            spawnEnemies();
+        }
         player.update(dt);
         for (ProjectileInterface p : projectiles) {
             p.move(dt);
@@ -84,13 +87,10 @@ public class BPModel extends Observable implements Observer {
                 notifyObservers(e);
             }
         }
-        if (enemies.size()<1){
-            spawnEnemies();
-        }
     }
 
     private void spawnEnemies() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 2; i++) {
             Enemy e = new Enemy(player, new Position(0, 0));
             enemies.add(e);
             characters.add(e);
@@ -101,10 +101,10 @@ public class BPModel extends Observable implements Observer {
             Random r = new Random();
             float x = r.nextFloat() * Constants.MAP_WIDTH;
             float y = r.nextFloat() * Constants.MAP_HEIGHT;
-            while (x <= player.getPosition().getX() + Constants.CAMERA_WIDTH && //Makes enemies spawn outside the players view
-                    x >= player.getPosition().getX() - Constants.CAMERA_WIDTH) {
-                while (y <= player.getPosition().getY() + Constants.CAMERA_HEIGHT &&
-                        y >= player.getPosition().getY() - Constants.CAMERA_HEIGHT) {
+            while (x <= player.getPosition().getX() + Constants.CAMERA_WIDTH/2 && //Makes enemies spawn outside the players view
+                    x >= player.getPosition().getX() - Constants.CAMERA_WIDTH/2) {
+                while (y <= player.getPosition().getY() + Constants.CAMERA_HEIGHT/2 &&
+                        y >= player.getPosition().getY() - Constants.CAMERA_HEIGHT/2) {
                     y = r.nextFloat() * Constants.MAP_HEIGHT;
                 }
                 x = r.nextFloat() * Constants.MAP_WIDTH;
@@ -170,8 +170,7 @@ public class BPModel extends Observable implements Observer {
     public void update(Observable o, Object arg) {
         if (arg instanceof ProjectileInterface && o instanceof Character) {
             addProjectile((ProjectileInterface) arg);
-        }
-        if (arg instanceof PowerUp){
+        } else if (arg instanceof PowerUp){
             PowerUp powerUp=(PowerUp)arg;
             powerUps.add(powerUp);
         }
