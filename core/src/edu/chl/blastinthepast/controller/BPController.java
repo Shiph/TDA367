@@ -141,6 +141,8 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                 if(currentGameState instanceof PlayState) {
                     if (!model.getChest().isOpened() && model.getPlayer().getPosition().overlaps(model.getChest().getPosition())) {
                         model.getPlayer().addWeapon(model.getChest().open(model.getPlayer()));
+                        ((PlayState)gsm.getGameState()).getPlayer().changeWeaponView();
+                        ((PlayState)gsm.getGameState()).updateGUIWeapon();
                     }
                 }
                 break;

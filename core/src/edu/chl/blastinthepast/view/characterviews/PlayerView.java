@@ -104,15 +104,13 @@ public class PlayerView implements CharacterView {
     public void draw(SpriteBatch batch) {
         updatePosition();
         updateDirection();
-        //rotate();
         batch.begin();
         sprite.draw(batch);
         batch.end();
-        changeWeaponViewIfNeeded();
         weaponView.draw(batch);
     }
 
-    public void changeWeaponViewIfNeeded() {
+    public void changeWeaponView() {
         if(!currentWeapon.equals(player.getWeapon().toString())) {
             switch (player.getWeapon().toString()) {
                 case "AK47":
@@ -127,12 +125,6 @@ public class PlayerView implements CharacterView {
                     break;
             }
         }
-    }
-
-    public void rotate () {
-        direction = player.getAimDirection();
-        sprite.setOriginCenter();
-        sprite.setRotation(direction.angle());
     }
 
     public void setCollision () {

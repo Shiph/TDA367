@@ -231,4 +231,7 @@ public class PlayState extends GameState implements Observer{
         }
     }
 
+    public void updateGUIWeapon() {
+        weaponImage = new Image(playerView.getWeaponView().getTexture());
+    }
 }
