@@ -2,11 +2,10 @@ package edu.chl.blastinthepast.controller;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import edu.chl.blastinthepast.model.*;
-import edu.chl.blastinthepast.model.Character;
+import edu.chl.blastinthepast.model.entities.Character;
 import com.badlogic.gdx.graphics.GL20;
-import edu.chl.blastinthepast.model.BPModel;
-import edu.chl.blastinthepast.model.ProjectileInterface;
+import edu.chl.blastinthepast.model.entities.Projectile;
+import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.view.gamestates.*;
 

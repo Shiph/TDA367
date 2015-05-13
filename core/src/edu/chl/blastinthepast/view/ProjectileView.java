@@ -4,15 +4,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import edu.chl.blastinthepast.model.Projectile;
 import com.badlogic.gdx.audio.Sound;
-import edu.chl.blastinthepast.model.ProjectileInterface;
+import edu.chl.blastinthepast.model.entities.ProjectileInterface;
 
 import java.util.ArrayList;
 
 import edu.chl.blastinthepast.utils.Constants;
-import edu.chl.blastinthepast.utils.GraphicalAssets;
-import edu.chl.blastinthepast.utils.SoundAssets;
 
 /**
  * Created by jonas on 2015-04-23.

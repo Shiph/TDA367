@@ -1,6 +1,6 @@
 package edu.chl.blastinthepast.view.gamestates;
 
-import edu.chl.blastinthepast.model.BPModel;
+import edu.chl.blastinthepast.model.level.BPModel;
 
 /**
  * Created by Shif on 23/04/15.

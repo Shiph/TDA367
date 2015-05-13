@@ -1,5 +1,7 @@
 package edu.chl.blastinthepast.model;
 
+import edu.chl.blastinthepast.model.entities.Weapon;
+
 import java.util.ArrayList;
 
 /**

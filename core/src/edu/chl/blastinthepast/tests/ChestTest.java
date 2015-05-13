@@ -1,7 +1,7 @@
 package edu.chl.blastinthepast.tests;
 
-import edu.chl.blastinthepast.model.Chest;
-import edu.chl.blastinthepast.model.WeaponInterface;
+import edu.chl.blastinthepast.model.entities.Chest;
+import edu.chl.blastinthepast.model.entities.WeaponInterface;
 import org.junit.Test;
 import static junit.framework.TestCase.*;
 

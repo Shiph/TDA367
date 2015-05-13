@@ -1,7 +1,6 @@
 package edu.chl.blastinthepast.view;
 
-import com.badlogic.gdx.graphics.Texture;
-import edu.chl.blastinthepast.model.ProjectileInterface;
+import edu.chl.blastinthepast.model.entities.ProjectileInterface;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 import edu.chl.blastinthepast.utils.SoundAssets;
 

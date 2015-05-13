@@ -1,6 +1,5 @@
-package edu.chl.blastinthepast.model;
+package edu.chl.blastinthepast.model.entities;
 
-import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
 
 /**

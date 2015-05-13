@@ -1,23 +1,15 @@
 package edu.chl.blastinthepast.view;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.TideMapLoader;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import edu.chl.blastinthepast.model.AK47;
-import edu.chl.blastinthepast.model.Chest;
-import edu.chl.blastinthepast.model.Weapon;
+import edu.chl.blastinthepast.model.entities.Chest;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
-import edu.chl.blastinthepast.utils.Position;
-
-import java.util.ArrayList;
 
 import java.util.ArrayList;
 

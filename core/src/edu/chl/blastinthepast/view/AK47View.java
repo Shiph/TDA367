@@ -1,8 +1,6 @@
 package edu.chl.blastinthepast.view;
 
-import edu.chl.blastinthepast.model.AK47;
-import edu.chl.blastinthepast.model.Weapon;
-import edu.chl.blastinthepast.model.WeaponInterface;
+import edu.chl.blastinthepast.model.entities.WeaponInterface;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 
 /**

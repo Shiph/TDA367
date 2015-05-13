@@ -1,6 +1,8 @@
-package edu.chl.blastinthepast.model;
+package edu.chl.blastinthepast.model.level;
 
 import com.badlogic.gdx.math.Vector2;
+import edu.chl.blastinthepast.model.entities.*;
+import edu.chl.blastinthepast.model.entities.Character;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 import java.util.*;

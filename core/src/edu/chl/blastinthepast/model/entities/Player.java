@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.model;
+package edu.chl.blastinthepast.model.entities;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Position;
@@ -9,7 +9,7 @@ import java.util.Observable;
 /**
  * Created by Shif on 21/04/15.
  */
-public class Player extends Observable implements Character {
+public class Player extends Observable implements edu.chl.blastinthepast.model.entities.Character {
 
     private int health;
     private int movementSpeed;

@@ -3,7 +3,7 @@ package edu.chl.blastinthepast.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import edu.chl.blastinthepast.controller.BPController;
-import edu.chl.blastinthepast.model.BPModel;
+import edu.chl.blastinthepast.model.level.BPModel;
 
 public class DesktopLauncher {
 

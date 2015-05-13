@@ -3,7 +3,7 @@ package edu.chl.blastinthepast.view;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import edu.chl.blastinthepast.model.WeaponInterface;
+import edu.chl.blastinthepast.model.entities.WeaponInterface;
 
 /**
  * Created by jonas on 2015-04-23.
