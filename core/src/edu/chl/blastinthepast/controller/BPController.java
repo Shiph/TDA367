@@ -8,7 +8,6 @@ import edu.chl.blastinthepast.model.entities.Projectile;
 import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.view.gamestates.*;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -153,6 +152,24 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                 } else if (gsm.getGameState() instanceof PlayState) {
                     gsm.getPlayState().toggleSound();
                     gsm.getInGameMenu().toggleSoundSprite();
+                }
+                break;
+            case "num1":
+                if(currentGameState instanceof PlayState) {
+                    try {
+                        model.getPlayer().setWeapon(model.getPlayer().getWeaponArray().get(0));
+                        ((PlayState) gsm.getGameState()).getPlayer().changeWeaponView();
+                        ((PlayState) gsm.getGameState()).updateGUIWeapon();
+                    } catch (IndexOutOfBoundsException e) {}
+                }
+                break;
+            case "num2":
+                if(currentGameState instanceof PlayState) {
+                    try {
+                        model.getPlayer().setWeapon(model.getPlayer().getWeaponArray().get(1));
+                        ((PlayState) gsm.getGameState()).getPlayer().changeWeaponView();
+                        ((PlayState) gsm.getGameState()).updateGUIWeapon();
+                    } catch (IndexOutOfBoundsException e) {}
                 }
                 break;
             default:

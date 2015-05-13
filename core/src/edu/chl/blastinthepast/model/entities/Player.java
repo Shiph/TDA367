@@ -94,6 +94,10 @@ public class Player extends Observable implements edu.chl.blastinthepast.model.e
         return weapon;
     }
 
+    public ArrayList<WeaponInterface> getWeaponArray(){
+        return weaponArray;
+    }
+
     public PositionInterface getPosition(){
         return position;
     }

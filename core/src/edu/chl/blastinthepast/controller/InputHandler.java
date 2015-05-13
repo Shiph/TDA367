@@ -17,7 +17,7 @@ import java.beans.PropertyChangeSupport;
  */
 public class InputHandler implements InputProcessor{
     private int northKey, southKey, westKey, eastKey, shootKey, enterKey, reloadKey, weapon1Key, weapon2Key,
-            menuKey, upKey, downKey, leftKey, rightKey, escapeKey, useKey, spaceKey;
+            menuKey, upKey, downKey, leftKey, rightKey, escapeKey, useKey, spaceKey, num1Key, num2Key;
     protected boolean menuIsUp=false;
     private PropertyChangeSupport pcs;
 
@@ -40,6 +40,8 @@ public class InputHandler implements InputProcessor{
         leftKey = Input.Keys.LEFT;
         rightKey = Input.Keys.RIGHT;
         spaceKey = Input.Keys.SPACE;
+        num1Key = Input.Keys.NUM_1;
+        num2Key = Input.Keys.NUM_2;
     }
 
     @Override
@@ -92,6 +94,12 @@ public class InputHandler implements InputProcessor{
         }
         if (keycode == spaceKey) {
             pcs.firePropertyChange("space", null, true);
+        }
+        if (keycode == num1Key) {
+            pcs.firePropertyChange("num1", null, true);
+        }
+        if (keycode == num2Key) {
+            pcs.firePropertyChange("num2", null, true);
         }
         return true;
     }
