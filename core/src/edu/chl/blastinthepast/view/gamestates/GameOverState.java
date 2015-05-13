@@ -79,6 +79,7 @@ public class GameOverState extends GameState{
             HighScoreHandler.gameData.addHighScore(HighScoreHandler.gameData.getTentativeScore(), new String(newName));
             HighScoreHandler.save();
         }
+        gsm.setState(GameStateManager.MAIN_MENU, false);
     }
 
     public void moveUp() {

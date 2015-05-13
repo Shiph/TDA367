@@ -79,6 +79,8 @@ public class MainMenu extends GameState {
 
     public void select() {
         if(currentItem == 0) {
+            //gsm.setState(GameStateManager.PLAY, false);
+            gsm.getPropertyChangeSupport().firePropertyChange("new game", false, true);
             gsm.setState(GameStateManager.PLAY, false);
         } else if (currentItem == 1) {
             //gsm.setState(GameStateManager.SAVES);

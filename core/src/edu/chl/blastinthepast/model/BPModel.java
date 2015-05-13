@@ -137,9 +137,6 @@ public class BPModel extends Observable implements Observer {
         }
     }
 
-    public void newGame() {
-    }
-
     public ArrayList<ProjectileInterface> getProjectiles(){
         return projectiles;
     }
@@ -173,6 +170,11 @@ public class BPModel extends Observable implements Observer {
         } else if (arg instanceof PowerUp){
             PowerUp powerUp=(PowerUp)arg;
             powerUps.add(powerUp);
+        } else if(arg instanceof String) {
+            if (arg.equals("player is kill")) {
+                setChanged();
+                notifyObservers("player is kill");
+            }
         }
     }
 
