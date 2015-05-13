@@ -26,20 +26,20 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
     public void render () {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        model.update(Gdx.graphics.getDeltaTime());
+        if (model != null) {
+            model.update(Gdx.graphics.getDeltaTime());
+        }
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.draw();
     }
 
     @Override
     public void create() {
-        model = new BPModel();
         inputHandler = new InputHandler();
         inputHandler.addListener(this);
         Gdx.input.setInputProcessor(inputHandler);
         gsm = new GameStateManager(model);
         gsm.addListener(this);
-        model.addObserver(this);
     }
 
     public static BPController createController() {
