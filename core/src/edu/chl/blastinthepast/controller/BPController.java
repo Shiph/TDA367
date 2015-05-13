@@ -10,19 +10,17 @@ import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.view.gamestates.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by Shif on 20/04/15.
  */
-public class BPController extends ApplicationAdapter implements PropertyChangeListener {
+public class BPController extends ApplicationAdapter implements PropertyChangeListener, Observer {
 
     private BPModel model;
     private InputHandler inputHandler;
     private GameStateManager gsm;
-
-    private BPController(BPModel model) {
-        this.model = model;
-    }
 
     @Override
     public void render () {
@@ -35,14 +33,17 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
 
     @Override
     public void create() {
+        model = new BPModel();
         inputHandler = new InputHandler();
         inputHandler.addListener(this);
         Gdx.input.setInputProcessor(inputHandler);
         gsm = new GameStateManager(model);
+        gsm.addListener(this);
+        model.addObserver(this);
     }
 
-    public static BPController create(BPModel model) {
-        return new BPController(model);
+    public static BPController createController() {
+        return new BPController();
     }
 
     @Override
@@ -59,11 +60,11 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
         switch(evt.getPropertyName()) {
             case "west":
                 if(currentGameState instanceof GameOverState) {
-                    ((GameOverState) currentGameState).moveLeft();
+                    //((GameOverState) currentGameState).moveLeft();
                 }
             case "east":
                 if(currentGameState instanceof GameOverState) {
-                    ((GameOverState) currentGameState).moveRight();
+                    //((GameOverState) currentGameState).moveRight();
                 }
             case "north":
             case "south":
@@ -83,10 +84,8 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
             case "escape":
                 if (currentGameState instanceof PlayState) {
                     gsm.setState(GameStateManager.IN_GAME_MENU, true);
-                    gsm.getGameState().draw();
                 } else if (currentGameState instanceof InGameMenu) {
                     gsm.setState(GameStateManager.PLAY, true);
-                    gsm.getGameState().draw();
                 } else if (currentGameState instanceof HighScoreState) {
                     gsm.setState(GameStateManager.MAIN_MENU, false);
                 }
@@ -98,7 +97,6 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                     ((MainMenu) currentGameState).select();
                 } else if (currentGameState instanceof GameOverState) {
                     ((GameOverState) currentGameState).select();
-                    gsm.setState(GameStateManager.MAIN_MENU, false);
                 }
                 break;
             case "up":
@@ -172,8 +170,20 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                     } catch (IndexOutOfBoundsException e) {}
                 }
                 break;
+            case "new game":
+                model = new BPModel();
+                model.addObserver(this);
+                gsm.setModel(model);
+                break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (arg.equals("player is kill")) {
+            gsm.setState(GameStateManager.GAMEOVER, true);
         }
     }
 

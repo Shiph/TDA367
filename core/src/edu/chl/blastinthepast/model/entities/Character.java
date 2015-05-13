@@ -29,4 +29,6 @@ public interface Character {
 
     public void update(float dt);
 
+    public void die();
+
 }

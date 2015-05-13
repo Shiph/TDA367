@@ -159,6 +159,11 @@ public class Enemy extends Observable implements Character {
 
     }
 
+    @Override
+    public void die() {
+
+    }
+
     private void updateMovementDirectionVector(int movementDirection) {
         switch (movementDirection) {
             case 0: // moving west

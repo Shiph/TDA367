@@ -136,11 +136,20 @@ public class Player extends Observable implements edu.chl.blastinthepast.model.e
     }
 
     public void update(float dt) {
+        if (health <= 0) {
+            die();
+        }
         weapon.setPosition(position);
         move(dt);
         if (shooting) {
             shoot();
         }
+    }
+
+    @Override
+    public void die() {
+        setChanged();
+        notifyObservers("player is kill");
     }
 
     public void isShooting(boolean shoot){

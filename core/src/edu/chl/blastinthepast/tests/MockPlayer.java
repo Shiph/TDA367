@@ -68,4 +68,9 @@ public class MockPlayer implements Character {
 
     }
 
+    @Override
+    public void die() {
+
+    }
+
 }
