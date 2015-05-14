@@ -32,8 +32,8 @@ public abstract class ProjectileView implements Collidable {
         rectangle.add(new Rectangle());
         rectangle.get(0).x = Constants.CAMERA_WIDTH / 2 - sprite.getWidth() / 2;
         rectangle.get(0).y = Constants.CAMERA_HEIGHT / 2 - sprite.getHeight() / 2;
-        rectangle.get(0).height = 64;
-        rectangle.get(0).width = 64;
+        rectangle.get(0).height = sprite.getHeight();
+        rectangle.get(0).width = sprite.getWidth();
         sprite.setX(rectangle.get(0).x);
         sprite.setY(rectangle.get(0).y);
     }

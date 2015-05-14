@@ -28,4 +28,9 @@ public class AK47 extends Weapon {
         return null;
     }
 
+    @Override
+    public Projectile getProjectile(){
+        return new AK47Projectile(getPosition(), getDirection());
+    }
+
 }

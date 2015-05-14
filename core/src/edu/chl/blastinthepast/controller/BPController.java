@@ -138,6 +138,9 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                     model.collision(c, p);
                 }
                 break;
+            case "Pick up ammo": //Temporary collision detection
+                    model.collision(evt.getOldValue(), evt.getNewValue());
+                break;
             case "use":
                 if(currentGameState instanceof PlayState) {
                     if (!model.getChest().isOpened()) {

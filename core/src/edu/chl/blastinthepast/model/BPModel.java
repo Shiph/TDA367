@@ -16,7 +16,7 @@ public class BPModel extends Observable implements Observer {
     private ArrayList<Character> characters;
     private Boss boss;
     private Chest chest;
-    private ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
+    private ArrayList<GameObject> dropList = new ArrayList<GameObject>();
 
 
     public BPModel() {
@@ -80,6 +80,14 @@ public class BPModel extends Observable implements Observer {
         while (iter.hasNext()){
             Enemy e=iter.next();
             if (e.getHealth()<=0) {
+                ArrayList<GameObject> drop = e.die();
+                if (drop!=null){
+                    for (GameObject o : drop){
+                        dropList.add(o);
+                        setChanged();
+                        notifyObservers(o);
+                    }
+                }
                 iter.remove();
                 characters.remove(e);
                 enemies.remove(e);
@@ -115,7 +123,7 @@ public class BPModel extends Observable implements Observer {
         }
     }
 
-    public void collision(Object o1, Object o2){ //temporary collision detection
+    public void collision(Object o1, Object o2){
         if ((o1 instanceof Character && o2 instanceof Projectile)){
             Character character=(Character) o1;
             Projectile projectile = (Projectile) o2;
@@ -124,6 +132,11 @@ public class BPModel extends Observable implements Observer {
             Character character=(Character) o2;
             ProjectileInterface projectile = (ProjectileInterface) o1;
             hit(character, projectile);
+        }
+        if (o1 instanceof Ammunition && o2 instanceof Player){
+            Ammunition a = (Ammunition) o1;
+            Player p = (Player) o2;
+            pickUpAmmunition(a, p);
         }
     }
 
@@ -135,6 +148,13 @@ public class BPModel extends Observable implements Observer {
             setChanged();
             notifyObservers(projectile);
         }
+    }
+
+    public void pickUpAmmunition(Ammunition ammo, Player player){
+        player.getWeapon().addAmmo(ammo.getAmount());
+        dropList.remove(ammo);
+        setChanged();
+        notifyObservers(ammo);
     }
 
     public void newGame() {
@@ -172,7 +192,6 @@ public class BPModel extends Observable implements Observer {
             addProjectile((ProjectileInterface) arg);
         } else if (arg instanceof PowerUp){
             PowerUp powerUp=(PowerUp)arg;
-            powerUps.add(powerUp);
         }
     }
 

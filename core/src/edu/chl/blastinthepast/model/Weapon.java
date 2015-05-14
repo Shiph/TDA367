@@ -71,7 +71,6 @@ public class Weapon implements WeaponInterface {
         if ((currentTime - latestShot) >= fireRate) {
             latestShot = System.currentTimeMillis();
             bulletsLeftInMagazine--;
-            System.out.println(position);
             return new Projectile(new Position(position.getX()+offset.getX(), position.getY()+offset.getY()), direction);
         }
         return null;

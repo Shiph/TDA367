@@ -1,5 +1,6 @@
 package edu.chl.blastinthepast.model;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
@@ -31,6 +32,7 @@ public class Enemy extends Observable implements Character {
     private Vector2 playerDirectionVector;
     private int range = 500;
     private ArrayList<ProjectileInterface> projectiles;
+    private ArrayList<GameObject> loot;
 
     /**
      * Default constructor for Enemy with default movement speed and health.
@@ -40,6 +42,7 @@ public class Enemy extends Observable implements Character {
     }
 
     public Enemy(int movementSpeed, int health, PositionInterface position, Character player) {
+        loot= new ArrayList<GameObject>();
         this.movementSpeed = movementSpeed;
         this.health = health;
         this.player = player;
@@ -54,6 +57,7 @@ public class Enemy extends Observable implements Character {
         timer.setRepeats(true);
         timer.start();
         projectiles=new ArrayList<ProjectileInterface>();
+        generateLoot();
     }
 
     public void move(float dt) {
@@ -200,6 +204,20 @@ public class Enemy extends Observable implements Character {
 
     public ArrayList<ProjectileInterface> getProjectiles(){
         return projectiles;
+    }
+
+    public void generateLoot(){
+        Random random = new Random();
+        boolean hasAmmo=random.nextBoolean();
+        if (hasAmmo) {
+            int amount = random.nextInt(4)*10+20;
+            Ammunition ammo = new Ammunition(getPosition(), weapon.getProjectile(), amount);
+            loot.add(ammo);
+        }
+    }
+
+    public ArrayList<GameObject> die(){
+        return loot;
     }
 
 }
