@@ -79,14 +79,15 @@ public class PlayerView implements CharacterView, WorldObject {
 
     public void updatePosition(){
         if (!collision) {
-            sprite.setPosition(player.getPosition().getX()-sprite.getWidth()/2, player.getPosition().getY()-sprite.getWidth()/2);
+            sprite.setPosition(player.getPosition().getX() - sprite.getWidth() / 2, player.getPosition().getY() - sprite.getWidth() / 2);
             rectangle.get(0).setPosition(player.getPosition().getX() - sprite.getWidth() / 2, player.getPosition().getY() - sprite.getHeight() / 2);
-        } else if (collision) {
+        }
+        /*} else if (collision) {
             player.setPosition(player.getPrevPos());
             sprite.setPosition(player.getPosition().getX(), player.getPosition().getY());
             rectangle.get(0).setPosition(player.getPosition().getX(), player.getPosition().getY());
             setCollision();
-        }
+        }*/
     }
 
     public void updateDirection() {

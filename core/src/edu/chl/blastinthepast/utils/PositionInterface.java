@@ -12,8 +12,6 @@ public interface PositionInterface {
     public void setPosition(float x, float y);
     public void setPosition(PositionInterface pos);
     public String toString();
-    public boolean equals(PositionInterface pos);
     public boolean overlaps(PositionInterface pos);
-    public int hashCode();
 
 }

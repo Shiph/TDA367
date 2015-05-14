@@ -141,6 +141,15 @@ public class BPModel extends Observable implements Observer {
             Ammunition a = (Ammunition) o1;
             Player p = (Player) o2;
             pickUpAmmunition(a, p);
+        } else if (o1 instanceof Player && o2 instanceof Ammunition){
+            Player p = (Player) o1;
+            Ammunition a = (Ammunition) o2;
+            pickUpAmmunition(a, p);
+        }
+        if (o1 instanceof Character && o2 instanceof Character){
+            Character c1 = (Character) o1;
+            Character c2 = (Character) o2;
+            characterCollision(c1, c2);
         }
     }
 
@@ -159,6 +168,11 @@ public class BPModel extends Observable implements Observer {
         dropList.remove(ammo);
         setChanged();
         notifyObservers(ammo);
+    }
+
+    private void characterCollision(Character character1, Character character2){
+        character1.setPosition(character1.getPrevPos());
+        character2.setPosition(character2.getPrevPos());
     }
 
     public void newGame() {

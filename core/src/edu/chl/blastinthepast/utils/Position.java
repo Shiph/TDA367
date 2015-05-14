@@ -53,8 +53,14 @@ public class Position implements PositionInterface {
                 (Math.abs(this.getPosition().getY() - pos.getY()) < margin));
     }
 
-    public boolean equals(PositionInterface pos) {
-        return (pos.getX() == this.getX() && pos.getY() == this.getY());
+    public boolean equals(Object obj) {
+        if (obj != null) {
+            if (obj instanceof Position){
+                Position pos = (Position) obj;
+                return (pos.getX() == this.getX() && pos.getY() == this.getY());
+            }
+        }
+        return false;
     }
 
     public int hashCode() {

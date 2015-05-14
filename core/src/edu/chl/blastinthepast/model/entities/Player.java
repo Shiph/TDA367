@@ -9,7 +9,7 @@ import java.util.Observable;
 /**
  * Created by Shif on 21/04/15.
  */
-public class Player extends Observable implements edu.chl.blastinthepast.model.entities.Character {
+public class Player extends Observable implements Character {
 
     private int health;
     private int movementSpeed;
@@ -17,7 +17,7 @@ public class Player extends Observable implements edu.chl.blastinthepast.model.e
     private WeaponInterface weapon;
     private boolean north, south, west, east, shooting;
     private PositionInterface position;
-    private Position prevPos;
+    private PositionInterface prevPos;
     private Vector2 aimDirection = new Vector2(1,0);
     private ArrayList<ProjectileInterface> projectiles;
 
@@ -102,8 +102,14 @@ public class Player extends Observable implements edu.chl.blastinthepast.model.e
         return position;
     }
 
-    public Position getPrevPos() {
+    @Override
+    public PositionInterface getPrevPos() {
         return prevPos;
+    }
+
+    @Override
+    public void setPosition(PositionInterface newPosition) {
+        position=new Position(newPosition);
     }
 
     public void setPrevPos (Position prevPos) {
@@ -119,6 +125,7 @@ public class Player extends Observable implements edu.chl.blastinthepast.model.e
     }
 
     public void move(float dt) {
+        prevPos = new Position(position);
         float x = position.getX();
         float y = position.getY();
         if (west) {

@@ -68,5 +68,15 @@ public class MockPlayer implements Character {
 
     }
 
+    @Override
+    public PositionInterface getPrevPos() {
+        return null;
+    }
+
+    @Override
+    public void setPosition(PositionInterface newPosition) {
+
+    }
+
 
 }

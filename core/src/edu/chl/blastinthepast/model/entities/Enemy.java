@@ -24,7 +24,7 @@ public class Enemy extends Observable implements Character {
     private int health;
     private int movementSpeed;
     private PositionInterface position;
-    private Position prevPos;
+    private PositionInterface prevPos;
     private WeaponInterface weapon;
     private MyActionListener actionListener;
     private Timer timer;
@@ -129,7 +129,7 @@ public class Enemy extends Observable implements Character {
         this.position = position;
     }
 
-    public Position getPrevPos(){
+    public PositionInterface getPrevPos(){
         return prevPos;
     }
 
@@ -146,6 +146,7 @@ public class Enemy extends Observable implements Character {
     }
 
     public void update(float dt) {
+        prevPos = new Position(position);
         playerDirectionVector.set(player.getPosition().getX() - position.getX(), player.getPosition().getY() - position.getY());
         weapon.setPosition(position);
         if(isPlayerInRange()) {

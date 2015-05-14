@@ -52,11 +52,6 @@ public class MockPosition implements PositionInterface {
     }
 
     @Override
-    public boolean equals(PositionInterface pos) {
-        return (pos.getX() == x && pos.getY() == y);
-    }
-
-    @Override
     public boolean overlaps(PositionInterface pos) {
         return false;
     }

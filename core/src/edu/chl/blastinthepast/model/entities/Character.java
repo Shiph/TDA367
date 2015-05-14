@@ -29,5 +29,9 @@ public interface Character {
 
     public void update(float dt);
 
+    public PositionInterface getPrevPos();
+
+    public void setPosition(PositionInterface newPosition);
+
 
 }
