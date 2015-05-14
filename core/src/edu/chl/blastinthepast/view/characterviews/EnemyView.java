@@ -13,13 +13,14 @@ import edu.chl.blastinthepast.utils.PositionInterface;
 import edu.chl.blastinthepast.view.AK47View;
 import edu.chl.blastinthepast.view.ProjectileView;
 import edu.chl.blastinthepast.view.WeaponView;
+import edu.chl.blastinthepast.view.WorldObject;
 
 import java.util.ArrayList;
 
 /**
  * Created by jonas on 2015-04-23.
  */
-public class EnemyView implements CharacterView {
+public class EnemyView implements CharacterView, WorldObject {
     private Texture texture;
     private Sprite sprite;
     private static final int DELAY = 2500;
@@ -87,6 +88,11 @@ public class EnemyView implements CharacterView {
     }
 
     @Override
+    public Object getObject() {
+        return enemy;
+    }
+
+    @Override
     public void draw(SpriteBatch batch) {
         updatePosition();
         batch.begin();
@@ -133,6 +139,11 @@ public class EnemyView implements CharacterView {
 
     public void dispose() {
         texture.dispose();
+    }
+
+    @Override
+    public Rectangle getRectangle() {
+        return rectangle.get(0);
     }
 
     public void updatePosition(){

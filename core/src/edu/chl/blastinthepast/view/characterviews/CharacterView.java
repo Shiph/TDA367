@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import edu.chl.blastinthepast.model.entities.Character;
 import edu.chl.blastinthepast.view.Collidable;
 import edu.chl.blastinthepast.view.ProjectileView;
+import edu.chl.blastinthepast.view.WorldObject;
 
 import java.util.ArrayList;
 

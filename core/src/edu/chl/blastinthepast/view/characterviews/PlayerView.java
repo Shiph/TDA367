@@ -14,7 +14,7 @@ import java.util.ArrayList;
 /**
  * Created by jonas on 2015-04-23.
  */
-public class PlayerView implements CharacterView {
+public class PlayerView implements CharacterView, WorldObject {
     private Texture texture;
     private Sprite sprite;
     private ArrayList<Rectangle> rectangle;
@@ -71,6 +71,7 @@ public class PlayerView implements CharacterView {
         return player;
     }
 
+
     @Override
     public void hit(ProjectileView projectile) {
         System.out.println(this);
@@ -98,6 +99,11 @@ public class PlayerView implements CharacterView {
         } else if (player.isMovingSouth()) {
             sprite.setTexture(GraphicalAssets.CHARACTERDOWN);
         }
+    }
+
+    @Override
+    public Object getObject() {
+        return  player;
     }
 
     @Override
@@ -133,6 +139,11 @@ public class PlayerView implements CharacterView {
 
     public void dispose() {
         //texture.dispose();
+    }
+
+    @Override
+    public Rectangle getRectangle() {
+        return rectangle.get(0);
     }
 
     public WeaponView getWeaponView() {

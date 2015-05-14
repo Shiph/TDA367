@@ -48,10 +48,6 @@ public class PlayState extends GameState implements Observer{
     private Sound wowSound;
     private Music music;
     private PropertyChangeSupport pcs;
-    private HashMap <ProjectileInterface, ProjectileView> projectiles = new HashMap <ProjectileInterface, ProjectileView>();
-    private HashMap <Character, CharacterView> characters;
-    private ArrayList <Character> removeChar;
-    private ArrayList <ProjectileInterface> removeProj;
     private Label ammoLabel;
     private Label.LabelStyle labelStyle;
     private BitmapFont font;
@@ -68,9 +64,6 @@ public class PlayState extends GameState implements Observer{
         this.model = model;
         chestView = new ChestView(model.getChest());
         model.addObserver(this);
-        characters = new HashMap <Character, CharacterView>();
-        removeChar= new ArrayList<Character>();
-        removeProj = new ArrayList<ProjectileInterface>();
         worldObjects = new HashMap <Object, WorldObject>();
         worldObjectsRemoveList = new ArrayList<Object>();
         chestView = new ChestView(model.getChest());
@@ -97,13 +90,13 @@ public class PlayState extends GameState implements Observer{
             if (c instanceof Player) {
                 Player p = (Player) c;
                 playerView = new PlayerView(p);
-                characters.put(p, playerView);
+                worldObjects.put(p, playerView);
             } else if (c instanceof Boss) {
                 Boss b = (Boss) c;
-                characters.put(b, new BossView(b));
+                worldObjects.put(b, new BossView(b));
             } else if (c instanceof Enemy){
                 Enemy e= (Enemy)c;
-                characters.put(e, new EnemyView(e));
+                worldObjects.put(e, new EnemyView(e));
             }
         }
     }
@@ -130,19 +123,15 @@ public class PlayState extends GameState implements Observer{
         tiledMapRenderer.render();
 
         chestView.draw(batch);
-        for (CharacterView c : characters.values()) {
-            c.draw(batch);
-        }
-        for (ProjectileView p : projectiles.values()) {
-            p.draw(batch);
-        }
         for (WorldObject o : worldObjects.values()){
             o.draw(batch);
         }
 
-        checkIfHit();
-        checkforAmmoPickup();
-        removeObjects();
+        checkForCollision();
+
+        if (!worldObjectsRemoveList.isEmpty()) {
+            removeObjects();
+        }
 
         batch.begin();
         ammoLabel.draw(batch, 1);
@@ -150,29 +139,11 @@ public class PlayState extends GameState implements Observer{
         batch.end();
     }
 
-    public void checkIfHit(){
-        for (ProjectileView p: projectiles.values()){
-            for (CharacterView c: characters.values()){
-                if (c.getRectangles().get(0).overlaps(p.getRectangles().get(0))){
-                    pcs.firePropertyChange("characterHit", p.getProjectile(), c.getCharacter());
-                }
-            }
-        }
-    }
-
-    public void checkforAmmoPickup(){
-        for (WorldObject o : worldObjects.values()){
-            if (playerView.getRectangles().get(0).overlaps(o.getRectangle())){
-                pcs.firePropertyChange("Pick up ammo", o.getObject(), playerView.getCharacter());
-            }
-        }
-    }
-
-    public void collision(){
+    public void checkForCollision(){
         for (WorldObject o1 : worldObjects.values()){
             for (WorldObject o2 : worldObjects.values()){
                 if (o1.getRectangle().overlaps(o2.getRectangle()) && o1!=o2){
-                    pcs.firePropertyChange("Collision", o1, o2);
+                    pcs.firePropertyChange("Collision", o1.getObject(), o2.getObject());
                 }
             }
         }
@@ -210,29 +181,29 @@ public class PlayState extends GameState implements Observer{
     @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof ProjectileInterface){
-            if (projectiles.containsKey(arg)) {
-                if (!removeProj.contains(arg)) {
-                    removeProj.add((ProjectileInterface) arg);
+            if (worldObjects.containsKey(arg)) {
+                if (!worldObjectsRemoveList.contains(arg)) {
+                    worldObjectsRemoveList.add(arg);
                 }
             } else {
                 if (arg instanceof AK47Projectile) {
-                    projectiles.put((ProjectileInterface) arg, new AK47ProjectileView((ProjectileInterface) arg));
+                    worldObjects.put(arg, new AK47ProjectileView((ProjectileInterface) arg));
                 } else if (arg instanceof MagnumProjectile) {
-                    projectiles.put((ProjectileInterface) arg, new MagnumProjectileView((ProjectileInterface) arg));
+                    worldObjects.put(arg, new MagnumProjectileView((ProjectileInterface) arg));
                 }
             }
         }
         if (arg instanceof Character){
-            if (characters.containsKey(arg)) {
-                if (!removeChar.contains(arg)) {
-                    removeChar.add((Character) arg);
+            if (worldObjects.containsKey(arg)) {
+                if (!worldObjectsRemoveList.contains(arg)) {
+                    worldObjectsRemoveList.add(arg);
                 }
             } else if (arg instanceof Boss){
-                characters.put((Boss)arg, new BossView((Boss)arg));
+                worldObjects.put(arg, new BossView((Boss)arg));
             } else if (arg instanceof Enemy){
-                characters.put((Enemy)arg, new EnemyView((Enemy)arg));
+                worldObjects.put(arg, new EnemyView((Enemy)arg));
             }  else if (arg instanceof Player){
-                characters.put((Player)arg, new PlayerView((Player)arg));
+                worldObjects.put(arg, new PlayerView((Player)arg));
             }
         }
         if (arg instanceof Ammunition) {
@@ -251,19 +222,8 @@ public class PlayState extends GameState implements Observer{
     }
 
     public void removeObjects(){
-        Iterator<Character> charIter=removeChar.iterator();
-        Iterator<ProjectileInterface> projIter = removeProj.iterator();
         Iterator<Object> objectIterator = worldObjectsRemoveList.iterator();
-        while (charIter.hasNext()){
-            Character c = charIter.next();
-            characters.remove(c);
-            charIter.remove();
-        }
-        while (projIter.hasNext()){
-            ProjectileInterface p = projIter.next();
-            projectiles.remove(p);
-            projIter.remove();
-        }
+
         while (objectIterator.hasNext()){
             Object o = objectIterator.next();
             worldObjects.remove(o);
