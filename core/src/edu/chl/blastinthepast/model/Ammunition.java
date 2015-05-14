@@ -8,7 +8,7 @@ import edu.chl.blastinthepast.utils.PositionInterface;
 /**
  * Created by jonas on 2015-05-13.
  */
-public class Ammunition implements GameObject{
+public class Ammunition {
     private PositionInterface position;
     private ProjectileInterface type;
     private int amount;
@@ -19,12 +19,12 @@ public class Ammunition implements GameObject{
         this.amount=amount;
     }
 
-    @Override
+    //@Override
     public PositionInterface getPosition(){
         return position;
     }
 
-    @Override
+    //@Override
     public void setPosition(PositionInterface position) {
         this.position.setPosition(position);
     }

@@ -2,7 +2,6 @@ package edu.chl.blastinthepast.model.level;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.Ammunition;
-import edu.chl.blastinthepast.model.GameObject;
 import edu.chl.blastinthepast.model.entities.*;
 import edu.chl.blastinthepast.model.entities.Character;
 import edu.chl.blastinthepast.utils.Constants;
@@ -17,10 +16,11 @@ public class BPModel extends Observable implements Observer {
     private Player player;
     private ArrayList<ProjectileInterface> projectiles = new ArrayList<ProjectileInterface>();
     private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+    private ArrayList<Object> dropList = new ArrayList<Object>();
     private ArrayList<Character> characters;
     private Boss boss;
     private Chest chest;
-    private ArrayList<GameObject> dropList = new ArrayList<GameObject>();
+
 
 
     public BPModel() {
@@ -84,9 +84,9 @@ public class BPModel extends Observable implements Observer {
         while (iter.hasNext()){
             Enemy e=iter.next();
             if (e.getHealth()<=0) {
-                ArrayList<GameObject> drop = e.die();
+                ArrayList<Object> drop = e.die();
                 if (drop!=null){
-                    for (GameObject o : drop){
+                    for (Object o : drop){
                         dropList.add(o);
                         setChanged();
                         notifyObservers(o);

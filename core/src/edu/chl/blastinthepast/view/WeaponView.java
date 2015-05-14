@@ -3,12 +3,13 @@ package edu.chl.blastinthepast.view;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import edu.chl.blastinthepast.model.entities.WeaponInterface;
 
 /**
  * Created by jonas on 2015-04-23.
  */
-public abstract class WeaponView {
+public abstract class WeaponView implements WorldObject {
 
     private Texture texture;
     private Sprite sprite;
@@ -20,6 +21,11 @@ public abstract class WeaponView {
         sprite = new Sprite(texture);
         updateDirection();
         updatePosition();
+    }
+
+    @Override
+    public Object getObject() {
+        return weapon;
     }
 
     public void draw(SpriteBatch batch) {
@@ -47,8 +53,15 @@ public abstract class WeaponView {
         texture.dispose();
     }
 
+    @Override
+    public Rectangle getRectangle() {
+        return null;
+    }
+
     public Texture getTexture() {
         return texture;
     }
+
+
 
 }

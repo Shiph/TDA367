@@ -1,5 +1,6 @@
 package edu.chl.blastinthepast.view;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 /**
  * Created by qwerty458 on 5/4/15.
  */
-public class ChestView implements Environment {
+public class ChestView implements Environment, WorldObject {
     private ArrayList<Rectangle> rectangles;
     private Sprite sprite;
     private Chest chest;
@@ -35,10 +36,30 @@ public class ChestView implements Environment {
         //rectangle.addAll(mapToRectangles(new TideMapLoader().load("GrassTestMap1.tmx")));
     }
 
+    @Override
+    public Object getObject() {
+        return chest;
+    }
+
     public void draw(SpriteBatch batch) {
         batch.begin();
         sprite.draw(batch);
         batch.end();
+    }
+
+    @Override
+    public Texture getTexture() {
+        return null;
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+
+    @Override
+    public Rectangle getRectangle() {
+        return null;
     }
 
     public void openChest() {

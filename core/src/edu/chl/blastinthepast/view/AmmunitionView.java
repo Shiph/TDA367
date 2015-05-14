@@ -5,12 +5,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import edu.chl.blastinthepast.model.Ammunition;
-import edu.chl.blastinthepast.model.GameObject;
 
 /**
  * Created by jonas on 2015-05-13.
  */
-public class AmmunitionView implements GameObjectView{
+public class AmmunitionView implements WorldObject {
 
 
     private Ammunition ammunition;
@@ -30,7 +29,7 @@ public class AmmunitionView implements GameObjectView{
     }
 
     @Override
-    public GameObject getGameObject() {
+    public Object getObject() {
         return ammunition;
     }
 

@@ -14,7 +14,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import edu.chl.blastinthepast.model.Ammunition;
-import edu.chl.blastinthepast.model.GameObject;
 import edu.chl.blastinthepast.model.entities.*;
 import edu.chl.blastinthepast.model.entities.Character;
 import edu.chl.blastinthepast.model.level.BPModel;
@@ -46,7 +45,6 @@ public class PlayState extends GameState implements Observer{
     private OrthographicCamera camera;
     private TiledMapRenderer tiledMapRenderer;
     private TiledMap tiledMap;
-    //private ArrayList<PowerUpView> powerUps = new ArrayList<PowerUpView>();
     private Sound wowSound;
     private Music music;
     private PropertyChangeSupport pcs;
@@ -58,8 +56,8 @@ public class PlayState extends GameState implements Observer{
     private Label.LabelStyle labelStyle;
     private BitmapFont font;
     private Image weaponImage;
-    private HashMap <GameObject, GameObjectView> worldObjects;
-    private ArrayList <GameObject> worldObjectsRemoveList;
+    private HashMap <Object, WorldObject> worldObjects;
+    private ArrayList <Object> worldObjectsRemoveList;
 
     public PlayState(GameStateManager gsm, BPModel model) {
         super(gsm, model);
@@ -73,8 +71,8 @@ public class PlayState extends GameState implements Observer{
         characters = new HashMap <Character, CharacterView>();
         removeChar= new ArrayList<Character>();
         removeProj = new ArrayList<ProjectileInterface>();
-        worldObjects = new HashMap <GameObject, GameObjectView>();
-        worldObjectsRemoveList = new ArrayList<GameObject>();
+        worldObjects = new HashMap <Object, WorldObject>();
+        worldObjectsRemoveList = new ArrayList<Object>();
         chestView = new ChestView(model.getChest());
         collisionView = new CollisionView();
         playerView = new PlayerView(model.getPlayer());
@@ -138,7 +136,7 @@ public class PlayState extends GameState implements Observer{
         for (ProjectileView p : projectiles.values()) {
             p.draw(batch);
         }
-        for (GameObjectView o : worldObjects.values()){
+        for (WorldObject o : worldObjects.values()){
             o.draw(batch);
         }
 
@@ -163,16 +161,16 @@ public class PlayState extends GameState implements Observer{
     }
 
     public void checkforAmmoPickup(){
-        for (GameObjectView o : worldObjects.values()){
+        for (WorldObject o : worldObjects.values()){
             if (playerView.getRectangles().get(0).overlaps(o.getRectangle())){
-                pcs.firePropertyChange("Pick up ammo", o.getGameObject(), playerView.getCharacter());
+                pcs.firePropertyChange("Pick up ammo", o.getObject(), playerView.getCharacter());
             }
         }
     }
 
     public void collision(){
-        for (GameObjectView o1 : worldObjects.values()){
-            for (GameObjectView o2 : worldObjects.values()){
+        for (WorldObject o1 : worldObjects.values()){
+            for (WorldObject o2 : worldObjects.values()){
                 if (o1.getRectangle().overlaps(o2.getRectangle()) && o1!=o2){
                     pcs.firePropertyChange("Collision", o1, o2);
                 }
@@ -240,7 +238,7 @@ public class PlayState extends GameState implements Observer{
         if (arg instanceof Ammunition) {
             if (worldObjects.containsKey(arg)) {
                 if (!worldObjectsRemoveList.contains(arg)){
-                    worldObjectsRemoveList.add((GameObject)arg);
+                    worldObjectsRemoveList.add(arg);
                 }
             } else {
                 Ammunition ammo = (Ammunition) arg;
@@ -255,7 +253,7 @@ public class PlayState extends GameState implements Observer{
     public void removeObjects(){
         Iterator<Character> charIter=removeChar.iterator();
         Iterator<ProjectileInterface> projIter = removeProj.iterator();
-        Iterator<GameObject> objectIterator = worldObjectsRemoveList.iterator();
+        Iterator<Object> objectIterator = worldObjectsRemoveList.iterator();
         while (charIter.hasNext()){
             Character c = charIter.next();
             characters.remove(c);
@@ -267,7 +265,7 @@ public class PlayState extends GameState implements Observer{
             projIter.remove();
         }
         while (objectIterator.hasNext()){
-            GameObject o = objectIterator.next();
+            Object o = objectIterator.next();
             worldObjects.remove(o);
             objectIterator.remove();
         }
