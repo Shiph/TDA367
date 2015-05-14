@@ -1,6 +1,5 @@
-package edu.chl.blastinthepast.model;
+package edu.chl.blastinthepast.model.entities;
 
-import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
 
 /**
@@ -17,11 +16,8 @@ public class Chest implements ChestInterface{
     }
 
     public WeaponInterface open(Character character) {
-        if(!isOpen && character.getPosition().overlaps(position)) {
             isOpen = true;
             return weapon;
-        }
-        return null;
     }
 
     public boolean isOpened() {

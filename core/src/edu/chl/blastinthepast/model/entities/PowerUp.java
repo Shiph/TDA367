@@ -1,6 +1,6 @@
-package edu.chl.blastinthepast.model;
+package edu.chl.blastinthepast.model.entities;
 
-import edu.chl.blastinthepast.model.Character;
+import edu.chl.blastinthepast.model.entities.Character;
 
 /**
  * Created by Mattias on 15-04-23.

@@ -1,12 +1,9 @@
 package edu.chl.blastinthepast.view;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import edu.chl.blastinthepast.model.Weapon;
-import edu.chl.blastinthepast.model.WeaponInterface;
-import edu.chl.blastinthepast.utils.GraphicalAssets;
+import edu.chl.blastinthepast.model.entities.WeaponInterface;
 
 /**
  * Created by jonas on 2015-04-23.
@@ -17,15 +14,23 @@ public abstract class WeaponView {
     private Sprite sprite;
     private WeaponInterface weapon;
 
-    public WeaponView(WeaponInterface newWeapon, Texture weaponTexture) {
-        weapon = newWeapon;
+    public WeaponView(WeaponInterface weapon, Texture weaponTexture) {
+        this.weapon = weapon;
         texture = weaponTexture;
         sprite = new Sprite(texture);
         updateDirection();
         updatePosition();
     }
 
-    public void updateDirection(){
+    public void draw(SpriteBatch batch) {
+        updateDirection();
+        updatePosition();
+        batch.begin();
+        sprite.draw(batch);
+        batch.end();
+    }
+
+    public void updateDirection() {
         sprite.setOrigin(0, 0);
         sprite.setRotation(weapon.getDirection().angle());
     }
@@ -34,23 +39,16 @@ public abstract class WeaponView {
         sprite.setPosition(weapon.getPosition().getX(), weapon.getPosition().getY());
     }
 
-    public void draw(SpriteBatch batch){
-        updateDirection();
-        updatePosition();
-        batch.begin();
-        sprite.draw(batch);
-        batch.end();
-    }
-
     public Sprite getSprite() {
         return sprite;
     }
 
     public void dispose() {
-        //texture.dispose();
+        texture.dispose();
     }
 
     public Texture getTexture() {
         return texture;
     }
+
 }

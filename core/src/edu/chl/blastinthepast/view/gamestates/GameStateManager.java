@@ -1,6 +1,9 @@
 package edu.chl.blastinthepast.view.gamestates;
 
-import edu.chl.blastinthepast.model.BPModel;
+import edu.chl.blastinthepast.model.level.BPModel;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 /**
  * Created by Shif on 23/04/15.
@@ -21,6 +24,7 @@ public class GameStateManager {
     public static final int OPTIONS = 4;
     public static final int HIGHSCORES = 5;
     public static final int GAMEOVER = 6;
+    private PropertyChangeSupport pcs;
 
     public GameStateManager(BPModel model) {
         this.model = model;
@@ -28,6 +32,7 @@ public class GameStateManager {
         inGameMenu = new InGameMenu(this, model);
         highScoreState = new HighScoreState(this, model);
         gameOverState = new GameOverState(this, model);
+        pcs = new PropertyChangeSupport(this);
         setState(MAIN_MENU, false);
     }
 
@@ -45,7 +50,6 @@ public class GameStateManager {
             case PLAY:
                 if(!inGame) {
                     mainMenu.dispose();
-                    model.newGame();
                     playState = new PlayState(this, model);
                     gameState = playState;
                 } else {
@@ -91,4 +95,15 @@ public class GameStateManager {
         return inGameMenu;
     }
 
+    public void addListener(PropertyChangeListener pcl) {
+        pcs.addPropertyChangeListener(pcl);
+    }
+
+    public PropertyChangeSupport getPropertyChangeSupport() {
+        return pcs;
+    }
+
+    public void setModel(BPModel model) {
+        this.model = model;
+    }
 }

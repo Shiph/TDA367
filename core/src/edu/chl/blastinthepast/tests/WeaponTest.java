@@ -1,8 +1,8 @@
 package edu.chl.blastinthepast.tests;
 
 import com.badlogic.gdx.math.Vector2;
-import edu.chl.blastinthepast.model.Projectile;
-import edu.chl.blastinthepast.model.Weapon;
+import edu.chl.blastinthepast.model.entities.Projectile;
+import edu.chl.blastinthepast.model.entities.Weapon;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

@@ -1,8 +1,7 @@
-package edu.chl.blastinthepast.model;
-
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+package edu.chl.blastinthepast.model.entities;
 
 import java.util.ArrayList;
+
 import edu.chl.blastinthepast.utils.PositionInterface;
 
 /**
@@ -29,5 +28,6 @@ public interface Character {
     public PositionInterface getPosition();
 
     public void update(float dt);
+
 
 }

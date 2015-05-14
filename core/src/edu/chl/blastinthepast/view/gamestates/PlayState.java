@@ -9,13 +9,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import edu.chl.blastinthepast.model.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import edu.chl.blastinthepast.model.Character;
-import edu.chl.blastinthepast.model.Enemy;
+import edu.chl.blastinthepast.model.Ammunition;
+import edu.chl.blastinthepast.model.GameObject;
+import edu.chl.blastinthepast.model.entities.*;
+import edu.chl.blastinthepast.model.entities.Character;
+import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 import edu.chl.blastinthepast.utils.Position;
@@ -28,7 +30,6 @@ import edu.chl.blastinthepast.view.characterviews.PlayerView;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.text.CharacterIterator;
 import java.util.*;
 
 
@@ -280,4 +281,7 @@ public class PlayState extends GameState implements Observer{
         }
     }
 
+    public void updateGUIWeapon() {
+        weaponImage = new Image(playerView.getWeaponView().getTexture());
+    }
 }

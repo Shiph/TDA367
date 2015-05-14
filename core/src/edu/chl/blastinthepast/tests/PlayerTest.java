@@ -1,9 +1,8 @@
 package edu.chl.blastinthepast.tests;
 
 import com.badlogic.gdx.math.Vector2;
-import edu.chl.blastinthepast.model.Player;
+import edu.chl.blastinthepast.model.entities.Player;
 import edu.chl.blastinthepast.utils.Position;
-import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

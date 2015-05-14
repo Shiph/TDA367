@@ -1,12 +1,8 @@
-package edu.chl.blastinthepast.model;
+package edu.chl.blastinthepast.model.entities;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Created by Mattias on 15-05-05.
@@ -29,8 +25,12 @@ public class AK47 extends Weapon {
     }
 
     @Override
-    public Projectile getProjectile(){
+    public Projectile getProjectile() {
         return new AK47Projectile(getPosition(), getDirection());
+    }
+
+    public String toString() {
+        return "AK47";
     }
 
 }

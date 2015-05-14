@@ -1,7 +1,7 @@
 package edu.chl.blastinthepast.tests;
 
-import edu.chl.blastinthepast.model.Enemy;
-import edu.chl.blastinthepast.model.WeaponInterface;
+import edu.chl.blastinthepast.model.entities.Enemy;
+import edu.chl.blastinthepast.model.entities.WeaponInterface;
 import edu.chl.blastinthepast.utils.PositionInterface;
 import org.junit.Before;
 import org.junit.Test;

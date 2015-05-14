@@ -1,5 +1,6 @@
 package edu.chl.blastinthepast.model;
 
+import edu.chl.blastinthepast.model.entities.ProjectileInterface;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
 

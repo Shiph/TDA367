@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import edu.chl.blastinthepast.model.BPModel;
+import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.utils.HighScoreHandler;
 
 /**
@@ -79,6 +79,7 @@ public class GameOverState extends GameState{
             HighScoreHandler.gameData.addHighScore(HighScoreHandler.gameData.getTentativeScore(), new String(newName));
             HighScoreHandler.save();
         }
+        gsm.setState(GameStateManager.MAIN_MENU, false);
     }
 
     public void moveUp() {

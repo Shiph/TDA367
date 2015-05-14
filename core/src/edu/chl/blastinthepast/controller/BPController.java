@@ -2,35 +2,33 @@ package edu.chl.blastinthepast.controller;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import edu.chl.blastinthepast.model.*;
-import edu.chl.blastinthepast.model.Character;
+import edu.chl.blastinthepast.model.entities.Character;
 import com.badlogic.gdx.graphics.GL20;
-import edu.chl.blastinthepast.model.BPModel;
-import edu.chl.blastinthepast.model.ProjectileInterface;
+import edu.chl.blastinthepast.model.entities.Projectile;
+import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.view.gamestates.*;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by Shif on 20/04/15.
  */
-public class BPController extends ApplicationAdapter implements PropertyChangeListener {
+public class BPController extends ApplicationAdapter implements PropertyChangeListener, Observer {
 
     private BPModel model;
     private InputHandler inputHandler;
     private GameStateManager gsm;
 
-    private BPController(BPModel model) {
-        this.model = model;
-    }
-
     @Override
     public void render () {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        model.update(Gdx.graphics.getDeltaTime());
+        if (model != null) {
+            model.update(Gdx.graphics.getDeltaTime());
+        }
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.draw();
     }
@@ -41,10 +39,11 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
         inputHandler.addListener(this);
         Gdx.input.setInputProcessor(inputHandler);
         gsm = new GameStateManager(model);
+        gsm.addListener(this);
     }
 
-    public static BPController create(BPModel model) {
-        return new BPController(model);
+    public static BPController createController() {
+        return new BPController();
     }
 
     @Override
@@ -61,11 +60,11 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
         switch(evt.getPropertyName()) {
             case "west":
                 if(currentGameState instanceof GameOverState) {
-                    ((GameOverState) currentGameState).moveLeft();
+                    //((GameOverState) currentGameState).moveLeft();
                 }
             case "east":
                 if(currentGameState instanceof GameOverState) {
-                    ((GameOverState) currentGameState).moveRight();
+                    //((GameOverState) currentGameState).moveRight();
                 }
             case "north":
             case "south":
@@ -85,10 +84,8 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
             case "escape":
                 if (currentGameState instanceof PlayState) {
                     gsm.setState(GameStateManager.IN_GAME_MENU, true);
-                    gsm.getGameState().draw();
                 } else if (currentGameState instanceof InGameMenu) {
                     gsm.setState(GameStateManager.PLAY, true);
-                    gsm.getGameState().draw();
                 } else if (currentGameState instanceof HighScoreState) {
                     gsm.setState(GameStateManager.MAIN_MENU, false);
                 }
@@ -100,7 +97,6 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                     ((MainMenu) currentGameState).select();
                 } else if (currentGameState instanceof GameOverState) {
                     ((GameOverState) currentGameState).select();
-                    gsm.setState(GameStateManager.MAIN_MENU, false);
                 }
                 break;
             case "up":
@@ -143,8 +139,10 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                 break;
             case "use":
                 if(currentGameState instanceof PlayState) {
-                    if (!model.getChest().isOpened()) {
+                    if (!model.getChest().isOpened() && model.getPlayer().getPosition().overlaps(model.getChest().getPosition())) {
                         model.getPlayer().addWeapon(model.getChest().open(model.getPlayer()));
+                        ((PlayState)gsm.getGameState()).getPlayer().changeWeaponView();
+                        ((PlayState)gsm.getGameState()).updateGUIWeapon();
                     }
                 }
                 break;
@@ -157,8 +155,38 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                     gsm.getInGameMenu().toggleSoundSprite();
                 }
                 break;
+            case "num1":
+                if(currentGameState instanceof PlayState) {
+                    try {
+                        model.getPlayer().setWeapon(model.getPlayer().getWeaponArray().get(0));
+                        ((PlayState) gsm.getGameState()).getPlayer().changeWeaponView();
+                        ((PlayState) gsm.getGameState()).updateGUIWeapon();
+                    } catch (IndexOutOfBoundsException e) {}
+                }
+                break;
+            case "num2":
+                if(currentGameState instanceof PlayState) {
+                    try {
+                        model.getPlayer().setWeapon(model.getPlayer().getWeaponArray().get(1));
+                        ((PlayState) gsm.getGameState()).getPlayer().changeWeaponView();
+                        ((PlayState) gsm.getGameState()).updateGUIWeapon();
+                    } catch (IndexOutOfBoundsException e) {}
+                }
+                break;
+            case "new game":
+                model = new BPModel();
+                model.addObserver(this);
+                gsm.setModel(model);
+                break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (arg.equals("player is kill")) {
+            gsm.setState(GameStateManager.GAMEOVER, true);
         }
     }
 

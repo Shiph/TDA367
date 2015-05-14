@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.model;
+package edu.chl.blastinthepast.model.entities;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Position;
@@ -22,6 +22,11 @@ public class Magnum extends Weapon {
             return new MagnumProjectile(getPosWithOffset(), getDirection());
         }
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return "Magnum";
     }
 
 }

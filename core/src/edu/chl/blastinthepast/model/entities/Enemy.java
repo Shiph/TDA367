@@ -1,7 +1,9 @@
-package edu.chl.blastinthepast.model;
+package edu.chl.blastinthepast.model.entities;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.Vector2;
+import edu.chl.blastinthepast.model.Ammunition;
+import edu.chl.blastinthepast.model.GameObject;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
@@ -9,6 +11,7 @@ import edu.chl.blastinthepast.utils.PositionInterface;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.*;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
@@ -215,6 +218,7 @@ public class Enemy extends Observable implements Character {
             loot.add(ammo);
         }
     }
+
 
     public ArrayList<GameObject> die(){
         return loot;

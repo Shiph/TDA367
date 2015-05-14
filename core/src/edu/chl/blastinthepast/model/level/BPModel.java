@@ -1,6 +1,10 @@
-package edu.chl.blastinthepast.model;
+package edu.chl.blastinthepast.model.level;
 
 import com.badlogic.gdx.math.Vector2;
+import edu.chl.blastinthepast.model.Ammunition;
+import edu.chl.blastinthepast.model.GameObject;
+import edu.chl.blastinthepast.model.entities.*;
+import edu.chl.blastinthepast.model.entities.Character;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 import java.util.*;
@@ -192,6 +196,11 @@ public class BPModel extends Observable implements Observer {
             addProjectile((ProjectileInterface) arg);
         } else if (arg instanceof PowerUp){
             PowerUp powerUp=(PowerUp)arg;
+        } else if(arg instanceof String) {
+            if (arg.equals("player is kill")) {
+                setChanged();
+                notifyObservers("player is kill");
+            }
         }
     }
 

@@ -5,13 +5,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import edu.chl.blastinthepast.model.*;
-import edu.chl.blastinthepast.model.Character;
+import edu.chl.blastinthepast.model.entities.Character;
+import edu.chl.blastinthepast.model.entities.Player;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
-import edu.chl.blastinthepast.view.AK47View;
-import edu.chl.blastinthepast.view.ProjectileView;
-import edu.chl.blastinthepast.view.WeaponView;
-
+import edu.chl.blastinthepast.view.*;
 import java.util.ArrayList;
 
 /**
@@ -24,6 +21,7 @@ public class PlayerView implements CharacterView {
     private Player player;
     private Vector2 direction;
     private WeaponView weaponView;
+    private String currentWeapon;
     private boolean collision;
 
     public PlayerView(Player newPlayer){
@@ -32,14 +30,11 @@ public class PlayerView implements CharacterView {
         rectangle = new ArrayList<Rectangle>();
         rectangle.add(new Rectangle());
         direction = new Vector2();
-        //rectangle.get(0).x = 800/2 - 64/2;
-        //rectangle.get(0).y = 480/2 - 64/2;
         rectangle.get(0).height = sprite.getHeight();
         rectangle.get(0).width = sprite.getWidth();
-        //sprite.setX(rectangle.get(0).x);
-        //sprite.setY(rectangle.get(0).y);
         player = newPlayer;
         weaponView = new AK47View(player.getWeapon());
+        currentWeapon = player.getWeapon().toString();
         collision = false;
     }
 
@@ -84,7 +79,7 @@ public class PlayerView implements CharacterView {
     public void updatePosition(){
         if (!collision) {
             sprite.setPosition(player.getPosition().getX()-sprite.getWidth()/2, player.getPosition().getY()-sprite.getWidth()/2);
-            rectangle.get(0).setPosition(player.getPosition().getX()-sprite.getWidth()/2, player.getPosition().getY() -sprite.getHeight()/2);
+            rectangle.get(0).setPosition(player.getPosition().getX() - sprite.getWidth() / 2, player.getPosition().getY() - sprite.getHeight() / 2);
         } else if (collision) {
             player.setPosition(player.getPrevPos());
             sprite.setPosition(player.getPosition().getX(), player.getPosition().getY());
@@ -109,17 +104,27 @@ public class PlayerView implements CharacterView {
     public void draw(SpriteBatch batch) {
         updatePosition();
         updateDirection();
-        //rotate();
         batch.begin();
         sprite.draw(batch);
         batch.end();
         weaponView.draw(batch);
     }
 
-    public void rotate () {
-        direction = player.getAimDirection();
-        sprite.setOriginCenter();
-        sprite.setRotation(direction.angle());
+    public void changeWeaponView() {
+        if(!currentWeapon.equals(player.getWeapon().toString())) {
+            switch (player.getWeapon().toString()) {
+                case "AK47":
+                    weaponView = new AK47View(player.getWeapon());
+                    currentWeapon = "AK47";
+                    break;
+                case "Magnum":
+                    weaponView = new MagnumView(player.getWeapon());
+                    currentWeapon = "Magnum";
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     public void setCollision () {

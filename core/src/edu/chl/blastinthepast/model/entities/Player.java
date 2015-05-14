@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.model;
+package edu.chl.blastinthepast.model.entities;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Position;
@@ -9,7 +9,7 @@ import java.util.Observable;
 /**
  * Created by Shif on 21/04/15.
  */
-public class Player extends Observable implements Character {
+public class Player extends Observable implements edu.chl.blastinthepast.model.entities.Character {
 
     private int health;
     private int movementSpeed;
@@ -25,7 +25,7 @@ public class Player extends Observable implements Character {
      * Default constructor for Player with default movement speed and health.
      */
     public Player() {
-        this(200, 100, new Position(0,0));
+        this(200, 10000000, new Position(0,0));
     }
 
     /**
@@ -69,8 +69,21 @@ public class Player extends Observable implements Character {
     }
 
     public void addWeapon(WeaponInterface weapon) {
-        weaponArray.add(weapon);
-        setWeapon(weapon);
+        WeaponInterface newWeapon;
+        switch(weapon.toString()) {
+            case "AK47":
+                newWeapon = new AK47(position,aimDirection);
+                weaponArray.add(newWeapon);
+                setWeapon(newWeapon);
+                break;
+            case "Magnum":
+                newWeapon = new Magnum(position,aimDirection);
+                weaponArray.add(newWeapon);
+                setWeapon(newWeapon);
+                break;
+            default:
+                break;
+        }
     }
 
     public void setWeapon(WeaponInterface weapon) {
@@ -79,6 +92,10 @@ public class Player extends Observable implements Character {
 
     public WeaponInterface getWeapon() {
         return weapon;
+    }
+
+    public ArrayList<WeaponInterface> getWeaponArray(){
+        return weaponArray;
     }
 
     public PositionInterface getPosition(){
@@ -119,11 +136,20 @@ public class Player extends Observable implements Character {
     }
 
     public void update(float dt) {
+        if (health <= 0) {
+            die();
+        }
         weapon.setPosition(position);
         move(dt);
         if (shooting) {
             shoot();
         }
+    }
+
+
+    public void die() {
+        setChanged();
+        notifyObservers("player is kill");
     }
 
     public void isShooting(boolean shoot){

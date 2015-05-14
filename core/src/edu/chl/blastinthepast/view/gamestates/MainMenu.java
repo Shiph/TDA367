@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import edu.chl.blastinthepast.model.BPModel;
+import edu.chl.blastinthepast.model.level.BPModel;
 
 /**
  * Created by MattiasJ on 2015-05-03.
@@ -79,6 +79,8 @@ public class MainMenu extends GameState {
 
     public void select() {
         if(currentItem == 0) {
+            //gsm.setState(GameStateManager.PLAY, false);
+            gsm.getPropertyChangeSupport().firePropertyChange("new game", false, true);
             gsm.setState(GameStateManager.PLAY, false);
         } else if (currentItem == 1) {
             //gsm.setState(GameStateManager.SAVES);
