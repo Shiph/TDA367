@@ -180,47 +180,22 @@ public class PlayState extends GameState implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
-        if (arg instanceof ProjectileInterface){
-            if (worldObjects.containsKey(arg)) {
-                if (!worldObjectsRemoveList.contains(arg)) {
-                    worldObjectsRemoveList.add(arg);
-                }
-            } else {
-                if (arg instanceof AK47Projectile) {
-                    worldObjects.put(arg, new AK47ProjectileView((ProjectileInterface) arg));
-                } else if (arg instanceof MagnumProjectile) {
-                    worldObjects.put(arg, new MagnumProjectileView((ProjectileInterface) arg));
-                }
+        if (worldObjects.containsKey(arg)) {
+            if (!worldObjectsRemoveList.contains(arg)) {
+                worldObjectsRemoveList.add(arg);
             }
+        } else {
+            checkIfProjectile(o, arg);
+            checkIfCharacter(o, arg);
+            checkIfAmmunition(o, arg);
+            checkIfPowerUp(o, arg);
         }
-        if (arg instanceof Character){
-            if (worldObjects.containsKey(arg)) {
-                if (!worldObjectsRemoveList.contains(arg)) {
-                    worldObjectsRemoveList.add(arg);
-                }
-            } else if (arg instanceof Boss){
-                worldObjects.put(arg, new BossView((Boss)arg));
-            } else if (arg instanceof Enemy){
-                worldObjects.put(arg, new EnemyView((Enemy)arg));
-            }  else if (arg instanceof Player){
-                worldObjects.put(arg, new PlayerView((Player)arg));
-            }
-        }
-        if (arg instanceof Ammunition) {
-            if (worldObjects.containsKey(arg)) {
-                if (!worldObjectsRemoveList.contains(arg)){
-                    worldObjectsRemoveList.add(arg);
-                }
-            } else {
-                Ammunition ammo = (Ammunition) arg;
-                if (ammo.getType() instanceof AK47Projectile) {
-                    worldObjects.put(ammo, new AmmunitionView(ammo, GraphicalAssets.TRIFORCE_BULLET));
-                }
-            }
-        }
-
     }
 
+    /**
+     *  Since removing objects without using the iterator while iterating through a list is met with an error
+     *  it is necessary to mark them for removal and remove when the iteration is complete.
+     */
     public void removeObjects(){
         Iterator<Object> objectIterator = worldObjectsRemoveList.iterator();
 
@@ -241,5 +216,52 @@ public class PlayState extends GameState implements Observer{
 
     public void updateGUIWeapon() {
         weaponImage = new Image(playerView.getWeaponView().getTexture());
+    }
+
+
+    public void checkIfProjectile(Observable o, Object arg){
+        if (arg instanceof  ProjectileInterface){
+            if (arg instanceof AK47Projectile) {
+                    worldObjects.put(arg, new AK47ProjectileView((ProjectileInterface) arg));
+                } else if (arg instanceof MagnumProjectile) {
+                    worldObjects.put(arg, new MagnumProjectileView((ProjectileInterface) arg));
+                }
+        }
+
+    }
+
+    public void checkIfCharacter(Observable o, Object arg){
+        if (arg instanceof Character){
+            if (arg instanceof Boss){
+                worldObjects.put(arg, new BossView((Boss)arg));
+            } else if (arg instanceof Enemy){
+                worldObjects.put(arg, new EnemyView((Enemy)arg));
+            }  else if (arg instanceof Player){
+                worldObjects.put(arg, new PlayerView((Player)arg));
+            }
+        }
+    }
+
+    public void checkIfAmmunition(Observable o, Object arg){
+        if (arg instanceof Ammunition){
+            Ammunition ammo = (Ammunition) arg;
+            if (ammo.getType() instanceof AK47Projectile) {
+                worldObjects.put(ammo, new AmmunitionView(ammo, GraphicalAssets.TRIFORCE_BULLET));
+            }
+        }
+
+    }
+
+    public void checkIfPowerUp(Observable o, Object arg){
+        if (arg instanceof PowerUp){
+            PowerUp powerUp = (PowerUp) arg;
+            if (powerUp instanceof DamagePowerUp){
+                worldObjects.put(powerUp, new PowerUpView(powerUp, GraphicalAssets.AK47));
+            } else if (powerUp instanceof MovementSpeedPowerUp){
+                worldObjects.put(powerUp, new PowerUpView(powerUp, GraphicalAssets.MAGNUM));
+            } else if (powerUp instanceof FireRatePowerUp){
+                worldObjects.put(powerUp, new PowerUpView(powerUp, GraphicalAssets.CHESTOPEN));
+            }
+        }
     }
 }

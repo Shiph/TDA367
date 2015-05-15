@@ -8,7 +8,7 @@ import edu.chl.blastinthepast.utils.PositionInterface;
 /**
  * Created by jonas on 2015-05-13.
  */
-public class Ammunition {
+public class Ammunition implements AmmunitionInterface{
     private PositionInterface position;
     private ProjectileInterface type;
     private int amount;

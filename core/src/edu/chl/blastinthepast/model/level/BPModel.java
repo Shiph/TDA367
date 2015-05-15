@@ -113,14 +113,14 @@ public class BPModel extends Observable implements Observer {
             Random r = new Random();
             float x = r.nextFloat() * Constants.MAP_WIDTH;
             float y = r.nextFloat() * Constants.MAP_HEIGHT;
-            while (x <= player.getPosition().getX() + Constants.CAMERA_WIDTH/2 && //Makes enemies spawn outside the players view
+           /* while (x <= player.getPosition().getX() + Constants.CAMERA_WIDTH/2 && //Makes enemies spawn outside the players view
                     x >= player.getPosition().getX() - Constants.CAMERA_WIDTH/2) {
                 while (y <= player.getPosition().getY() + Constants.CAMERA_HEIGHT/2 &&
                         y >= player.getPosition().getY() - Constants.CAMERA_HEIGHT/2) {
                     y = r.nextFloat() * Constants.MAP_HEIGHT;
                 }
                 x = r.nextFloat() * Constants.MAP_WIDTH;
-            }
+            }*/
             e.getPosition().setX(x);
             e.getPosition().setY(y);
             e.addObserver(this);
@@ -151,6 +151,15 @@ public class BPModel extends Observable implements Observer {
             Character c2 = (Character) o2;
             characterCollision(c1, c2);
         }
+        if (o1 instanceof PowerUp && o2 instanceof Player){
+            PowerUp powerUp = (PowerUp) o1;
+            Player player = (Player) o2;
+            pickUpPowerUp(powerUp, player);
+        } else if (o1 instanceof Player && o2 instanceof PowerUp){
+            PowerUp powerUp = (PowerUp) o2;
+            Player player = (Player) o1;
+            pickUpPowerUp(powerUp, player);
+        }
     }
 
     public void hit(Character character, ProjectileInterface projectile){ //collision for bullets
@@ -173,6 +182,13 @@ public class BPModel extends Observable implements Observer {
     private void characterCollision(Character character1, Character character2){
         character1.setPosition(character1.getPrevPos());
         character2.setPosition(character2.getPrevPos());
+    }
+
+    private void pickUpPowerUp(PowerUp powerUp, Player player){
+        powerUp.applyPowerUp(player);
+        dropList.remove(powerUp);
+        setChanged();
+        notifyObservers(powerUp);
     }
 
     public void newGame() {
@@ -208,8 +224,6 @@ public class BPModel extends Observable implements Observer {
     public void update(Observable o, Object arg) {
         if (arg instanceof ProjectileInterface && o instanceof Character) {
             addProjectile((ProjectileInterface) arg);
-        } else if (arg instanceof PowerUp){
-            PowerUp powerUp=(PowerUp)arg;
         } else if(arg instanceof String) {
             if (arg.equals("player is kill")) {
                 setChanged();

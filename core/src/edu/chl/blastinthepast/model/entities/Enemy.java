@@ -213,8 +213,15 @@ public class Enemy extends Observable implements Character {
         boolean hasAmmo=random.nextBoolean();
         if (hasAmmo) {
             int amount = random.nextInt(4)*10+20;
-            Ammunition ammo = new Ammunition(getPosition(), weapon.getProjectile(), amount);
+            Ammunition ammo = new Ammunition(position, weapon.getProjectile(), amount);
             loot.add(ammo);
+        }
+        //boolean hasPowerUp = random.nextBoolean();
+        boolean hasPowerUp=true;
+        if (hasPowerUp){
+            PowerUp powerUp = PowerUpGenerator.generatePowerUp();
+            powerUp.setPosition(position);
+            loot.add(powerUp);
         }
     }
 
