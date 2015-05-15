@@ -95,6 +95,11 @@ public class BPModel extends Observable implements Observer {
             Enemy e=iter.next();
             if (e.getHealth()<=0) {
                 ArrayList<Object> drop = e.die();
+                if(e instanceof Boss) {
+                    player.setScore(player.getScore() + 50);
+                } else {
+                    player.setScore(player.getScore() + 10);
+                }
                 if (drop!=null){
                     for (Object o : drop){
                         dropList.add(o);

@@ -196,6 +196,10 @@ public class Player extends Observable implements Character {
         return score;
     }
 
+    public void setScore(int score) {
+        this.score += score;
+    }
+
     public void setMovementDirection(String movementDirection){
         switch (movementDirection) {
             case "north":
