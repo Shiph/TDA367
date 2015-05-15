@@ -6,6 +6,9 @@ import edu.chl.blastinthepast.model.entities.Character;
 import com.badlogic.gdx.graphics.GL20;
 import edu.chl.blastinthepast.model.entities.Projectile;
 import edu.chl.blastinthepast.model.level.BPModel;
+import edu.chl.blastinthepast.model.level.LevelInterface;
+import edu.chl.blastinthepast.model.level.LevelManager;
+import edu.chl.blastinthepast.model.level.LevelOne;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.view.gamestates.*;
 import java.beans.PropertyChangeEvent;
@@ -21,6 +24,7 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
     private BPModel model;
     private InputHandler inputHandler;
     private GameStateManager gsm;
+    private LevelManager levelManager;
 
     @Override
     public void render () {
@@ -40,6 +44,7 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
         Gdx.input.setInputProcessor(inputHandler);
         gsm = new GameStateManager(model);
         gsm.addListener(this);
+        //levelManager = new LevelManager(model);
     }
 
     public static BPController createController() {
@@ -170,6 +175,11 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                 model = new BPModel();
                 model.addObserver(this);
                 gsm.setModel(model);
+                if (levelManager == null) {
+                    levelManager = new LevelManager(new LevelOne(model));
+                } else {
+                    levelManager.setLevel(new LevelOne(model));
+                }
                 break;
             default:
                 break;

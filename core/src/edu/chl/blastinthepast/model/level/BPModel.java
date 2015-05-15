@@ -32,12 +32,10 @@ public class BPModel extends Observable implements Observer {
         notifyObservers(player);
         player.addObserver(this);
         characters.add(player);
-        spawnBoss();
-        spawnEnemies();
     }
 
-    public void spawnBoss() {
-        boss = new Boss(player, new Position(500, 500));
+    public void spawnBoss(Position pos) {
+        boss = new Boss(player, pos);
         boss.addObserver(this);
         enemies.add(boss);
         characters.add(boss);
@@ -45,11 +43,23 @@ public class BPModel extends Observable implements Observer {
         notifyObservers(boss);
     }
 
+    public void spawnEnemies(int amount) {
+        for (int i = 0; i < amount; i++) {
+            Enemy e = new Enemy(player, new Position(0, 0));
+            enemies.add(e);
+            characters.add(e);
+            setChanged();
+            notifyObservers(e);
+            e.addObserver(this);
+        }
+    }
+
     public void update(float dt){
         removeProjectiles();
         removeDeadEnemies();
         if (enemies.size()<1){
-            spawnEnemies();
+            setChanged();
+            notifyObservers("all enemies is kill");
         }
         player.update(dt);
         for (ProjectileInterface p : projectiles) {
@@ -101,32 +111,6 @@ public class BPModel extends Observable implements Observer {
         }
     }
 
-    private void spawnEnemies() {
-        for (int i = 0; i < 2; i++) {
-            Enemy e = new Enemy(player, new Position(0, 0));
-            enemies.add(e);
-            characters.add(e);
-            setChanged();
-            notifyObservers(e);
-        }
-        for (Enemy e : enemies) {
-            Random r = new Random();
-            float x = r.nextFloat() * Constants.MAP_WIDTH;
-            float y = r.nextFloat() * Constants.MAP_HEIGHT;
-            while (x <= player.getPosition().getX() + Constants.CAMERA_WIDTH/2 && //Makes enemies spawn outside the players view
-                    x >= player.getPosition().getX() - Constants.CAMERA_WIDTH/2) {
-                while (y <= player.getPosition().getY() + Constants.CAMERA_HEIGHT/2 &&
-                        y >= player.getPosition().getY() - Constants.CAMERA_HEIGHT/2) {
-                    y = r.nextFloat() * Constants.MAP_HEIGHT;
-                }
-                x = r.nextFloat() * Constants.MAP_WIDTH;
-            }
-            e.getPosition().setX(x);
-            e.getPosition().setY(y);
-            e.addObserver(this);
-        }
-    }
-
     public void collision(Object o1, Object o2){
         if ((o1 instanceof Character && o2 instanceof Projectile)){
             Character character=(Character) o1;
@@ -173,9 +157,6 @@ public class BPModel extends Observable implements Observer {
     private void characterCollision(Character character1, Character character2){
         character1.setPosition(character1.getPrevPos());
         character2.setPosition(character2.getPrevPos());
-    }
-
-    public void newGame() {
     }
 
     public ArrayList<ProjectileInterface> getProjectiles(){
