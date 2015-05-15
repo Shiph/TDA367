@@ -81,8 +81,10 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
             case "escape":
                 if (currentGameState instanceof PlayState) {
                     gsm.setState(GameStateManager.IN_GAME_MENU, true);
+                    //model.pause();
                 } else if (currentGameState instanceof InGameMenu) {
                     gsm.setState(GameStateManager.PLAY, true);
+                    //model.unPause();
                 } else if (currentGameState instanceof HighScoreState) {
                     gsm.setState(GameStateManager.MAIN_MENU, false);
                 }

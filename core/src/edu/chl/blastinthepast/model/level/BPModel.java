@@ -20,8 +20,7 @@ public class BPModel extends Observable implements Observer {
     private ArrayList<Character> characters;
     private Boss boss;
     private Chest chest;
-
-
+    private boolean isPaused;
 
     public BPModel() {
         player = new Player();
@@ -55,18 +54,20 @@ public class BPModel extends Observable implements Observer {
     }
 
     public void update(float dt){
-        removeProjectiles();
-        removeDeadEnemies();
-        if (enemies.size()<1){
-            setChanged();
-            notifyObservers("all enemies is kill");
-        }
-        player.update(dt);
-        for (ProjectileInterface p : projectiles) {
-            p.move(dt);
-        }
-        for (Enemy e : enemies) {
-            e.update(dt);
+        if (!isPaused) {
+            removeProjectiles();
+            removeDeadEnemies();
+            if (enemies.size() < 1) {
+                setChanged();
+                notifyObservers("all enemies is kill");
+            }
+            player.update(dt);
+            for (ProjectileInterface p : projectiles) {
+                p.move(dt);
+            }
+            for (Enemy e : enemies) {
+                e.update(dt);
+            }
         }
     }
 
@@ -208,4 +209,19 @@ public class BPModel extends Observable implements Observer {
         return characters;
     }
 
+    public void pause() {
+        isPaused = true;
+        setChanged();
+        notifyObservers("paused");
+    }
+
+    public void unPause() {
+        isPaused = false;
+        setChanged();
+        notifyObservers("unpaused");
+    }
+
+    public boolean isPaused() {
+        return isPaused;
+    }
 }
