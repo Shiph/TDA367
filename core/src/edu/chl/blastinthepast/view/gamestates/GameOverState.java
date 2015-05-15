@@ -1,6 +1,7 @@
 package edu.chl.blastinthepast.view.gamestates;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -62,7 +63,11 @@ public class GameOverState extends GameState{
         font.draw(batch, newHighScore, (Gdx.graphics.getWidth() - width) / 2, 3 * Gdx.graphics.getHeight() / 4);
 
         for(int i = 0; i < newName.length; i++) {
+            if(i == currentChar) {
+                font.setColor(Color.RED);
+            }
             font.draw(batch, Character.toString(newName[i]), (Gdx.graphics.getWidth() - 60) / 2 + 20 * i, 3 * Gdx.graphics.getHeight() / 5);
+            font.setColor(Color.WHITE);
         }
 
         batch.end();
@@ -79,10 +84,10 @@ public class GameOverState extends GameState{
 
     public void moveUp() {
         if(newName[currentChar] == ' ') {
-            newName[currentChar] = 'Z';
+            newName[currentChar] = 'A';
         } else {
-            newName[currentChar] --;
-            if(newName[currentChar] < 'A') {
+            newName[currentChar] ++;
+            if(newName[currentChar] > 'Z') {
                 newName[currentChar] = ' ';
             }
         }
@@ -91,10 +96,10 @@ public class GameOverState extends GameState{
 
     public void moveDown() {
         if(newName[currentChar] == ' ') {
-            newName[currentChar] = 'A';
+            newName[currentChar] = 'Z';
         } else {
-            newName[currentChar] ++;
-            if(newName[currentChar] > 'Z') {
+            newName[currentChar] --;
+            if(newName[currentChar] < 'A') {
                 newName[currentChar] = ' ';
             }
         }

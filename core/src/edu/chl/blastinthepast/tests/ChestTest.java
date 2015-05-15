@@ -32,9 +32,6 @@ public class ChestTest {
         assertFalse(chest.isOpened());
         chest.open(mockPlayer);
         assertTrue(chest.isOpened());
-
-        //We now test that once the chest is opened it won't return a weapon when a player tries to open it.
-        assertFalse(chest.open(mockPlayer) instanceof WeaponInterface);
     }
 
 }
