@@ -39,4 +39,4 @@ gitinspector/
 .stan
 
 ## Saves
-.sav
+*.sav
