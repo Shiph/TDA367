@@ -46,6 +46,7 @@ public class GameStateManager {
                 break;
             case IN_GAME_MENU:
                 gameState = inGameMenu;
+                model.pause();
                 break;
             case PLAY:
                 if(!inGame) {
@@ -55,6 +56,7 @@ public class GameStateManager {
                 } else {
                     gameState = playState;
                 }
+                model.unPause();
                 break;
             case SAVES:
                 if(inGame) {
