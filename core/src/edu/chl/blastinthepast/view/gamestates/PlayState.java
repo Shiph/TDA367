@@ -87,7 +87,7 @@ public class PlayState extends GameState implements Observer{
         pcs=new PropertyChangeSupport(this);
         music.play();
         Pixmap pm = new Pixmap(Gdx.files.internal("crosshair.png"));
-        Gdx.input.setCursorImage(pm, 0, 0);
+        Gdx.input.setCursorImage(pm, pm.getWidth()/2, pm.getHeight()/2);
         for (Character c : model.getCharacters()){
             if (c instanceof Player) {
                 Player p = (Player) c;
