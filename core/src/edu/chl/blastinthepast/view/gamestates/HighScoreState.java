@@ -54,15 +54,10 @@ public class HighScoreState extends GameState {
         batch.end();
     }
 
-    public void dispose() {
+    public void dispose() {}
 
-    }
+    public void update(float dt) {}
 
-    public void update(float dt) {
+    public void handleInput() {}
 
-    }
-
-    public void handleInput() {
-
-    }
 }

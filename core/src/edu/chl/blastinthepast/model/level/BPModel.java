@@ -20,8 +20,7 @@ public class BPModel extends Observable implements Observer {
     private ArrayList<Character> characters;
     private Boss boss;
     private Chest chest;
-
-
+    private boolean isPaused;
 
     public BPModel() {
         player = new Player();
@@ -32,12 +31,10 @@ public class BPModel extends Observable implements Observer {
         notifyObservers(player);
         player.addObserver(this);
         characters.add(player);
-        spawnBoss();
-        spawnEnemies();
     }
 
-    public void spawnBoss() {
-        boss = new Boss(player, new Position(500, 500));
+    public void spawnBoss(Position pos) {
+        boss = new Boss(player, pos);
         boss.addObserver(this);
         enemies.add(boss);
         characters.add(boss);
@@ -45,18 +42,32 @@ public class BPModel extends Observable implements Observer {
         notifyObservers(boss);
     }
 
+    public void spawnEnemies(int amount) {
+        for (int i = 0; i < amount; i++) {
+            Enemy e = new Enemy(player, new Position(0, 0));
+            enemies.add(e);
+            characters.add(e);
+            setChanged();
+            notifyObservers(e);
+            e.addObserver(this);
+        }
+    }
+
     public void update(float dt){
-        removeProjectiles();
-        removeDeadEnemies();
-        if (enemies.size()<1){
-            spawnEnemies();
-        }
-        player.update(dt);
-        for (ProjectileInterface p : projectiles) {
-            p.move(dt);
-        }
-        for (Enemy e : enemies) {
-            e.update(dt);
+        if (!isPaused) {
+            removeProjectiles();
+            removeDeadEnemies();
+            if (enemies.size() < 1) {
+                setChanged();
+                notifyObservers("all enemies is kill");
+            }
+            player.update(dt);
+            for (ProjectileInterface p : projectiles) {
+                p.move(dt);
+            }
+            for (Enemy e : enemies) {
+                e.update(dt);
+            }
         }
     }
 
@@ -85,6 +96,11 @@ public class BPModel extends Observable implements Observer {
             Enemy e=iter.next();
             if (e.getHealth()<=0) {
                 ArrayList<Object> drop = e.die();
+                if(e instanceof Boss) {
+                    player.setScore(player.getScore() + 50);
+                } else if (e instanceof Enemy) {
+                    player.setScore(player.getScore() + 10);
+                }
                 if (drop!=null){
                     for (Object o : drop){
                         dropList.add(o);
@@ -99,10 +115,13 @@ public class BPModel extends Observable implements Observer {
                 notifyObservers(e);
             }
         }
+        if (enemies.size()<1){
+            spawnEnemies();
+        }
     }
 
     private void spawnEnemies() {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 5; i++) {
             Enemy e = new Enemy(player, new Position(0, 0));
             enemies.add(e);
             characters.add(e);
@@ -182,6 +201,7 @@ public class BPModel extends Observable implements Observer {
     public void newGame() {
     }
 
+
     public ArrayList<ProjectileInterface> getProjectiles(){
         return projectiles;
     }
@@ -224,4 +244,19 @@ public class BPModel extends Observable implements Observer {
         return characters;
     }
 
+    public void pause() {
+        isPaused = true;
+        setChanged();
+        notifyObservers("paused");
+    }
+
+    public void unPause() {
+        isPaused = false;
+        setChanged();
+        notifyObservers("unpaused");
+    }
+
+    public boolean isPaused() {
+        return isPaused;
+    }
 }

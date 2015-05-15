@@ -17,6 +17,8 @@ public class Player extends Observable implements Character {
     private WeaponInterface weapon;
     private boolean north, south, west, east, shooting;
     private PositionInterface position;
+    private int score = 0;
+    private boolean playerIsDead = false;
     private PositionInterface prevPos;
     private Vector2 aimDirection = new Vector2(1,0);
     private ArrayList<ProjectileInterface> projectiles;
@@ -25,7 +27,7 @@ public class Player extends Observable implements Character {
      * Default constructor for Player with default movement speed and health.
      */
     public Player() {
-        this(200, 10000000, new Position(0,0));
+        this(200, 1000000, new Position(0,0));
     }
 
     /**
@@ -156,7 +158,10 @@ public class Player extends Observable implements Character {
 
     public void die() {
         setChanged();
-        notifyObservers("player is kill");
+        if(!playerIsDead) {
+            playerIsDead = true;
+            notifyObservers("player is kill");
+        }
     }
 
     public void isShooting(boolean shoot){
@@ -185,6 +190,14 @@ public class Player extends Observable implements Character {
         float length=direction.len();
         direction.scl(1 / length);
         setAimDirection(direction.angle());
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score += score;
     }
 
     public void setMovementDirection(String movementDirection){

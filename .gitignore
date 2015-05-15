@@ -37,3 +37,6 @@ gitinspector/
 ## Stan
 .project
 .stan
+
+## Saves
+*.sav

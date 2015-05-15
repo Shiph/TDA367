@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
@@ -23,7 +24,6 @@ import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.SoundAssets;
 import edu.chl.blastinthepast.view.*;
 import edu.chl.blastinthepast.view.characterviews.BossView;
-import edu.chl.blastinthepast.view.characterviews.CharacterView;
 import edu.chl.blastinthepast.view.characterviews.EnemyView;
 import edu.chl.blastinthepast.view.characterviews.PlayerView;
 
@@ -86,6 +86,8 @@ public class PlayState extends GameState implements Observer{
         weaponImage = new Image(playerView.getWeaponView().getTexture());
         pcs=new PropertyChangeSupport(this);
         music.play();
+        Pixmap pm = new Pixmap(Gdx.files.internal("crosshair.png"));
+        Gdx.input.setCursorImage(pm, pm.getWidth()/2, pm.getHeight()/2);
         for (Character c : model.getCharacters()){
             if (c instanceof Player) {
                 Player p = (Player) c;
@@ -104,18 +106,20 @@ public class PlayState extends GameState implements Observer{
 
     @Override
     public void update(float dt) {
-        chestView.update();
-        camera.position.set(playerView.getRectangles().get(0).getX() + playerView.getRectangles().get(0).getWidth() / 2, playerView.getRectangles().get(0).getY() + playerView.getRectangles().get(0).getWidth() / 2, 0);
-        camera.update();
-        batch.setProjectionMatrix(camera.combined);
-        tiledMapRenderer.setView(camera);
-        //new CollisionDetection(enemies, playerView, projectiles, chestView, collisionView);
-        if(!music.isPlaying()) {
-            music.play();
+        if(!model.isPaused()) {
+            chestView.update();
+            camera.position.set(playerView.getRectangles().get(0).getX() + playerView.getRectangles().get(0).getWidth() / 2, playerView.getRectangles().get(0).getY() + playerView.getRectangles().get(0).getWidth() / 2, 0);
+            camera.update();
+            batch.setProjectionMatrix(camera.combined);
+            tiledMapRenderer.setView(camera);
+            //new CollisionDetection(enemies, playerView, projectiles, chestView, collisionView);
+            if (!music.isPlaying()) {
+                music.play();
+            }
+            ammoLabel.setPosition(camera.position.x - Constants.CAMERA_WIDTH / 2 + 10, camera.position.y - Constants.CAMERA_HEIGHT / 2 + 10);
+            weaponImage.setPosition(ammoLabel.getX(), ammoLabel.getY() + ammoLabel.getHeight());
+            ammoLabel.setText(model.getPlayer().getWeapon().getTotalBullets() + "/" + model.getPlayer().getWeapon().getbulletsLeftInMagazine());
         }
-        ammoLabel.setPosition(camera.position.x - Constants.CAMERA_WIDTH / 2 + 10, camera.position.y - Constants.CAMERA_HEIGHT / 2 + 10);
-        weaponImage.setPosition(ammoLabel.getX(), ammoLabel.getY() + ammoLabel.getHeight());
-        ammoLabel.setText(model.getPlayer().getWeapon().getTotalBullets() + "/" + model.getPlayer().getWeapon().getbulletsLeftInMagazine());
     }
 
     @Override
@@ -189,6 +193,14 @@ public class PlayState extends GameState implements Observer{
             checkIfCharacter(o, arg);
             checkIfAmmunition(o, arg);
             checkIfPowerUp(o, arg);
+        }
+
+        if (arg instanceof String) {
+            if (arg.equals("paused")) {
+                music.pause();
+            } else if (arg.equals("unpaused")) {
+                music.play();
+            }
         }
     }
 
@@ -265,3 +277,4 @@ public class PlayState extends GameState implements Observer{
         }
     }
 }
+

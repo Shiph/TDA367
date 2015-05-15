@@ -6,6 +6,9 @@ import edu.chl.blastinthepast.model.entities.Character;
 import com.badlogic.gdx.graphics.GL20;
 import edu.chl.blastinthepast.model.entities.Projectile;
 import edu.chl.blastinthepast.model.level.BPModel;
+import edu.chl.blastinthepast.model.level.LevelInterface;
+import edu.chl.blastinthepast.model.level.LevelManager;
+import edu.chl.blastinthepast.model.level.LevelOne;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.view.gamestates.*;
 import java.beans.PropertyChangeEvent;
@@ -21,6 +24,7 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
     private BPModel model;
     private InputHandler inputHandler;
     private GameStateManager gsm;
+    private LevelManager levelManager;
 
     @Override
     public void render () {
@@ -40,6 +44,7 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
         Gdx.input.setInputProcessor(inputHandler);
         gsm = new GameStateManager(model);
         gsm.addListener(this);
+        //levelManager = new LevelManager(model);
     }
 
     public static BPController createController() {
@@ -48,8 +53,6 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        //GameState currentGameState = view.getGameStateController().getGameState();
-        //GameStateManager gameStateManager = view.getGameStateController();
 
         GameState currentGameState = gsm.getGameState();
         if (currentGameState instanceof PlayState){
@@ -59,13 +62,7 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
 
         switch(evt.getPropertyName()) {
             case "west":
-                if(currentGameState instanceof GameOverState) {
-                    //((GameOverState) currentGameState).moveLeft();
-                }
             case "east":
-                if(currentGameState instanceof GameOverState) {
-                    //((GameOverState) currentGameState).moveRight();
-                }
             case "north":
             case "south":
                 if(currentGameState instanceof PlayState) {
@@ -84,8 +81,10 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
             case "escape":
                 if (currentGameState instanceof PlayState) {
                     gsm.setState(GameStateManager.IN_GAME_MENU, true);
+                    //model.pause();
                 } else if (currentGameState instanceof InGameMenu) {
                     gsm.setState(GameStateManager.PLAY, true);
+                    //model.unPause();
                 } else if (currentGameState instanceof HighScoreState) {
                     gsm.setState(GameStateManager.MAIN_MENU, false);
                 }
@@ -97,6 +96,7 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                     ((MainMenu) currentGameState).select();
                 } else if (currentGameState instanceof GameOverState) {
                     ((GameOverState) currentGameState).select();
+                    gsm.setState(GameStateManager.MAIN_MENU, false);
                 }
                 break;
             case "up":
@@ -115,6 +115,16 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                     ((MainMenu) currentGameState).moveDown();
                 } else if (currentGameState instanceof GameOverState) {
                     ((GameOverState) currentGameState).moveDown();
+                }
+                break;
+            case "left":
+                if(currentGameState instanceof GameOverState) {
+                    ((GameOverState) currentGameState).moveLeft();
+                }
+                break;
+            case "right":
+                if(currentGameState instanceof GameOverState) {
+                    ((GameOverState) currentGameState).moveRight();
                 }
                 break;
             case "mouseMoved":
@@ -170,6 +180,11 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                 model = new BPModel();
                 model.addObserver(this);
                 gsm.setModel(model);
+                if (levelManager == null) {
+                    levelManager = new LevelManager(new LevelOne(model));
+                } else {
+                    levelManager.setLevel(new LevelOne(model));
+                }
                 break;
             default:
                 break;
@@ -180,6 +195,7 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
     public void update(Observable o, Object arg) {
         if (arg.equals("player is kill")) {
             gsm.setState(GameStateManager.GAMEOVER, true);
+            ((GameOverState)gsm.getGameState()).setScore(model.getPlayer().getScore());
         }
     }
 

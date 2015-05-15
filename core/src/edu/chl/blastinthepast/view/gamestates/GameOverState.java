@@ -1,6 +1,7 @@
 package edu.chl.blastinthepast.view.gamestates;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,8 +20,9 @@ public class GameOverState extends GameState{
     private final String title = "Game Over";
     private float width;
     private ShapeRenderer shapeRenderer;
-    private char[] newName;
-    private int currentChar;
+    private char[] newName = new char[] {'A', 'A', 'A'};
+    private int currentChar = 0;
+    private int score;
     private BitmapFont gameOverFont;
     private BitmapFont font;
 
@@ -34,14 +36,14 @@ public class GameOverState extends GameState{
         camera = new OrthographicCamera();
         shapeRenderer = new ShapeRenderer();
         batch = new SpriteBatch();
-        newHighScore = HighScoreHandler.gameData.isHighScore(HighScoreHandler.gameData.getTentativeScore());
-        if(newHighScore) {
-            newName = new char[] {'A', 'A', 'A'};
-            currentChar = 0;
-        }
     }
 
     public void update(float dt) {}
+
+    public void setScore(int score) {
+        this.score = score;
+        newHighScore = HighScoreHandler.gameData.isHighScore(score);
+    }
 
     public void draw() {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -56,44 +58,31 @@ public class GameOverState extends GameState{
             return;
         }
 
-        String newHighScore = "New High Score: " + HighScoreHandler.gameData.getTentativeScore();
+        String newHighScore = "New High Score: " + score;
         width = font.getBounds(newHighScore).width;
-        font.draw(batch, newHighScore, (Gdx.graphics.getWidth() - width) / 2, 4 * Gdx.graphics.getHeight() / 5);
+        font.draw(batch, newHighScore, (Gdx.graphics.getWidth() - width) / 2, 3 * Gdx.graphics.getHeight() / 4);
 
         for(int i = 0; i < newName.length; i++) {
-            font.draw(batch, Character.toString(newName[i]), Gdx.graphics.getWidth() + 30 * i, 4 * Gdx.graphics.getHeight() / 7);
+            if(i == currentChar) {
+                font.setColor(Color.RED);
+            }
+            font.draw(batch, Character.toString(newName[i]), (Gdx.graphics.getWidth() - 60) / 2 + 20 * i, 3 * Gdx.graphics.getHeight() / 5);
+            font.setColor(Color.WHITE);
         }
 
         batch.end();
-
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.line(230 + 14 * currentChar, 100, 244 + 14 * currentChar, 100);
-        shapeRenderer.end();
-
     }
 
     public void handleInput() {}
 
     public void select() {
         if(newHighScore) {
-            HighScoreHandler.gameData.addHighScore(HighScoreHandler.gameData.getTentativeScore(), new String(newName));
+            HighScoreHandler.gameData.addHighScore(score, new String(newName));
             HighScoreHandler.save();
         }
-        gsm.setState(GameStateManager.MAIN_MENU, false);
     }
 
     public void moveUp() {
-        if(newName[currentChar] == ' ') {
-            newName[currentChar] = 'Z';
-        } else {
-            newName[currentChar] --;
-            if(newName[currentChar] < 'A') {
-                newName[currentChar] = ' ';
-            }
-        }
-    }
-
-    public void moveDown() {
         if(newName[currentChar] == ' ') {
             newName[currentChar] = 'A';
         } else {
@@ -102,20 +91,39 @@ public class GameOverState extends GameState{
                 newName[currentChar] = ' ';
             }
         }
+        draw();
+    }
+
+    public void moveDown() {
+        if(newName[currentChar] == ' ') {
+            newName[currentChar] = 'Z';
+        } else {
+            newName[currentChar] --;
+            if(newName[currentChar] < 'A') {
+                newName[currentChar] = ' ';
+            }
+        }
+        draw();
     }
 
     public void moveLeft() {
         if(currentChar > 0) {
             currentChar--;
         }
+        draw();
     }
 
     public void moveRight() {
         if(currentChar < newName.length - 1) {
             currentChar++;
         }
+        draw();
     }
 
-    public void dispose() {}
+    public void dispose() {
+        newName = new char[] {'A', 'A', 'A'};
+        currentChar = 0;
+        score = 0;
+    }
 
 }

@@ -1,5 +1,6 @@
 package edu.chl.blastinthepast.view.gamestates;
 
+import com.badlogic.gdx.Gdx;
 import edu.chl.blastinthepast.model.level.BPModel;
 
 import java.beans.PropertyChangeListener;
@@ -46,6 +47,7 @@ public class GameStateManager {
                 break;
             case IN_GAME_MENU:
                 gameState = inGameMenu;
+                model.pause();
                 break;
             case PLAY:
                 if(!inGame) {
@@ -55,6 +57,7 @@ public class GameStateManager {
                 } else {
                     gameState = playState;
                 }
+                model.unPause();
                 break;
             case SAVES:
                 if(inGame) {
@@ -70,7 +73,10 @@ public class GameStateManager {
                 gameState = highScoreState;
                 break;
             case GAMEOVER:
+                model.pause();
                 gameState = gameOverState;
+                break;
+            default:
                 break;
         }
     }

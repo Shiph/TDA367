@@ -18,7 +18,7 @@ public class HighScoreHandler {
     public static void init() {
         gameData = new GameData();
         gameData.init();
-        save();
+        load();
     }
 
     public static void save() {
