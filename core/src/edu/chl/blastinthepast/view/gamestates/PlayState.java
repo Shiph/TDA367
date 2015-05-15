@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
@@ -85,6 +86,8 @@ public class PlayState extends GameState implements Observer{
         weaponImage = new Image(playerView.getWeaponView().getTexture());
         pcs=new PropertyChangeSupport(this);
         music.play();
+        Pixmap pm = new Pixmap(Gdx.files.internal("crosshair.png"));
+        Gdx.input.setCursorImage(pm, 0, 0);
         for (Character c : model.getCharacters()){
             if (c instanceof Player) {
                 Player p = (Player) c;
