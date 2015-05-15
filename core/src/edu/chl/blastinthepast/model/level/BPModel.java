@@ -115,6 +115,35 @@ public class BPModel extends Observable implements Observer {
                 notifyObservers(e);
             }
         }
+        if (enemies.size()<1){
+            spawnEnemies();
+        }
+    }
+
+    private void spawnEnemies() {
+        for (int i = 0; i < 5; i++) {
+            Enemy e = new Enemy(player, new Position(0, 0));
+            enemies.add(e);
+            characters.add(e);
+            setChanged();
+            notifyObservers(e);
+        }
+        for (Enemy e : enemies) {
+            Random r = new Random();
+            float x = r.nextFloat() * Constants.MAP_WIDTH;
+            float y = r.nextFloat() * Constants.MAP_HEIGHT;
+            /*while (x <= player.getPosition().getX() + Constants.CAMERA_WIDTH/2 && //Makes enemies spawn outside the players view
+                    x >= player.getPosition().getX() - Constants.CAMERA_WIDTH/2) {
+                while (y <= player.getPosition().getY() + Constants.CAMERA_HEIGHT/2 &&
+                        y >= player.getPosition().getY() - Constants.CAMERA_HEIGHT/2) {
+                    y = r.nextFloat() * Constants.MAP_HEIGHT;
+                }
+                x = r.nextFloat() * Constants.MAP_WIDTH;
+            }*/
+            e.getPosition().setX(x);
+            e.getPosition().setY(y);
+            e.addObserver(this);
+        }
     }
 
     public void collision(Object o1, Object o2){
@@ -122,24 +151,21 @@ public class BPModel extends Observable implements Observer {
             Character character=(Character) o1;
             Projectile projectile = (Projectile) o2;
             hit(character, projectile);
-        } else if (o2 instanceof Character && o1 instanceof ProjectileInterface){
-            Character character=(Character) o2;
-            ProjectileInterface projectile = (ProjectileInterface) o1;
-            hit(character, projectile);
         }
         if (o1 instanceof Ammunition && o2 instanceof Player){
             Ammunition a = (Ammunition) o1;
             Player p = (Player) o2;
-            pickUpAmmunition(a, p);
-        } else if (o1 instanceof Player && o2 instanceof Ammunition){
-            Player p = (Player) o1;
-            Ammunition a = (Ammunition) o2;
             pickUpAmmunition(a, p);
         }
         if (o1 instanceof Character && o2 instanceof Character){
             Character c1 = (Character) o1;
             Character c2 = (Character) o2;
             characterCollision(c1, c2);
+        }
+        if (o1 instanceof PowerUp && o2 instanceof Player){
+            PowerUp powerUp = (PowerUp) o1;
+            Player player = (Player) o2;
+            pickUpPowerUp(powerUp, player);
         }
     }
 
@@ -164,6 +190,17 @@ public class BPModel extends Observable implements Observer {
         character1.setPosition(character1.getPrevPos());
         character2.setPosition(character2.getPrevPos());
     }
+
+    private void pickUpPowerUp(PowerUp powerUp, Player player){
+        powerUp.applyPowerUp(player);
+        dropList.remove(powerUp);
+        setChanged();
+        notifyObservers(powerUp);
+    }
+
+    public void newGame() {
+    }
+
 
     public ArrayList<ProjectileInterface> getProjectiles(){
         return projectiles;
@@ -195,8 +232,6 @@ public class BPModel extends Observable implements Observer {
     public void update(Observable o, Object arg) {
         if (arg instanceof ProjectileInterface && o instanceof Character) {
             addProjectile((ProjectileInterface) arg);
-        } else if (arg instanceof PowerUp){
-            PowerUp powerUp=(PowerUp)arg;
         } else if(arg instanceof String) {
             if (arg.equals("player is kill")) {
                 setChanged();

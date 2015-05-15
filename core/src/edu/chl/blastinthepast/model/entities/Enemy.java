@@ -39,7 +39,7 @@ public class Enemy extends Observable implements Character {
      * Default constructor for Enemy with default movement speed and health.
      */
     public Enemy(Character player, PositionInterface position) {
-        this(150, 100, position, player);
+        this(150, 1, position, player);
     }
 
     public Enemy(int movementSpeed, int health, PositionInterface position, Character player) {
@@ -213,8 +213,15 @@ public class Enemy extends Observable implements Character {
         boolean hasAmmo=random.nextBoolean();
         if (hasAmmo) {
             int amount = random.nextInt(4)*10+20;
-            Ammunition ammo = new Ammunition(getPosition(), weapon.getProjectile(), amount);
+            Ammunition ammo = new Ammunition(position, weapon.getProjectile(), amount);
             loot.add(ammo);
+        }
+        //boolean hasPowerUp = random.nextBoolean();
+        boolean hasPowerUp=true;
+        if (hasPowerUp){
+            PowerUp powerUp = PowerUpGenerator.generatePowerUp();
+            powerUp.setPosition(position);
+            loot.add(powerUp);
         }
     }
 

@@ -23,5 +23,7 @@ public interface WeaponInterface {
     public int getbulletsLeftInMagazine();
     public void reload();
     public int getTotalBullets();
+    public int getBonusDamage();
+    public void setBonusDamage(int bonusDamage);
 
 }

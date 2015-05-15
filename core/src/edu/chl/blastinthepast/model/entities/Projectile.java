@@ -13,15 +13,19 @@ public class Projectile implements  ProjectileInterface{
     private int damage;
     private Position position;
 
-    public Projectile(Position pos, Vector2 direction) {
-        this(pos, direction, 10, 5);
+    public Projectile(Position pos, Vector2 direction, int damage) {
+        this(pos, direction, 0, damage, 0);
     }
 
-    public Projectile(Position pos, Vector2 direction, int speed, int damage) {
+    public Projectile(Position pos, Vector2 direction, int speed, int damage, int bonusDamage) {
         this.direction = new Vector2(direction);
         position = pos;
         this.speed = speed;
-        this.damage = damage;
+        this.damage = damage+bonusDamage;
+    }
+
+    public Projectile(Position pos, Vector2 direction, int speed, int damage) {
+        this(pos, direction, speed, damage, 0);
     }
 
     public void move(float dt) {
