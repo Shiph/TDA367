@@ -113,7 +113,7 @@ public class BPModel extends Observable implements Observer {
             Random r = new Random();
             float x = r.nextFloat() * Constants.MAP_WIDTH;
             float y = r.nextFloat() * Constants.MAP_HEIGHT;
-           /* while (x <= player.getPosition().getX() + Constants.CAMERA_WIDTH/2 && //Makes enemies spawn outside the players view
+            /*while (x <= player.getPosition().getX() + Constants.CAMERA_WIDTH/2 && //Makes enemies spawn outside the players view
                     x >= player.getPosition().getX() - Constants.CAMERA_WIDTH/2) {
                 while (y <= player.getPosition().getY() + Constants.CAMERA_HEIGHT/2 &&
                         y >= player.getPosition().getY() - Constants.CAMERA_HEIGHT/2) {
@@ -132,18 +132,10 @@ public class BPModel extends Observable implements Observer {
             Character character=(Character) o1;
             Projectile projectile = (Projectile) o2;
             hit(character, projectile);
-        } else if (o2 instanceof Character && o1 instanceof ProjectileInterface){
-            Character character=(Character) o2;
-            ProjectileInterface projectile = (ProjectileInterface) o1;
-            hit(character, projectile);
         }
         if (o1 instanceof Ammunition && o2 instanceof Player){
             Ammunition a = (Ammunition) o1;
             Player p = (Player) o2;
-            pickUpAmmunition(a, p);
-        } else if (o1 instanceof Player && o2 instanceof Ammunition){
-            Player p = (Player) o1;
-            Ammunition a = (Ammunition) o2;
             pickUpAmmunition(a, p);
         }
         if (o1 instanceof Character && o2 instanceof Character){
@@ -154,10 +146,6 @@ public class BPModel extends Observable implements Observer {
         if (o1 instanceof PowerUp && o2 instanceof Player){
             PowerUp powerUp = (PowerUp) o1;
             Player player = (Player) o2;
-            pickUpPowerUp(powerUp, player);
-        } else if (o1 instanceof Player && o2 instanceof PowerUp){
-            PowerUp powerUp = (PowerUp) o2;
-            Player player = (Player) o1;
             pickUpPowerUp(powerUp, player);
         }
     }

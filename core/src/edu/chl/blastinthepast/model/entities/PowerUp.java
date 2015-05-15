@@ -12,9 +12,9 @@ public interface PowerUp {
      * Applies the picked up power-up on the player character.
      * @param character
      */
-    public void applyPowerUp(Character character);
+    public void applyPowerUp(final Character character);
 
-    public void removePowerUp(Character character);
+    public void removePowerUp(final Character character);
 
     public void setPosition(PositionInterface newPosition);
 

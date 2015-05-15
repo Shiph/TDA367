@@ -17,13 +17,14 @@ public class Weapon implements WeaponInterface {
     private int reloadTime; //Reload time in milliseconds
     private int bulletsLeftInMagazine;
     private int totalBullets;
-    private int fireRate; //Time between shots in milliseconds
+    private int fireRate; //Shots per second
     private long latestShot = 0;
     private boolean isReloading = false;
     private Timer reloadTimer;
     private Position position;
     private Vector2 direction;
     private Position offset;
+    private int bonusDamage = 0;
 
     public Weapon (PositionInterface pos, Vector2 direction, int reloadTime, int fireRate, final int magazineCapacity, int totalBullets, PositionInterface offset) {
         position = new Position(pos);
@@ -64,10 +65,10 @@ public class Weapon implements WeaponInterface {
 
     public ProjectileInterface fire() {
         long currentTime = System.currentTimeMillis();
-        if ((currentTime - latestShot) >= fireRate) {
+        if ((currentTime - latestShot) >= 1000/fireRate) {
             latestShot = System.currentTimeMillis();
             bulletsLeftInMagazine--;
-            return new Projectile(new Position(position.getX()+offset.getX(), position.getY()+offset.getY()), direction);
+            return new Projectile(new Position(position.getX()+offset.getX(), position.getY()+offset.getY()), direction, bonusDamage);
         }
         return null;
     }
@@ -160,6 +161,14 @@ public class Weapon implements WeaponInterface {
         v2.scl(1/v2.len());
         v2.scl(getOffset().getX(), getOffset().getY());
         return new Position(position.getX()+v2.x, position.getY()+v2.y);
+    }
+
+    public void setBonusDamage(int bonusDamage){
+        this.bonusDamage=bonusDamage;
+    }
+
+    public int getBonusDamage(){
+        return bonusDamage;
     }
 
 }

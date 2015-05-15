@@ -95,6 +95,16 @@ public class MockWeapon implements WeaponInterface {
     }
 
     @Override
+    public int getBonusDamage() {
+        return 0;
+    }
+
+    @Override
+    public void setBonusDamage(int bonusDamage) {
+
+    }
+
+    @Override
     public int getbulletsLeftInMagazine() {
         return bulletsInMag;
     }
