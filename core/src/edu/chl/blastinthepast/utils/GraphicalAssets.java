@@ -1,6 +1,7 @@
 package edu.chl.blastinthepast.utils;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 
 /**
@@ -27,5 +28,6 @@ public class GraphicalAssets {
     public static final Texture SOUND = new Texture(Gdx.files.local("sound.png"));
     public static final Texture SOUND_OFF = new Texture(Gdx.files.local("sound_off.png"));
     public static final Texture MAGNUM = new Texture(Gdx.files.local("magnum.png"));
+    public static final Pixmap CROSSHAIR = new Pixmap(Gdx.files.local("crosshair.png"));
 
 }

@@ -44,9 +44,11 @@ public class GameStateManager {
         switch(state) {
             case MAIN_MENU:
                 gameState = mainMenu;
+                Gdx.input.setCursorImage(null, 0, 0);
                 break;
             case IN_GAME_MENU:
                 gameState = inGameMenu;
+                Gdx.input.setCursorImage(null, 0, 0);
                 model.pause();
                 break;
             case PLAY:
@@ -56,6 +58,7 @@ public class GameStateManager {
                     gameState = playState;
                 } else {
                     gameState = playState;
+                    playState.setCrosshairCursor();
                 }
                 model.unPause();
                 break;
@@ -71,10 +74,12 @@ public class GameStateManager {
                 break;
             case HIGHSCORES:
                 gameState = highScoreState;
+                Gdx.input.setCursorImage(null, 0, 0);
                 break;
             case GAMEOVER:
                 model.pause();
                 gameState = gameOverState;
+                Gdx.input.setCursorImage(null, 0, 0);
                 break;
             default:
                 break;
@@ -112,4 +117,5 @@ public class GameStateManager {
     public void setModel(BPModel model) {
         this.model = model;
     }
+
 }
