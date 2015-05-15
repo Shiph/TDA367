@@ -13,14 +13,21 @@ public class PositionTest {
 
     /**
      * Checks that the two positions does not share reference but that they still have the same x and y coordinates.
+     * Also checks that two different positions does not return true.
      */
     @Test
     public void testEquals() {
         Position pos = position.getPosition();
         assertTrue(pos.equals(position));
         assertFalse(pos == position);
+
+        pos.setPosition(-15,-15);
+        assertFalse(pos.equals(position));
     }
 
+    /**
+     * This method is used for looting a chest and will test if positions near it will return true, even if negative values.
+     */
     @Test
     public void testOverlaps() {
         Position pos = new Position(-10,-10);

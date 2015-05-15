@@ -1,5 +1,6 @@
 package edu.chl.blastinthepast.view.gamestates;
 
+import com.badlogic.gdx.Gdx;
 import edu.chl.blastinthepast.model.level.BPModel;
 
 import java.beans.PropertyChangeListener;
@@ -71,6 +72,8 @@ public class GameStateManager {
                 break;
             case GAMEOVER:
                 gameState = gameOverState;
+                break;
+            default:
                 break;
         }
     }

@@ -53,8 +53,6 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        //GameState currentGameState = view.getGameStateController().getGameState();
-        //GameStateManager gameStateManager = view.getGameStateController();
 
         GameState currentGameState = gsm.getGameState();
         if (currentGameState instanceof PlayState){
@@ -64,13 +62,7 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
 
         switch(evt.getPropertyName()) {
             case "west":
-                if(currentGameState instanceof GameOverState) {
-                    //((GameOverState) currentGameState).moveLeft();
-                }
             case "east":
-                if(currentGameState instanceof GameOverState) {
-                    //((GameOverState) currentGameState).moveRight();
-                }
             case "north":
             case "south":
                 if(currentGameState instanceof PlayState) {
@@ -102,6 +94,7 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                     ((MainMenu) currentGameState).select();
                 } else if (currentGameState instanceof GameOverState) {
                     ((GameOverState) currentGameState).select();
+                    gsm.setState(GameStateManager.MAIN_MENU, false);
                 }
                 break;
             case "up":
@@ -120,6 +113,16 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                     ((MainMenu) currentGameState).moveDown();
                 } else if (currentGameState instanceof GameOverState) {
                     ((GameOverState) currentGameState).moveDown();
+                }
+                break;
+            case "left":
+                if(currentGameState instanceof GameOverState) {
+                    ((GameOverState) currentGameState).moveLeft();
+                }
+                break;
+            case "right":
+                if(currentGameState instanceof GameOverState) {
+                    ((GameOverState) currentGameState).moveRight();
                 }
                 break;
             case "mouseMoved":
@@ -190,6 +193,7 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
     public void update(Observable o, Object arg) {
         if (arg.equals("player is kill")) {
             gsm.setState(GameStateManager.GAMEOVER, true);
+            ((GameOverState)gsm.getGameState()).setScore(model.getPlayer().getScore());
         }
     }
 
