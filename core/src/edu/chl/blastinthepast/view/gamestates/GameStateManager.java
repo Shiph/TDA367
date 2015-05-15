@@ -72,6 +72,7 @@ public class GameStateManager {
                 gameState = highScoreState;
                 break;
             case GAMEOVER:
+                model.pause();
                 gameState = gameOverState;
                 break;
         }
