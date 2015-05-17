@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import edu.chl.blastinthepast.model.level.BPModel;
+import edu.chl.blastinthepast.utils.GraphicalAssets;
+import edu.chl.blastinthepast.utils.SoundAssets;
 
 /**
  * Created by MattiasJ on 2015-05-03.
@@ -34,13 +36,13 @@ public class MainMenu extends GameState {
 
     @Override
     public void init(BPModel model) {
-        texture = new Texture(Gdx.files.internal("menu.jpg"));
+        texture = GraphicalAssets.MAINMENU;
         texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         sprite = new Sprite(texture);
         sprite.setOrigin(0,0);
         camera = new OrthographicCamera();
         batch = new SpriteBatch();
-        music = Gdx.audio.newMusic(Gdx.files.internal("menu.mp3"));
+        music = SoundAssets.MENU_MUSIC;
         music.play();
         music.setLooping(true);
         music.setVolume(0.4f);

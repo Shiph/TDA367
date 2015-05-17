@@ -24,7 +24,7 @@ public class ChestTest {
     }
 
     /**
-     * Once the player loots a chest it's critical that isOpened() will return the correct value so that the player can't loot a weapon again.
+     * Once the player loots a chest it's important that isOpened() will return the correct value so that the player can't loot a weapon again.
      */
     @Test
     public void testIsOpened() {

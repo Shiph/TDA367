@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
  */
 public class WeaponTest {
 
-    Weapon weapon = new Weapon(new MockPosition(), new Vector2(0,0), 0, 0, 20, 150, new MockPosition());
+    Weapon weapon = new Weapon(new MockPosition(), new Vector2(0,0), 0, 1000, 20, 150, new MockPosition());
 
     /**
      * Tests that the pull trigger-method returns an instance of a projectile, which it should unless you're out of ammo.

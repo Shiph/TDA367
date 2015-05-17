@@ -19,14 +19,13 @@ import edu.chl.blastinthepast.utils.GraphicalAssets;
 public class InGameMenu extends GameState {
 
     private SpriteBatch batch;
-    private BitmapFont titleFont;
     private BitmapFont font;
     private OrthographicCamera camera;
     private GameStateManager gsm;
-    private final String title = "blast in the past";
     private int currentItem;
     private String[] menuItems;
     private Sprite sprite;
+    private Texture texture;
     private Label soundTextLabel;
     private Label.LabelStyle soundTextLabelStyle;
     private boolean soundOn = true;
@@ -41,11 +40,12 @@ public class InGameMenu extends GameState {
 
     @Override
     public void init(BPModel model) {
-        sprite = new Sprite();
+        texture = GraphicalAssets.INGAMEMENU;
+        texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        sprite = new Sprite(texture);
         sprite.setOrigin(0,0);
         camera = new OrthographicCamera();
         batch = new SpriteBatch();
-        titleFont = new BitmapFont(Gdx.files.internal("font.fnt"));
         font = new BitmapFont();
         menuItems = new String[]{"Continue", "Save game", "Options", "Exit to main menu"};
         soundTexture = GraphicalAssets.SOUND;
@@ -67,8 +67,7 @@ public class InGameMenu extends GameState {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        float width = titleFont.getBounds(title).width;
-        titleFont.draw(batch, title, (Gdx.graphics.getWidth() - width) / 2, 400);
+        sprite.draw(batch);
 
         for (int i = 0; i < menuItems.length; i++) {
             if (currentItem == i) {
@@ -78,6 +77,7 @@ public class InGameMenu extends GameState {
             }
             font.draw(batch, menuItems[i], Gdx.graphics.getWidth() / 2 - 30, 140 - 35 * i);
         }
+
         soundImage.draw(batch, 1);
         soundTextLabel.draw(batch, 1);
         batch.end();
