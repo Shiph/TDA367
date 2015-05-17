@@ -33,7 +33,7 @@ public class EnemyView implements CharacterView, WorldObject {
         this.enemy = enemy;
         texture = GraphicalAssets.ENEMYDOWN;
         sprite = new Sprite(texture);
-        weaponView = new AK47View(enemy.getWeapon());
+        weaponView = new AK47View(enemy.getCurrentWeapon());
         rectangle = new ArrayList<Rectangle>();
         rectangle.add(new Rectangle());
         //rectangle.get(0).x = Constants.CAMERA_WIDTH/2 - 64/2;

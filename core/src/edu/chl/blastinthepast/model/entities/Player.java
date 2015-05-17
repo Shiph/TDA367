@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Observable;
 
 /**
@@ -22,6 +23,10 @@ public class Player extends Observable implements Character {
     private PositionInterface prevPos;
     private Vector2 aimDirection = new Vector2(1,0);
     private ArrayList<ProjectileInterface> projectiles;
+    private HashMap<PowerUp, Integer> activePowerUps;
+    private PowerUpDecorator nextPowerUp;
+    private int bonusMovementSpeed = 0;
+
 
     /**
      * Default constructor for Player with default movement speed and health.
@@ -34,6 +39,7 @@ public class Player extends Observable implements Character {
      * Creates a new player character with texture, rectangle and sprite.
      */
     public Player(int movementSpeed, int health, PositionInterface pos) {
+        activePowerUps = new HashMap<PowerUp, Integer>();
         position = new Position(pos);
         this.movementSpeed = movementSpeed;
         this.health = health;
@@ -86,14 +92,26 @@ public class Player extends Observable implements Character {
             default:
                 break;
         }
+        for (WeaponInterface w : weaponArray){
+            for (PowerUp p : activePowerUps.keySet()){
+                if (p instanceof WeaponPowerUp && activePowerUps.get(p)>0 && !w.getActivePowerUps().containsKey(p)) {
+                    WeaponPowerUp powerUp = (WeaponPowerUp) p;
+                    w.addPowerUp(powerUp, activePowerUps.get(p));
+                }
+            }
+        }
     }
 
     public void setWeapon(WeaponInterface weapon) {
         this.weapon = weapon;
     }
 
-    public WeaponInterface getWeapon() {
+    public WeaponInterface getCurrentWeapon() {
         return weapon;
+    }
+
+    public ArrayList<WeaponInterface> getWeapons(){
+        return weaponArray;
     }
 
     public ArrayList<WeaponInterface> getWeaponArray(){
@@ -123,7 +141,7 @@ public class Player extends Observable implements Character {
     }
 
     public void setPosition (Position position) {
-        this.position = position;
+        this.position.setPosition(position);
     }
 
     public void move(float dt) {
@@ -149,6 +167,7 @@ public class Player extends Observable implements Character {
             die();
         }
         weapon.setPosition(position);
+        weapon.resetBonusDamage();
         move(dt);
         if (shooting) {
             shoot();
@@ -236,5 +255,18 @@ public class Player extends Observable implements Character {
     public ArrayList<ProjectileInterface> getProjectiles(){
         return projectiles;
     }
+
+    public void setNextPowerUp(PowerUpDecorator p){
+        nextPowerUp= p;
+    }
+
+    public PowerUpDecorator getNextPowerUp(){
+        return nextPowerUp;
+    }
+
+    public void setBonusMovementSpeed(){
+
+    }
+
 
 }

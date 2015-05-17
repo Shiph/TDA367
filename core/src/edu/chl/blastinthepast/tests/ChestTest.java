@@ -18,9 +18,9 @@ public class ChestTest {
      */
     @Test
     public void testOpen() {
-        assertTrue(mockPlayer.getWeapon() == null);
+        assertTrue(mockPlayer.getCurrentWeapon() == null);
         mockPlayer.setWeapon(chest.open(mockPlayer));
-        assertTrue(mockPlayer.getWeapon() instanceof WeaponInterface);
+        assertTrue(mockPlayer.getCurrentWeapon() instanceof WeaponInterface);
     }
 
     /**

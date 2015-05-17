@@ -87,7 +87,7 @@ public class PlayState extends GameState implements Observer{
         pcs=new PropertyChangeSupport(this);
         music.play();
         Pixmap pm = new Pixmap(Gdx.files.internal("crosshair.png"));
-        Gdx.input.setCursorImage(pm, pm.getWidth()/2, pm.getHeight()/2);
+        Gdx.input.setCursorImage(pm, pm.getWidth() / 2, pm.getHeight() / 2);
         for (Character c : model.getCharacters()){
             if (c instanceof Player) {
                 Player p = (Player) c;
@@ -118,7 +118,7 @@ public class PlayState extends GameState implements Observer{
             }
             ammoLabel.setPosition(camera.position.x - Constants.CAMERA_WIDTH / 2 + 10, camera.position.y - Constants.CAMERA_HEIGHT / 2 + 10);
             weaponImage.setPosition(ammoLabel.getX(), ammoLabel.getY() + ammoLabel.getHeight());
-            ammoLabel.setText(model.getPlayer().getWeapon().getTotalBullets() + "/" + model.getPlayer().getWeapon().getbulletsLeftInMagazine());
+            ammoLabel.setText(model.getPlayer().getCurrentWeapon().getTotalBullets() + "/" + model.getPlayer().getCurrentWeapon().getbulletsLeftInMagazine());
         }
     }
 
@@ -148,6 +148,13 @@ public class PlayState extends GameState implements Observer{
             for (WorldObject o2 : worldObjects.values()){
                 if (o1.getRectangle().overlaps(o2.getRectangle()) && o1!=o2){
                     pcs.firePropertyChange("Collision", o1.getObject(), o2.getObject());
+                }
+            }
+        }
+        for (int i = 0; i<worldObjects.size() ; ++i){
+            for (int j = worldObjects.size(); j > i; --j){
+                if (worldObjects.get(i).getRectangle().overlaps(worldObjects.get(j).getRectangle())){
+                    pcs.firePropertyChange("Collision", worldObjects.get(i), worldObjects.get(j));
                 }
             }
         }

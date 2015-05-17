@@ -5,6 +5,8 @@ import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.Timer;
 
 /**
@@ -25,8 +27,12 @@ public class Weapon implements WeaponInterface {
     private Vector2 direction;
     private Position offset;
     private int bonusDamage = 0;
+    private int bonusFireRate=0;
+    private HashMap<WeaponPowerUp, Integer> activePowerUps;
 
-    public Weapon (PositionInterface pos, Vector2 direction, int reloadTime, int fireRate, final int magazineCapacity, int totalBullets, PositionInterface offset) {
+    public Weapon (PositionInterface pos, Vector2 direction, int reloadTime, int fireRate, final int magazineCapacity,
+                   int totalBullets, PositionInterface offset) {
+        activePowerUps = new HashMap<WeaponPowerUp, Integer>();
         position = new Position(pos);
         this.direction = direction;
         this.fireRate = fireRate;
@@ -163,12 +169,29 @@ public class Weapon implements WeaponInterface {
         return new Position(position.getX()+v2.x, position.getY()+v2.y);
     }
 
-    public void setBonusDamage(int bonusDamage){
-        this.bonusDamage=bonusDamage;
+    @Override
+    public void addBonusDamage(int bonusDamage){
+        this.bonusDamage+=bonusDamage;
     }
 
     public int getBonusDamage(){
         return bonusDamage;
+    }
+
+    @Override
+    public void addPowerUp(WeaponPowerUp powerUp, int multiplier){
+        activePowerUps.put(powerUp, multiplier);
+        powerUp.applyPowerUpToWeapon(this, multiplier);
+    }
+
+    @Override
+    public HashMap<WeaponPowerUp, Integer> getActivePowerUps(){
+        return activePowerUps;
+    }
+
+    @Override
+    public void resetBonusDamage(){
+        bonusDamage=0;
     }
 
 }

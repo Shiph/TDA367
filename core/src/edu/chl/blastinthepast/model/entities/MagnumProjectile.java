@@ -8,6 +8,10 @@ import edu.chl.blastinthepast.utils.Position;
  */
 public class MagnumProjectile extends Projectile {
 
+    public MagnumProjectile(Position pos, Vector2 direction, int bonusDamage) {
+        super(pos, direction, 800, 10, bonusDamage);
+    }
+
     public MagnumProjectile(Position pos, Vector2 direction) {
         super(pos, direction, 600, 20);
     }

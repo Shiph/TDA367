@@ -34,7 +34,7 @@ public class MockPlayer implements Character {
     }
 
     @Override
-    public WeaponInterface getWeapon() {
+    public WeaponInterface getCurrentWeapon() {
         return weapon;
     }
 

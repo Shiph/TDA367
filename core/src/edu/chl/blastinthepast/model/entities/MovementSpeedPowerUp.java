@@ -1,6 +1,5 @@
 package edu.chl.blastinthepast.model.entities;
 
-import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
 
 import javax.swing.*;
@@ -14,14 +13,15 @@ public class MovementSpeedPowerUp implements PowerUp {
 
     private PositionInterface position;
     private int duration = 10*1000;
+    private int speedIncrease=100;
 
-    public void applyPowerUp(final Character character) {
+    public void applyPowerUp(final Player player) {
         System.out.println("Maximum speed");
-        character.setMovementSpeed(character.getMovementSpeed() + (int) Math.round(character.getMovementSpeed() * 0.25));
+        player.setMovementSpeed(player.getMovementSpeed() + speedIncrease);
         ActionListener activate = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                removePowerUp(character);
+                removePowerUp(player);
             }
         };
         Timer powerUpTimer = new Timer(duration, activate);
@@ -29,9 +29,9 @@ public class MovementSpeedPowerUp implements PowerUp {
         powerUpTimer.start();
     }
 
-    public void removePowerUp(Character character) {
+    public void removePowerUp(Player player) {
         System.out.println("Maximum speed deactivated");
-        character.setMovementSpeed(character.getMovementSpeed()-(int)Math.round(character.getMovementSpeed()*0.25));
+        player.setMovementSpeed(player.getMovementSpeed()-speedIncrease);
     }
 
     @Override
@@ -43,5 +43,16 @@ public class MovementSpeedPowerUp implements PowerUp {
     public PositionInterface getPosition() {
         return position;
     }
+
+    @Override
+    public void setDuration(int newDuration) {
+        duration=newDuration;
+    }
+
+    @Override
+    public int getDuration() {
+        return duration;
+    }
+
 
 }

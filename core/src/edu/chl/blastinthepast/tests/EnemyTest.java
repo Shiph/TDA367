@@ -32,9 +32,9 @@ public class EnemyTest {
 
     @Test
     public void testSetWeapon() throws Exception {
-        WeaponInterface weapon = enemy.getWeapon();
+        WeaponInterface weapon = enemy.getCurrentWeapon();
         enemy.setWeapon(new MockWeapon());
-        assertTrue(!weapon.equals(enemy.getWeapon()));
+        assertTrue(!weapon.equals(enemy.getCurrentWeapon()));
     }
 
     @Test

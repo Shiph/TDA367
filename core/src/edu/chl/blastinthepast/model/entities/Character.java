@@ -12,7 +12,7 @@ public interface Character {
     public void move(float dt);
     public void setMovementSpeed(int newSpeed);
     public int getMovementSpeed();
-    public WeaponInterface getWeapon();
+    public WeaponInterface getCurrentWeapon();
     public void setWeapon (WeaponInterface weapon);
     public int getHealth();
     public void setHealth(int newHealth);
@@ -21,5 +21,4 @@ public interface Character {
     public void update(float dt);
     public PositionInterface getPrevPos();
     public void setPosition(PositionInterface newPosition);
-
 }

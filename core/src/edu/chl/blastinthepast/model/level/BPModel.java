@@ -162,8 +162,8 @@ public class BPModel extends Observable implements Observer {
             Character c2 = (Character) o2;
             characterCollision(c1, c2);
         }
-        if (o1 instanceof PowerUp && o2 instanceof Player){
-            PowerUp powerUp = (PowerUp) o1;
+        if (o1 instanceof PowerUpDecorator && o2 instanceof Player){
+            PowerUpDecorator powerUp = (PowerUpDecorator) o1;
             Player player = (Player) o2;
             pickUpPowerUp(powerUp, player);
         }
@@ -180,7 +180,7 @@ public class BPModel extends Observable implements Observer {
     }
 
     public void pickUpAmmunition(Ammunition ammo, Player player){
-        player.getWeapon().addAmmo(ammo.getAmount());
+        player.getCurrentWeapon().addAmmo(ammo.getAmount());
         dropList.remove(ammo);
         setChanged();
         notifyObservers(ammo);
@@ -191,8 +191,15 @@ public class BPModel extends Observable implements Observer {
         character2.setPosition(character2.getPrevPos());
     }
 
-    private void pickUpPowerUp(PowerUp powerUp, Player player){
+    /*private void pickUpPowerUp(PowerUp powerUp, Player player){
         powerUp.applyPowerUp(player);
+        dropList.remove(powerUp);
+        setChanged();
+        notifyObservers(powerUp);
+    }*/
+
+    private void pickUpPowerUp(PowerUpDecorator powerUp, Player player){
+        powerUp.init(player);
         dropList.remove(powerUp);
         setChanged();
         notifyObservers(powerUp);
@@ -259,4 +266,6 @@ public class BPModel extends Observable implements Observer {
     public boolean isPaused() {
         return isPaused;
     }
+
+
 }

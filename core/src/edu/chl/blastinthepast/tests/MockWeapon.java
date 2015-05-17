@@ -3,7 +3,10 @@ package edu.chl.blastinthepast.tests;
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.entities.ProjectileInterface;
 import edu.chl.blastinthepast.model.entities.WeaponInterface;
+import edu.chl.blastinthepast.model.entities.WeaponPowerUp;
 import edu.chl.blastinthepast.utils.PositionInterface;
+
+import java.util.HashMap;
 
 /**
  * Created by Shif on 06/05/15.
@@ -101,6 +104,16 @@ public class MockWeapon implements WeaponInterface {
 
     @Override
     public void setBonusDamage(int bonusDamage) {
+
+    }
+
+    @Override
+    public HashMap<WeaponPowerUp, Integer> getActivePowerUps() {
+        return null;
+    }
+
+    @Override
+    public void addPowerUp(WeaponPowerUp powerUp, int multiplier) {
 
     }
 

@@ -126,7 +126,7 @@ public class Enemy extends Observable implements Character {
     }
 
     public void setPosition (PositionInterface position) {
-        this.position = position;
+        this.position.setPosition(position);
     }
 
     public PositionInterface getPrevPos(){
@@ -137,7 +137,7 @@ public class Enemy extends Observable implements Character {
         this.prevPos = prevPos;
     }
 
-    public WeaponInterface getWeapon() {
+    public WeaponInterface getCurrentWeapon() {
         return weapon;
     };
 
