@@ -1,6 +1,5 @@
 package edu.chl.blastinthepast.model.entities;
 
-import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
 
 import javax.swing.*;
@@ -15,15 +14,18 @@ public class FireRatePowerUp implements PowerUp {
 
     private PositionInterface position;
     private int duration=10*1000; //Duration in milliseconds
+    private int bonus=20;
 
     @Override
-    public void applyPowerUp(final Character character) {
+    public void applyPowerUp(final Player player) {
         System.out.println("Maximum fire rate");
-        character.getWeapon().setFireRate(character.getWeapon().getFireRate() + (int) Math.round(character.getWeapon().getFireRate() * 0.25));
+        for (WeaponInterface w : player.getWeaponArray()){
+            w.setBonusFireRate(w.getFireRate()+bonus);
+        }
         ActionListener activate = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                removePowerUp(character);
+                removePowerUp(player);
             }
         };
         Timer powerUpTimer = new Timer(duration, activate);
@@ -32,9 +34,11 @@ public class FireRatePowerUp implements PowerUp {
     }
 
     @Override
-    public void removePowerUp(Character character) {
+    public void removePowerUp(Player player) {
         System.out.println("Maximum fire rate deactivated");
-        character.getWeapon().setFireRate(character.getWeapon().getFireRate() - (int) Math.round(character.getWeapon().getFireRate() * 0.25));
+        for (WeaponInterface w : player.getWeaponArray()){
+            w.setBonusDamage(w.getBonusDamage()-bonus);
+        }
     }
 
     @Override

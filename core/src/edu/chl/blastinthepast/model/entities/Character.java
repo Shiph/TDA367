@@ -9,17 +9,19 @@ import edu.chl.blastinthepast.utils.PositionInterface;
  */
 public interface Character {
 
-    public void move(float dt);
-    public void setMovementSpeed(int newSpeed);
-    public int getMovementSpeed();
-    public WeaponInterface getWeapon();
-    public void setWeapon (WeaponInterface weapon);
-    public int getHealth();
-    public void setHealth(int newHealth);
-    public ArrayList<ProjectileInterface> getProjectiles();
-    public PositionInterface getPosition();
-    public void update(float dt);
-    public PositionInterface getPrevPos();
-    public void setPosition(PositionInterface newPosition);
-
+    void move(float dt);
+    void setMovementSpeed(int newSpeed);
+    int getMovementSpeed();
+    WeaponInterface getWeapon();
+    void setWeapon (WeaponInterface weapon);
+    int getHealth();
+    void setHealth(int newHealth);
+    ArrayList<ProjectileInterface> getProjectiles();
+    PositionInterface getPosition();
+    void update(float dt);
+    PositionInterface getPrevPos();
+    void setPosition(PositionInterface newPosition);
+    void setBonusMovementSpeed(int bonusSpeed);
+    int getBonusMovementSpeed();
+    int getTotalMovementSpeed();
 }

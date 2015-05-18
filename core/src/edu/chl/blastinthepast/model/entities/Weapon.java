@@ -25,6 +25,7 @@ public class Weapon implements WeaponInterface {
     private Vector2 direction;
     private Position offset;
     private int bonusDamage = 0;
+    private int bonusFireRate=0;
 
     public Weapon (PositionInterface pos, Vector2 direction, int reloadTime, int fireRate, final int magazineCapacity, int totalBullets, PositionInterface offset) {
         position = new Position(pos);
@@ -65,7 +66,7 @@ public class Weapon implements WeaponInterface {
 
     public ProjectileInterface fire() {
         long currentTime = System.currentTimeMillis();
-        if ((currentTime - latestShot) >= 1000/fireRate) {
+        if ((currentTime - latestShot) >= 1000/getTotalFireRate()) {
             latestShot = System.currentTimeMillis();
             bulletsLeftInMagazine--;
             return new Projectile(new Position(position.getX()+offset.getX(), position.getY()+offset.getY()), direction, bonusDamage);
@@ -163,10 +164,34 @@ public class Weapon implements WeaponInterface {
         return new Position(position.getX()+v2.x, position.getY()+v2.y);
     }
 
+    @Override
     public void setBonusDamage(int bonusDamage){
         this.bonusDamage=bonusDamage;
+        if (this.bonusDamage<0){
+            this.bonusDamage=0;
+        }
     }
 
+    @Override
+    public void setBonusFireRate(int bonusFireRate) {
+        this.bonusFireRate=bonusFireRate;
+        if (this.bonusFireRate<0){
+            this.bonusFireRate=0;
+        }
+    }
+
+    @Override
+    public int getBonusFireRate(){
+        return bonusFireRate;
+    }
+
+    @Override
+    public int getTotalFireRate() {
+        return fireRate+bonusFireRate;
+    }
+
+
+    @Override
     public int getBonusDamage(){
         return bonusDamage;
     }

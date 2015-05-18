@@ -1,6 +1,5 @@
 package edu.chl.blastinthepast.model.entities;
 
-import edu.chl.blastinthepast.model.entities.Character;
 import edu.chl.blastinthepast.utils.PositionInterface;
 
 /**
@@ -10,11 +9,11 @@ public interface PowerUp {
 
     /**
      * Applies the picked up power-up on the player character.
-     * @param character
+     * @param player
      */
-    public void applyPowerUp(final Character character);
+    public void applyPowerUp(final Player player);
 
-    public void removePowerUp(final Character character);
+    public void removePowerUp(final Player player);
 
     public void setPosition(PositionInterface newPosition);
 

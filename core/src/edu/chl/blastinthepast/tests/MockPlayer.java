@@ -78,5 +78,20 @@ public class MockPlayer implements Character {
 
     }
 
+    @Override
+    public void setBonusMovementSpeed(int bonusSpeed) {
+
+    }
+
+    @Override
+    public int getBonusMovementSpeed() {
+        return 0;
+    }
+
+    @Override
+    public int getTotalMovementSpeed() {
+        return 0;
+    }
+
 
 }

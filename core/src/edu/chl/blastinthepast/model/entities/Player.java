@@ -22,6 +22,7 @@ public class Player extends Observable implements Character {
     private PositionInterface prevPos;
     private Vector2 aimDirection = new Vector2(1,0);
     private ArrayList<ProjectileInterface> projectiles;
+    private int bonusMovementSpeed=0;
 
     /**
      * Default constructor for Player with default movement speed and health.
@@ -114,6 +115,24 @@ public class Player extends Observable implements Character {
         position=new Position(newPosition);
     }
 
+    @Override
+    public void setBonusMovementSpeed(int bonusSpeed) {
+        bonusMovementSpeed=bonusSpeed;
+        if (bonusMovementSpeed<0){
+            bonusMovementSpeed=0;
+        }
+    }
+
+    @Override
+    public int getBonusMovementSpeed() {
+        return bonusMovementSpeed;
+    }
+
+    @Override
+    public int getTotalMovementSpeed() {
+        return movementSpeed+bonusMovementSpeed;
+    }
+
     public void setPrevPos (Position prevPos) {
         this.prevPos = prevPos;
     }
@@ -131,16 +150,16 @@ public class Player extends Observable implements Character {
         float x = position.getX();
         float y = position.getY();
         if (west) {
-            position.setX(x - movementSpeed * dt);
+            position.setX(x - getTotalMovementSpeed() * dt);
         }
         if (east) {
-            position.setX(x + movementSpeed * dt);
+            position.setX(x + getTotalMovementSpeed() * dt);
         }
         if (north) {
-            position.setY(y + movementSpeed * dt);
+            position.setY(y + getTotalMovementSpeed() * dt);
         }
         if (south) {
-            position.setY(y - movementSpeed * dt);
+            position.setY(y - getTotalMovementSpeed() * dt);
         }
     }
 

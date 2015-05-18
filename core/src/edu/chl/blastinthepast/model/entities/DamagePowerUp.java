@@ -1,6 +1,5 @@
 package edu.chl.blastinthepast.model.entities;
 
-import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
 
 import javax.swing.*;
@@ -15,15 +14,18 @@ public class DamagePowerUp implements PowerUp {
 
     private PositionInterface position;
     int duration = 10*1000;
+    private int bonus=25;
 
     @Override
-    public void applyPowerUp(final Character character) {
+    public void applyPowerUp(final Player player) {
         System.out.println("Maximum strength");
-        character.getWeapon().setBonusDamage(character.getWeapon().getBonusDamage() + (int) Math.round(character.getWeapon().getProjectile().getDamage() * 0.5));
+        for (WeaponInterface w : player.getWeaponArray()){
+            w.setBonusDamage(w.getBonusDamage()+bonus);
+        }
         ActionListener activate = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                removePowerUp(character);
+                removePowerUp(player);
             }
         };
         Timer powerUpTimer = new Timer(duration, activate);
@@ -31,9 +33,11 @@ public class DamagePowerUp implements PowerUp {
         powerUpTimer.start();
     }
 
-    public void removePowerUp(Character character) {
+    public void removePowerUp(Player player) {
         System.out.println("Maximum strength deactivated");
-        character.getWeapon().setBonusDamage(character.getWeapon().getBonusDamage() - (int)Math.round(character.getWeapon().getProjectile().getDamage()*0.5));
+        for (WeaponInterface w : player.getWeaponArray()){
+            w.setBonusDamage(w.getBonusDamage()-bonus);
+        }
     }
 
     @Override

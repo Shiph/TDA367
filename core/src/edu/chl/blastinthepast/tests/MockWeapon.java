@@ -105,6 +105,21 @@ public class MockWeapon implements WeaponInterface {
     }
 
     @Override
+    public void setBonusFireRate(int bonusFireRate) {
+
+    }
+
+    @Override
+    public int getBonusFireRate() {
+        return 0;
+    }
+
+    @Override
+    public int getTotalFireRate() {
+        return 0;
+    }
+
+    @Override
     public int getbulletsLeftInMagazine() {
         return bulletsInMag;
     }

@@ -34,6 +34,7 @@ public class Enemy extends Observable implements Character {
     private int range = 500;
     private ArrayList<ProjectileInterface> projectiles;
     private ArrayList<Object> loot;
+    private int bonusMovementSpeed=0;
 
     /**
      * Default constructor for Enemy with default movement speed and health.
@@ -67,7 +68,7 @@ public class Enemy extends Observable implements Character {
                 if (!(position.getX() > 0)) {
                     movementDirection = 1;
                 } else {
-                    position.setX(position.getX() - movementSpeed * dt);
+                    position.setX(position.getX() - getTotalMovementSpeed() * dt);
                     movementDirectionVector.set(position.getX() - range, position.getY());
                 }
                 break;
@@ -75,7 +76,7 @@ public class Enemy extends Observable implements Character {
                 if (!(position.getX() < Constants.MAP_WIDTH)) {
                     movementDirection = 0;
                 } else {
-                    position.setX(position.getX() + movementSpeed * dt);
+                    position.setX(position.getX() + getTotalMovementSpeed() * dt);
                     movementDirectionVector.set(position.getX() + range, position.getY());
                 }
                 break;
@@ -83,7 +84,7 @@ public class Enemy extends Observable implements Character {
                 if (!(position.getY() < Constants.MAP_HEIGHT)) {
                     movementDirection = 3;
                 } else {
-                    position.setY(position.getY() + movementSpeed * dt);
+                    position.setY(position.getY() + getTotalMovementSpeed() * dt);
                     movementDirectionVector.set(position.getX(), position.getY() + range);
                 }
                 break;
@@ -91,7 +92,7 @@ public class Enemy extends Observable implements Character {
                 if (!(position.getY() > 2)) {
                     movementDirection = 1;
                 } else {
-                    position.setY(position.getY() - movementSpeed * dt);
+                    position.setY(position.getY() - getTotalMovementSpeed() * dt);
                     movementDirectionVector.set(position.getX(), position.getY() - range);
                 }
                 break;
@@ -127,6 +128,24 @@ public class Enemy extends Observable implements Character {
 
     public void setPosition (PositionInterface position) {
         this.position = position;
+    }
+
+    @Override
+    public void setBonusMovementSpeed(int bonusSpeed) {
+        bonusMovementSpeed=bonusSpeed;
+        if (bonusMovementSpeed<0){
+            bonusMovementSpeed=0;
+        }
+    }
+
+    @Override
+    public int getBonusMovementSpeed() {
+        return bonusMovementSpeed;
+    }
+
+    @Override
+    public int getTotalMovementSpeed() {
+        return movementSpeed+bonusMovementSpeed;
     }
 
     public PositionInterface getPrevPos(){
