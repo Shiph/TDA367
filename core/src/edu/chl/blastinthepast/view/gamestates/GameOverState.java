@@ -3,10 +3,13 @@ package edu.chl.blastinthepast.view.gamestates;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import edu.chl.blastinthepast.model.level.BPModel;
+import edu.chl.blastinthepast.utils.GraphicalAssets;
 import edu.chl.blastinthepast.utils.HighScoreHandler;
 
 /**
@@ -16,10 +19,11 @@ public class GameOverState extends GameState{
 
     private SpriteBatch batch;
     private boolean newHighScore;
+    private Sprite sprite;
+    private Texture texture;
     private OrthographicCamera camera;
     private final String title = "Game Over";
     private float width;
-    private ShapeRenderer shapeRenderer;
     private char[] newName = new char[] {'A', 'A', 'A'};
     private int currentChar = 0;
     private int score;
@@ -31,10 +35,13 @@ public class GameOverState extends GameState{
     }
 
     public void init(BPModel model) {
+        texture = GraphicalAssets.GAMEOVER;
+        texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        sprite = new Sprite(texture);
+        sprite.setOrigin(0,0);
         gameOverFont = new BitmapFont();
         font = new BitmapFont();
         camera = new OrthographicCamera();
-        shapeRenderer = new ShapeRenderer();
         batch = new SpriteBatch();
     }
 
@@ -50,6 +57,7 @@ public class GameOverState extends GameState{
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
+        sprite.draw(batch);
         width = gameOverFont.getBounds(title).width;
         gameOverFont.draw(batch, title, (Gdx.graphics.getWidth() - width) / 2, 4 * Gdx.graphics.getHeight() / 5 + 50);
 

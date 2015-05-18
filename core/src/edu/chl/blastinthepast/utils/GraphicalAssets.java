@@ -29,8 +29,10 @@ public class GraphicalAssets {
     public static final Texture SOUND_OFF = new Texture(Gdx.files.local("sound_off.png"));
     public static final Texture MAGNUM = new Texture(Gdx.files.local("magnum.png"));
     public static final Pixmap CROSSHAIR = new Pixmap(Gdx.files.local("crosshair.png"));
+    public static final Texture HEART = new Texture(Gdx.files.local("heart32.png"));
     public static final Texture MAINMENU = new Texture(Gdx.files.internal("mainmenu.jpg"));
     public static final Texture INGAMEMENU = new Texture(Gdx.files.internal("ingamemenu.jpg"));
-    public static final Texture HEART = new Texture(Gdx.files.local("heart32.png"));
+    public static final Texture GAMEOVER = new Texture(Gdx.files.internal("ingamemenu.jpg"));
+    public static final Texture HIGHSCORE = new Texture(Gdx.files.internal("ingamemenu.jpg"));
 
 }
