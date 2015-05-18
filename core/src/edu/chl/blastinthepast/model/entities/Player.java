@@ -25,7 +25,6 @@ public class Player extends Observable implements Character {
     private ArrayList<ProjectileInterface> projectiles;
     private PowerUpDecorator nextPowerUp;
     private int bonusMovementSpeed = 0;
-    protected Player previousPlayer;
 
 
     /**
@@ -47,7 +46,6 @@ public class Player extends Observable implements Character {
         weaponArray.add(weapon);
         projectiles = new ArrayList<ProjectileInterface>();
         position=pos;
-        previousPlayer=this;
     }
 
 
@@ -272,26 +270,5 @@ public class Player extends Observable implements Character {
     public int getActualMovementSpeed(){
         return movementSpeed+bonusMovementSpeed;
     }
-
-    public Player removePowerExpiredPowerUps(){
-        Player nextLink=this;
-        while (nextLink.previousPlayer!=null && nextLink.previousPlayer!=this){
-            nextLink=previousPlayer;
-        }
-        if (nextLink instanceof PowerUpDecorator){
-
-        } else {
-            System.out.println("LOL");
-        }
-        while (nextLink.nextPowerUp!=null){
-            if (nextLink.nextPowerUp.toBeRemoved) {
-                nextLink.nextPowerUp.removeFromChain();
-            } else {
-                nextLink=nextLink.nextPowerUp;
-            }
-        }
-        return nextLink;
-    }
-
 
 }

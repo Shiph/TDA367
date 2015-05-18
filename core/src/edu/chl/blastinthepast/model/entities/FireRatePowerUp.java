@@ -1,10 +1,5 @@
 package edu.chl.blastinthepast.model.entities;
 
-import edu.chl.blastinthepast.utils.PositionInterface;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.lang.*;
 
 /**

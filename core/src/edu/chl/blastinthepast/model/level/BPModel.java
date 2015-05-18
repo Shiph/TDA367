@@ -66,7 +66,6 @@ public class BPModel extends Observable implements Observer {
             } else {
                 System.out.println("Jag har ingen powerup");
             }
-            player=player.removePowerExpiredPowerUps();
             player.update(dt);
             System.out.println(player);
             for (ProjectileInterface p : projectiles) {
@@ -197,13 +196,6 @@ public class BPModel extends Observable implements Observer {
         character1.setPosition(character1.getPrevPos());
         character2.setPosition(character2.getPrevPos());
     }
-
-    /*private void pickUpPowerUp(PowerUp powerUp, Player player){
-        powerUp.applyPowerUp(player);
-        dropList.remove(powerUp);
-        setChanged();
-        notifyObservers(powerUp);
-    }*/
 
     private void pickUpPowerUp(PowerUpDecorator powerUp, Player player){
         this.player=powerUp.init(this.player);

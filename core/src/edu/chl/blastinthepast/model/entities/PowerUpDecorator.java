@@ -12,11 +12,10 @@ import edu.chl.blastinthepast.utils.PositionInterface;
  * once the timer has expired without breaking the chain.
  */
 public abstract class PowerUpDecorator extends Player{
-    //protected Player previousPlayer;
+    protected Player previousPlayer;
     protected int duration=1*1000;
     protected long activationTime;
     protected PositionInterface position;
-    protected boolean toBeRemoved=false;
 
     /**
      * The init method exists so that it is possible to create a power up without assigning it to a player,
@@ -26,10 +25,6 @@ public abstract class PowerUpDecorator extends Player{
      */
     public Player init(Player player){
         previousPlayer=player;
-        /*if (player instanceof PowerUpDecorator){
-            PowerUpDecorator powerUp = (PowerUpDecorator) player;
-            powerUp.setNextPowerUp(this);
-        }*/
         previousPlayer.setNextPowerUp(this);
         activationTime=System.currentTimeMillis();
         return this;
@@ -37,14 +32,11 @@ public abstract class PowerUpDecorator extends Player{
 
     public abstract void applyPowerUp();
 
-    public Player removeFromChain(){
+    public void removePowerUp(){
         if (getNextPowerUp()!=null) {
             getNextPowerUp().previousPlayer = previousPlayer;
-            previousPlayer.setNextPowerUp(getNextPowerUp());
-        } else {
-            previousPlayer.setNextPowerUp(null);
         }
-        return previousPlayer;
+        previousPlayer.setNextPowerUp(getNextPowerUp());
     }
 
     /**
@@ -57,7 +49,7 @@ public abstract class PowerUpDecorator extends Player{
         if (System.currentTimeMillis() - activationTime < duration) {
             applyPowerUp();
         } else {
-            toBeRemoved=true;
+            removePowerUp();
         }
         previousPlayer.update(dt);
     }
