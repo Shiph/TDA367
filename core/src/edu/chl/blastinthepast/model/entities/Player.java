@@ -27,7 +27,7 @@ public class Player extends Observable implements Character {
      * Default constructor for Player with default movement speed and health.
      */
     public Player() {
-        this(200, 500, new Position(0,0));
+        this(200, 10, new Position(0,0));
     }
 
     /**

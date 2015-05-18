@@ -39,7 +39,7 @@ public class Enemy extends Observable implements Character {
      * Default constructor for Enemy with default movement speed and health.
      */
     public Enemy(Character player, PositionInterface position) {
-        this(150, 1, position, player);
+        this(150, 6, position, player);
     }
 
     public Enemy(int movementSpeed, int health, PositionInterface position, Character player) {

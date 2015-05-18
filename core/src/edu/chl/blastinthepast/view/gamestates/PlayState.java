@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.sun.tools.internal.jxc.ap.Const;
 import edu.chl.blastinthepast.model.Ammunition;
 import edu.chl.blastinthepast.model.entities.*;
 import edu.chl.blastinthepast.model.entities.Character;
@@ -52,6 +54,7 @@ public class PlayState extends GameState implements Observer{
     private Image weaponImage;
     private HashMap <Object, WorldObject> worldObjects;
     private ArrayList <Object> worldObjectsRemoveList;
+    private ArrayList<Image> heartIcons;
 
     public PlayState(GameStateManager gsm, BPModel model) {
         super(gsm, model);
@@ -81,6 +84,15 @@ public class PlayState extends GameState implements Observer{
         labelStyle.font = font;
         ammoLabel = new Label("ammo", labelStyle);
         weaponImage = new Image(playerView.getWeaponView().getTexture());
+
+        heartIcons = new ArrayList<>(model.getPlayer().getHealth());
+
+        for (int i=0; i<model.getPlayer().getHealth(); i++) {
+            Texture heartTexture = GraphicalAssets.HEART;
+            heartIcons.add(new Image(heartTexture));
+        }
+        updateHeartPositions();
+
         pcs=new PropertyChangeSupport(this);
         music.stop();
         music.play();
@@ -109,13 +121,30 @@ public class PlayState extends GameState implements Observer{
             camera.update();
             batch.setProjectionMatrix(camera.combined);
             tiledMapRenderer.setView(camera);
-            //new CollisionDetection(enemies, playerView, projectiles, chestView, collisionView);
             if (!music.isPlaying()) {
                 music.play();
             }
             ammoLabel.setPosition(camera.position.x - Constants.CAMERA_WIDTH / 2 + 10, camera.position.y - Constants.CAMERA_HEIGHT / 2 + 10);
             weaponImage.setPosition(ammoLabel.getX(), ammoLabel.getY() + ammoLabel.getHeight());
             ammoLabel.setText(model.getPlayer().getWeapon().getTotalBullets() + "/" + model.getPlayer().getWeapon().getbulletsLeftInMagazine());
+
+            if (model.getPlayer().getHealth() < heartIcons.size()) {
+                for (int i=0; i < heartIcons.size()-model.getPlayer().getHealth(); i++) {
+                    heartIcons.remove(heartIcons.size()-i-1);
+                }
+            } else if (model.getPlayer().getHealth() > heartIcons.size()) {
+                for (int i=0; i<model.getPlayer().getHealth()-heartIcons.size(); i++) {
+                    heartIcons.add(new Image(GraphicalAssets.HEART));
+                }
+            }
+            updateHeartPositions();
+        }
+    }
+
+    private void updateHeartPositions() {
+        heartIcons.get(0).setPosition(camera.position.x - Constants.CAMERA_WIDTH/2 + 15, camera.position.y + Constants.CAMERA_HEIGHT/2 - 80);
+        for (int i=1; i<heartIcons.size(); i++) {
+            heartIcons.get(i).setPosition(heartIcons.get(i - 1).getX() + 40, heartIcons.get(i - 1).getY());
         }
     }
 
@@ -137,6 +166,10 @@ public class PlayState extends GameState implements Observer{
         batch.begin();
         ammoLabel.draw(batch, 1);
         weaponImage.draw(batch, 1);
+        for (Image i : heartIcons) {
+            i.draw(batch, 1);
+            i.setSize(32, 32);
+        }
         batch.end();
     }
 

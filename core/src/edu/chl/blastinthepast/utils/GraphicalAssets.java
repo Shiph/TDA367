@@ -31,5 +31,6 @@ public class GraphicalAssets {
     public static final Pixmap CROSSHAIR = new Pixmap(Gdx.files.local("crosshair.png"));
     public static final Texture MAINMENU = new Texture(Gdx.files.internal("mainmenu.jpg"));
     public static final Texture INGAMEMENU = new Texture(Gdx.files.internal("ingamemenu.jpg"));
+    public static final Texture HEART = new Texture(Gdx.files.local("heart32.png"));
 
 }
