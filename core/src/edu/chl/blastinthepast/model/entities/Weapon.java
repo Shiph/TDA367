@@ -28,11 +28,9 @@ public class Weapon implements WeaponInterface {
     private Position offset;
     private int bonusDamage = 0;
     private int bonusFireRate=0;
-    private HashMap<WeaponPowerUp, Integer> activePowerUps;
 
     public Weapon (PositionInterface pos, Vector2 direction, int reloadTime, int fireRate, final int magazineCapacity,
                    int totalBullets, PositionInterface offset) {
-        activePowerUps = new HashMap<WeaponPowerUp, Integer>();
         position = new Position(pos);
         this.direction = direction;
         this.fireRate = fireRate;
@@ -179,19 +177,24 @@ public class Weapon implements WeaponInterface {
     }
 
     @Override
-    public void addPowerUp(WeaponPowerUp powerUp, int multiplier){
-        activePowerUps.put(powerUp, multiplier);
-        powerUp.applyPowerUpToWeapon(this, multiplier);
-    }
-
-    @Override
-    public HashMap<WeaponPowerUp, Integer> getActivePowerUps(){
-        return activePowerUps;
-    }
-
-    @Override
     public void resetBonusDamage(){
         bonusDamage=0;
+    }
+
+    @Override
+    public void addBonusFireRate(int bonusFireRate) {
+       this.bonusFireRate+=bonusFireRate;
+    }
+
+    @Override
+    public void resetBonusFireRate() {
+        bonusFireRate=0;
+    }
+
+    @Override
+    public void resetBonuses() {
+        resetBonusDamage();
+        resetBonusFireRate();
     }
 
 }

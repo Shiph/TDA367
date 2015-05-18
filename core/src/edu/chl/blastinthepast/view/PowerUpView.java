@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import edu.chl.blastinthepast.model.entities.PowerUp;
+import edu.chl.blastinthepast.model.entities.PowerUpDecorator;
 
 /**
  * Created by jonas on 2015-05-15.
@@ -12,11 +12,11 @@ import edu.chl.blastinthepast.model.entities.PowerUp;
 public class PowerUpView implements WorldObject{
 
     private Texture texture;
-    private PowerUp powerUp;
+    private PowerUpDecorator powerUp;
     private Rectangle rectangle;
     private Sprite sprite;
 
-    public PowerUpView(PowerUp powerUp, Texture texture){
+    public PowerUpView(PowerUpDecorator powerUp, Texture texture){
         this.powerUp=powerUp;
         this.texture=texture;
         sprite= new Sprite(texture);

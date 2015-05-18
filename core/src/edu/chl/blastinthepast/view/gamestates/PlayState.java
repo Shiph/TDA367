@@ -151,13 +151,13 @@ public class PlayState extends GameState implements Observer{
                 }
             }
         }
-        for (int i = 0; i<worldObjects.size() ; ++i){
+        /*for (int i = 0; i<worldObjects.size() ; ++i){
             for (int j = worldObjects.size(); j > i; --j){
                 if (worldObjects.get(i).getRectangle().overlaps(worldObjects.get(j).getRectangle())){
                     pcs.firePropertyChange("Collision", worldObjects.get(i), worldObjects.get(j));
                 }
             }
-        }
+        }*/
     }
 
     @Override
@@ -272,8 +272,8 @@ public class PlayState extends GameState implements Observer{
     }
 
     public void checkIfPowerUp(Observable o, Object arg){
-        if (arg instanceof PowerUp){
-            PowerUp powerUp = (PowerUp) arg;
+        if (arg instanceof PowerUpDecorator){
+            PowerUpDecorator powerUp = (PowerUpDecorator) arg;
             if (powerUp instanceof DamagePowerUp){
                 worldObjects.put(powerUp, new PowerUpView(powerUp, GraphicalAssets.AK47));
             } else if (powerUp instanceof MovementSpeedPowerUp){

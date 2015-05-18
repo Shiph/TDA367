@@ -23,9 +23,9 @@ public class Player extends Observable implements Character {
     private PositionInterface prevPos;
     private Vector2 aimDirection = new Vector2(1,0);
     private ArrayList<ProjectileInterface> projectiles;
-    private HashMap<PowerUp, Integer> activePowerUps;
     private PowerUpDecorator nextPowerUp;
     private int bonusMovementSpeed = 0;
+    protected Player previousPlayer;
 
 
     /**
@@ -39,7 +39,6 @@ public class Player extends Observable implements Character {
      * Creates a new player character with texture, rectangle and sprite.
      */
     public Player(int movementSpeed, int health, PositionInterface pos) {
-        activePowerUps = new HashMap<PowerUp, Integer>();
         position = new Position(pos);
         this.movementSpeed = movementSpeed;
         this.health = health;
@@ -48,6 +47,7 @@ public class Player extends Observable implements Character {
         weaponArray.add(weapon);
         projectiles = new ArrayList<ProjectileInterface>();
         position=pos;
+        previousPlayer=this;
     }
 
 
@@ -91,14 +91,6 @@ public class Player extends Observable implements Character {
                 break;
             default:
                 break;
-        }
-        for (WeaponInterface w : weaponArray){
-            for (PowerUp p : activePowerUps.keySet()){
-                if (p instanceof WeaponPowerUp && activePowerUps.get(p)>0 && !w.getActivePowerUps().containsKey(p)) {
-                    WeaponPowerUp powerUp = (WeaponPowerUp) p;
-                    w.addPowerUp(powerUp, activePowerUps.get(p));
-                }
-            }
         }
     }
 
@@ -149,16 +141,16 @@ public class Player extends Observable implements Character {
         float x = position.getX();
         float y = position.getY();
         if (west) {
-            position.setX(x - movementSpeed * dt);
+            position.setX(x - getActualMovementSpeed() * dt);
         }
         if (east) {
-            position.setX(x + movementSpeed * dt);
+            position.setX(x + getActualMovementSpeed() * dt);
         }
         if (north) {
-            position.setY(y + movementSpeed * dt);
+            position.setY(y + getActualMovementSpeed() * dt);
         }
         if (south) {
-            position.setY(y - movementSpeed * dt);
+            position.setY(y - getActualMovementSpeed() * dt);
         }
     }
 
@@ -166,12 +158,14 @@ public class Player extends Observable implements Character {
         if (health <= 0) {
             die();
         }
-        weapon.setPosition(position);
-        weapon.resetBonusDamage();
+        for (WeaponInterface w : weaponArray){
+            weapon.setPosition(position);
+        }
         move(dt);
         if (shooting) {
             shoot();
         }
+        resetBonuses();
     }
 
 
@@ -257,15 +251,46 @@ public class Player extends Observable implements Character {
     }
 
     public void setNextPowerUp(PowerUpDecorator p){
-        nextPowerUp= p;
+        nextPowerUp = p;
     }
 
     public PowerUpDecorator getNextPowerUp(){
         return nextPowerUp;
     }
 
-    public void setBonusMovementSpeed(){
+    public void addBonusMovementSpeed(int bonusMovementSpeed){
+        this.bonusMovementSpeed+=bonusMovementSpeed;
+    }
 
+    public void resetBonuses(){
+        bonusMovementSpeed=0;
+        for (WeaponInterface w : weaponArray){
+            w.resetBonuses();
+        }
+    }
+
+    public int getActualMovementSpeed(){
+        return movementSpeed+bonusMovementSpeed;
+    }
+
+    public Player removePowerExpiredPowerUps(){
+        Player nextLink=this;
+        while (nextLink.previousPlayer!=null && nextLink.previousPlayer!=this){
+            nextLink=previousPlayer;
+        }
+        if (nextLink instanceof PowerUpDecorator){
+
+        } else {
+            System.out.println("LOL");
+        }
+        while (nextLink.nextPowerUp!=null){
+            if (nextLink.nextPowerUp.toBeRemoved) {
+                nextLink.nextPowerUp.removeFromChain();
+            } else {
+                nextLink=nextLink.nextPowerUp;
+            }
+        }
+        return nextLink;
     }
 
 

@@ -27,8 +27,8 @@ public interface WeaponInterface {
     int getTotalBullets();
     int getBonusDamage();
     void addBonusDamage(int bonusDamage);
-    HashMap<WeaponPowerUp, Integer> getActivePowerUps();
-    void addPowerUp(WeaponPowerUp powerUp, int multiplier);
     void resetBonusDamage();
-
+    void addBonusFireRate(int bonusFireRate);
+    void resetBonusFireRate();
+    void resetBonuses();
 }

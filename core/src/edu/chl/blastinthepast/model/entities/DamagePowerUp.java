@@ -9,14 +9,11 @@ public class DamagePowerUp extends PowerUpDecorator {
 
     private int bonusDamage=100;
 
-    public DamagePowerUp(){
-        duration=15;
-    }
-
     @Override
     public void applyPowerUp() {
         for (WeaponInterface w : previousPlayer.getWeaponArray()){
             w.addBonusDamage(bonusDamage);
         }
+        System.out.println("Bonus damage applied");
     }
 }

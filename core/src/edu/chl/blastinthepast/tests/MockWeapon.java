@@ -103,17 +103,28 @@ public class MockWeapon implements WeaponInterface {
     }
 
     @Override
-    public void setBonusDamage(int bonusDamage) {
+    public void addBonusDamage(int bonusDamage) {
+
 
     }
 
     @Override
-    public HashMap<WeaponPowerUp, Integer> getActivePowerUps() {
-        return null;
+    public void resetBonusDamage() {
+
     }
 
     @Override
-    public void addPowerUp(WeaponPowerUp powerUp, int multiplier) {
+    public void addBonusFireRate(int bonusFireRate) {
+
+    }
+
+    @Override
+    public void resetBonusFireRate() {
+
+    }
+
+    @Override
+    public void resetBonuses() {
 
     }
 

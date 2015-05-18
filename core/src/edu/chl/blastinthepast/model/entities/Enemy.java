@@ -219,7 +219,7 @@ public class Enemy extends Observable implements Character {
         //boolean hasPowerUp = random.nextBoolean();
         boolean hasPowerUp=true;
         if (hasPowerUp){
-            PowerUp powerUp = PowerUpGenerator.generatePowerUp();
+            PowerUpDecorator powerUp = PowerUpGenerator.generatePowerUp();
             powerUp.setPosition(position);
             loot.add(powerUp);
         }

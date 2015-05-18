@@ -61,7 +61,14 @@ public class BPModel extends Observable implements Observer {
                 setChanged();
                 notifyObservers("all enemies is kill");
             }
+            if (player instanceof PowerUpDecorator){
+                System.out.println("Jag har powerup");
+            } else {
+                System.out.println("Jag har ingen powerup");
+            }
+            player=player.removePowerExpiredPowerUps();
             player.update(dt);
+            System.out.println(player);
             for (ProjectileInterface p : projectiles) {
                 p.move(dt);
             }
@@ -199,7 +206,7 @@ public class BPModel extends Observable implements Observer {
     }*/
 
     private void pickUpPowerUp(PowerUpDecorator powerUp, Player player){
-        powerUp.init(player);
+        this.player=powerUp.init(this.player);
         dropList.remove(powerUp);
         setChanged();
         notifyObservers(powerUp);
