@@ -217,6 +217,13 @@ public class Player extends Observable implements Character {
         }
     }
 
+    public void resetMovementDirection() {
+        north = false;
+        south = false;
+        west = false;
+        east = false;
+    }
+
     public boolean isMovingNorth(){
         return north;
     }

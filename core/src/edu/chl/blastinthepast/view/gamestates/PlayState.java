@@ -44,7 +44,6 @@ public class PlayState extends GameState implements Observer{
     private OrthographicCamera camera;
     private TiledMapRenderer tiledMapRenderer;
     private TiledMap tiledMap;
-    private Sound wowSound;
     private Music music;
     private PropertyChangeSupport pcs;
     private Label ammoLabel;
@@ -74,7 +73,6 @@ public class PlayState extends GameState implements Observer{
         camera.update();
         tiledMap = new TmxMapLoader().load("GrassTestMap1.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
-        wowSound = SoundAssets.WOW_SOUND;
         music = SoundAssets.SANIC_THEME;
         music.setVolume(0.2f);
         music.setLooping(true);
@@ -84,6 +82,7 @@ public class PlayState extends GameState implements Observer{
         ammoLabel = new Label("ammo", labelStyle);
         weaponImage = new Image(playerView.getWeaponView().getTexture());
         pcs=new PropertyChangeSupport(this);
+        music.stop();
         music.play();
         setCrosshairCursor();
         for (Character c : model.getCharacters()){
