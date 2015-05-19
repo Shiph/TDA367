@@ -2,8 +2,8 @@ package edu.chl.blastinthepast.tests;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.entities.AK47;
-import edu.chl.blastinthepast.model.entities.Projectile;
-import edu.chl.blastinthepast.model.entities.Weapon;
+import edu.chl.blastinthepast.model.entities.ProjectileInterface;
+import edu.chl.blastinthepast.model.entities.WeaponInterface;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,11 +14,11 @@ import static org.junit.Assert.*;
  */
 public class WeaponTest {
 
-    Weapon weapon;
+    WeaponInterface weapon;
 
     @Before
     public void setUp() {
-        weapon = new AK47(new MockPosition(), new Vector2(0, 0));
+        weapon = new AK47(new MockPosition(), new Vector2(0,0));
     }
 
     /**
@@ -27,7 +27,7 @@ public class WeaponTest {
      */
     @Test
     public void testPullTrigger() {
-        assertTrue(weapon.pullTrigger() instanceof Projectile);
+        assertTrue(weapon.pullTrigger() instanceof ProjectileInterface);
     }
 
     /**
@@ -36,12 +36,14 @@ public class WeaponTest {
      */
     @Test
     public void testReload() {
+        weapon.pullTrigger();
         weapon.reload();
         assertTrue(weapon.getbulletsLeftInMagazine() == weapon.getMagazineCapacity());
     }
 
     /**
-     * Tests that after the weapon has fired all of its ammo it should also accordingly have no ammo left in the magazine.
+     * Tests that after the weapon has fired all of its ammo it should also accordingly have no ammo left in the magazine (or at all).
+     * Takes some time to perform this test due to a timer depending on the firerate.
      */
     @Test
     public void testHasAmmo() {
@@ -49,6 +51,22 @@ public class WeaponTest {
             weapon.pullTrigger();
         }
         assertTrue(weapon.getbulletsLeftInMagazine() == 0);
+        assertTrue(weapon.getTotalBullets() == 0);
+    }
+
+    /**
+     * Asserts that a negative value won't be "added" to the total amount of bullets
+     * and that the total amounts of bullets will change if ammo is actually added.
+     */
+    @Test
+    public void testAddAmmo() {
+        int currentAmmo = weapon.getTotalBullets();
+
+        weapon.addAmmo(-100);
+        assertTrue(currentAmmo == weapon.getTotalBullets());
+
+        weapon.addAmmo(10);
+        assertFalse(currentAmmo == weapon.getTotalBullets());
     }
 
     @After

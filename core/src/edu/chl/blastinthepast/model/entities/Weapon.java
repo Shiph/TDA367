@@ -12,9 +12,9 @@ import javax.swing.Timer;
  */
 public abstract class Weapon implements WeaponInterface {
 
-    private Projectile projectile;
     private int magazineCapacity;
     private int reloadTime; //Reload time in milliseconds
+    private ProjectileInterface projectile;
     private int bulletsLeftInMagazine;
     private int totalBullets;
     private int fireRate; //Shots per second
@@ -60,6 +60,10 @@ public abstract class Weapon implements WeaponInterface {
         return magazineCapacity;
     }
 
+    public ProjectileInterface getProjectile() {
+        return projectile;
+    }
+
     public boolean hasAmmo() {
         return ((totalBullets + bulletsLeftInMagazine) > 0);
     }
@@ -96,18 +100,6 @@ public abstract class Weapon implements WeaponInterface {
         }
     }
 
-    public Projectile getProjectile() {
-        return projectile;
-    }
-
-    public void setLatestShot(long newValue) {
-        latestShot = newValue;
-    }
-
-    public long getLatestShot () {
-        return latestShot;
-    }
-
     public void setPosition(PositionInterface position){
         this.position.setPosition(position);
     }
@@ -118,10 +110,6 @@ public abstract class Weapon implements WeaponInterface {
 
     public Position getPosition(){
         return position;
-    }
-
-    public void setBulletsLeftInMagazine(int newValue) {
-        bulletsLeftInMagazine = newValue;
     }
 
     public int getbulletsLeftInMagazine() {
