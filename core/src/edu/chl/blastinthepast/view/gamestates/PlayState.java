@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -25,7 +26,6 @@ import edu.chl.blastinthepast.view.*;
 import edu.chl.blastinthepast.view.characterviews.BossView;
 import edu.chl.blastinthepast.view.characterviews.EnemyView;
 import edu.chl.blastinthepast.view.characterviews.PlayerView;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.*;
@@ -52,6 +52,9 @@ public class PlayState extends GameState implements Observer{
     private HashMap <Object, WorldObject> worldObjects;
     private ArrayList <Object> worldObjectsRemoveList;
     private ArrayList<Image> heartIcons;
+    private TiledMapTileLayer collisionLayer;
+    private float tileWidth, tileHeight;
+    private boolean playerBlocked = false;
 
     public PlayState(GameStateManager gsm, BPModel model) {
         super(gsm, model);
@@ -70,11 +73,13 @@ public class PlayState extends GameState implements Observer{
         camera= new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.update();
-
         camera.position.set(Constants.MAP_WIDTH / 2, Constants.MAP_HEIGHT / 2, 0);
         camera.update();
         tiledMap = new TmxMapLoader().load("big_grass.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+        collisionLayer = (TiledMapTileLayer)tiledMap.getLayers().get(1);
+        tileWidth = collisionLayer.getTileWidth();
+        tileHeight = collisionLayer.getTileHeight();
         music = SoundAssets.SANIC_THEME;
         music.setVolume(Constants.masterVolume);
         music.setLooping(true);
@@ -83,9 +88,7 @@ public class PlayState extends GameState implements Observer{
         labelStyle.font = font;
         ammoLabel = new Label("ammo", labelStyle);
         weaponImage = new Image(playerView.getWeaponView().getTexture());
-
         heartIcons = new ArrayList<>(model.getPlayer().getHealth());
-
         for (int i=0; i<model.getPlayer().getHealth(); i++) {
             Texture heartTexture = GraphicalAssets.HEART;
             heartIcons.add(new Image(heartTexture));
@@ -114,6 +117,7 @@ public class PlayState extends GameState implements Observer{
     @Override
     public void update(float dt) {
         if(!model.isPaused()) {
+            checkForCollision();
             chestView.update();
             ammoLabel.setPosition(camera.position.x - Constants.CAMERA_WIDTH / 2 + 10, camera.position.y - Constants.CAMERA_HEIGHT / 2 + 10);
             weaponImage.setPosition(ammoLabel.getX(), ammoLabel.getY() + ammoLabel.getHeight());
@@ -147,7 +151,9 @@ public class PlayState extends GameState implements Observer{
     }
 
     private void updateHeartPositions() {
-        heartIcons.get(0).setPosition(camera.position.x - Constants.CAMERA_WIDTH/2 + 15, camera.position.y + Constants.CAMERA_HEIGHT/2 - 80);
+        if (!heartIcons.isEmpty()) {
+            heartIcons.get(0).setPosition(camera.position.x - Constants.CAMERA_WIDTH / 2 + 15, camera.position.y + Constants.CAMERA_HEIGHT / 2 - 80);
+        }
         for (int i=1; i<heartIcons.size(); i++) {
             heartIcons.get(i).setPosition(heartIcons.get(i - 1).getX() + 40, heartIcons.get(i - 1).getY());
         }
@@ -161,8 +167,6 @@ public class PlayState extends GameState implements Observer{
         for (WorldObject o : worldObjects.values()){
             o.draw(batch);
         }
-
-        checkForCollision();
 
         if (!worldObjectsRemoveList.isEmpty()) {
             removeObjects();
@@ -184,6 +188,32 @@ public class PlayState extends GameState implements Observer{
                 if (o1.getRectangle().overlaps(o2.getRectangle()) && o1!=o2){
                     pcs.firePropertyChange("Collision", o1.getObject(), o2.getObject());
                 }
+            }
+        }
+        int playerMapX;
+        int playerMapY;
+        if (model.getPlayer().isMovingEast()) {
+            playerMapX = Math.round((model.getPlayer().getPosition().getX() + playerView.getSprite().getWidth()) / tileWidth) - 1;
+        } else {
+            playerMapX = Math.round(model.getPlayer().getPosition().getX() / tileWidth) - 1;
+        }
+        if (model.getPlayer().isMovingNorth()) {
+            playerMapY = Math.round((model.getPlayer().getPosition().getY() + playerView.getSprite().getHeight())/ tileHeight) - 1;
+        } else {
+            playerMapY = Math.round(model.getPlayer().getPosition().getY()/ tileHeight) - 1;
+        }
+
+        if (collisionLayer.getCell(playerMapX, playerMapY) != null) {
+            if (collisionLayer.getCell(playerMapX, playerMapY).getTile().getProperties().containsKey("blocked")) {
+                if (!playerBlocked) {
+                    pcs.firePropertyChange("blocked", false, "");
+                    playerBlocked = true;
+                }
+            }
+        } else {
+            if (playerBlocked) {
+                playerBlocked = false;
+                pcs.firePropertyChange("unblocked", false, true);
             }
         }
     }

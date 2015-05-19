@@ -67,14 +67,7 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
             case "south":
                 if(currentGameState instanceof PlayState) {
                     model.getPlayer().setMovementDirection(evt.getPropertyName());
-                    /*
-                    if (!model.playerMovesOutsideMap(evt.getPropertyName())) {
-                        model.getPlayer().move(Gdx.graphics.getDeltaTime());
-                    } else {
-                        System.out.println("player tries to move outside map!");
-                    }
-                    */
-                    model.getPlayer().move(Gdx.graphics.getDeltaTime());
+                    //model.getPlayer().move(Gdx.graphics.getDeltaTime());
                 }
                 break;
             case "shoot":
@@ -146,7 +139,13 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                 }
                 break;
             case "Collision":
-                    model.collision(evt.getOldValue(), evt.getNewValue());
+                model.collision(evt.getOldValue(), evt.getNewValue());
+                break;
+            case "blocked":
+                model.getPlayer().block();
+                break;
+            case "unblocked":
+                model.getPlayer().unBlock();
                 break;
             case "use":
                 if(currentGameState instanceof PlayState) {
