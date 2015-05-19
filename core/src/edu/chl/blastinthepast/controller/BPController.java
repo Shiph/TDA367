@@ -67,6 +67,13 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
             case "south":
                 if(currentGameState instanceof PlayState) {
                     model.getPlayer().setMovementDirection(evt.getPropertyName());
+                    /*
+                    if (!model.playerMovesOutsideMap(evt.getPropertyName())) {
+                        model.getPlayer().move(Gdx.graphics.getDeltaTime());
+                    } else {
+                        System.out.println("player tries to move outside map!");
+                    }
+                    */
                     model.getPlayer().move(Gdx.graphics.getDeltaTime());
                 }
                 break;

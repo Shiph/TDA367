@@ -36,6 +36,7 @@ public class PlayerView implements CharacterView, WorldObject {
         weaponView = new AK47View(player.getWeapon());
         currentWeapon = player.getWeapon().toString();
         collision = false;
+        updatePosition();
     }
 
     /**

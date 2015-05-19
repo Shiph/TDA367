@@ -1,6 +1,7 @@
 package edu.chl.blastinthepast.model.entities;
 
 import com.badlogic.gdx.math.Vector2;
+import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class Player extends Observable implements Character {
     private PositionInterface prevPos;
     private Vector2 aimDirection = new Vector2(1,0);
     private ArrayList<ProjectileInterface> projectiles;
-    private int bonusMovementSpeed=0;
+    private int bonusMovementSpeed;
 
     /**
      * Default constructor for Player with default movement speed and health.
@@ -129,7 +130,6 @@ public class Player extends Observable implements Character {
     public int getTotalMovementSpeed() {
         return movementSpeed+bonusMovementSpeed;
     }
-
     public void setPrevPos (Position prevPos) {
         this.prevPos = prevPos;
     }
@@ -146,17 +146,17 @@ public class Player extends Observable implements Character {
         prevPos = new Position(position);
         float x = position.getX();
         float y = position.getY();
-        if (west) {
-            position.setX(x - getTotalMovementSpeed() * dt);
+        if (west && position.getX() >= 0) {
+            position.setX(x - movementSpeed * dt);
         }
-        if (east) {
-            position.setX(x + getTotalMovementSpeed() * dt);
+        if (east && position.getX() <= Constants.MAP_WIDTH) {
+            position.setX(x + movementSpeed * dt);
         }
-        if (north) {
-            position.setY(y + getTotalMovementSpeed() * dt);
+        if (north && position.getY() <= Constants.MAP_HEIGHT) {
+            position.setY(y + movementSpeed * dt);
         }
-        if (south) {
-            position.setY(y - getTotalMovementSpeed() * dt);
+        if (south && position.getY() >= 0) {
+            position.setY(y - movementSpeed * dt);
         }
     }
 
