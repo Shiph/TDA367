@@ -19,6 +19,11 @@ public class LevelOne implements LevelInterface {
         model.spawnEnemies(5);
         model.spawnBoss(new Position(500, 500));
         placeEnemies();
+        placePlayer();
+    }
+
+    private void placePlayer() {
+        model.getPlayer().setPosition(Constants.MAP_WIDTH/2, Constants.MAP_HEIGHT/2);
     }
 
     public void placeEnemies() {

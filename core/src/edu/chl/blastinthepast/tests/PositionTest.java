@@ -1,6 +1,8 @@
 package edu.chl.blastinthepast.tests;
 
 import edu.chl.blastinthepast.utils.Position;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -9,7 +11,14 @@ import static org.junit.Assert.*;
  */
 public class PositionTest {
 
-    Position position = new Position(15,15);
+    Position position;
+    Position pos;
+
+    @Before
+    public void setUp() {
+        position = new Position(15,15);
+        pos = position.getPosition();
+    }
 
     /**
      * Checks that the two positions does not share reference but that they still have the same x and y coordinates.
@@ -17,7 +26,6 @@ public class PositionTest {
      */
     @Test
     public void testEquals() {
-        Position pos = position.getPosition();
         assertTrue(pos.equals(position));
         assertFalse(pos == position);
 
@@ -30,7 +38,7 @@ public class PositionTest {
      */
     @Test
     public void testOverlaps() {
-        Position pos = new Position(-10,-10);
+        pos.setPosition(-10,-10);
         assertTrue(pos.overlaps(position));
 
         pos.setPosition(100,100);
@@ -39,5 +47,8 @@ public class PositionTest {
         pos.setPosition(position.getPosition());
         assertTrue(pos.overlaps(position));
     }
+
+    @After
+    public void tearDown() {}
 
 }

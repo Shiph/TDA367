@@ -24,7 +24,6 @@ public class BPModel extends Observable implements Observer {
     private ArrayList<PowerUpI> powerUps=new ArrayList<PowerUpI>();
 
     public BPModel() {
-        player = new Player();
         chest = new Chest(new Magnum(new Position(300,300), new Vector2()));
         characters = new ArrayList<Character>();
         player = new Player();
@@ -145,14 +144,6 @@ public class BPModel extends Observable implements Observer {
             Random r = new Random();
             float x = r.nextFloat() * Constants.MAP_WIDTH;
             float y = r.nextFloat() * Constants.MAP_HEIGHT;
-            /*while (x <= player.getPosition().getX() + Constants.CAMERA_WIDTH/2 && //Makes enemies spawn outside the players view
-                    x >= player.getPosition().getX() - Constants.CAMERA_WIDTH/2) {
-                while (y <= player.getPosition().getY() + Constants.CAMERA_HEIGHT/2 &&
-                        y >= player.getPosition().getY() - Constants.CAMERA_HEIGHT/2) {
-                    y = r.nextFloat() * Constants.MAP_HEIGHT;
-                }
-                x = r.nextFloat() * Constants.MAP_WIDTH;
-            }*/
             e.getPosition().setX(x);
             e.getPosition().setY(y);
             e.addObserver(this);
@@ -212,10 +203,6 @@ public class BPModel extends Observable implements Observer {
         notifyObservers(powerUp);
     }
 
-    public void newGame() {
-    }
-
-
     public ArrayList<ProjectileInterface> getProjectiles(){
         return projectiles;
     }
@@ -273,4 +260,34 @@ public class BPModel extends Observable implements Observer {
     public boolean isPaused() {
         return isPaused;
     }
+
+    /*
+    public boolean playerMovesOutsideMap(String direction) {
+        switch (direction) {
+            case "west":
+                if (player.getPosition().getX() <= 0) {
+                    return true;
+                }
+                break;
+            case "east":
+                if (player.getPosition().getX() >= Constants.MAP_WIDTH) {
+                    return true;
+                }
+                break;
+            case "north":
+                if (player.getPosition().getY() >= Constants.MAP_HEIGHT) {
+                    return true;
+                }
+                break;
+            case "south":
+                if (player.getPosition().getY() <= 0) {
+                    return true;
+                }
+                break;
+            default:
+                return false;
+        }
+        return false;
+    }
+    */
 }

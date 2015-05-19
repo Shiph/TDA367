@@ -25,7 +25,7 @@ public abstract class ProjectileView implements Collidable, WorldObject {
         this.texture = texture;
         sprite = new Sprite(texture);
         rectangle = new ArrayList<Rectangle>();
-        sound.play();
+        sound.play(Constants.masterVolume);
         rectangle.add(new Rectangle());
         rectangle.get(0).x = Constants.CAMERA_WIDTH / 2 - sprite.getWidth() / 2;
         rectangle.get(0).y = Constants.CAMERA_HEIGHT / 2 - sprite.getHeight() / 2;

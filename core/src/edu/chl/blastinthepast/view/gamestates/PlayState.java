@@ -39,7 +39,6 @@ public class PlayState extends GameState implements Observer{
     private BPModel model;
     private PlayerView playerView;
     private ChestView chestView;
-    private CollisionView collisionView;
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private TiledMapRenderer tiledMapRenderer;
@@ -66,16 +65,18 @@ public class PlayState extends GameState implements Observer{
         worldObjects = new HashMap <Object, WorldObject>();
         worldObjectsRemoveList = new ArrayList<Object>();
         chestView = new ChestView(model.getChest());
-        collisionView = new CollisionView();
         playerView = new PlayerView(model.getPlayer());
         batch = new SpriteBatch();
         camera= new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.update();
-        tiledMap = new TmxMapLoader().load("GrassTestMap1.tmx");
+
+        camera.position.set(Constants.MAP_WIDTH / 2, Constants.MAP_HEIGHT / 2, 0);
+        camera.update();
+        tiledMap = new TmxMapLoader().load("big_grass.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         music = SoundAssets.SANIC_THEME;
-        music.setVolume(0.2f);
+        music.setVolume(Constants.masterVolume);
         music.setLooping(true);
         font = new BitmapFont();
         labelStyle = new Label.LabelStyle();
@@ -110,18 +111,10 @@ public class PlayState extends GameState implements Observer{
         }
     }
 
-
     @Override
     public void update(float dt) {
         if(!model.isPaused()) {
             chestView.update();
-            camera.position.set(playerView.getRectangles().get(0).getX() + playerView.getRectangles().get(0).getWidth() / 2, playerView.getRectangles().get(0).getY() + playerView.getRectangles().get(0).getWidth() / 2, 0);
-            camera.update();
-            batch.setProjectionMatrix(camera.combined);
-            tiledMapRenderer.setView(camera);
-            if (!music.isPlaying()) {
-                music.play();
-            }
             ammoLabel.setPosition(camera.position.x - Constants.CAMERA_WIDTH / 2 + 10, camera.position.y - Constants.CAMERA_HEIGHT / 2 + 10);
             weaponImage.setPosition(ammoLabel.getX(), ammoLabel.getY() + ammoLabel.getHeight());
             ammoLabel.setText(model.getPlayer().getWeapon().getTotalBullets() + "/" + model.getPlayer().getWeapon().getbulletsLeftInMagazine());
@@ -136,6 +129,20 @@ public class PlayState extends GameState implements Observer{
                 }
             }
             updateHeartPositions();
+            if (playerView.getRectangles().get(0).getX() + playerView.getRectangles().get(0).getWidth() / 2 - Constants.CAMERA_WIDTH/2 > 0 &&
+                    playerView.getRectangles().get(0).getX() + playerView.getRectangles().get(0).getWidth() / 2 + Constants.CAMERA_WIDTH/2 < Constants.MAP_WIDTH) {
+                camera.position.x = playerView.getRectangles().get(0).getX() + playerView.getRectangles().get(0).getWidth() / 2;
+            }
+            if (playerView.getRectangles().get(0).getY() + playerView.getRectangles().get(0).getWidth() / 2 + Constants.CAMERA_HEIGHT/2 < Constants.MAP_HEIGHT &&
+                    playerView.getRectangles().get(0).getY() + playerView.getRectangles().get(0).getWidth() / 2 - Constants.CAMERA_HEIGHT/2 > 0) {
+                camera.position.y = playerView.getRectangles().get(0).getY() + playerView.getRectangles().get(0).getWidth() / 2;
+            }
+            camera.update();
+            batch.setProjectionMatrix(camera.combined);
+            tiledMapRenderer.setView(camera);
+            if (!music.isPlaying()) {
+                music.play();
+            }
         }
     }
 
@@ -247,11 +254,13 @@ public class PlayState extends GameState implements Observer{
     }
 
     public void toggleSound() {
-        if (music.getVolume() == 0) {
-            music.setVolume(0.2f);
+        if (Constants.masterVolume == 0) {
+            Constants.masterVolume = 0.2f;
         } else {
-            music.setVolume(0);
+            Constants.masterVolume = 0;
+
         }
+        music.setVolume(Constants.masterVolume);
     }
 
     public void updateGUIWeapon() {

@@ -2,6 +2,8 @@ package edu.chl.blastinthepast.tests;
 
 import edu.chl.blastinthepast.model.entities.Chest;
 import edu.chl.blastinthepast.model.entities.WeaponInterface;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import static junit.framework.TestCase.*;
 
@@ -10,8 +12,16 @@ import static junit.framework.TestCase.*;
  */
 public class ChestTest {
 
-    private MockPlayer mockPlayer = new MockPlayer();
-    private Chest chest = new Chest(new MockWeapon());
+    private MockPlayer mockPlayer;
+    private Chest chest;
+    private MockWeapon mockWeapon;
+
+    @Before
+    public void setUp() {
+        mockPlayer = new MockPlayer();
+        mockWeapon = new MockWeapon();
+        chest = new Chest(mockWeapon);
+    }
 
     /**
      * Tests that the player equips a weapon when the chest is looted.
@@ -28,10 +38,13 @@ public class ChestTest {
      */
     @Test
     public void testIsOpened() {
-        chest = new Chest(new MockWeapon());
+        chest = new Chest(mockWeapon);
         assertFalse(chest.isOpened());
         chest.open(mockPlayer);
         assertTrue(chest.isOpened());
     }
+
+    @After
+    public void tearDown() {}
 
 }
