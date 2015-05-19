@@ -189,7 +189,7 @@ public class BPModel extends Observable implements Observer {
     }
 
     public void pickUpAmmunition(Ammunition ammo, Player player){
-        player.getWeapon().addAmmo(ammo.getAmount());
+        player.getCurrentWeapon().addAmmo(ammo.getAmount());
         dropList.remove(ammo);
         setChanged();
         notifyObservers(ammo);

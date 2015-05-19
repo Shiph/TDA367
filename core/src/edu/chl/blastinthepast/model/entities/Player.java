@@ -95,11 +95,11 @@ public class Player extends Observable implements Character {
         this.weapon = weapon;
     }
 
-    public WeaponInterface getWeapon() {
+    public WeaponInterface getCurrentWeapon() {
         return weapon;
     }
 
-    public ArrayList<WeaponInterface> getWeaponArray(){
+    public ArrayList<WeaponInterface> getAllWeapons(){
         return weaponArray;
     }
 
@@ -291,5 +291,11 @@ public class Player extends Observable implements Character {
         blockedSouth = false;
         blockedEast = false;
         blockedWest = false;
+    }
+
+    public void reloadCurrentWeapon(){
+        if (weapon.getbulletsLeftInMagazine()<weapon.getMagazineCapacity() && weapon.getTotalBullets()>0){
+            weapon.reload();
+        }
     }
 }

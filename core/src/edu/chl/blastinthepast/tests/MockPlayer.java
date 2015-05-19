@@ -34,7 +34,7 @@ public class MockPlayer implements Character {
     }
 
     @Override
-    public WeaponInterface getWeapon() {
+    public WeaponInterface getCurrentWeapon() {
         return weapon;
     }
 
@@ -95,7 +95,7 @@ public class MockPlayer implements Character {
     }
 
     @Override
-    public ArrayList<WeaponInterface> getWeaponArray() {
+    public ArrayList<WeaponInterface> getAllWeapons() {
         return null;
     }
 

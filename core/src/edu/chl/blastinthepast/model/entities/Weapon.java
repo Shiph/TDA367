@@ -91,11 +91,11 @@ public abstract class Weapon implements WeaponInterface {
     }
 
     private void reloadWeapon(){
-        if(totalBullets >= magazineCapacity) {
+        if((totalBullets+bulletsLeftInMagazine) >= magazineCapacity) {
             totalBullets -= (magazineCapacity - bulletsLeftInMagazine);
             bulletsLeftInMagazine = magazineCapacity;
         } else {
-            bulletsLeftInMagazine = totalBullets;
+            bulletsLeftInMagazine += totalBullets;
             totalBullets = 0;
         }
     }

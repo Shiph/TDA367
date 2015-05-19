@@ -2,11 +2,8 @@ package edu.chl.blastinthepast.controller;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import edu.chl.blastinthepast.model.entities.Character;
 import com.badlogic.gdx.graphics.GL20;
-import edu.chl.blastinthepast.model.entities.Projectile;
 import edu.chl.blastinthepast.model.level.BPModel;
-import edu.chl.blastinthepast.model.level.LevelInterface;
 import edu.chl.blastinthepast.model.level.LevelManager;
 import edu.chl.blastinthepast.model.level.LevelOne;
 import edu.chl.blastinthepast.utils.Position;
@@ -168,7 +165,7 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
             case "num1":
                 if(currentGameState instanceof PlayState) {
                     try {
-                        model.getPlayer().setWeapon(model.getPlayer().getWeaponArray().get(0));
+                        model.getPlayer().setWeapon(model.getPlayer().getAllWeapons().get(0));
                         ((PlayState) gsm.getGameState()).getPlayer().changeWeaponView();
                         ((PlayState) gsm.getGameState()).updateGUIWeapon();
                     } catch (IndexOutOfBoundsException e) {}
@@ -177,7 +174,7 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
             case "num2":
                 if(currentGameState instanceof PlayState) {
                     try {
-                        model.getPlayer().setWeapon(model.getPlayer().getWeaponArray().get(1));
+                        model.getPlayer().setWeapon(model.getPlayer().getAllWeapons().get(1));
                         ((PlayState) gsm.getGameState()).getPlayer().changeWeaponView();
                         ((PlayState) gsm.getGameState()).updateGUIWeapon();
                     } catch (IndexOutOfBoundsException e) {}
@@ -193,6 +190,10 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                     levelManager.setLevel(new LevelOne(model));
                 }
                 break;
+            case "reload":
+                if (currentGameState instanceof PlayState){
+                    model.getPlayer().reloadCurrentWeapon();
+                }
             default:
                 break;
         }

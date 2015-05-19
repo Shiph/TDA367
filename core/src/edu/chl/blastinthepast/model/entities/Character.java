@@ -12,7 +12,7 @@ public interface Character {
     void move(float dt);
     void setMovementSpeed(int newSpeed);
     int getMovementSpeed();
-    WeaponInterface getWeapon();
+    WeaponInterface getCurrentWeapon();
     void setWeapon (WeaponInterface weapon);
     int getHealth();
     void setHealth(int newHealth);
@@ -24,6 +24,6 @@ public interface Character {
     void addBonusMovementSpeed(int bonusSpeed);
     int getBonusMovementSpeed();
     int getTotalMovementSpeed();
-    ArrayList<WeaponInterface> getWeaponArray();
+    ArrayList<WeaponInterface> getAllWeapons();
     void resetBonuses();
 }

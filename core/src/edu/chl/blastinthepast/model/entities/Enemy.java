@@ -146,7 +146,7 @@ public class Enemy extends Observable implements Character {
     }
 
     @Override
-    public ArrayList<WeaponInterface> getWeaponArray() {
+    public ArrayList<WeaponInterface> getAllWeapons() {
         ArrayList<WeaponInterface> weaponArray=new ArrayList<WeaponInterface>();
         weaponArray.add(weapon);
         return weaponArray;
@@ -165,7 +165,7 @@ public class Enemy extends Observable implements Character {
         this.prevPos = prevPos;
     }
 
-    public WeaponInterface getWeapon() {
+    public WeaponInterface getCurrentWeapon() {
         return weapon;
     };
 

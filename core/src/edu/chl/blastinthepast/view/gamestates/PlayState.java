@@ -121,7 +121,7 @@ public class PlayState extends GameState implements Observer{
             chestView.update();
             ammoLabel.setPosition(camera.position.x - Constants.CAMERA_WIDTH / 2 + 10, camera.position.y - Constants.CAMERA_HEIGHT / 2 + 10);
             weaponImage.setPosition(ammoLabel.getX(), ammoLabel.getY() + ammoLabel.getHeight());
-            ammoLabel.setText(model.getPlayer().getWeapon().getTotalBullets() + "/" + model.getPlayer().getWeapon().getbulletsLeftInMagazine());
+            ammoLabel.setText(model.getPlayer().getCurrentWeapon().getTotalBullets() + "/" + model.getPlayer().getCurrentWeapon().getbulletsLeftInMagazine());
 
             if (model.getPlayer().getHealth() < heartIcons.size()) {
                 for (int i=0; i < heartIcons.size()-model.getPlayer().getHealth(); i++) {

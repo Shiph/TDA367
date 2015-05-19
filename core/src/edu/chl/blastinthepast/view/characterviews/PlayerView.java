@@ -33,8 +33,8 @@ public class PlayerView implements CharacterView, WorldObject {
         rectangle.get(0).height = sprite.getHeight();
         rectangle.get(0).width = sprite.getWidth();
         player = newPlayer;
-        weaponView = new AK47View(player.getWeapon());
-        currentWeapon = player.getWeapon().toString();
+        weaponView = new AK47View(player.getCurrentWeapon());
+        currentWeapon = player.getCurrentWeapon().toString();
         collision = false;
         updatePosition();
     }
@@ -119,14 +119,14 @@ public class PlayerView implements CharacterView, WorldObject {
     }
 
     public void changeWeaponView() {
-        if(!currentWeapon.equals(player.getWeapon().toString())) {
-            switch (player.getWeapon().toString()) {
+        if(!currentWeapon.equals(player.getCurrentWeapon().toString())) {
+            switch (player.getCurrentWeapon().toString()) {
                 case "AK47":
-                    weaponView = new AK47View(player.getWeapon());
+                    weaponView = new AK47View(player.getCurrentWeapon());
                     currentWeapon = "AK47";
                     break;
                 case "Magnum":
-                    weaponView = new MagnumView(player.getWeapon());
+                    weaponView = new MagnumView(player.getCurrentWeapon());
                     currentWeapon = "Magnum";
                     break;
                 default:

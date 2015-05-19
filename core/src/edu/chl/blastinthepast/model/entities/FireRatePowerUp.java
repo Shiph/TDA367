@@ -11,7 +11,7 @@ public class FireRatePowerUp extends PowerUp {
 
     @Override
     public void applyPowerUp() {
-        for (WeaponInterface w : character.getWeaponArray()){
+        for (WeaponInterface w : character.getAllWeapons()){
             w.addBonusFireRate(bonus);
         }
     }
