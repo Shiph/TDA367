@@ -1,53 +1,36 @@
 package edu.chl.blastinthepast.model.entities;
 
-import edu.chl.blastinthepast.utils.PositionInterface;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.lang.*;
 
 /**
  * Created by Mattias on 15-04-23.
  */
-public class FireRatePowerUp implements PowerUp {
+public class FireRatePowerUp extends PowerUp {
 
-    private PositionInterface position;
-    private int duration=10*1000; //Duration in milliseconds
-    private int bonus=20;
+    private int bonus=2;
 
     @Override
-    public void applyPowerUp(final Player player) {
+    public void applyPowerUp() {
         System.out.println("Maximum fire rate");
-        for (WeaponInterface w : player.getWeaponArray()){
-            w.setBonusFireRate(w.getFireRate()+bonus);
+        for (WeaponInterface w : character.getWeaponArray()){
+            w.addBonusFireRate(bonus);
         }
-        ActionListener activate = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                removePowerUp(player);
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if (obj!=null){
+            if (obj instanceof FireRatePowerUp){
+                return true;
             }
-        };
-        Timer powerUpTimer = new Timer(duration, activate);
-        powerUpTimer.setRepeats(false);
-        powerUpTimer.start();
-    }
-
-    @Override
-    public void removePowerUp(Player player) {
-        System.out.println("Maximum fire rate deactivated");
-        for (WeaponInterface w : player.getWeaponArray()){
-            w.setBonusDamage(w.getBonusDamage()-bonus);
         }
+        return false;
     }
 
     @Override
-    public void setPosition(PositionInterface newPosition) {
-        position = newPosition;
+    public int hashCode(){
+        return 13;
     }
 
-    @Override
-    public PositionInterface getPosition() {
-        return position;
-    }
+
 }

@@ -28,7 +28,7 @@ public class Player extends Observable implements Character {
      * Default constructor for Player with default movement speed and health.
      */
     public Player() {
-        this(200, 10, new Position(0,0));
+        this(200, 100, new Position(0,0));
     }
 
     /**
@@ -116,11 +116,8 @@ public class Player extends Observable implements Character {
     }
 
     @Override
-    public void setBonusMovementSpeed(int bonusSpeed) {
-        bonusMovementSpeed=bonusSpeed;
-        if (bonusMovementSpeed<0){
-            bonusMovementSpeed=0;
-        }
+    public void addBonusMovementSpeed(int bonusSpeed) {
+        bonusMovementSpeed+=bonusSpeed;
     }
 
     @Override
@@ -172,6 +169,10 @@ public class Player extends Observable implements Character {
         if (shooting) {
             shoot();
         }
+        for (WeaponInterface w : weaponArray){
+            w.resetBonuses();
+        }
+        resetBonuses();
     }
 
 
@@ -261,6 +262,10 @@ public class Player extends Observable implements Character {
 
     public ArrayList<ProjectileInterface> getProjectiles(){
         return projectiles;
+    }
+
+    public void resetBonuses(){
+        bonusMovementSpeed=0;
     }
 
 }

@@ -24,8 +24,9 @@ public interface WeaponInterface {
     void reload();
     int getTotalBullets();
     int getBonusDamage();
-    void setBonusDamage(int bonusDamage);
-    void setBonusFireRate(int bonusFireRate);
+    void addBonusDamage(int bonusDamage);
+    void addBonusFireRate(int bonusFireRate);
     int getBonusFireRate();
     int getTotalFireRate();
+    void resetBonuses();
 }

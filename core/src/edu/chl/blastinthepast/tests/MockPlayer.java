@@ -79,9 +79,10 @@ public class MockPlayer implements Character {
     }
 
     @Override
-    public void setBonusMovementSpeed(int bonusSpeed) {
+    public void addBonusMovementSpeed(int bonusSpeed) {
 
     }
+
 
     @Override
     public int getBonusMovementSpeed() {
@@ -91,6 +92,16 @@ public class MockPlayer implements Character {
     @Override
     public int getTotalMovementSpeed() {
         return 0;
+    }
+
+    @Override
+    public ArrayList<WeaponInterface> getWeaponArray() {
+        return null;
+    }
+
+    @Override
+    public void resetBonuses() {
+
     }
 
 

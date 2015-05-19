@@ -8,9 +8,9 @@ import java.util.Random;
  */
 public class PowerUpGenerator {
 
-    public static PowerUp generatePowerUp(){
+    public static PowerUpI generatePowerUp(){
         Random random = new Random();
-        ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
+        ArrayList<PowerUpI> powerUps = new ArrayList<PowerUpI>();
 
         powerUps.add(new DamagePowerUp());
         powerUps.add(new MovementSpeedPowerUp());

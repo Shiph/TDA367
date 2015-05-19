@@ -10,13 +10,13 @@ import edu.chl.blastinthepast.utils.PositionInterface;
 public class Magnum extends Weapon {
 
     public Magnum(PositionInterface position, Vector2 direction) {
-        super(position, direction, 850, 500, 16, 16*16, new Position(0, 0));
+        super(position, direction, 850, 2, 16, 16*16, new Position(0, 0));
     }
 
     @Override
     public Projectile fire() {
         long currentTime = System.currentTimeMillis();
-        if ((currentTime - getLatestShot()) >= getFireRate()) {
+        if ((currentTime - getLatestShot()) >= 1000/getTotalFireRate()) {
             setLatestShot(System.currentTimeMillis());
             setBulletsLeftInMagazine(getbulletsLeftInMagazine()-1);
             return new MagnumProjectile(getPosWithOffset(), getDirection());

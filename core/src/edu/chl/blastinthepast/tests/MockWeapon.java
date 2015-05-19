@@ -100,12 +100,12 @@ public class MockWeapon implements WeaponInterface {
     }
 
     @Override
-    public void setBonusDamage(int bonusDamage) {
+    public void addBonusDamage(int bonusDamage) {
 
     }
 
     @Override
-    public void setBonusFireRate(int bonusFireRate) {
+    public void addBonusFireRate(int bonusFireRate) {
 
     }
 
@@ -117,6 +117,11 @@ public class MockWeapon implements WeaponInterface {
     @Override
     public int getTotalFireRate() {
         return 0;
+    }
+
+    @Override
+    public void resetBonuses() {
+
     }
 
     @Override

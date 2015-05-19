@@ -165,22 +165,6 @@ public class Weapon implements WeaponInterface {
     }
 
     @Override
-    public void setBonusDamage(int bonusDamage){
-        this.bonusDamage=bonusDamage;
-        if (this.bonusDamage<0){
-            this.bonusDamage=0;
-        }
-    }
-
-    @Override
-    public void setBonusFireRate(int bonusFireRate) {
-        this.bonusFireRate=bonusFireRate;
-        if (this.bonusFireRate<0){
-            this.bonusFireRate=0;
-        }
-    }
-
-    @Override
     public int getBonusFireRate(){
         return bonusFireRate;
     }
@@ -190,10 +174,26 @@ public class Weapon implements WeaponInterface {
         return fireRate+bonusFireRate;
     }
 
+    @Override
+    public void resetBonuses() {
+        bonusFireRate=0;
+        bonusDamage=0;
+    }
+
 
     @Override
     public int getBonusDamage(){
         return bonusDamage;
+    }
+
+    @Override
+    public void addBonusDamage(int bonusDamage) {
+        this.bonusDamage+=bonusDamage;
+    }
+
+    @Override
+    public void addBonusFireRate(int bonusFireRate) {
+        this.bonusFireRate=bonusFireRate;
     }
 
 }

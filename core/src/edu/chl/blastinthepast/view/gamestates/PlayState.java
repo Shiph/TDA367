@@ -2,7 +2,6 @@ package edu.chl.blastinthepast.view.gamestates;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -297,8 +296,8 @@ public class PlayState extends GameState implements Observer{
     }
 
     public void checkIfPowerUp(Observable o, Object arg){
-        if (arg instanceof PowerUp){
-            PowerUp powerUp = (PowerUp) arg;
+        if (arg instanceof PowerUpI){
+            PowerUpI powerUp = (PowerUpI) arg;
             if (powerUp instanceof DamagePowerUp){
                 worldObjects.put(powerUp, new PowerUpView(powerUp, GraphicalAssets.AK47));
             } else if (powerUp instanceof MovementSpeedPowerUp){

@@ -1,53 +1,34 @@
 package edu.chl.blastinthepast.model.entities;
 
-import edu.chl.blastinthepast.utils.PositionInterface;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.lang.*;
 
 /**
  * Created by Mattias on 15-04-23.
  */
-public class DamagePowerUp implements PowerUp {
+public class DamagePowerUp extends PowerUp{
 
-    private PositionInterface position;
-    int duration = 10*1000;
-    private int bonus=25;
+    private int bonus=5;
 
     @Override
-    public void applyPowerUp(final Player player) {
+    public void applyPowerUp() {
         System.out.println("Maximum strength");
-        for (WeaponInterface w : player.getWeaponArray()){
-            w.setBonusDamage(w.getBonusDamage()+bonus);
+        for (WeaponInterface w : character.getWeaponArray()) {
+            w.addBonusDamage(bonus);
         }
-        ActionListener activate = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                removePowerUp(player);
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if (obj!=null){
+            if (obj instanceof DamagePowerUp){
+                return true;
             }
-        };
-        Timer powerUpTimer = new Timer(duration, activate);
-        powerUpTimer.setRepeats(false);
-        powerUpTimer.start();
-    }
-
-    public void removePowerUp(Player player) {
-        System.out.println("Maximum strength deactivated");
-        for (WeaponInterface w : player.getWeaponArray()){
-            w.setBonusDamage(w.getBonusDamage()-bonus);
         }
+        return false;
     }
 
     @Override
-    public void setPosition(PositionInterface newPosition) {
-        position = newPosition;
+    public int hashCode(){
+        return 19;
     }
-
-    @Override
-    public PositionInterface getPosition() {
-        return position;
-    }
-
 }

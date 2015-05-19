@@ -7,16 +7,16 @@ import edu.chl.blastinthepast.utils.PositionInterface;
  */
 public interface PowerUpI {
 
-    /**
-     * Applies the picked up power-up on the player character.
-     * @param player
-     */
-    public void applyPowerUp(final Player player);
+    void init(Character character);
 
-    public void removePowerUp(final Player player);
+    void update();
 
-    public void setPosition(PositionInterface newPosition);
+    void applyPowerUp();
 
-    public PositionInterface getPosition();
+    void setPosition(PositionInterface newPosition);
+
+    PositionInterface getPosition();
+
+    boolean getHasExpired();
 
 }

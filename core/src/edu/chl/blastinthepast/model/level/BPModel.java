@@ -21,6 +21,7 @@ public class BPModel extends Observable implements Observer {
     private Boss boss;
     private Chest chest;
     private boolean isPaused;
+    private ArrayList<PowerUpI> powerUps=new ArrayList<PowerUpI>();
 
     public BPModel() {
         player = new Player();
@@ -61,6 +62,7 @@ public class BPModel extends Observable implements Observer {
                 setChanged();
                 notifyObservers("all enemies is kill");
             }
+            updatePowerUps();
             player.update(dt);
             for (ProjectileInterface p : projectiles) {
                 p.move(dt);
@@ -86,6 +88,17 @@ public class BPModel extends Observable implements Observer {
                     setChanged();
                     notifyObservers(p);
                 }
+            }
+        }
+    }
+
+    private void updatePowerUps(){
+        Iterator<PowerUpI> powerUpIterator = powerUps.iterator();
+        while(powerUpIterator.hasNext()){
+            PowerUpI powerUp = powerUpIterator.next();
+            powerUp.update();
+            if (powerUp.getHasExpired()){
+                powerUpIterator.remove();
             }
         }
     }
@@ -162,8 +175,8 @@ public class BPModel extends Observable implements Observer {
             Character c2 = (Character) o2;
             characterCollision(c1, c2);
         }
-        if (o1 instanceof PowerUp && o2 instanceof Player){
-            PowerUp powerUp = (PowerUp) o1;
+        if (o1 instanceof PowerUpI && o2 instanceof Player){
+            PowerUpI powerUp = (PowerUpI) o1;
             Player player = (Player) o2;
             pickUpPowerUp(powerUp, player);
         }
@@ -191,8 +204,9 @@ public class BPModel extends Observable implements Observer {
         character2.setPosition(character2.getPrevPos());
     }
 
-    private void pickUpPowerUp(PowerUp powerUp, Player player){
-        powerUp.applyPowerUp(player);
+    private void pickUpPowerUp(PowerUpI powerUp, Player player){
+        powerUp.init(player);
+        powerUps.add(powerUp);
         dropList.remove(powerUp);
         setChanged();
         notifyObservers(powerUp);

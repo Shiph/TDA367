@@ -131,11 +131,8 @@ public class Enemy extends Observable implements Character {
     }
 
     @Override
-    public void setBonusMovementSpeed(int bonusSpeed) {
-        bonusMovementSpeed=bonusSpeed;
-        if (bonusMovementSpeed<0){
-            bonusMovementSpeed=0;
-        }
+    public void addBonusMovementSpeed(int bonusSpeed) {
+
     }
 
     @Override
@@ -146,6 +143,18 @@ public class Enemy extends Observable implements Character {
     @Override
     public int getTotalMovementSpeed() {
         return movementSpeed+bonusMovementSpeed;
+    }
+
+    @Override
+    public ArrayList<WeaponInterface> getWeaponArray() {
+        ArrayList<WeaponInterface> weaponArray=new ArrayList<WeaponInterface>();
+        weaponArray.add(weapon);
+        return weaponArray;
+    }
+
+    @Override
+    public void resetBonuses() {
+
     }
 
     public PositionInterface getPrevPos(){
@@ -238,7 +247,7 @@ public class Enemy extends Observable implements Character {
         //boolean hasPowerUp = random.nextBoolean();
         boolean hasPowerUp=true;
         if (hasPowerUp){
-            PowerUp powerUp = PowerUpGenerator.generatePowerUp();
+            PowerUpI powerUp = PowerUpGenerator.generatePowerUp();
             powerUp.setPosition(position);
             loot.add(powerUp);
         }

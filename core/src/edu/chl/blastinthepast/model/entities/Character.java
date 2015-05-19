@@ -21,7 +21,9 @@ public interface Character {
     void update(float dt);
     PositionInterface getPrevPos();
     void setPosition(PositionInterface newPosition);
-    void setBonusMovementSpeed(int bonusSpeed);
+    void addBonusMovementSpeed(int bonusSpeed);
     int getBonusMovementSpeed();
     int getTotalMovementSpeed();
+    ArrayList<WeaponInterface> getWeaponArray();
+    void resetBonuses();
 }
