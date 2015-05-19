@@ -76,7 +76,7 @@ public class PlayState extends GameState implements Observer{
         tiledMap = new TmxMapLoader().load("big_grass.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         music = SoundAssets.SANIC_THEME;
-        music.setVolume(0.2f);
+        music.setVolume(Constants.masterVolume);
         music.setLooping(true);
         font = new BitmapFont();
         labelStyle = new Label.LabelStyle();
@@ -110,7 +110,6 @@ public class PlayState extends GameState implements Observer{
             }
         }
     }
-
 
     @Override
     public void update(float dt) {
@@ -255,11 +254,13 @@ public class PlayState extends GameState implements Observer{
     }
 
     public void toggleSound() {
-        if (music.getVolume() == 0) {
-            music.setVolume(0.2f);
+        if (Constants.masterVolume == 0) {
+            Constants.masterVolume = 0.2f;
         } else {
-            music.setVolume(0);
+            Constants.masterVolume = 0;
+
         }
+        music.setVolume(Constants.masterVolume);
     }
 
     public void updateGUIWeapon() {
