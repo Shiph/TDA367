@@ -8,7 +8,6 @@ public class MovementSpeedPowerUp extends PowerUp {
 
     @Override
     public void applyPowerUp() {
-        System.out.println("Maximum speed");
         character.addBonusMovementSpeed(bonus);
     }
 

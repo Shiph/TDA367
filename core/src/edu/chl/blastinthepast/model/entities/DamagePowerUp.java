@@ -11,7 +11,6 @@ public class DamagePowerUp extends PowerUp{
 
     @Override
     public void applyPowerUp() {
-        System.out.println("Maximum strength");
         for (WeaponInterface w : character.getWeaponArray()) {
             w.addBonusDamage(bonus);
         }

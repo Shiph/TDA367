@@ -10,7 +10,7 @@ import javax.swing.Timer;
 /**
  * Created by Shif on 21/04/15.
  */
-public class Weapon implements WeaponInterface {
+public abstract class Weapon implements WeaponInterface {
 
     private Projectile projectile;
     private int magazineCapacity;
@@ -69,7 +69,7 @@ public class Weapon implements WeaponInterface {
         if ((currentTime - latestShot) >= 1000/getTotalFireRate()) {
             latestShot = System.currentTimeMillis();
             bulletsLeftInMagazine--;
-            return new Projectile(new Position(position.getX()+offset.getX(), position.getY()+offset.getY()), direction, bonusDamage);
+            return getNewProjectile();
         }
         return null;
     }
@@ -195,5 +195,7 @@ public class Weapon implements WeaponInterface {
     public void addBonusFireRate(int bonusFireRate) {
         this.bonusFireRate=bonusFireRate;
     }
+
+    public abstract ProjectileInterface getNewProjectile();
 
 }

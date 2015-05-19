@@ -29,4 +29,6 @@ public interface WeaponInterface {
     int getBonusFireRate();
     int getTotalFireRate();
     void resetBonuses();
+    ProjectileInterface getNewProjectile();
+    int getMagazineCapacity();
 }

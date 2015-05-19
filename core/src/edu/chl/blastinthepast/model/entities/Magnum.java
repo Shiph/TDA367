@@ -14,14 +14,8 @@ public class Magnum extends Weapon {
     }
 
     @Override
-    public Projectile fire() {
-        long currentTime = System.currentTimeMillis();
-        if ((currentTime - getLatestShot()) >= 1000/getTotalFireRate()) {
-            setLatestShot(System.currentTimeMillis());
-            setBulletsLeftInMagazine(getbulletsLeftInMagazine()-1);
-            return new MagnumProjectile(getPosWithOffset(), getDirection());
-        }
-        return null;
+    public ProjectileInterface getNewProjectile() {
+        return new MagnumProjectile(getPosWithOffset(), getDirection());
     }
 
     @Override
