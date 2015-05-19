@@ -40,7 +40,7 @@ public class Enemy extends Observable implements Character {
      * Default constructor for Enemy with default movement speed and health.
      */
     public Enemy(Character player, PositionInterface position) {
-        this(150, 6, position, player);
+        this(150, 5, position, player);
     }
 
     public Enemy(int movementSpeed, int health, PositionInterface position, Character player) {
@@ -212,7 +212,9 @@ public class Enemy extends Observable implements Character {
     }
 
     private boolean isPlayerInRange() {
-        if (Math.abs(playerDirectionVector.angle(movementDirectionVector)) < 100) {
+        if (Math.abs(playerDirectionVector.angle(movementDirectionVector)) < 100 &&
+               Math.abs(player.getPosition().getX() - position.getX()) < 300 &&
+                Math.abs(player.getPosition().getY() - position.getY()) < 300) {
             return true;
         }
         return false;
