@@ -313,6 +313,8 @@ public class PlayState extends GameState implements Observer{
                 worldObjects.put(powerUp, new PowerUpView(powerUp, GraphicalAssets.MAGNUM));
             } else if (powerUp instanceof FireRatePowerUp){
                 worldObjects.put(powerUp, new PowerUpView(powerUp, GraphicalAssets.CHESTOPEN));
+            } else if (powerUp instanceof HealthPowerUp){
+                worldObjects.put(powerUp, new PowerUpView(powerUp, GraphicalAssets.BOSSUP));
             }
         }
     }

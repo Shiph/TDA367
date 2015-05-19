@@ -15,6 +15,7 @@ public class PowerUpGenerator {
         powerUps.add(new DamagePowerUp());
         powerUps.add(new MovementSpeedPowerUp());
         powerUps.add(new FireRatePowerUp());
+        powerUps.add(new HealthPowerUp());
 
         return powerUps.get(random.nextInt(powerUps.size()));
     }

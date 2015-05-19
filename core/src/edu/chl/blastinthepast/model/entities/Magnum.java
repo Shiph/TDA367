@@ -15,7 +15,7 @@ public class Magnum extends Weapon {
 
     @Override
     public ProjectileInterface getNewProjectile() {
-        return new MagnumProjectile(getPosWithOffset(), getDirection());
+        return new MagnumProjectile(getPosWithOffset(), getDirection(), getBonusDamage());
     }
 
     @Override

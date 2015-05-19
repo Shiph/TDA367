@@ -10,18 +10,21 @@ public abstract class PowerUp implements PowerUpI{
     private PositionInterface position;
     private long activationTime=0;
     private boolean hasExpired=false;
+    private boolean firstUpdate=true;
     protected int duration=10*1000;
     protected Character character;
 
     public void init(Character character){
         this.character=character;
-        activationTime=System.currentTimeMillis();
     }
 
     @Override
     public void update(){
         if (System.currentTimeMillis() - activationTime < duration){
             applyPowerUp();
+        } else if (firstUpdate){
+            applyPowerUp();
+            firstUpdate=false;
         } else {
             hasExpired=true;
         }
