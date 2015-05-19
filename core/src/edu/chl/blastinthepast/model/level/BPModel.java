@@ -22,6 +22,7 @@ public class BPModel extends Observable implements Observer {
     private Chest chest;
     private boolean isPaused;
     private ArrayList<PowerUpI> powerUps=new ArrayList<PowerUpI>();
+    private boolean playerBlocked = false;
 
     public BPModel() {
         chest = new Chest(new Magnum(new Position(300,300), new Vector2()));
@@ -173,6 +174,10 @@ public class BPModel extends Observable implements Observer {
         }
     }
 
+    public void playerCollision() {
+        player.setPosition(player.getPrevPos());
+    }
+
     public void hit(Character character, ProjectileInterface projectile){ //collision for bullets
         if (!character.getProjectiles().contains(projectile)) {
             character.setHealth(character.getHealth() - projectile.getDamage());
@@ -261,33 +266,4 @@ public class BPModel extends Observable implements Observer {
         return isPaused;
     }
 
-    /*
-    public boolean playerMovesOutsideMap(String direction) {
-        switch (direction) {
-            case "west":
-                if (player.getPosition().getX() <= 0) {
-                    return true;
-                }
-                break;
-            case "east":
-                if (player.getPosition().getX() >= Constants.MAP_WIDTH) {
-                    return true;
-                }
-                break;
-            case "north":
-                if (player.getPosition().getY() >= Constants.MAP_HEIGHT) {
-                    return true;
-                }
-                break;
-            case "south":
-                if (player.getPosition().getY() <= 0) {
-                    return true;
-                }
-                break;
-            default:
-                return false;
-        }
-        return false;
-    }
-    */
 }

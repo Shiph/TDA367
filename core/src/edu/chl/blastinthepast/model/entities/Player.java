@@ -24,6 +24,7 @@ public class Player extends Observable implements Character {
     private Vector2 aimDirection = new Vector2(1,0);
     private ArrayList<ProjectileInterface> projectiles;
     private int bonusMovementSpeed;
+    private boolean blockedWest, blockedEast, blockedNorth, blockedSouth = false;
 
     /**
      * Default constructor for Player with default movement speed and health.
@@ -165,7 +166,10 @@ public class Player extends Observable implements Character {
             die();
         }
         weapon.setPosition(position);
-        move(dt);
+        if (!(blockedEast || blockedNorth || blockedSouth || blockedWest)) {
+            move(dt);
+        }
+
         if (shooting) {
             shoot();
         }
@@ -174,7 +178,6 @@ public class Player extends Observable implements Character {
         }
         resetBonuses();
     }
-
 
     public void die() {
         setChanged();
@@ -268,4 +271,25 @@ public class Player extends Observable implements Character {
         bonusMovementSpeed=0;
     }
 
+    public void block() {
+        if (north) {
+            blockedNorth = true;
+        }
+        if (south) {
+            blockedSouth = true;
+        }
+        if (east) {
+            blockedEast = true;
+        }
+        if (west) {
+            blockedWest = true;
+        }
+    }
+
+    public void unBlock() {
+        blockedNorth = false;
+        blockedSouth = false;
+        blockedEast = false;
+        blockedWest = false;
+    }
 }

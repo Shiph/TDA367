@@ -14,6 +14,7 @@ public class MockWeapon implements WeaponInterface {
     private MockProjectile projectile = new MockProjectile();
     private MockPosition position = new MockPosition();
     private Vector2 direction = new Vector2();
+    private int magazineCapacity;
     private int ammo = 100;
     private int bulletsInMag = 10;
 
@@ -101,7 +102,11 @@ public class MockWeapon implements WeaponInterface {
 
     @Override
     public void addBonusDamage(int bonusDamage) {
+    }
 
+    @Override
+    public int getMagazineCapacity() {
+        return magazineCapacity;
     }
 
     @Override
@@ -127,11 +132,6 @@ public class MockWeapon implements WeaponInterface {
     @Override
     public ProjectileInterface getNewProjectile() {
         return null;
-    }
-
-    @Override
-    public int getMagazineCapacity() {
-        return 0;
     }
 
     @Override
