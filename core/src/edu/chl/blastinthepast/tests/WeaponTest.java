@@ -3,6 +3,8 @@ package edu.chl.blastinthepast.tests;
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.entities.Projectile;
 import edu.chl.blastinthepast.model.entities.Weapon;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -11,7 +13,12 @@ import static org.junit.Assert.*;
  */
 public class WeaponTest {
 
-    Weapon weapon = new Weapon(new MockPosition(), new Vector2(0,0), 0, 1000, 20, 150, new MockPosition());
+    Weapon weapon;
+
+    @Before
+    public void setUp() {
+        weapon = new Weapon(new MockPosition(), new Vector2(0,0), 0, 1000, 20, 150, new MockPosition());
+    }
 
     /**
      * Tests that the pull trigger-method returns an instance of a projectile, which it should unless you're out of ammo.
@@ -42,5 +49,8 @@ public class WeaponTest {
         }
         assertTrue(weapon.getbulletsLeftInMagazine() == 0);
     }
+
+    @After
+    public void tearDown() {}
 
 }

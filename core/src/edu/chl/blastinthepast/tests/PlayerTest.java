@@ -6,7 +6,6 @@ import edu.chl.blastinthepast.utils.Position;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import static org.junit.Assert.*;
 
 /**
