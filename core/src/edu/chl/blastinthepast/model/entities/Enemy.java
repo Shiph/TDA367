@@ -51,7 +51,6 @@ public abstract class Enemy extends Observable implements Character {
         timer.setRepeats(true);
         timer.start();
         projectiles=new ArrayList<ProjectileInterface>();
-        generateLoot();
     }
 
     public void move(float dt) {
@@ -241,7 +240,9 @@ public abstract class Enemy extends Observable implements Character {
     public abstract void generateLoot();
 
 
-    public ArrayList<Object> die(){
+    public ArrayList<Object> die()
+    {
+        generateLoot();
         return loot;
     }
 
