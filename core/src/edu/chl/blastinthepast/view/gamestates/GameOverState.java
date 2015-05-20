@@ -137,6 +137,10 @@ public class GameOverState extends GameState{
         newName = new char[] {'A', 'A', 'A'};
         currentChar = 0;
         score = 0;
+        batch.dispose();
+        texture.dispose();
+        font.dispose();
+        gameOverFont.dispose();
     }
 
 }

@@ -73,7 +73,8 @@ public class HighScoreState extends GameState {
     }
 
     @Override
-    public void dispose() {}
+    public void dispose() {
+    }
 
     @Override
     public void update(float dt) {}

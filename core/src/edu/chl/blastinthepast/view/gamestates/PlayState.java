@@ -57,11 +57,9 @@ public class PlayState extends GameState implements Observer{
     private TiledMapTileLayer collisionLayer;
     private float tileWidth, tileHeight;
     private boolean playerBlocked = false;
-    private LevelInterface level;
 
     public PlayState(GameStateManager gsm, BPModel model, LevelInterface level) {
         super(gsm, model, level);
-        this.level = level;
     }
 
     @Override
@@ -70,7 +68,6 @@ public class PlayState extends GameState implements Observer{
     @Override
     public void init(BPModel model, LevelInterface level) {
         this.model = model;
-        this.level = level;
         chestView = new ChestView(model.getChest());
         model.addObserver(this);
         worldObjects = new HashMap <Object, WorldObject>();
