@@ -2,6 +2,7 @@ package edu.chl.blastinthepast.model.level;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.Ammunition;
+import edu.chl.blastinthepast.model.EnemyFactory;
 import edu.chl.blastinthepast.model.entities.*;
 import edu.chl.blastinthepast.model.entities.Character;
 import edu.chl.blastinthepast.utils.Constants;
@@ -14,6 +15,7 @@ import java.util.*;
 public class BPModel extends Observable implements Observer {
 
     private Player player;
+    private EnemyFactory enemyFactory;
     private ArrayList<ProjectileInterface> projectiles = new ArrayList<ProjectileInterface>();
     private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     private ArrayList<Object> dropList = new ArrayList<Object>();
@@ -24,9 +26,10 @@ public class BPModel extends Observable implements Observer {
     private ArrayList<PowerUpI> powerUps=new ArrayList<PowerUpI>();
 
     public BPModel() {
-        chest = new Chest(new Magnum(new Position(300,300), new Vector2()));
+        chest = new Chest(new Magnum(new Position(1000,1500), new Vector2()));
         characters = new ArrayList<Character>();
         player = new Player();
+        enemyFactory = new EnemyFactory();
         setChanged();
         notifyObservers(player);
         player.addObserver(this);
@@ -34,7 +37,7 @@ public class BPModel extends Observable implements Observer {
     }
 
     public void spawnBoss(Position pos) {
-        boss = new Boss(player, pos);
+        boss = (Boss)enemyFactory.getEnemy("Boss", player);
         boss.addObserver(this);
         enemies.add(boss);
         characters.add(boss);
@@ -44,7 +47,7 @@ public class BPModel extends Observable implements Observer {
 
     public void spawnEnemies(int amount) {
         for (int i = 0; i < amount; i++) {
-            Enemy e = new Enemy(player, new Position(0, 0));
+            Enemy e = enemyFactory.getEnemy("Pleb", player);
             enemies.add(e);
             characters.add(e);
             setChanged();
@@ -103,14 +106,14 @@ public class BPModel extends Observable implements Observer {
     }
 
     private void removeDeadEnemies(){
-        Iterator<Enemy> iter= enemies.iterator();
+        Iterator<Enemy> iter = enemies.iterator();
         while (iter.hasNext()){
             Enemy e=iter.next();
-            if (e.getHealth()<=0) {
+            if (e.getHealth() <= 0) {
                 ArrayList<Object> drop = e.die();
-                if(e instanceof Boss) {
+                if(e.toString().equals("Boss")) {
                     player.setScore(player.getScore() + 50);
-                } else if (e instanceof Enemy) {
+                } else if (e.toString().equals("Pleb")) {
                     player.setScore(player.getScore() + 10);
                 }
                 if (drop!=null){
@@ -134,7 +137,7 @@ public class BPModel extends Observable implements Observer {
 
     private void spawnEnemies() {
         for (int i = 0; i < 5; i++) {
-            Enemy e = new Enemy(player, new Position(0, 0));
+            Enemy e = enemyFactory.getEnemy("Pleb", player);
             enemies.add(e);
             characters.add(e);
             setChanged();

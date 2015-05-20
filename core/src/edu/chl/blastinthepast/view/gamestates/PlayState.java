@@ -25,8 +25,6 @@ import edu.chl.blastinthepast.utils.GraphicalAssets;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.SoundAssets;
 import edu.chl.blastinthepast.view.*;
-import edu.chl.blastinthepast.view.characterviews.BossView;
-import edu.chl.blastinthepast.view.characterviews.EnemyView;
 import edu.chl.blastinthepast.view.characterviews.PlayerView;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -41,6 +39,7 @@ public class PlayState extends GameState implements Observer{
     private BPModel model;
     private PlayerView playerView;
     private ChestView chestView;
+    private EnemyViewFactory enemyViewFactory;
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private TiledMapRenderer tiledMapRenderer;
@@ -69,6 +68,7 @@ public class PlayState extends GameState implements Observer{
     public void init(BPModel model, LevelInterface level) {
         this.model = model;
         chestView = new ChestView(model.getChest());
+        enemyViewFactory = new EnemyViewFactory();
         model.addObserver(this);
         worldObjects = new HashMap <Object, WorldObject>();
         worldObjectsRemoveList = new ArrayList<Object>();
@@ -105,19 +105,7 @@ public class PlayState extends GameState implements Observer{
         music.stop();
         music.play();
         setCrosshairCursor();
-        for (Character c : model.getCharacters()){
-            if (c instanceof Player) {
-                Player p = (Player) c;
-                playerView = new PlayerView(p);
-                worldObjects.put(p, playerView);
-            } else if (c instanceof Boss) {
-                Boss b = (Boss) c;
-                worldObjects.put(b, new BossView(b));
-            } else if (c instanceof Enemy){
-                Enemy e= (Enemy)c;
-                worldObjects.put(e, new EnemyView(e));
-            }
-        }
+        spawnCharacterViews();
     }
 
     @Override
@@ -186,6 +174,19 @@ public class PlayState extends GameState implements Observer{
             i.setSize(32, 32);
         }
         batch.end();
+    }
+
+    public void spawnCharacterViews() {
+        for (Character c : model.getCharacters()) {
+            if(c.toString().equals("Player")) {
+                Player p = (Player) c;
+                playerView = new PlayerView(p);
+                worldObjects.put(p, playerView);
+            } else {
+                Enemy e = (Enemy) c;
+                worldObjects.put(e, enemyViewFactory.getEnemyView(e.toString(), e));
+            }
+        }
     }
 
     public void checkForCollision(){
@@ -317,12 +318,11 @@ public class PlayState extends GameState implements Observer{
 
     public void checkIfCharacter(Observable o, Object arg){
         if (arg instanceof Character){
-            if (arg instanceof Boss){
-                worldObjects.put(arg, new BossView((Boss)arg));
-            } else if (arg instanceof Enemy){
-                worldObjects.put(arg, new EnemyView((Enemy)arg));
-            }  else if (arg instanceof Player){
+            if(arg.toString().equals("Player")) {
                 worldObjects.put(arg, new PlayerView((Player)arg));
+            } else {
+                Enemy e = (Enemy)arg;
+                worldObjects.put(arg, enemyViewFactory.getEnemyView(e.toString(), e));
             }
         }
     }

@@ -298,4 +298,9 @@ public class Player extends Observable implements Character {
             weapon.reload();
         }
     }
+
+    @Override
+    public String toString() {
+        return "Player";
+    }
 }
