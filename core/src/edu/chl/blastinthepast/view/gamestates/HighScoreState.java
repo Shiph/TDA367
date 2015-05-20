@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import edu.chl.blastinthepast.model.level.BPModel;
+import edu.chl.blastinthepast.model.level.LevelInterface;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 import edu.chl.blastinthepast.utils.HighScoreHandler;
@@ -31,10 +32,12 @@ public class HighScoreState extends GameState {
 
     public HighScoreState(GameStateManager gsm, BPModel model) {
         super(gsm, model);
-        this.gsm = gsm;
-        init(model);
     }
 
+    @Override
+    public void init(BPModel model, LevelInterface level) {}
+
+    @Override
     public void init(BPModel model) {
         texture = GraphicalAssets.HIGHSCORE;
         texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
@@ -50,6 +53,7 @@ public class HighScoreState extends GameState {
         names = highScoreHandler.gameData.getNames();
     }
 
+    @Override
     public void draw() {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.update();
@@ -68,10 +72,10 @@ public class HighScoreState extends GameState {
         batch.end();
     }
 
+    @Override
     public void dispose() {}
 
+    @Override
     public void update(float dt) {}
-
-    public void handleInput() {}
 
 }

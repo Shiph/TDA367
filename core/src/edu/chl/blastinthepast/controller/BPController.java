@@ -39,9 +39,9 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
         inputHandler = new InputHandler();
         inputHandler.addListener(this);
         Gdx.input.setInputProcessor(inputHandler);
-        gsm = new GameStateManager(model);
+        //levelManager = new LevelManager();
+        gsm = new GameStateManager(model, levelManager);
         gsm.addListener(this);
-        //levelManager = new LevelManager(model);
     }
 
     public static BPController createController() {
@@ -186,6 +186,7 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                 gsm.setModel(model);
                 if (levelManager == null) {
                     levelManager = new LevelManager(new LevelOne(model));
+                    gsm.setLevelManager(levelManager);
                 } else {
                     levelManager.setLevel(new LevelOne(model));
                 }

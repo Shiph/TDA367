@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import edu.chl.blastinthepast.model.level.BPModel;
+import edu.chl.blastinthepast.model.level.LevelInterface;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 
@@ -21,7 +22,6 @@ public class InGameMenu extends GameState {
     private SpriteBatch batch;
     private BitmapFont font;
     private OrthographicCamera camera;
-    private GameStateManager gsm;
     private int currentItem;
     private String[] menuItems;
     private Sprite sprite;
@@ -32,14 +32,16 @@ public class InGameMenu extends GameState {
     private Image soundImage;
     private Texture soundTexture;
 
-    public InGameMenu (GameStateManager gsm, BPModel model) {
+    public InGameMenu (GameStateManager gsm, BPModel model ) {
         super(gsm, model);
-        this.gsm = gsm;
         currentItem = 0;
     }
 
     @Override
-    public void init(BPModel model) {
+    public void init(BPModel model, LevelInterface level) {}
+
+    @Override
+    public void init(BPModel mode ) {
         texture = GraphicalAssets.INGAMEMENU;
         texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         sprite = new Sprite(texture);
@@ -59,9 +61,9 @@ public class InGameMenu extends GameState {
     }
 
     @Override
-    public void update(float dt) {
-    }
+    public void update(float dt) {}
 
+    @Override
     public void draw() {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.update();
@@ -81,10 +83,6 @@ public class InGameMenu extends GameState {
         soundImage.draw(batch, 1);
         soundTextLabel.draw(batch, 1);
         batch.end();
-    }
-
-    @Override
-    public void handleInput() {
     }
 
     public void select() {

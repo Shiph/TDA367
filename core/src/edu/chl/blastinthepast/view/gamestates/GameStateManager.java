@@ -2,7 +2,7 @@ package edu.chl.blastinthepast.view.gamestates;
 
 import com.badlogic.gdx.Gdx;
 import edu.chl.blastinthepast.model.level.BPModel;
-
+import edu.chl.blastinthepast.model.level.LevelManager;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -26,9 +26,11 @@ public class GameStateManager {
     public static final int HIGHSCORES = 5;
     public static final int GAMEOVER = 6;
     private PropertyChangeSupport pcs;
+    private LevelManager levelManager;
 
-    public GameStateManager(BPModel model) {
+    public GameStateManager(BPModel model, LevelManager levelManager) {
         this.model = model;
+        this.levelManager = levelManager;
         mainMenu = new MainMenu(this, model);
         inGameMenu = new InGameMenu(this, model);
         highScoreState = new HighScoreState(this, model);
@@ -54,7 +56,7 @@ public class GameStateManager {
             case PLAY:
                 if(!inGame) {
                     mainMenu.dispose();
-                    playState = new PlayState(this, model);
+                    playState = new PlayState(this, model, levelManager.getLevel());
                     gameState = playState;
                 } else {
                     gameState = playState;
@@ -116,6 +118,10 @@ public class GameStateManager {
 
     public void setModel(BPModel model) {
         this.model = model;
+    }
+
+    public void setLevelManager(LevelManager levelManager) {
+        this.levelManager = levelManager;
     }
 
 }

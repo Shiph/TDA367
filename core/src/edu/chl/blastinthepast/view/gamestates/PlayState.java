@@ -18,6 +18,8 @@ import edu.chl.blastinthepast.model.Ammunition;
 import edu.chl.blastinthepast.model.entities.*;
 import edu.chl.blastinthepast.model.entities.Character;
 import edu.chl.blastinthepast.model.level.BPModel;
+import edu.chl.blastinthepast.model.level.LevelInterface;
+import edu.chl.blastinthepast.model.level.LevelOne;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 import edu.chl.blastinthepast.utils.Position;
@@ -55,14 +57,20 @@ public class PlayState extends GameState implements Observer{
     private TiledMapTileLayer collisionLayer;
     private float tileWidth, tileHeight;
     private boolean playerBlocked = false;
+    private LevelInterface level;
 
-    public PlayState(GameStateManager gsm, BPModel model) {
-        super(gsm, model);
+    public PlayState(GameStateManager gsm, BPModel model, LevelInterface level) {
+        super(gsm, model, level);
+        this.level = level;
     }
 
     @Override
-    public void init(BPModel model) {
+    public void init(BPModel model) {}
+
+    @Override
+    public void init(BPModel model, LevelInterface level) {
         this.model = model;
+        this.level = level;
         chestView = new ChestView(model.getChest());
         model.addObserver(this);
         worldObjects = new HashMap <Object, WorldObject>();
@@ -75,7 +83,9 @@ public class PlayState extends GameState implements Observer{
         camera.update();
         camera.position.set(Constants.MAP_WIDTH / 2, Constants.MAP_HEIGHT / 2, 0);
         camera.update();
-        tiledMap = new TmxMapLoader().load("big_grass.tmx");
+        if (level instanceof LevelOne) {
+            tiledMap = new TmxMapLoader().load("big_grass.tmx");
+        }
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         collisionLayer = (TiledMapTileLayer)tiledMap.getLayers().get(1);
         tileWidth = collisionLayer.getTileWidth();
@@ -94,7 +104,6 @@ public class PlayState extends GameState implements Observer{
             heartIcons.add(new Image(heartTexture));
         }
         updateHeartPositions();
-
         pcs=new PropertyChangeSupport(this);
         music.stop();
         music.play();
@@ -217,9 +226,6 @@ public class PlayState extends GameState implements Observer{
             }
         }
     }
-
-    @Override
-    public void handleInput() {}
 
     @Override
     public void dispose() {
@@ -348,4 +354,5 @@ public class PlayState extends GameState implements Observer{
             }
         }
     }
+
 }

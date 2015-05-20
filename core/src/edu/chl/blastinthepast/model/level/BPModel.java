@@ -22,7 +22,6 @@ public class BPModel extends Observable implements Observer {
     private Chest chest;
     private boolean isPaused;
     private ArrayList<PowerUpI> powerUps=new ArrayList<PowerUpI>();
-    private boolean playerBlocked = false;
 
     public BPModel() {
         chest = new Chest(new Magnum(new Position(300,300), new Vector2()));
@@ -172,10 +171,6 @@ public class BPModel extends Observable implements Observer {
             Player player = (Player) o2;
             pickUpPowerUp(powerUp, player);
         }
-    }
-
-    public void playerCollision() {
-        player.setPosition(player.getPrevPos());
     }
 
     public void hit(Character character, ProjectileInterface projectile){ //collision for bullets

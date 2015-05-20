@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import edu.chl.blastinthepast.model.level.BPModel;
+import edu.chl.blastinthepast.model.level.LevelInterface;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 import edu.chl.blastinthepast.utils.HighScoreHandler;
 
@@ -34,6 +34,10 @@ public class GameOverState extends GameState{
         super(gsm, model);
     }
 
+    @Override
+    public void init(BPModel model, LevelInterface level) {}
+
+    @Override
     public void init(BPModel model) {
         texture = GraphicalAssets.GAMEOVER;
         texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
@@ -45,6 +49,7 @@ public class GameOverState extends GameState{
         batch = new SpriteBatch();
     }
 
+    @Override
     public void update(float dt) {}
 
     public void setScore(int score) {
@@ -52,6 +57,7 @@ public class GameOverState extends GameState{
         newHighScore = HighScoreHandler.gameData.isHighScore(score);
     }
 
+    @Override
     public void draw() {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.update();
@@ -80,8 +86,6 @@ public class GameOverState extends GameState{
 
         batch.end();
     }
-
-    public void handleInput() {}
 
     public void select() {
         if(newHighScore) {
@@ -128,6 +132,7 @@ public class GameOverState extends GameState{
         draw();
     }
 
+    @Override
     public void dispose() {
         newName = new char[] {'A', 'A', 'A'};
         currentChar = 0;

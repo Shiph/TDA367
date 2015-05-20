@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import edu.chl.blastinthepast.model.level.BPModel;
+import edu.chl.blastinthepast.model.level.LevelInterface;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 import edu.chl.blastinthepast.utils.SoundAssets;
 
@@ -20,7 +21,6 @@ public class MainMenu extends GameState {
     private BitmapFont titleFont;
     private BitmapFont font;
     private OrthographicCamera camera;
-    private GameStateManager gsm;
     private final String title = "blast in the past";
     private int currentItem;
     private Texture texture;
@@ -30,9 +30,11 @@ public class MainMenu extends GameState {
 
     public MainMenu(GameStateManager gsm, BPModel model) {
         super(gsm, model);
-        this.gsm = gsm;
         currentItem = 0;
     }
+
+    @Override
+    public void init(BPModel model, LevelInterface level) {}
 
     @Override
     public void init(BPModel model) {
@@ -51,10 +53,12 @@ public class MainMenu extends GameState {
         menuItems = new String[]{"New game", "Load game", "Highscores", "Options", "Quit"};
     }
 
+    @Override
     public void update(float dt) {
         music.play();
     }
 
+    @Override
     public void draw() {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.update();
@@ -76,9 +80,6 @@ public class MainMenu extends GameState {
         batch.end();
     }
 
-    public void handleInput() {
-    }
-
     public void select() {
         if(currentItem == 0) {
             //gsm.setState(GameStateManager.PLAY, false);
@@ -95,6 +96,7 @@ public class MainMenu extends GameState {
         }
     }
 
+    @Override
     public void dispose() {
         music.stop();
     }
