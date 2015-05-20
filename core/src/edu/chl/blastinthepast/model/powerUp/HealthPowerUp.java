@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.model.entities;
+package edu.chl.blastinthepast.model.powerUp;
 
 /**
  * Created by jonas on 2015-05-19.

@@ -1,4 +1,6 @@
-package edu.chl.blastinthepast.model.entities;
+package edu.chl.blastinthepast.model.powerUp;
+
+import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 
 import java.lang.*;
 

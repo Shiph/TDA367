@@ -1,7 +1,9 @@
-package edu.chl.blastinthepast.model.entities;
+package edu.chl.blastinthepast.model.enemy;
 
 import com.badlogic.gdx.math.Vector2;
-import edu.chl.blastinthepast.model.Ammunition;
+import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
+import edu.chl.blastinthepast.model.weapon.AK47;
+import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
@@ -17,9 +19,9 @@ import java.util.Random;
 /**
  * Created by Mattias on 15-04-21.
  */
-public abstract class Enemy extends Observable implements Character {
+public abstract class Enemy extends Observable implements edu.chl.blastinthepast.model.player.Character {
 
-    private final Character player;
+    private final edu.chl.blastinthepast.model.player.Character player;
     private int health;
     private int movementSpeed;
     private PositionInterface position;
@@ -35,7 +37,7 @@ public abstract class Enemy extends Observable implements Character {
     private ArrayList<Object> loot;
     private int bonusMovementSpeed=0;
 
-    public Enemy(int movementSpeed, int health, Character player) {
+    public Enemy(int movementSpeed, int health, edu.chl.blastinthepast.model.player.Character player) {
         loot= new ArrayList<Object>();
         this.movementSpeed = movementSpeed;
         this.health = health;

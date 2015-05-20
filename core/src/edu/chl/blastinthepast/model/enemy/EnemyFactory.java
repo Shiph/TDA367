@@ -1,9 +1,9 @@
-package edu.chl.blastinthepast.model;
+package edu.chl.blastinthepast.model.enemy;
 
-import edu.chl.blastinthepast.model.entities.Boss;
-import edu.chl.blastinthepast.model.entities.Enemy;
-import edu.chl.blastinthepast.model.entities.Character;
-import edu.chl.blastinthepast.model.entities.Pleb;
+import edu.chl.blastinthepast.model.enemy.Boss;
+import edu.chl.blastinthepast.model.enemy.Enemy;
+import edu.chl.blastinthepast.model.player.Character;
+import edu.chl.blastinthepast.model.enemy.Pleb;
 
 /**
  * Created by MattiasJ on 2015-05-20.

@@ -1,6 +1,6 @@
 package edu.chl.blastinthepast.view;
 
-import edu.chl.blastinthepast.model.entities.Enemy;
+import edu.chl.blastinthepast.model.enemy.Enemy;
 import edu.chl.blastinthepast.view.characterviews.BossView;
 import edu.chl.blastinthepast.view.characterviews.EnemyView;
 import edu.chl.blastinthepast.view.characterviews.PlebView;

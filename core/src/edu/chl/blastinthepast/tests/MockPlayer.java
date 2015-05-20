@@ -1,8 +1,8 @@
 package edu.chl.blastinthepast.tests;
 
-import edu.chl.blastinthepast.model.entities.Character;
-import edu.chl.blastinthepast.model.entities.ProjectileInterface;
-import edu.chl.blastinthepast.model.entities.WeaponInterface;
+import edu.chl.blastinthepast.model.player.Character;
+import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
+import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
 

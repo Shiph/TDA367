@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import edu.chl.blastinthepast.model.entities.WeaponInterface;
+import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 
 /**
  * Created by jonas on 2015-04-23.

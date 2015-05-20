@@ -1,9 +1,15 @@
-package edu.chl.blastinthepast.model.entities;
+package edu.chl.blastinthepast.model.player;
 
 import com.badlogic.gdx.math.Vector2;
+import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
+import edu.chl.blastinthepast.model.weapon.AK47;
+import edu.chl.blastinthepast.model.weapon.Magnum;
+import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
+
+import java.lang.*;
 import java.util.ArrayList;
 import java.util.Observable;
 

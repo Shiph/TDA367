@@ -1,5 +1,6 @@
-package edu.chl.blastinthepast.model.entities;
+package edu.chl.blastinthepast.model.chest;
 
+import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.utils.PositionInterface;
 
 /**
@@ -15,7 +16,7 @@ public class Chest implements ChestInterface{
         position = weapon.getPosition();
     }
 
-    public WeaponInterface open(Character character) {
+    public WeaponInterface open(edu.chl.blastinthepast.model.player.Character character) {
             isOpen = true;
             return weapon;
     }

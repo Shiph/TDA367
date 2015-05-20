@@ -1,6 +1,8 @@
-package edu.chl.blastinthepast.model.entities;
+package edu.chl.blastinthepast.model.weapon;
 
 import com.badlogic.gdx.math.Vector2;
+import edu.chl.blastinthepast.model.projectile.AK47Projectile;
+import edu.chl.blastinthepast.model.projectile.Projectile;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
 

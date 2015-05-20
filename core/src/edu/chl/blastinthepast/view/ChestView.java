@@ -9,7 +9,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import edu.chl.blastinthepast.model.entities.Chest;
+import edu.chl.blastinthepast.model.chest.Chest;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 
 import java.util.ArrayList;

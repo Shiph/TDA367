@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.model.entities;
+package edu.chl.blastinthepast.model.powerUp;
 
 import java.util.ArrayList;
 import java.util.Random;

@@ -1,6 +1,7 @@
-package edu.chl.blastinthepast.model.entities;
+package edu.chl.blastinthepast.model.powerUp;
 
 
+import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.utils.PositionInterface;
 
 /**
@@ -12,7 +13,7 @@ public abstract class PowerUp implements PowerUpI{
     private boolean hasExpired=false;
     private boolean firstUpdate=true;
     protected int duration=10*1000;
-    protected Character character;
+    protected edu.chl.blastinthepast.model.player.Character character;
 
     public void init(Character character){
         this.character=character;

@@ -1,6 +1,9 @@
-package edu.chl.blastinthepast.model.entities;
+package edu.chl.blastinthepast.model.enemy;
 
-import edu.chl.blastinthepast.model.Ammunition;
+import edu.chl.blastinthepast.model.ammunition.Ammunition;
+import edu.chl.blastinthepast.model.player.Character;
+import edu.chl.blastinthepast.model.powerUp.PowerUpGenerator;
+import edu.chl.blastinthepast.model.powerUp.PowerUpI;
 
 import java.util.Random;
 

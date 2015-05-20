@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.model.entities;
+package edu.chl.blastinthepast.model.powerUp;
 
 import edu.chl.blastinthepast.utils.PositionInterface;
 
@@ -7,7 +7,7 @@ import edu.chl.blastinthepast.utils.PositionInterface;
  */
 public interface PowerUpI {
 
-    void init(Character character);
+    void init(edu.chl.blastinthepast.model.player.Character character);
 
     void update();
 

@@ -1,7 +1,9 @@
-package edu.chl.blastinthepast.model.entities;
+package edu.chl.blastinthepast.model.player;
 
 import java.util.ArrayList;
 
+import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
+import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.utils.PositionInterface;
 
 /**

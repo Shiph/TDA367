@@ -1,6 +1,6 @@
-package edu.chl.blastinthepast.model;
+package edu.chl.blastinthepast.model.ammunition;
 
-import edu.chl.blastinthepast.model.entities.ProjectileInterface;
+import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
 import edu.chl.blastinthepast.utils.PositionInterface;
 
 /**
