@@ -20,7 +20,7 @@ import java.util.ArrayList;
 /**
  * Created by jonas on 2015-04-23.
  */
-public class EnemyView implements CharacterView, WorldObject {
+public abstract class EnemyView implements CharacterView, WorldObject {
     private Texture texture;
     private Sprite sprite;
     private static final int DELAY = 2500;
@@ -29,32 +29,22 @@ public class EnemyView implements CharacterView, WorldObject {
     private WeaponView weaponView;
     private boolean collision;
 
-    public EnemyView(Enemy enemy) {
+    public EnemyView(Enemy enemy, Texture texture) {
         this.enemy = enemy;
-        texture = GraphicalAssets.ENEMYDOWN;
+        this.texture = texture;
         sprite = new Sprite(texture);
         weaponView = new AK47View(enemy.getCurrentWeapon());
         rectangle = new ArrayList<Rectangle>();
         rectangle.add(new Rectangle());
-        //rectangle.get(0).x = Constants.CAMERA_WIDTH/2 - 64/2;
-        //rectangle.get(0).y = Constants.CAMERA_HEIGHT/2 - 64/2;
         rectangle.get(0).height = getSprite().getHeight();
         rectangle.get(0).width = getSprite().getWidth();
-        //sprite.setX(rectangle.get(0).x);
-        //sprite.setY(rectangle.get(0).y);
         collision = false;
     }
 
-    /**
-     * @return the texture of the player character.
-     */
     public Texture getTexture() {
         return texture;
     }
 
-    /**
-     * @return the rectangle of the player character.
-     */
     public ArrayList<Rectangle> getRectangles() {
         return rectangle;
     }
@@ -66,9 +56,6 @@ public class EnemyView implements CharacterView, WorldObject {
 
     public void setRectangle(Rectangle rectangle) {}
 
-    /**
-     * @return the sprite of the player character.
-     */
     public Sprite getSprite() {
         return sprite;
     }
@@ -114,24 +101,7 @@ public class EnemyView implements CharacterView, WorldObject {
         updateDirection();
     }
 
-    public void updateDirection() {
-        try {
-            switch (enemy.getMovementDirection()) {
-                case 0:
-                    sprite.setTexture(GraphicalAssets.ENEMYLEFT);
-                    break;
-                case 1:
-                    sprite.setTexture(GraphicalAssets.ENEMYRIGHT);
-                    break;
-                case 2:
-                    sprite.setTexture(GraphicalAssets.ENEMYUP);
-                    break;
-                case 3:
-                    sprite.setTexture(GraphicalAssets.ENEMYDOWN);
-                    break;
-            }
-        } catch (NullPointerException e) {}
-    }
+    public abstract void updateDirection();
 
     public void setCollision () {
         collision ^= true;

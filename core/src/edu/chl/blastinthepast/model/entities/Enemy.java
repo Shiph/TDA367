@@ -5,7 +5,6 @@ import edu.chl.blastinthepast.model.Ammunition;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,7 +17,7 @@ import java.util.Random;
 /**
  * Created by Mattias on 15-04-21.
  */
-public class Enemy extends Observable implements Character {
+public abstract class Enemy extends Observable implements Character {
 
     private final Character player;
     private int health;
@@ -36,19 +35,12 @@ public class Enemy extends Observable implements Character {
     private ArrayList<Object> loot;
     private int bonusMovementSpeed=0;
 
-    /**
-     * Default constructor for Enemy with default movement speed and health.
-     */
-    public Enemy(Character player, PositionInterface position) {
-        this(150, 5, position, player);
-    }
-
-    public Enemy(int movementSpeed, int health, PositionInterface position, Character player) {
+    public Enemy(int movementSpeed, int health, Character player) {
         loot= new ArrayList<Object>();
         this.movementSpeed = movementSpeed;
         this.health = health;
         this.player = player;
-        this.position = position;
+        position = new Position(0,0);
         actionListener = new MyActionListener();
         Random r = new Random();
         movementDirection = r.nextInt(4);
@@ -114,6 +106,10 @@ public class Enemy extends Observable implements Character {
         this.weapon = weapon;
     }
 
+    public WeaponInterface getWeapon() {
+        return weapon;
+    }
+
     public int getHealth() {
         return health;
     }
@@ -155,6 +151,10 @@ public class Enemy extends Observable implements Character {
     @Override
     public void resetBonuses() {
 
+    }
+
+    public ArrayList<Object> getLoot() {
+        return loot;
     }
 
     public PositionInterface getPrevPos(){
@@ -238,22 +238,7 @@ public class Enemy extends Observable implements Character {
         return projectiles;
     }
 
-    public void generateLoot(){
-        Random random = new Random();
-        boolean hasAmmo=random.nextBoolean();
-        if (hasAmmo) {
-            int amount = random.nextInt(4)*10+20;
-            Ammunition ammo = new Ammunition(position, weapon.getProjectile(), amount);
-            loot.add(ammo);
-        }
-        //boolean hasPowerUp = random.nextBoolean();
-        boolean hasPowerUp=true;
-        if (hasPowerUp){
-            PowerUpI powerUp = PowerUpGenerator.generatePowerUp();
-            powerUp.setPosition(position);
-            loot.add(powerUp);
-        }
-    }
+    public abstract void generateLoot();
 
 
     public ArrayList<Object> die(){

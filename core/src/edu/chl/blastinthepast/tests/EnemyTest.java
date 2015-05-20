@@ -1,11 +1,11 @@
 package edu.chl.blastinthepast.tests;
 
+import edu.chl.blastinthepast.model.EnemyFactory;
 import edu.chl.blastinthepast.model.entities.Enemy;
 import edu.chl.blastinthepast.model.entities.WeaponInterface;
 import edu.chl.blastinthepast.utils.PositionInterface;
 import org.junit.Before;
 import org.junit.Test;
-
 import static org.junit.Assert.*;
 
 /**
@@ -13,11 +13,13 @@ import static org.junit.Assert.*;
  */
 public class EnemyTest {
 
-    private Enemy enemy = new Enemy(new MockPlayer(), new MockPosition());
+    private Enemy enemy;
+    private EnemyFactory enemyFactory;
 
     @Before
     public void before(){
-        enemy = new Enemy(new MockPlayer(), new MockPosition());
+        enemyFactory = new EnemyFactory();
+        enemy = enemyFactory.getEnemy("Pleb", new MockPlayer());
     }
 
     @Test

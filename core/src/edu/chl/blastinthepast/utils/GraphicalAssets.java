@@ -13,10 +13,10 @@ public class GraphicalAssets {
     public static final Texture CHARACTERLEFT = new Texture(Gdx.files.local("characterleft.png"));
     public static final Texture CHARACTERRIGHT = new Texture(Gdx.files.local("characterright.png"));
     public static final Texture CHARACTERDOWN = new Texture(Gdx.files.local("characterdown.png"));
-    public static final Texture ENEMYUP = new Texture(Gdx.files.local("enemyup.png"));
-    public static final Texture ENEMYLEFT = new Texture(Gdx.files.local("enemyleft.png"));
-    public static final Texture ENEMYRIGHT = new Texture(Gdx.files.local("enemyright.png"));
-    public static final Texture ENEMYDOWN = new Texture(Gdx.files.local("enemydown.png"));
+    public static final Texture PLEBUP = new Texture(Gdx.files.local("plebup.png"));
+    public static final Texture PLEBLEFT = new Texture(Gdx.files.local("plebleft.png"));
+    public static final Texture PLEBRIGHT = new Texture(Gdx.files.local("plebright.png"));
+    public static final Texture PLEBDOWN = new Texture(Gdx.files.local("plebdown.png"));
     public static final Texture BOSSUP = new Texture(Gdx.files.local("bossup.png"));
     public static final Texture BOSSLEFT = new Texture(Gdx.files.local("bossleft.png"));
     public static final Texture BOSSRIGHT = new Texture(Gdx.files.local("bossright.png"));
