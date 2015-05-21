@@ -9,7 +9,7 @@ import java.lang.*;
  */
 public class FireRatePowerUp extends PowerUp {
 
-    private int bonus=2;
+    private int bonus = 2;
 
     @Override
     public void applyPowerUp() {
@@ -19,8 +19,13 @@ public class FireRatePowerUp extends PowerUp {
     }
 
     @Override
+    public PowerUpType getPowerUpType() {
+        return PowerUpType.FIRERATE;
+    }
+
+    @Override
     public boolean equals(Object obj){
-        if (obj!=null){
+        if (obj != null){
             if (obj instanceof FireRatePowerUp){
                 return true;
             }
@@ -32,6 +37,5 @@ public class FireRatePowerUp extends PowerUp {
     public int hashCode(){
         return 13;
     }
-
 
 }

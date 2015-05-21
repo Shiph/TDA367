@@ -8,10 +8,11 @@ import com.badlogic.gdx.math.Rectangle;
  * Created by jonas on 2015-05-13.
  */
 public interface WorldObject {
-    public Object getObject();
-    public void draw(SpriteBatch batch);
-    public Texture getTexture();
-    public void dispose();
-    public Rectangle getRectangle();
+
+    Object getObject();
+    void draw(SpriteBatch batch);
+    Texture getTexture();
+    void dispose();
+    Rectangle getRectangle();
 
 }

@@ -17,10 +17,10 @@ public class PowerUpView implements WorldObject{
     private Sprite sprite;
 
     public PowerUpView(PowerUpI powerUp, Texture texture){
-        this.powerUp=powerUp;
-        this.texture=texture;
-        sprite= new Sprite(texture);
-        rectangle= new Rectangle();
+        this.powerUp = powerUp;
+        this.texture = texture;
+        sprite = new Sprite(texture);
+        rectangle = new Rectangle();
         rectangle.setWidth(sprite.getWidth());
         rectangle.setHeight(sprite.getHeight());
         sprite.setPosition(powerUp.getPosition().getX(), powerUp.getPosition().getY());

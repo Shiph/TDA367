@@ -9,7 +9,7 @@ import java.lang.*;
  */
 public class DamagePowerUp extends PowerUp{
 
-    private int bonus=5;
+    private int bonus = 5;
 
     @Override
     public void applyPowerUp() {
@@ -19,8 +19,13 @@ public class DamagePowerUp extends PowerUp{
     }
 
     @Override
+    public PowerUpType getPowerUpType() {
+        return PowerUpType.DAMAGE;
+    }
+
+    @Override
     public boolean equals(Object obj){
-        if (obj!=null){
+        if (obj != null){
             if (obj instanceof DamagePowerUp){
                 return true;
             }
@@ -32,4 +37,5 @@ public class DamagePowerUp extends PowerUp{
     public int hashCode(){
         return 19;
     }
+
 }
