@@ -30,6 +30,7 @@ import edu.chl.blastinthepast.utils.GraphicalAssets;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.SoundAssets;
 import edu.chl.blastinthepast.view.*;
+import edu.chl.blastinthepast.view.characterviews.EnemyViewFactory;
 import edu.chl.blastinthepast.view.characterviews.PlayerView;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -189,7 +190,7 @@ public class PlayState extends GameState implements Observer{
                 worldObjects.put(p, playerView);
             } else {
                 Enemy e = (Enemy) c;
-                worldObjects.put(e, enemyViewFactory.getEnemyView(e.toString(), e));
+                worldObjects.put(e, enemyViewFactory.getEnemyView(e));
             }
         }
     }

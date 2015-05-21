@@ -2,6 +2,7 @@ package edu.chl.blastinthepast.model.player;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.utils.PositionInterface;
@@ -28,4 +29,5 @@ public interface Character {
     int getTotalMovementSpeed();
     ArrayList<WeaponInterface> getAllWeapons();
     void resetBonuses();
+    Vector2 getDirection();
 }

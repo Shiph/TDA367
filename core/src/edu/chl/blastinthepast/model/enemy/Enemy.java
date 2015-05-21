@@ -2,7 +2,7 @@ package edu.chl.blastinthepast.model.enemy;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
-import edu.chl.blastinthepast.model.weapon.AK47;
+import edu.chl.blastinthepast.model.weapon.WeaponFactory;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
@@ -27,6 +27,7 @@ public abstract class Enemy extends Observable implements edu.chl.blastinthepast
     private PositionInterface position;
     private PositionInterface prevPos;
     private WeaponInterface weapon;
+    private WeaponFactory weaponFactory;
     private MyActionListener actionListener;
     private Timer timer;
     private int movementDirection;
@@ -48,7 +49,8 @@ public abstract class Enemy extends Observable implements edu.chl.blastinthepast
         movementDirection = r.nextInt(4);
         movementDirectionVector = new Vector2();
         playerDirectionVector = new Vector2();
-        weapon = new AK47(position, movementDirectionVector);
+        weaponFactory = new WeaponFactory();
+        weapon = weaponFactory.getWeapon(this, "AK47");
         timer = new Timer(1000, actionListener);
         timer.setRepeats(true);
         timer.start();
@@ -213,7 +215,7 @@ public abstract class Enemy extends Observable implements edu.chl.blastinthepast
     }
 
     private boolean isPlayerInRange() {
-        if (Math.abs(playerDirectionVector.angle(movementDirectionVector)) < 100 &&
+        if (Math.abs(playerDirectionVector.angle(movementDirectionVector)) < 150 &&
                Math.abs(player.getPosition().getX() - position.getX()) < 300 &&
                 Math.abs(player.getPosition().getY() - position.getY()) < 300) {
             return true;

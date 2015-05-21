@@ -1,10 +1,11 @@
-package edu.chl.blastinthepast.view;
+package edu.chl.blastinthepast.view.weaponviews;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
+import edu.chl.blastinthepast.view.WorldObject;
 
 /**
  * Created by jonas on 2015-04-23.

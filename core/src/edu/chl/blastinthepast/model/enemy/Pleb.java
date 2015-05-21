@@ -16,7 +16,7 @@ public class Pleb extends Enemy {
         this(150, 5, player);
     }
 
-    public Pleb(int movementSpeed, int health, Character player) {
+    private Pleb(int movementSpeed, int health, Character player) {
         super(movementSpeed, health, player);
     }
 

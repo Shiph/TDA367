@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.view;
+package edu.chl.blastinthepast.view.weaponviews;
 
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.utils.GraphicalAssets;

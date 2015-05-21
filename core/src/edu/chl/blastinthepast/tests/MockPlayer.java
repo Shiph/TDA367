@@ -1,5 +1,6 @@
 package edu.chl.blastinthepast.tests;
 
+import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
@@ -102,6 +103,11 @@ public class MockPlayer implements Character {
     @Override
     public void resetBonuses() {
 
+    }
+
+    @Override
+    public Vector2 getDirection() {
+        return null;
     }
 
 
