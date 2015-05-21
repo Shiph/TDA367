@@ -9,10 +9,11 @@ import com.badlogic.gdx.math.Rectangle;
 import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.model.enemy.Enemy;
 import edu.chl.blastinthepast.utils.PositionInterface;
-import edu.chl.blastinthepast.view.AK47View;
+import edu.chl.blastinthepast.view.weaponviews.AK47View;
 import edu.chl.blastinthepast.view.ProjectileView;
-import edu.chl.blastinthepast.view.WeaponView;
+import edu.chl.blastinthepast.view.weaponviews.WeaponView;
 import edu.chl.blastinthepast.view.WorldObject;
+import edu.chl.blastinthepast.view.weaponviews.WeaponViewFactory;
 
 import java.util.ArrayList;
 
@@ -25,6 +26,7 @@ public abstract class EnemyView implements CharacterView, WorldObject {
     private static final int DELAY = 2500;
     private ArrayList<Rectangle> rectangle;
     private Enemy enemy;
+    private WeaponViewFactory weaponViewFactory;
     private WeaponView weaponView;
     private boolean collision;
 
@@ -32,7 +34,8 @@ public abstract class EnemyView implements CharacterView, WorldObject {
         this.enemy = enemy;
         this.texture = texture;
         sprite = new Sprite(texture);
-        weaponView = new AK47View(enemy.getCurrentWeapon());
+        weaponViewFactory = new WeaponViewFactory();
+        weaponView = weaponViewFactory.getWeaponView(enemy.getCurrentWeapon());
         rectangle = new ArrayList<Rectangle>();
         rectangle.add(new Rectangle());
         rectangle.get(0).height = getSprite().getHeight();

@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.AK47;
 import edu.chl.blastinthepast.model.weapon.Magnum;
+import edu.chl.blastinthepast.model.weapon.WeaponFactory;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
@@ -22,6 +23,7 @@ public class Player extends Observable implements Character {
     private int movementSpeed;
     private ArrayList<WeaponInterface> weaponArray;
     private WeaponInterface weapon;
+    private WeaponFactory weaponFactory;
     private boolean north, south, west, east, shooting;
     private PositionInterface position;
     private int score = 0;
@@ -42,12 +44,13 @@ public class Player extends Observable implements Character {
     /**
      * Creates a new player character with texture, rectangle and sprite.
      */
-    public Player(int movementSpeed, int health, PositionInterface pos) {
+    private Player(int movementSpeed, int health, PositionInterface pos) {
         position = new Position(pos);
         this.movementSpeed = movementSpeed;
         this.health = health;
+        weaponFactory = new WeaponFactory();
         weaponArray = new ArrayList<WeaponInterface>();
-        weapon = new AK47(position, aimDirection);
+        weapon = weaponFactory.getWeapon(this, "AK47");
         weaponArray.add(weapon);
         projectiles = new ArrayList<ProjectileInterface>();
         position=pos;
@@ -81,20 +84,10 @@ public class Player extends Observable implements Character {
 
     public void addWeapon(WeaponInterface weapon) {
         WeaponInterface newWeapon;
-        switch(weapon.toString()) {
-            case "AK47":
-                newWeapon = new AK47(position,aimDirection);
-                weaponArray.add(newWeapon);
-                setWeapon(newWeapon);
-                break;
-            case "Magnum":
-                newWeapon = new Magnum(position,aimDirection);
-                weaponArray.add(newWeapon);
-                setWeapon(newWeapon);
-                break;
-            default:
-                break;
-        }
+        newWeapon = weaponFactory.getWeapon(this, weapon.toString());
+        weaponArray.add(newWeapon);
+        setWeapon(newWeapon);
+
     }
 
     public void setWeapon(WeaponInterface weapon) {
@@ -206,7 +199,7 @@ public class Player extends Observable implements Character {
         }
     }
 
-    public Vector2 getAimDirection(){
+    public Vector2 getDirection(){
         return aimDirection;
     }
 

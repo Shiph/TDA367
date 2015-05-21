@@ -14,7 +14,7 @@ public class Boss extends Enemy {
         this(200, 15, player);
     }
 
-    public Boss(int movementSpeed, int health, Character player) {
+    private Boss(int movementSpeed, int health, Character player) {
         super(movementSpeed, health, player);
     }
 

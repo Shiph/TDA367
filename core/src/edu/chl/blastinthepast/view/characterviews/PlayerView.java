@@ -9,6 +9,11 @@ import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.model.player.Player;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 import edu.chl.blastinthepast.view.*;
+import edu.chl.blastinthepast.view.weaponviews.AK47View;
+import edu.chl.blastinthepast.view.weaponviews.MagnumView;
+import edu.chl.blastinthepast.view.weaponviews.WeaponView;
+import edu.chl.blastinthepast.view.weaponviews.WeaponViewFactory;
+
 import java.util.ArrayList;
 
 /**
@@ -20,6 +25,7 @@ public class PlayerView implements CharacterView, WorldObject {
     private ArrayList<Rectangle> rectangle;
     private Player player;
     private Vector2 direction;
+    private WeaponViewFactory weaponViewFactory;
     private WeaponView weaponView;
     private String currentWeapon;
     private boolean collision;
@@ -33,7 +39,8 @@ public class PlayerView implements CharacterView, WorldObject {
         rectangle.get(0).height = sprite.getHeight();
         rectangle.get(0).width = sprite.getWidth();
         player = newPlayer;
-        weaponView = new AK47View(player.getCurrentWeapon());
+        weaponViewFactory = new WeaponViewFactory();
+        weaponView = weaponViewFactory.getWeaponView(player.getCurrentWeapon());
         currentWeapon = player.getCurrentWeapon().toString();
         collision = false;
         updatePosition();
@@ -83,12 +90,6 @@ public class PlayerView implements CharacterView, WorldObject {
             sprite.setPosition(player.getPosition().getX() - sprite.getWidth() / 2, player.getPosition().getY() - sprite.getWidth() / 2);
             rectangle.get(0).setPosition(player.getPosition().getX() - sprite.getWidth() / 2, player.getPosition().getY() - sprite.getHeight() / 2);
         }
-        /*} else if (collision) {
-            player.setPosition(player.getPrevPos());
-            sprite.setPosition(player.getPosition().getX(), player.getPosition().getY());
-            rectangle.get(0).setPosition(player.getPosition().getX(), player.getPosition().getY());
-            setCollision();
-        }*/
     }
 
     public void updateDirection() {
@@ -120,23 +121,9 @@ public class PlayerView implements CharacterView, WorldObject {
 
     public void changeWeaponView() {
         if(!currentWeapon.equals(player.getCurrentWeapon().toString())) {
-            switch (player.getCurrentWeapon().toString()) {
-                case "AK47":
-                    weaponView = new AK47View(player.getCurrentWeapon());
-                    currentWeapon = "AK47";
-                    break;
-                case "Magnum":
-                    weaponView = new MagnumView(player.getCurrentWeapon());
-                    currentWeapon = "Magnum";
-                    break;
-                default:
-                    break;
-            }
+            weaponView = weaponViewFactory.getWeaponView(player.getCurrentWeapon());
+            currentWeapon = player.getCurrentWeapon().toString();
         }
-    }
-
-    public void setCollision () {
-        collision ^= true;
     }
 
     public void dispose() {
