@@ -9,8 +9,8 @@ import edu.chl.blastinthepast.utils.PositionInterface;
  */
 public class Ammunition implements AmmunitionInterface{
     private PositionInterface position;
-    private ProjectileInterface type;
-    private int amount;
+    private final ProjectileInterface type;
+    private final int amount;
 
     public Ammunition(PositionInterface position, ProjectileInterface type, int amount){
         this.position=position;

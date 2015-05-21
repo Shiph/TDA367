@@ -10,14 +10,15 @@ import edu.chl.blastinthepast.view.characterviews.PlebView;
  */
 public class EnemyViewFactory {
 
-    public EnemyView getEnemyView(String enemyType, Enemy enemy) {
-        if(enemyType == null) {
+    public EnemyView getEnemyView(Enemy enemy) {
+        if(enemy == null) {
             return null;
         }
-        if(enemyType.equals("Pleb")) {
-            return new PlebView(enemy);
-        } else if(enemyType.equals("Boss")) {
-            return new BossView(enemy);
+        switch (enemy.toString()) {
+            case "Pleb":
+                return new PlebView(enemy);
+            case "Boss":
+                return new BossView(enemy);
         }
         return null;
     }
