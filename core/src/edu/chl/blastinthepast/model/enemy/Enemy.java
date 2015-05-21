@@ -1,7 +1,6 @@
 package edu.chl.blastinthepast.model.enemy;
 
 import com.badlogic.gdx.math.Vector2;
-import edu.chl.blastinthepast.model.player.*;
 import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponFactory;
@@ -21,7 +20,7 @@ import java.util.Random;
 /**
  * Created by Mattias on 15-04-21.
  */
-public abstract class Enemy extends Observable implements edu.chl.blastinthepast.model.player.Character {
+public abstract class Enemy extends Observable implements Character {
 
     private final Character player;
     private int health;
@@ -54,7 +53,7 @@ public abstract class Enemy extends Observable implements edu.chl.blastinthepast
         movementVector = new Vector2(1, 0);
         playerDirectionVector = new Vector2();
         weaponFactory = new WeaponFactory();
-        weapon = weaponFactory.getWeapon(this, "AK47");
+        weapon = weaponFactory.getWeapon(this, WeaponInterface.WeaponType.AK47);
         timer = new Timer(1000, actionListener);
         timer.setRepeats(true);
         timer.start();
@@ -250,7 +249,6 @@ public abstract class Enemy extends Observable implements edu.chl.blastinthepast
     }
 
     public abstract void generateLoot();
-
 
     public ArrayList<Object> die() {
         generateLoot();

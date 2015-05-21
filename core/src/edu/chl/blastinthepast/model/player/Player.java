@@ -2,11 +2,11 @@ package edu.chl.blastinthepast.model.player;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
-import edu.chl.blastinthepast.model.weapon.AK47;
-import edu.chl.blastinthepast.model.weapon.Magnum;
-import edu.chl.blastinthepast.model.weapon.WeaponInterface;
+import edu.chl.blastinthepast.model.weapon.*;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
+
+import java.lang.*;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -19,13 +19,14 @@ public class Player extends Observable implements Character {
     private int movementSpeed;
     private ArrayList<WeaponInterface> weaponArray;
     private WeaponInterface weapon;
+    private WeaponFactory weaponFactory;
     private boolean north, south, west, east, shooting;
     private PositionInterface position;
     private int score = 0;
     private boolean playerIsDead = false;
     private PositionInterface prevPos;
     private Vector2 aimVector = new Vector2(1,0);
-    private Vector2 movementVector = new Vector2(0,0);
+    private Vector2 movementVector = new Vector2(1, 0);
     private ArrayList<ProjectileInterface> projectiles;
     private int bonusMovementSpeed;
     private boolean blockedWest, blockedEast, blockedNorth, blockedSouth = false;
@@ -38,14 +39,15 @@ public class Player extends Observable implements Character {
     }
 
     /**
-     * Creates a new player character with texture, rectangle and sprite.
+     * Creates a new player character with given movement speed and health.
      */
-    public Player(int movementSpeed, int health, PositionInterface pos) {
+    private Player(int movementSpeed, int health, PositionInterface pos) {
         position = new Position(pos);
         this.movementSpeed = movementSpeed;
         this.health = health;
+        weaponFactory = new WeaponFactory();
         weaponArray = new ArrayList<WeaponInterface>();
-        weapon = new AK47(position, aimVector, movementVector);
+        weapon = weaponFactory.getWeapon(this, WeaponInterface.WeaponType.AK47);
         weaponArray.add(weapon);
         projectiles = new ArrayList<ProjectileInterface>();
         position=pos;
@@ -77,20 +79,10 @@ public class Player extends Observable implements Character {
 
     public void addWeapon(WeaponInterface weapon) {
         WeaponInterface newWeapon;
-        switch(weapon.toString()) {
-            case "AK47":
-                newWeapon = new AK47(position, aimVector, movementVector);
-                weaponArray.add(newWeapon);
-                setWeapon(newWeapon);
-                break;
-            case "Magnum":
-                newWeapon = new Magnum(position, aimVector, movementVector);
-                weaponArray.add(newWeapon);
-                setWeapon(newWeapon);
-                break;
-            default:
-                break;
-        }
+        newWeapon = weaponFactory.getWeapon(this, weapon.getWeaponType());
+        weaponArray.add(newWeapon);
+        setWeapon(newWeapon);
+
     }
 
     public void setWeapon(WeaponInterface weapon) {
@@ -227,10 +219,6 @@ public class Player extends Observable implements Character {
         }
     }
 
-    public Vector2 getAimVector(){
-        return aimVector;
-    }
-
     public void setAimVector(float aimVector){
         this.aimVector.setAngle(aimVector);
     }
@@ -298,6 +286,16 @@ public class Player extends Observable implements Character {
         bonusMovementSpeed=0;
     }
 
+    @Override
+    public Vector2 getMovementVector() {
+        return movementVector;
+    }
+
+    @Override
+    public Vector2 getAimVector() {
+        return aimVector;
+    }
+
     public void block() {
         if (north) {
             blockedNorth = true;
@@ -321,18 +319,13 @@ public class Player extends Observable implements Character {
     }
 
     public void reloadCurrentWeapon(){
-        if (weapon.getbulletsLeftInMagazine()<weapon.getMagazineCapacity() && weapon.getTotalBullets()>0){
+        if (weapon.getbulletsLeftInMagazine() < weapon.getMagazineCapacity() && weapon.getTotalBullets() > 0){
             weapon.reload();
         }
     }
 
-    public Vector2 getMovementVector() {
-        return movementVector;
-    }
-
     @Override
-    public String toString() {
-        return "Player";
+    public CharacterType getCharacterType() {
+        return CharacterType.PLAYER;
     }
-
 }

@@ -115,4 +115,9 @@ public class MockPlayer implements Character {
         return null;
     }
 
+    @Override
+    public CharacterType getCharacterType() {
+        return null;
+    }
+
 }

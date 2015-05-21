@@ -9,8 +9,7 @@ import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.model.player.Player;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 import edu.chl.blastinthepast.view.*;
-import edu.chl.blastinthepast.view.weaponviews.AK47View;
-import edu.chl.blastinthepast.view.weaponviews.MagnumView;
+import edu.chl.blastinthepast.view.projectileviews.ProjectileView;
 import edu.chl.blastinthepast.view.weaponviews.WeaponView;
 import edu.chl.blastinthepast.view.weaponviews.WeaponViewFactory;
 

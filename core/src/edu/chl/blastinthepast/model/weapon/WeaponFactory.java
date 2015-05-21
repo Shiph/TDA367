@@ -7,16 +7,19 @@ import edu.chl.blastinthepast.model.player.Character;
  */
 public class WeaponFactory {
 
-    public WeaponInterface getWeapon(Character character, String weaponType) {
+    public WeaponInterface getWeapon(Character character, WeaponInterface.WeaponType weaponType) {
+
         if(character == null) {
             return null;
         }
+
         switch(weaponType) {
-            case "AK47":
+            case AK47:
                 return new AK47(character.getPosition(), character.getAimVector(), character.getMovementVector());
-            case "Magnum":
+            case MAGNUM:
                 return new Magnum(character.getPosition(), character.getAimVector(), character.getMovementVector());
         }
+
         return null;
     }
 

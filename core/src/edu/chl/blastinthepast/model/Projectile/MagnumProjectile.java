@@ -12,4 +12,8 @@ public class MagnumProjectile extends Projectile {
         super(pos, aimDirection, movementDirection, 600, 2, bonusDamage);
     }
 
+    @Override
+    public ProjectileType getProjectileType() {
+        return ProjectileType.MAGNUM;
+    }
 }

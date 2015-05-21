@@ -2,6 +2,7 @@ package edu.chl.blastinthepast.tests;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
+import edu.chl.blastinthepast.model.weapon.Weapon;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.utils.PositionInterface;
 
@@ -111,6 +112,11 @@ public class MockWeapon implements WeaponInterface {
     @Override
     public int getMagazineCapacity() {
         return magazineCapacity;
+    }
+
+    @Override
+    public Weapon.WeaponType getWeaponType() {
+        return null;
     }
 
     @Override

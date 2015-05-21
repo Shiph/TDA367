@@ -1,4 +1,3 @@
-
 package edu.chl.blastinthepast.model.weapon;
 
 import com.badlogic.gdx.math.Vector2;

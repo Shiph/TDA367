@@ -15,4 +15,8 @@ public interface ProjectileInterface {
     public Vector2 getAimVector();
     public float getSpeed();
     public PositionInterface getPosition();
+    public enum ProjectileType {
+        AK47, MAGNUM
+    }
+    ProjectileType getProjectileType();
 }

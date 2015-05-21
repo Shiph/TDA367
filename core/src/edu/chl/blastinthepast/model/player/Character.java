@@ -12,6 +12,10 @@ import edu.chl.blastinthepast.utils.PositionInterface;
  */
 public interface Character {
 
+    public enum CharacterType {
+        PLAYER, PLEB, BOSS
+    }
+
     void move(float dt);
     void setMovementSpeed(int newSpeed);
     int getMovementSpeed();
@@ -31,5 +35,6 @@ public interface Character {
     void resetBonuses();
     Vector2 getMovementVector();
     Vector2 getAimVector();
+    CharacterType getCharacterType();
 
 }

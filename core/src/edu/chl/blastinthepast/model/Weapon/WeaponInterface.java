@@ -9,6 +9,10 @@ import edu.chl.blastinthepast.utils.PositionInterface;
  */
 public interface WeaponInterface {
 
+    public enum WeaponType {
+        AK47, MAGNUM
+    }
+
     void setFireRate(int fireRate);
     int getFireRate();
     boolean hasAmmo();
@@ -33,4 +37,6 @@ public interface WeaponInterface {
     void resetBonuses();
     ProjectileInterface getNewProjectile();
     int getMagazineCapacity();
+    WeaponType getWeaponType();
+
 }

@@ -31,8 +31,7 @@ public class Boss extends Enemy {
     }
 
     @Override
-    public String toString() {
-        return "Boss";
+    public CharacterType getCharacterType() {
+        return CharacterType.BOSS;
     }
-
 }

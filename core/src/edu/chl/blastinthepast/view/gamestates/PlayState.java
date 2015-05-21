@@ -32,6 +32,10 @@ import edu.chl.blastinthepast.utils.SoundAssets;
 import edu.chl.blastinthepast.view.*;
 import edu.chl.blastinthepast.view.characterviews.EnemyViewFactory;
 import edu.chl.blastinthepast.view.characterviews.PlayerView;
+import edu.chl.blastinthepast.view.projectileviews.AK47ProjectileView;
+import edu.chl.blastinthepast.view.projectileviews.MagnumProjectileView;
+import edu.chl.blastinthepast.view.projectileviews.ProjectileViewFactory;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.*;
@@ -46,6 +50,7 @@ public class PlayState extends GameState implements Observer{
     private PlayerView playerView;
     private ChestView chestView;
     private EnemyViewFactory enemyViewFactory;
+    private ProjectileViewFactory projectileViewFactory;
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private TiledMapRenderer tiledMapRenderer;
@@ -75,6 +80,7 @@ public class PlayState extends GameState implements Observer{
         this.model = model;
         chestView = new ChestView(model.getChest());
         enemyViewFactory = new EnemyViewFactory();
+        projectileViewFactory = new ProjectileViewFactory();
         model.addObserver(this);
         worldObjects = new HashMap <Object, WorldObject>();
         worldObjectsRemoveList = new ArrayList<Object>();
@@ -184,7 +190,7 @@ public class PlayState extends GameState implements Observer{
 
     public void spawnCharacterViews() {
         for (Character c : model.getCharacters()) {
-            if(c.toString().equals("Player")) {
+            if(c.getCharacterType() == Character.CharacterType.PLAYER) {
                 Player p = (Player) c;
                 playerView = new PlayerView(p);
                 worldObjects.put(p, playerView);
@@ -313,18 +319,14 @@ public class PlayState extends GameState implements Observer{
 
     public void checkIfProjectile(Observable o, Object arg){
         if (arg instanceof ProjectileInterface){
-            if (arg instanceof AK47Projectile) {
-                    worldObjects.put(arg, new AK47ProjectileView((ProjectileInterface) arg));
-                } else if (arg instanceof MagnumProjectile) {
-                    worldObjects.put(arg, new MagnumProjectileView((ProjectileInterface) arg));
-                }
+            ProjectileInterface projectile = (ProjectileInterface) arg;
+            worldObjects.put(arg, projectileViewFactory.getProjectileView(projectile));
         }
-
     }
 
     public void checkIfCharacter(Observable o, Object arg){
-        if (arg instanceof Character){
-            if(arg.toString().equals("Player")) {
+        if (arg instanceof Character) {
+            if(((Character) arg).getCharacterType() == Character.CharacterType.PLAYER) {
                 worldObjects.put(arg, new PlayerView((Player)arg));
             } else {
                 Enemy e = (Enemy)arg;

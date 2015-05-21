@@ -22,8 +22,8 @@ public class Magnum extends Weapon {
     }
 
     @Override
-    public String toString() {
-        return "Magnum";
+    public WeaponType getWeaponType() {
+        return WeaponType.MAGNUM;
     }
 
 }

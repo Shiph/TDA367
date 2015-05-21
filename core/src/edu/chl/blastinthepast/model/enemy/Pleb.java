@@ -39,8 +39,8 @@ public class Pleb extends Enemy {
     }
 
     @Override
-    public String toString() {
-        return "Pleb";
+    public CharacterType getCharacterType() {
+        return CharacterType.PLEB;
     }
 
 }

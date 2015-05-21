@@ -25,4 +25,9 @@ public class AK47 extends Weapon {
         return "AK47";
     }
 
+    @Override
+    public WeaponType getWeaponType() {
+        return WeaponType.AK47;
+    }
+
 }

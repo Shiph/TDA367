@@ -10,14 +10,15 @@ import edu.chl.blastinthepast.model.enemy.Pleb;
  */
 public class EnemyFactory {
 
-    public Enemy getEnemy(String enemyType, Character player) {
-        if(enemyType == null) {
+    public Enemy getEnemy(Character player, Character.CharacterType characterType) {
+        if(player == null) {
             return null;
         }
-        if(enemyType.equals("Pleb")) {
-            return new Pleb(player);
-        } else if(enemyType.equals("Boss")) {
-            return new Boss(player);
+        switch(characterType) {
+            case PLEB:
+                return new Pleb(player);
+            case BOSS:
+                return new Boss(player);
         }
         return null;
     }

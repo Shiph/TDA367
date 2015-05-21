@@ -14,10 +14,10 @@ public class EnemyViewFactory{
         if(enemy == null) {
             return null;
         }
-        switch (enemy.toString()) {
-            case "Pleb":
+        switch (enemy.getCharacterType()) {
+            case PLEB:
                 return new PlebView(enemy);
-            case "Boss":
+            case BOSS:
                 return new BossView(enemy);
         }
         return null;

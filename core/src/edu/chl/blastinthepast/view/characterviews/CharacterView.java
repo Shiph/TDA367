@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.view.Collidable;
-import edu.chl.blastinthepast.view.ProjectileView;
+import edu.chl.blastinthepast.view.projectileviews.ProjectileView;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.view;
+package edu.chl.blastinthepast.view.projectileviews;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -10,6 +10,8 @@ import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
 import java.util.ArrayList;
 
 import edu.chl.blastinthepast.utils.Constants;
+import edu.chl.blastinthepast.view.Collidable;
+import edu.chl.blastinthepast.view.WorldObject;
 
 /**
  * Created by jonas on 2015-04-23.
