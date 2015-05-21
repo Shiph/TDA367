@@ -327,7 +327,7 @@ public class PlayState extends GameState implements Observer{
                 worldObjects.put(arg, new PlayerView((Player)arg));
             } else {
                 Enemy e = (Enemy)arg;
-                worldObjects.put(arg, enemyViewFactory.getEnemyView(e.toString(), e));
+                worldObjects.put(arg, enemyViewFactory.getEnemyView(e));
             }
         }
     }
