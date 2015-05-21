@@ -18,7 +18,7 @@ public class WeaponTest {
 
     @Before
     public void setUp() {
-        weapon = new AK47(new MockPosition(), new Vector2(0,0));
+        weapon = new AK47(new MockPosition(), new Vector2(0,0), new Vector2(0,0));
     }
 
     /**

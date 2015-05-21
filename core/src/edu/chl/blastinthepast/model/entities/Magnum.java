@@ -9,13 +9,13 @@ import edu.chl.blastinthepast.utils.PositionInterface;
  */
 public class Magnum extends Weapon {
 
-    public Magnum(PositionInterface position, Vector2 direction) {
-        super(position, direction, 850, 2, 16, 16*16, new Position(0, 0));
+    public Magnum(PositionInterface position, Vector2 aimDirection, Vector2 movementDirection) {
+        super(position, aimDirection, movementDirection, 8500, 2, 16, 16*16, new Position(0, 0));
     }
 
     @Override
     public ProjectileInterface getNewProjectile() {
-        return new MagnumProjectile(getPosWithOffset(), getDirection(), getBonusDamage());
+        return new MagnumProjectile(getPosWithOffset(), getAimDirection(), getMovementDirection(), getBonusDamage());
     }
 
     @Override

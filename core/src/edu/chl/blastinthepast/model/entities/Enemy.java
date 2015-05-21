@@ -1,7 +1,6 @@
 package edu.chl.blastinthepast.model.entities;
 
 import com.badlogic.gdx.math.Vector2;
-import edu.chl.blastinthepast.model.Ammunition;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
@@ -28,8 +27,9 @@ public abstract class Enemy extends Observable implements Character {
     private MyActionListener actionListener;
     private Timer timer;
     private int movementDirection;
-    private Vector2 movementDirectionVector;
+    private Vector2 aimVector;
     private Vector2 playerDirectionVector;
+    private Vector2 movementVector = new Vector2(1,0);
     private int range = 500;
     private ArrayList<ProjectileInterface> projectiles;
     private ArrayList<Object> loot;
@@ -44,9 +44,9 @@ public abstract class Enemy extends Observable implements Character {
         actionListener = new MyActionListener();
         Random r = new Random();
         movementDirection = r.nextInt(4);
-        movementDirectionVector = new Vector2();
+        aimVector = new Vector2();
         playerDirectionVector = new Vector2();
-        weapon = new AK47(position, movementDirectionVector);
+        weapon = new AK47(position, aimVector, new Vector2(1, 0));
         timer = new Timer(1000, actionListener);
         timer.setRepeats(true);
         timer.start();
@@ -55,43 +55,47 @@ public abstract class Enemy extends Observable implements Character {
     }
 
     public void move(float dt) {
+        movementVector.setLength(movementSpeed * dt);
         switch (movementDirection) {
             case 0: // move west
                 if (!(position.getX() > 0)) {
                     movementDirection = 1;
                 } else {
-                    position.setX(position.getX() - getTotalMovementSpeed() * dt);
-                    movementDirectionVector.set(position.getX() - range, position.getY());
+                    movementVector.setAngle(180);
+                    position.setX(position.getX() + movementVector.x);
+                    aimVector.set(position.getX() - range, position.getY());
                 }
                 break;
             case 1: // move east
                 if (!(position.getX() < Constants.MAP_WIDTH)) {
                     movementDirection = 0;
                 } else {
-                    position.setX(position.getX() + getTotalMovementSpeed() * dt);
-                    movementDirectionVector.set(position.getX() + range, position.getY());
+                    movementVector.setAngle(0);
+                    position.setX(position.getX() + movementVector.x);
+                    aimVector.set(position.getX() + range, position.getY());
                 }
                 break;
             case 2: // move north
                 if (!(position.getY() < Constants.MAP_HEIGHT)) {
                     movementDirection = 3;
                 } else {
-                    position.setY(position.getY() + getTotalMovementSpeed() * dt);
-                    movementDirectionVector.set(position.getX(), position.getY() + range);
+                    movementVector.setAngle(90);
+                    position.setY(position.getY() + movementVector.y);
+                    aimVector.set(position.getX(), position.getY() + range);
                 }
                 break;
             case 3: // move south
                 if (!(position.getY() > 2)) {
                     movementDirection = 1;
                 } else {
-                    position.setY(position.getY() - getTotalMovementSpeed() * dt);
-                    movementDirectionVector.set(position.getX(), position.getY() - range);
+                    movementVector.setAngle(270);
+                    position.setY(position.getY() + movementVector.y);
+                    aimVector.set(position.getX(), position.getY() - range);
                 }
                 break;
             default:
                 break;
         }
-
     }
 
     public void setMovementSpeed(int newSpeed) {
@@ -178,7 +182,7 @@ public abstract class Enemy extends Observable implements Character {
         playerDirectionVector.set(player.getPosition().getX() - position.getX(), player.getPosition().getY() - position.getY());
         weapon.setPosition(position);
         if(isPlayerInRange()) {
-            movementDirectionVector.set(playerDirectionVector);
+            aimVector.set(playerDirectionVector);
             ProjectileInterface p=weapon.pullTrigger();
             if (p!=null){
                 projectiles.add(p);
@@ -195,16 +199,16 @@ public abstract class Enemy extends Observable implements Character {
     private void updateMovementDirectionVector(int movementDirection) {
         switch (movementDirection) {
             case 0: // moving west
-                    movementDirectionVector.set(position.getX() - range, position.getY());
+                    aimVector.set(position.getX() - range, position.getY());
                 break;
             case 1: // moving east
-                    movementDirectionVector.set(position.getX() + range, position.getY());
+                    aimVector.set(position.getX() + range, position.getY());
                 break;
             case 2: // moving north
-                    movementDirectionVector.set(position.getX(), position.getY() + range);
+                    aimVector.set(position.getX(), position.getY() + range);
                 break;
             case 3: // moving south
-                    movementDirectionVector.set(position.getX(), position.getY() - range);
+                    aimVector.set(position.getX(), position.getY() - range);
                 break;
             default:
                 break;
@@ -212,7 +216,7 @@ public abstract class Enemy extends Observable implements Character {
     }
 
     private boolean isPlayerInRange() {
-        if (Math.abs(playerDirectionVector.angle(movementDirectionVector)) < 100 &&
+        if (Math.abs(playerDirectionVector.angle(aimVector)) < 100 &&
                Math.abs(player.getPosition().getX() - position.getX()) < 300 &&
                 Math.abs(player.getPosition().getY() - position.getY()) < 300) {
             return true;
@@ -221,7 +225,7 @@ public abstract class Enemy extends Observable implements Character {
     }
 
     public Vector2 getDirection() {
-        return movementDirectionVector;
+        return aimVector;
     }
 
     private class MyActionListener implements ActionListener {

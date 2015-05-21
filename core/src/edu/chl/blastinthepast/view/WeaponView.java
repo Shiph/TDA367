@@ -38,7 +38,7 @@ public abstract class WeaponView implements WorldObject {
 
     public void updateDirection() {
         sprite.setOrigin(0, 0);
-        sprite.setRotation(weapon.getDirection().angle());
+        sprite.setRotation(weapon.getAimDirection().angle());
     }
 
     public void updatePosition(){

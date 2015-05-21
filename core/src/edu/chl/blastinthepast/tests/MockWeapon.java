@@ -86,7 +86,12 @@ public class MockWeapon implements WeaponInterface {
     }
 
     @Override
-    public Vector2 getDirection() {
+    public Vector2 getAimDirection() {
+        return null;
+    }
+
+    @Override
+    public Vector2 getMovementDirection() {
         return null;
     }
 

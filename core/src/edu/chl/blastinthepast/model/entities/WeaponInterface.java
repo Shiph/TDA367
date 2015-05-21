@@ -19,7 +19,8 @@ public interface WeaponInterface {
     PositionInterface getPosition();
     ProjectileInterface pullTrigger();
     void reloadIfNeeded();
-    Vector2 getDirection();
+    Vector2 getAimDirection();
+    Vector2 getMovementDirection();
     int getbulletsLeftInMagazine();
     void reload();
     int getTotalBullets();

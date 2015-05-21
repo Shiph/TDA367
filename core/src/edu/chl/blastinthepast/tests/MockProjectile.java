@@ -35,8 +35,8 @@ public class MockProjectile implements ProjectileInterface {
     }
 
     @Override
-    public Vector2 getDirection() {
-        return direction;
+    public Vector2 getAimDirection() {
+        return null;
     }
 
     @Override

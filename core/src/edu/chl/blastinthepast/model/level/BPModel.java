@@ -7,6 +7,7 @@ import edu.chl.blastinthepast.model.entities.*;
 import edu.chl.blastinthepast.model.entities.Character;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
+
 import java.util.*;
 
 /**
@@ -26,7 +27,7 @@ public class BPModel extends Observable implements Observer {
     private ArrayList<PowerUpI> powerUps=new ArrayList<PowerUpI>();
 
     public BPModel() {
-        chest = new Chest(new Magnum(new Position(1000,1500), new Vector2()));
+        chest = new Chest(new Magnum(new Position(1000,1500), new Vector2(), new Vector2()));
         characters = new ArrayList<Character>();
         player = new Player();
         enemyFactory = new EnemyFactory();

@@ -1,7 +1,6 @@
 package edu.chl.blastinthepast.model.entities;
 
 import com.badlogic.gdx.math.Vector2;
-import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
 import java.util.ArrayList;
@@ -22,6 +21,7 @@ public class Player extends Observable implements Character {
     private boolean playerIsDead = false;
     private PositionInterface prevPos;
     private Vector2 aimDirection = new Vector2(1,0);
+    private Vector2 movementVector = new Vector2(0,0);
     private ArrayList<ProjectileInterface> projectiles;
     private int bonusMovementSpeed;
     private boolean blockedWest, blockedEast, blockedNorth, blockedSouth = false;
@@ -41,13 +41,11 @@ public class Player extends Observable implements Character {
         this.movementSpeed = movementSpeed;
         this.health = health;
         weaponArray = new ArrayList<WeaponInterface>();
-        weapon = new AK47(position, aimDirection);
+        weapon = new AK47(position, aimDirection, movementVector);
         weaponArray.add(weapon);
         projectiles = new ArrayList<ProjectileInterface>();
         position=pos;
     }
-
-
 
     public int getMovementSpeed() {
         return movementSpeed;
@@ -77,12 +75,12 @@ public class Player extends Observable implements Character {
         WeaponInterface newWeapon;
         switch(weapon.toString()) {
             case "AK47":
-                newWeapon = new AK47(position,aimDirection);
+                newWeapon = new AK47(position,aimDirection, movementVector);
                 weaponArray.add(newWeapon);
                 setWeapon(newWeapon);
                 break;
             case "Magnum":
-                newWeapon = new Magnum(position,aimDirection);
+                newWeapon = new Magnum(position,aimDirection, movementVector);
                 weaponArray.add(newWeapon);
                 setWeapon(newWeapon);
                 break;
@@ -147,17 +145,42 @@ public class Player extends Observable implements Character {
         prevPos = new Position(position);
         float x = position.getX();
         float y = position.getY();
-        if (west && position.getX() >= 0) {
-            position.setX(x - movementSpeed * dt);
+        updateMovementVector(dt);
+        if (movementVector.len() != 0) {
+            position.setX(x + movementVector.x);
         }
-        if (east && position.getX() <= Constants.MAP_WIDTH) {
-            position.setX(x + movementSpeed * dt);
-        }
-        if (north && position.getY() <= Constants.MAP_HEIGHT) {
-            position.setY(y + movementSpeed * dt);
-        }
-        if (south && position.getY() >= 0) {
-            position.setY(y - movementSpeed * dt);
+        //System.out.println("Delta x: " + Math.cos(movementVector.angleRad()));
+        position.setY(y + movementVector.y);
+    }
+
+    private void updateMovementVector(float dt) {
+        movementVector.set(1, 0);
+        if (north) {
+            if (east) {
+                movementVector.setAngle(45);
+            } else if (west) {
+                movementVector.setAngle(90+45);
+            } else {
+                movementVector.setAngle(90);
+            }
+            movementVector.setLength(movementSpeed * dt);
+        } else if (south) {
+            if (east) {
+                movementVector.setAngle(360-45);
+            } else if (west) {
+                movementVector.setAngle(180 + 45);
+            } else {
+                movementVector.setAngle(270);
+            }
+            movementVector.setLength(movementSpeed * dt);
+        } else if (west) {
+            movementVector.setAngle(180);
+            movementVector.setLength(movementSpeed * dt);
+        } else if (east) {
+            movementVector.setAngle(0);
+            movementVector.setLength(movementSpeed * dt);
+        } else {
+            movementVector.setLength(0);
         }
     }
 
@@ -299,8 +322,13 @@ public class Player extends Observable implements Character {
         }
     }
 
+    public Vector2 getMovementVector() {
+        return movementVector;
+    }
+
     @Override
     public String toString() {
         return "Player";
     }
+
 }

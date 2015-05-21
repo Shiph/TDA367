@@ -13,7 +13,7 @@ public interface ProjectileInterface {
     public void move(float dt);
     public int getDamage();
     public void setDamage(int damage);
-    public Vector2 getDirection();
+    public Vector2 getAimDirection();
     public float getSpeed();
     public PositionInterface getPosition();
 }

@@ -55,7 +55,7 @@ public abstract class ProjectileView implements Collidable, WorldObject {
     }
 
     private void setRotation(){
-        sprite.setRotation(projectile.getDirection().angle());
+        sprite.setRotation(projectile.getAimDirection().angle());
     }
 
     /**

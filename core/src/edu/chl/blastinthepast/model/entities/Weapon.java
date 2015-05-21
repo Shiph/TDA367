@@ -3,6 +3,7 @@ package edu.chl.blastinthepast.model.entities;
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
@@ -22,14 +23,16 @@ public abstract class Weapon implements WeaponInterface {
     private boolean isReloading = false;
     private Timer reloadTimer;
     private Position position;
-    private Vector2 direction;
+    private Vector2 aimDirection;
+    private Vector2 movementDirection;
     private Position offset;
     private int bonusDamage = 0;
     private int bonusFireRate=0;
 
-    public Weapon (PositionInterface pos, Vector2 direction, int reloadTime, int fireRate, final int magazineCapacity, int totalBullets, PositionInterface offset) {
+    public Weapon (PositionInterface pos, Vector2 aimDirection, Vector2 movementDirection, int reloadTime, int fireRate, final int magazineCapacity, int totalBullets, PositionInterface offset) {
         position = new Position(pos);
-        this.direction = direction;
+        this.aimDirection = aimDirection;
+        this.movementDirection = movementDirection;
         this.fireRate = fireRate;
         this.reloadTime = reloadTime;
         this.totalBullets = totalBullets - magazineCapacity;
@@ -48,26 +51,32 @@ public abstract class Weapon implements WeaponInterface {
         reloadTimer.setRepeats(false);
     }
 
+    @Override
     public void setFireRate(int newFireRate) {
         fireRate = newFireRate;
     }
 
+    @Override
     public int getFireRate() {
         return fireRate;
     }
 
+    @Override
     public int getMagazineCapacity() {
         return magazineCapacity;
     }
 
+    @Override
     public ProjectileInterface getProjectile() {
         return projectile;
     }
 
+    @Override
     public boolean hasAmmo() {
         return ((totalBullets + bulletsLeftInMagazine) > 0);
     }
 
+    @Override
     public ProjectileInterface fire() {
         long currentTime = System.currentTimeMillis();
         if ((currentTime - latestShot) >= 1000/getTotalFireRate()) {
@@ -78,12 +87,14 @@ public abstract class Weapon implements WeaponInterface {
         return null;
     }
 
+    @Override
     public void addAmmo(int amount) {
         if(amount > 0) {
             totalBullets += amount;
         }
     }
 
+    @Override
     public void reload() {
         isReloading = true;
         reloadTimer.start();
@@ -100,26 +111,33 @@ public abstract class Weapon implements WeaponInterface {
         }
     }
 
+    @Override
     public void setPosition(PositionInterface position){
         this.position.setPosition(position);
     }
 
+
+    @Override
     public void setPosition(int x, int y){
         position.setPosition(x, y);
     }
 
+    @Override
     public Position getPosition(){
         return position;
     }
 
+    @Override
     public int getbulletsLeftInMagazine() {
         return bulletsLeftInMagazine;
     }
 
+    @Override
     public int getTotalBullets() {
         return totalBullets;
     }
 
+    @Override
     public ProjectileInterface pullTrigger() {
         if (hasAmmo()) {
             reloadIfNeeded();
@@ -131,14 +149,16 @@ public abstract class Weapon implements WeaponInterface {
             return null;
     }
 
+    @Override
     public void reloadIfNeeded() {
         if (bulletsLeftInMagazine == 0) {
             reload();
         }
     }
 
-    public Vector2 getDirection(){
-        return direction;
+    @Override
+    public Vector2 getAimDirection(){
+        return aimDirection;
     }
 
     public PositionInterface getOffset(){
@@ -146,7 +166,7 @@ public abstract class Weapon implements WeaponInterface {
     }
 
     public Position getPosWithOffset(){
-        Vector2 v2=new Vector2(getDirection());
+        Vector2 v2 = new Vector2(getAimDirection());
         v2.scl(1/v2.len());
         v2.scl(getOffset().getX(), getOffset().getY());
         return new Position(position.getX()+v2.x, position.getY()+v2.y);
@@ -182,6 +202,11 @@ public abstract class Weapon implements WeaponInterface {
     @Override
     public void addBonusFireRate(int bonusFireRate) {
         this.bonusFireRate=bonusFireRate;
+    }
+
+    @Override
+    public Vector2 getMovementDirection() {
+        return movementDirection;
     }
 
     public abstract ProjectileInterface getNewProjectile();

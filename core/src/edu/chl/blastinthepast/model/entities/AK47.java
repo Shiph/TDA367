@@ -9,15 +9,16 @@ import edu.chl.blastinthepast.utils.PositionInterface;
  */
 public class AK47 extends Weapon {
 
-    public AK47(PositionInterface position, Vector2 direction) {
-        super(position, direction, 1000, 5, 20, 200, new Position(60, 60));
+    public AK47(PositionInterface position, Vector2 aimDirection, Vector2 movementDirection) {
+        super(position, aimDirection, movementDirection, 1000, 5, 20, 200, new Position(60, 60));
     }
 
     @Override
     public Projectile getNewProjectile() {
-        return new AK47Projectile(getPosWithOffset(), getDirection(), getBonusDamage());
+        return new AK47Projectile(getPosWithOffset(), getAimDirection(), getMovementDirection(), getBonusDamage());
     }
 
+    @Override
     public String toString() {
         return "AK47";
     }
