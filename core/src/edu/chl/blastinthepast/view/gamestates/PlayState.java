@@ -51,6 +51,7 @@ public class PlayState extends GameState implements Observer{
     private ChestView chestView;
     private EnemyViewFactory enemyViewFactory;
     private ProjectileViewFactory projectileViewFactory;
+    private PowerUpViewFactory powerUpViewFactory;
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private TiledMapRenderer tiledMapRenderer;
@@ -81,6 +82,7 @@ public class PlayState extends GameState implements Observer{
         chestView = new ChestView(model.getChest());
         enemyViewFactory = new EnemyViewFactory();
         projectileViewFactory = new ProjectileViewFactory();
+        powerUpViewFactory = new PowerUpViewFactory();
         model.addObserver(this);
         worldObjects = new HashMap <Object, WorldObject>();
         worldObjectsRemoveList = new ArrayList<Object>();
@@ -348,15 +350,7 @@ public class PlayState extends GameState implements Observer{
     public void checkIfPowerUp(Observable o, Object arg){
         if (arg instanceof PowerUpI){
             PowerUpI powerUp = (PowerUpI) arg;
-            if (powerUp instanceof DamagePowerUp){
-                worldObjects.put(powerUp, new PowerUpView(powerUp, GraphicalAssets.AK47));
-            } else if (powerUp instanceof MovementSpeedPowerUp){
-                worldObjects.put(powerUp, new PowerUpView(powerUp, GraphicalAssets.MAGNUM));
-            } else if (powerUp instanceof FireRatePowerUp){
-                worldObjects.put(powerUp, new PowerUpView(powerUp, GraphicalAssets.CHESTOPEN));
-            } else if (powerUp instanceof HealthPowerUp){
-                worldObjects.put(powerUp, new PowerUpView(powerUp, GraphicalAssets.BOSSUP));
-            }
+            worldObjects.put(powerUp, powerUpViewFactory.getPowerUpView(powerUp));
         }
     }
 
