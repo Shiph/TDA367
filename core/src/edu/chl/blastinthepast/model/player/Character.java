@@ -12,7 +12,7 @@ import edu.chl.blastinthepast.utils.PositionInterface;
  */
 public interface Character {
 
-    public enum CharacterType {
+    enum CharacterType {
         PLAYER, PLEB, BOSS
     }
 

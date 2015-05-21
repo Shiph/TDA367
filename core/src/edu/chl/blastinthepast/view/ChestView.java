@@ -31,9 +31,6 @@ public class ChestView implements WorldObject {
         sprite.setY(chest.getPosition().getY());
         rectangles.get(0).height = sprite.getHeight();
         rectangles.get(0).width = sprite.getWidth();
-
-        //No ChestObjectLayer exists in the map yet.
-        //rectangle.addAll(mapToRectangles(new TideMapLoader().load("GrassTestMap1.tmx")));
     }
 
     @Override
@@ -72,14 +69,4 @@ public class ChestView implements WorldObject {
         }
     }
 
-    private ArrayList<Rectangle> mapToRectangles(TiledMap map) {
-        MapLayer objectLayer = map.getLayers().get("ChestObjectLayer");
-        MapObjects objects = objectLayer.getObjects();
-        Array<RectangleMapObject> rectangleObjects = objects.getByType(RectangleMapObject.class);
-        ArrayList<Rectangle> rectangles = new ArrayList<Rectangle>();
-        for(int i = 0; i < rectangleObjects.size; i++) {
-            rectangles.add(rectangleObjects.get(i).getRectangle());
-        }
-        return rectangles;
-    }
 }

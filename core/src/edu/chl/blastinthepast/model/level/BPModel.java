@@ -215,16 +215,8 @@ public class BPModel extends Observable implements Observer {
         notifyObservers(powerUp);
     }
 
-    public ArrayList<ProjectileInterface> getProjectiles(){
-        return projectiles;
-    }
-
     public Player getPlayer(){
         return player;
-    }
-
-    public Boss getBoss() {
-        return boss;
     }
 
     public Chest getChest() {

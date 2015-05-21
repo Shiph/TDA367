@@ -171,10 +171,6 @@ public abstract class Enemy extends Observable implements Character {
         return prevPos;
     }
 
-    public void setPrevPos (Position prevPos) {
-        this.prevPos = prevPos;
-    }
-
     public WeaponInterface getCurrentWeapon() {
         return weapon;
     };
@@ -228,10 +224,6 @@ public abstract class Enemy extends Observable implements Character {
             return true;
         }
         return false;
-    }
-
-    public Vector2 getDirection() {
-        return aimVector;
     }
 
     private class MyActionListener implements ActionListener {

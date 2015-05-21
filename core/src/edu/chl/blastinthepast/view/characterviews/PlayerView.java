@@ -59,8 +59,6 @@ public class PlayerView implements CharacterView, WorldObject {
         return rectangle;
     }
 
-    public void setRectangle(Rectangle rectangle) {}
-
     /**
      * @return the sprite of the player character.
      */

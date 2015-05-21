@@ -9,7 +9,7 @@ import edu.chl.blastinthepast.utils.PositionInterface;
  */
 public interface WeaponInterface {
 
-    public enum WeaponType {
+    enum WeaponType {
         AK47, MAGNUM
     }
 
