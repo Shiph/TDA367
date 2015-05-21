@@ -10,7 +10,7 @@ import edu.chl.blastinthepast.view.characterviews.PlebView;
  */
 public class EnemyViewFactory{
 
-    public WorldObject getEnemyView(Enemy enemy) {
+    public EnemyView getEnemyView(Enemy enemy) {
         if(enemy == null) {
             return null;
         }

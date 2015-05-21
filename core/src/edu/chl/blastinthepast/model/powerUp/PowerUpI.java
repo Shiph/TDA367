@@ -1,5 +1,6 @@
 package edu.chl.blastinthepast.model.powerUp;
 
+import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.utils.PositionInterface;
 
 /**
