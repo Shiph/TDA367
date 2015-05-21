@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.view;
+package edu.chl.blastinthepast.view.projectileviews;
 
 import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
 
@@ -8,13 +8,13 @@ import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
 public class ProjectileViewFactory {
 
     public ProjectileView getProjectileView(ProjectileInterface projectile){
-        if (projectile==null){
+        if (projectile == null) {
             return null;
         }
-        switch (projectile.toString()){
-            case "AK47Projectile":
+        switch (projectile.getProjectileType()){
+            case AK47:
                 return new AK47ProjectileView(projectile);
-            case "MagnumProjectile":
+            case MAGNUM:
                 return new MagnumProjectileView(projectile);
         }
         return null;

@@ -8,11 +8,16 @@ import edu.chl.blastinthepast.utils.PositionInterface;
  */
 public interface ProjectileInterface {
 
-    public void setSpeed(int newSpeed);
-    public void move(float dt);
-    public int getDamage();
-    public void setDamage(int damage);
-    public Vector2 getDirection();
-    public float getSpeed();
-    public PositionInterface getPosition();
+    public enum ProjectileType {
+        AK47, MAGNUM
+    }
+
+    void setSpeed(int newSpeed);
+    void move(float dt);
+    int getDamage();
+    void setDamage(int damage);
+    Vector2 getDirection();
+    float getSpeed();
+    PositionInterface getPosition();
+    ProjectileType getProjectileType();
 }

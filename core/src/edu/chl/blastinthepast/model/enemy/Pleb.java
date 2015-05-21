@@ -12,8 +12,6 @@ import java.util.Random;
  */
 public class Pleb extends Enemy {
 
-    private CharacterType characterType = CharacterType.PLEB;
-
     public Pleb (Character player) {
         this(150, 5, player);
     }
@@ -41,6 +39,6 @@ public class Pleb extends Enemy {
 
     @Override
     public CharacterType getCharacterType() {
-        return characterType;
+        return CharacterType.PLEB;
     }
 }

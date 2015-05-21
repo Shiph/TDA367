@@ -73,6 +73,4 @@ public abstract class Projectile implements  ProjectileInterface{
         return position;
     }
 
-
-
 }

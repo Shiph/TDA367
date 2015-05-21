@@ -1,6 +1,7 @@
 package edu.chl.blastinthepast.model.projectile;
 
 import com.badlogic.gdx.math.Vector2;
+import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.utils.Position;
 
 /**
@@ -10,5 +11,10 @@ public class AK47Projectile extends Projectile {
 
     public AK47Projectile(Position pos, Vector2 direction, int bonusDamage) {
         super(pos, direction, 800, 1, bonusDamage);
+    }
+
+    @Override
+    public ProjectileType getProjectileType() {
+        return ProjectileType.AK47;
     }
 }

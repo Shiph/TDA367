@@ -18,7 +18,6 @@ public class Player extends Observable implements Character {
 
     private int health;
     private int movementSpeed;
-    private CharacterType characterType = CharacterType.PLAYER;
     private ArrayList<WeaponInterface> weaponArray;
     private WeaponInterface weapon;
     private WeaponFactory weaponFactory;
@@ -296,6 +295,6 @@ public class Player extends Observable implements Character {
 
     @Override
     public CharacterType getCharacterType() {
-        return characterType;
+        return CharacterType.PLAYER;
     }
 }

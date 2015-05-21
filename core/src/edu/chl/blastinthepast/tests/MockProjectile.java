@@ -49,4 +49,9 @@ public class MockProjectile implements ProjectileInterface {
         return position;
     }
 
+    @Override
+    public ProjectileType getProjectileType() {
+        return null;
+    }
+
 }
