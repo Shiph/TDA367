@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * Created by qwerty458 on 5/4/15.
  */
-public class ChestView implements Environment, WorldObject {
+public class ChestView implements WorldObject {
     private ArrayList<Rectangle> rectangles;
     private Sprite sprite;
     private Chest chest;
@@ -71,14 +71,6 @@ public class ChestView implements Environment, WorldObject {
             openChest();
         }
     }
-
-    @Override
-    public ArrayList<Rectangle> getRectangles() {
-        return rectangles;
-    }
-
-    @Override
-    public void setRectangles(ArrayList<Rectangle> rectangles) {}
 
     private ArrayList<Rectangle> mapToRectangles(TiledMap map) {
         MapLayer objectLayer = map.getLayers().get("ChestObjectLayer");

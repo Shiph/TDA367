@@ -59,11 +59,6 @@ public class PlayerView implements CharacterView, WorldObject {
         return rectangle;
     }
 
-    @Override
-    public void setRectangles(ArrayList<Rectangle> rectangles) {
-
-    }
-
     public void setRectangle(Rectangle rectangle) {}
 
     /**

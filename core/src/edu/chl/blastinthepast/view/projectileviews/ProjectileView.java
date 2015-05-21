@@ -10,13 +10,12 @@ import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
 import java.util.ArrayList;
 
 import edu.chl.blastinthepast.utils.Constants;
-import edu.chl.blastinthepast.view.Collidable;
 import edu.chl.blastinthepast.view.WorldObject;
 
 /**
  * Created by jonas on 2015-04-23.
  */
-public abstract class ProjectileView implements Collidable, WorldObject {
+public abstract class ProjectileView implements WorldObject {
     private Texture texture;
     private Sprite sprite;
     private ArrayList<Rectangle> rectangle;
@@ -78,11 +77,6 @@ public abstract class ProjectileView implements Collidable, WorldObject {
         batch.begin();
         sprite.draw(batch);
         batch.end();
-    }
-
-    @Override
-    public void setRectangles(ArrayList<Rectangle> rectangles) {
-
     }
 
     public void dispose() {
