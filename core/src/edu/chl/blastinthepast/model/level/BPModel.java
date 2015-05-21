@@ -12,6 +12,7 @@ import edu.chl.blastinthepast.model.chest.*;
 import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.model.player.Player;
 import edu.chl.blastinthepast.model.powerUp.PowerUpI;
+import edu.chl.blastinthepast.model.weapon.WeaponFactory;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 import java.util.*;
@@ -27,8 +28,8 @@ public class BPModel extends Observable implements Observer {
     private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     private ArrayList<Object> dropList = new ArrayList<Object>();
     private ArrayList<Character> characters;
-    private Boss boss;
     private Chest chest;
+    private Boss boss;
     private boolean isPaused;
     private ArrayList<PowerUpI> powerUps=new ArrayList<PowerUpI>();
 
@@ -44,7 +45,7 @@ public class BPModel extends Observable implements Observer {
     }
 
     public void spawnBoss(Position pos) {
-        boss = (Boss)enemyFactory.getEnemy("Boss", player);
+        boss = (Boss)enemyFactory.getEnemy(player, Character.CharacterType.BOSS);
         boss.addObserver(this);
         enemies.add(boss);
         characters.add(boss);
@@ -54,12 +55,12 @@ public class BPModel extends Observable implements Observer {
 
     public void spawnEnemies(int amount) {
         for (int i = 0; i < amount; i++) {
-            Enemy e = enemyFactory.getEnemy("Pleb", player);
-            enemies.add(e);
-            characters.add(e);
+            Enemy pleb = enemyFactory.getEnemy(player, Character.CharacterType.PLEB);
+            enemies.add(pleb);
+            characters.add(pleb);
             setChanged();
-            notifyObservers(e);
-            e.addObserver(this);
+            notifyObservers(pleb);
+            pleb.addObserver(this);
         }
     }
 
@@ -144,7 +145,7 @@ public class BPModel extends Observable implements Observer {
 
     private void spawnEnemies() {
         for (int i = 0; i < 5; i++) {
-            Enemy e = enemyFactory.getEnemy("Pleb", player);
+            Enemy e = enemyFactory.getEnemy(player, Character.CharacterType.PLEB);
             enemies.add(e);
             characters.add(e);
             setChanged();

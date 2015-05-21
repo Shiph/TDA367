@@ -26,7 +26,7 @@ public abstract class Weapon implements WeaponInterface {
     private Vector2 direction;
     private Position offset;
     private int bonusDamage = 0;
-    private int bonusFireRate=0;
+    private int bonusFireRate = 0;
 
     public Weapon (PositionInterface pos, Vector2 direction, int reloadTime, int fireRate, final int magazineCapacity, int totalBullets, PositionInterface offset) {
         position = new Position(pos);
@@ -168,7 +168,6 @@ public abstract class Weapon implements WeaponInterface {
         bonusFireRate=0;
         bonusDamage=0;
     }
-
 
     @Override
     public int getBonusDamage(){

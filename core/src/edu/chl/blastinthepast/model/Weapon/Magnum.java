@@ -11,6 +11,8 @@ import edu.chl.blastinthepast.utils.PositionInterface;
  */
 public class Magnum extends Weapon {
 
+    private WeaponType weaponType = WeaponType.MAGNUM;
+
     public Magnum(PositionInterface position, Vector2 direction) {
         super(position, direction, 850, 2, 16, 16*16, new Position(0, 0));
     }
@@ -21,8 +23,8 @@ public class Magnum extends Weapon {
     }
 
     @Override
-    public String toString() {
-        return "Magnum";
+    public WeaponType getWeaponType() {
+        return weaponType;
     }
 
 }

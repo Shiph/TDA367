@@ -2,10 +2,7 @@ package edu.chl.blastinthepast.model.player;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
-import edu.chl.blastinthepast.model.weapon.AK47;
-import edu.chl.blastinthepast.model.weapon.Magnum;
-import edu.chl.blastinthepast.model.weapon.WeaponFactory;
-import edu.chl.blastinthepast.model.weapon.WeaponInterface;
+import edu.chl.blastinthepast.model.weapon.*;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
@@ -21,6 +18,7 @@ public class Player extends Observable implements Character {
 
     private int health;
     private int movementSpeed;
+    private CharacterType characterType = CharacterType.PLAYER;
     private ArrayList<WeaponInterface> weaponArray;
     private WeaponInterface weapon;
     private WeaponFactory weaponFactory;
@@ -42,7 +40,7 @@ public class Player extends Observable implements Character {
     }
 
     /**
-     * Creates a new player character with texture, rectangle and sprite.
+     * Creates a new player character with given movement speed and health.
      */
     private Player(int movementSpeed, int health, PositionInterface pos) {
         position = new Position(pos);
@@ -50,13 +48,11 @@ public class Player extends Observable implements Character {
         this.health = health;
         weaponFactory = new WeaponFactory();
         weaponArray = new ArrayList<WeaponInterface>();
-        weapon = weaponFactory.getWeapon(this, "AK47");
+        weapon = weaponFactory.getWeapon(this, WeaponInterface.WeaponType.AK47);
         weaponArray.add(weapon);
         projectiles = new ArrayList<ProjectileInterface>();
         position=pos;
     }
-
-
 
     public int getMovementSpeed() {
         return movementSpeed;
@@ -84,7 +80,7 @@ public class Player extends Observable implements Character {
 
     public void addWeapon(WeaponInterface weapon) {
         WeaponInterface newWeapon;
-        newWeapon = weaponFactory.getWeapon(this, weapon.toString());
+        newWeapon = weaponFactory.getWeapon(this, weapon.getWeaponType());
         weaponArray.add(newWeapon);
         setWeapon(newWeapon);
 
@@ -293,13 +289,13 @@ public class Player extends Observable implements Character {
     }
 
     public void reloadCurrentWeapon(){
-        if (weapon.getbulletsLeftInMagazine()<weapon.getMagazineCapacity() && weapon.getTotalBullets()>0){
+        if (weapon.getbulletsLeftInMagazine() < weapon.getMagazineCapacity() && weapon.getTotalBullets() > 0){
             weapon.reload();
         }
     }
 
     @Override
-    public String toString() {
-        return "Player";
+    public CharacterType getCharacterType() {
+        return characterType;
     }
 }

@@ -10,6 +10,8 @@ import edu.chl.blastinthepast.model.powerUp.PowerUpI;
  */
 public class Boss extends Enemy {
 
+    private CharacterType characterType = CharacterType.BOSS;
+
     public Boss(Character player) {
         this(200, 15, player);
     }
@@ -29,8 +31,7 @@ public class Boss extends Enemy {
     }
 
     @Override
-    public String toString() {
-        return "Boss";
+    public CharacterType getCharacterType() {
+        return characterType;
     }
-
 }

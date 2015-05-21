@@ -184,7 +184,7 @@ public class PlayState extends GameState implements Observer{
 
     public void spawnCharacterViews() {
         for (Character c : model.getCharacters()) {
-            if(c.toString().equals("Player")) {
+            if(c.getCharacterType() == Character.CharacterType.PLAYER) {
                 Player p = (Player) c;
                 playerView = new PlayerView(p);
                 worldObjects.put(p, playerView);
