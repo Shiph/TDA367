@@ -1,6 +1,6 @@
 package edu.chl.blastinthepast.model.level;
 
-import edu.chl.blastinthepast.model.entities.Enemy;
+import edu.chl.blastinthepast.model.enemy.Enemy;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 import java.util.Observable;

@@ -1,0 +1,270 @@
+package edu.chl.blastinthepast.model.enemy;
+
+import com.badlogic.gdx.math.Vector2;
+import edu.chl.blastinthepast.model.player.*;
+import edu.chl.blastinthepast.model.player.Character;
+import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
+import edu.chl.blastinthepast.model.weapon.WeaponFactory;
+import edu.chl.blastinthepast.model.weapon.WeaponInterface;
+import edu.chl.blastinthepast.utils.Constants;
+import edu.chl.blastinthepast.utils.Position;
+import edu.chl.blastinthepast.utils.PositionInterface;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.lang.*;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Random;
+
+
+/**
+ * Created by Mattias on 15-04-21.
+ */
+public abstract class Enemy extends Observable implements edu.chl.blastinthepast.model.player.Character {
+
+    private final Character player;
+    private int health;
+    private int movementSpeed;
+    private PositionInterface position;
+    private PositionInterface prevPos;
+    private WeaponInterface weapon;
+    private WeaponFactory weaponFactory;
+    private MyActionListener actionListener;
+    private Timer timer;
+    private int movementDirection;
+    private Vector2 aimVector;
+    private Vector2 playerDirectionVector;
+    private Vector2 movementVector;
+    private int range = 500;
+    private ArrayList<ProjectileInterface> projectiles;
+    private ArrayList<Object> loot;
+    private int bonusMovementSpeed=0;
+
+    public Enemy(int movementSpeed, int health, Character player) {
+        loot= new ArrayList<Object>();
+        this.movementSpeed = movementSpeed;
+        this.health = health;
+        this.player = player;
+        position = new Position(0,0);
+        actionListener = new MyActionListener();
+        Random r = new Random();
+        movementDirection = r.nextInt(4);
+        aimVector = new Vector2(1, 0);
+        movementVector = new Vector2(1, 0);
+        playerDirectionVector = new Vector2();
+        weaponFactory = new WeaponFactory();
+        weapon = weaponFactory.getWeapon(this, "AK47");
+        timer = new Timer(1000, actionListener);
+        timer.setRepeats(true);
+        timer.start();
+        projectiles=new ArrayList<ProjectileInterface>();
+    }
+
+    public void move(float dt) {
+        movementVector.setLength(movementSpeed * dt);
+        switch (movementDirection) {
+            case 0: // move west
+                if (!(position.getX() > 0)) {
+                    movementDirection = 1;
+                } else {
+                    movementVector.setAngle(180);
+                    position.setX(position.getX() + movementVector.x);
+                    aimVector.set(position.getX() - range, position.getY());
+                }
+                break;
+            case 1: // move east
+                if (!(position.getX() < Constants.MAP_WIDTH)) {
+                    movementDirection = 0;
+                } else {
+                    movementVector.setAngle(0);
+                    position.setX(position.getX() + movementVector.x);
+                    aimVector.set(position.getX() + range, position.getY());
+                }
+                break;
+            case 2: // move north
+                if (!(position.getY() < Constants.MAP_HEIGHT)) {
+                    movementDirection = 3;
+                } else {
+                    movementVector.setAngle(90);
+                    position.setY(position.getY() + movementVector.y);
+                    aimVector.set(position.getX(), position.getY() + range);
+                }
+                break;
+            case 3: // move south
+                if (!(position.getY() > 2)) {
+                    movementDirection = 1;
+                } else {
+                    movementVector.setAngle(270);
+                    position.setY(position.getY() + movementVector.y);
+                    aimVector.set(position.getX(), position.getY() - range);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void setMovementSpeed(int newSpeed) {
+        movementSpeed = newSpeed;
+    }
+
+    public void setHealth(int newHealth) {
+        health = newHealth;
+    }
+
+    public void setWeapon(WeaponInterface weapon) {
+        this.weapon = weapon;
+    }
+
+    public WeaponInterface getWeapon() {
+        return weapon;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public PositionInterface getPosition(){
+        return position;
+    }
+
+    public int getMovementDirection() {
+        return movementDirection;
+    }
+
+    public void setPosition (PositionInterface position) {
+        this.position = position;
+    }
+
+    @Override
+    public void addBonusMovementSpeed(int bonusSpeed) {
+
+    }
+
+    @Override
+    public int getBonusMovementSpeed() {
+        return bonusMovementSpeed;
+    }
+
+    @Override
+    public int getTotalMovementSpeed() {
+        return movementSpeed+bonusMovementSpeed;
+    }
+
+    @Override
+    public ArrayList<WeaponInterface> getAllWeapons() {
+        ArrayList<WeaponInterface> weaponArray=new ArrayList<WeaponInterface>();
+        weaponArray.add(weapon);
+        return weaponArray;
+    }
+
+    @Override
+    public void resetBonuses() {
+
+    }
+
+    public ArrayList<Object> getLoot() {
+        return loot;
+    }
+
+    public PositionInterface getPrevPos(){
+        return prevPos;
+    }
+
+    public void setPrevPos (Position prevPos) {
+        this.prevPos = prevPos;
+    }
+
+    public WeaponInterface getCurrentWeapon() {
+        return weapon;
+    };
+
+    public int getMovementSpeed() {
+        return movementSpeed;
+    }
+
+    public void update(float dt) {
+        prevPos = new Position(position);
+        playerDirectionVector.set(player.getPosition().getX() - position.getX(), player.getPosition().getY() - position.getY());
+        weapon.setPosition(position);
+        if(isPlayerInRange()) {
+            aimVector.set(playerDirectionVector);
+            ProjectileInterface p=weapon.pullTrigger();
+            if (p!=null){
+                projectiles.add(p);
+                setChanged();
+                notifyObservers(p);
+            }
+        } else {
+            updateMovementDirectionVector(movementDirection);
+        }
+        move(dt);
+
+    }
+
+    private void updateMovementDirectionVector(int movementDirection) {
+        switch (movementDirection) {
+            case 0: // moving west
+                    aimVector.set(position.getX() - range, position.getY());
+                break;
+            case 1: // moving east
+                    aimVector.set(position.getX() + range, position.getY());
+                break;
+            case 2: // moving north
+                    aimVector.set(position.getX(), position.getY() + range);
+                break;
+            case 3: // moving south
+                    aimVector.set(position.getX(), position.getY() - range);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private boolean isPlayerInRange() {
+        if (Math.abs(playerDirectionVector.angle(aimVector)) < 150 &&
+               Math.abs(player.getPosition().getX() - position.getX()) < 300 &&
+                Math.abs(player.getPosition().getY() - position.getY()) < 300) {
+            return true;
+        }
+        return false;
+    }
+
+    public Vector2 getDirection() {
+        return aimVector;
+    }
+
+    private class MyActionListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Random r = new Random();
+            movementDirection = r.nextInt(4);
+        }
+
+    }
+
+    public ArrayList<ProjectileInterface> getProjectiles(){
+        return projectiles;
+    }
+
+    public abstract void generateLoot();
+
+
+    public ArrayList<Object> die() {
+        generateLoot();
+        return loot;
+    }
+
+    @Override
+    public Vector2 getAimVector() {
+        return aimVector;
+    }
+
+    @Override
+    public Vector2 getMovementVector() {
+        return movementVector;
+    }
+
+}

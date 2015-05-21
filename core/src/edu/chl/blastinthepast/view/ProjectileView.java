@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.audio.Sound;
-import edu.chl.blastinthepast.model.entities.ProjectileInterface;
+import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
 
 import java.util.ArrayList;
 
@@ -55,7 +55,7 @@ public abstract class ProjectileView implements Collidable, WorldObject {
     }
 
     private void setRotation(){
-        sprite.setRotation(projectile.getAimDirection().angle());
+        sprite.setRotation(projectile.getAimVector().angle());
     }
 
     /**

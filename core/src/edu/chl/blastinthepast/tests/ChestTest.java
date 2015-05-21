@@ -1,7 +1,7 @@
 package edu.chl.blastinthepast.tests;
 
-import edu.chl.blastinthepast.model.entities.Chest;
-import edu.chl.blastinthepast.model.entities.WeaponInterface;
+import edu.chl.blastinthepast.model.chest.Chest;
+import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

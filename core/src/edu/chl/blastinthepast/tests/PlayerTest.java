@@ -1,7 +1,7 @@
 package edu.chl.blastinthepast.tests;
 
 import com.badlogic.gdx.math.Vector2;
-import edu.chl.blastinthepast.model.entities.Player;
+import edu.chl.blastinthepast.model.player.Player;
 import edu.chl.blastinthepast.utils.Position;
 import org.junit.After;
 import org.junit.Before;
@@ -25,7 +25,7 @@ public class PlayerTest {
         player.calculateDirection(new Position(1, 1));
         Vector2 v = new Vector2(1, 1);
         v.scl(1 / v.len());
-        assertTrue(player.getAimDirection().equals(v));
+        assertTrue(player.getAimVector().equals(v));
     }
 
     @Test

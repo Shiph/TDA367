@@ -1,6 +1,6 @@
 package edu.chl.blastinthepast.view.characterviews;
 
-import edu.chl.blastinthepast.model.entities.Enemy;
+import edu.chl.blastinthepast.model.enemy.Enemy;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 
 /**

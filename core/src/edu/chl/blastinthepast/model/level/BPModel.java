@@ -1,10 +1,17 @@
 package edu.chl.blastinthepast.model.level;
 
 import com.badlogic.gdx.math.Vector2;
-import edu.chl.blastinthepast.model.Ammunition;
-import edu.chl.blastinthepast.model.EnemyFactory;
-import edu.chl.blastinthepast.model.entities.*;
-import edu.chl.blastinthepast.model.entities.Character;
+import edu.chl.blastinthepast.model.ammunition.Ammunition;
+import edu.chl.blastinthepast.model.enemy.EnemyFactory;
+import edu.chl.blastinthepast.model.projectile.Projectile;
+import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
+import edu.chl.blastinthepast.model.weapon.Magnum;
+import edu.chl.blastinthepast.model.enemy.Boss;
+import edu.chl.blastinthepast.model.enemy.Enemy;
+import edu.chl.blastinthepast.model.chest.*;
+import edu.chl.blastinthepast.model.player.Character;
+import edu.chl.blastinthepast.model.player.Player;
+import edu.chl.blastinthepast.model.powerUp.PowerUpI;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 

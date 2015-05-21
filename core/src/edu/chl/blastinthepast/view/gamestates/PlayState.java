@@ -14,17 +14,23 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import edu.chl.blastinthepast.model.Ammunition;
-import edu.chl.blastinthepast.model.entities.*;
-import edu.chl.blastinthepast.model.entities.Character;
+import edu.chl.blastinthepast.model.ammunition.Ammunition;
+import edu.chl.blastinthepast.model.projectile.AK47Projectile;
+import edu.chl.blastinthepast.model.projectile.MagnumProjectile;
+import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
+import edu.chl.blastinthepast.model.enemy.Enemy;
+import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.model.level.LevelInterface;
 import edu.chl.blastinthepast.model.level.LevelOne;
+import edu.chl.blastinthepast.model.player.Player;
+import edu.chl.blastinthepast.model.powerUp.*;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.SoundAssets;
 import edu.chl.blastinthepast.view.*;
+import edu.chl.blastinthepast.view.characterviews.EnemyViewFactory;
 import edu.chl.blastinthepast.view.characterviews.PlayerView;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -184,7 +190,7 @@ public class PlayState extends GameState implements Observer{
                 worldObjects.put(p, playerView);
             } else {
                 Enemy e = (Enemy) c;
-                worldObjects.put(e, enemyViewFactory.getEnemyView(e.toString(), e));
+                worldObjects.put(e, enemyViewFactory.getEnemyView(e));
             }
         }
     }
@@ -306,7 +312,7 @@ public class PlayState extends GameState implements Observer{
     }
 
     public void checkIfProjectile(Observable o, Object arg){
-        if (arg instanceof  ProjectileInterface){
+        if (arg instanceof ProjectileInterface){
             if (arg instanceof AK47Projectile) {
                     worldObjects.put(arg, new AK47ProjectileView((ProjectileInterface) arg));
                 } else if (arg instanceof MagnumProjectile) {
@@ -322,7 +328,7 @@ public class PlayState extends GameState implements Observer{
                 worldObjects.put(arg, new PlayerView((Player)arg));
             } else {
                 Enemy e = (Enemy)arg;
-                worldObjects.put(arg, enemyViewFactory.getEnemyView(e.toString(), e));
+                worldObjects.put(arg, enemyViewFactory.getEnemyView(e));
             }
         }
     }
