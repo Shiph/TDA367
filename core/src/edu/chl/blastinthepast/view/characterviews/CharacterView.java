@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import edu.chl.blastinthepast.model.player.Character;
+import edu.chl.blastinthepast.view.WorldObject;
 import edu.chl.blastinthepast.view.projectileviews.ProjectileView;
 
 import java.util.ArrayList;
@@ -12,14 +13,12 @@ import java.util.ArrayList;
 /**
  * Created by MattiasJ on 2015-04-27.
  */
-public interface CharacterView {
+public interface CharacterView extends WorldObject {
 
     ArrayList<Rectangle> getRectangles();
     Texture getTexture();
     Sprite getSprite();
     Character getCharacter();
-    void hit(ProjectileView projectile);
     void draw(SpriteBatch batch);
-
 
 }

@@ -23,21 +23,19 @@ public class PlayerView implements CharacterView, WorldObject {
     private Sprite sprite;
     private ArrayList<Rectangle> rectangle;
     private Player player;
-    private Vector2 direction;
     private WeaponViewFactory weaponViewFactory;
     private WeaponView weaponView;
     private String currentWeapon;
     private boolean collision;
 
-    public PlayerView(Player newPlayer){
+    public PlayerView(Player player){
         texture = GraphicalAssets.CHARACTERDOWN;
         sprite = new Sprite(texture);
         rectangle = new ArrayList<Rectangle>();
         rectangle.add(new Rectangle());
-        direction = new Vector2();
         rectangle.get(0).height = sprite.getHeight();
         rectangle.get(0).width = sprite.getWidth();
-        player = newPlayer;
+        this.player = player;
         weaponViewFactory = new WeaponViewFactory();
         weaponView = weaponViewFactory.getWeaponView(player.getCurrentWeapon());
         currentWeapon = player.getCurrentWeapon().toString();
@@ -69,12 +67,6 @@ public class PlayerView implements CharacterView, WorldObject {
     @Override
     public Character getCharacter() {
         return player;
-    }
-
-
-    @Override
-    public void hit(ProjectileView projectile) {
-        System.out.println(this);
     }
 
     public void updatePosition(){
@@ -119,7 +111,7 @@ public class PlayerView implements CharacterView, WorldObject {
     }
 
     public void dispose() {
-        //texture.dispose();
+        texture.dispose();
     }
 
     @Override

@@ -59,11 +59,6 @@ public abstract class EnemyView implements CharacterView, WorldObject {
         return enemy;
     }
 
-    @Override
-    public void hit(ProjectileView projectile) {
-        System.out.println(this);
-    }
-
     public PositionInterface getPosition(){
         return enemy.getPosition();
     }
