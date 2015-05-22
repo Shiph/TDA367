@@ -12,7 +12,6 @@ public abstract class GameState{
 
     protected GameState(GameStateManager gsm, BPModel model, LevelInterface level) {
         this.gsm = gsm;
-        init(model, level);
     }
 
     protected GameState(GameStateManager gsm, BPModel model) {

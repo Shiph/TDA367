@@ -68,13 +68,6 @@ public class PlayState extends GameState implements Observer{
 
     public PlayState(GameStateManager gsm, BPModel model, LevelInterface level) {
         super(gsm, model, level);
-    }
-
-    @Override
-    public void init(BPModel model) {}
-
-    @Override
-    public void init(BPModel model, LevelInterface level) {
         this.model = model;
         chestView = new ChestView(model.getChest());
         characterViewFactory = new CharacterViewFactory();
@@ -84,10 +77,16 @@ public class PlayState extends GameState implements Observer{
         worldObjectsRemoveList = new ArrayList<Object>();
         chestView = new ChestView(model.getChest());
         batch = new SpriteBatch();
-
         pcs = new PropertyChangeSupport(this);
         model.addObserver(this);
+        init(model, level);
+    }
 
+    @Override
+    public void init(BPModel model) {}
+
+    @Override
+    public void init(BPModel model, LevelInterface level) {
         setCrosshairCursor();
         spawnCharacterViews();
 
@@ -134,26 +133,75 @@ public class PlayState extends GameState implements Observer{
     public void update(float dt) {
         if(!model.isPaused()) {
             checkForCollision();
-            chestView.update();
             updateWeaponGUI();
-            if (model.getPlayer().getHealth() < heartIcons.size()) {
-                for (int i=0; i < heartIcons.size()-model.getPlayer().getHealth(); i++) {
-                    heartIcons.remove(heartIcons.size()-i-1);
-                }
-            } else if (model.getPlayer().getHealth() > heartIcons.size()) {
-                for (int i=0; i<model.getPlayer().getHealth()-heartIcons.size(); i++) {
-                    heartIcons.add(new Image(GraphicalAssets.HEART));
-                }
-            }
+            updateHearts();
             updateHeartPositions();
             updateCameraPosition();
             if (!music.isPlaying()) {
                 music.play();
             }
+            chestView.update();
         }
     }
 
-    private void updateHeartPositions() {
+    @Override
+    public void update(Observable o, Object arg) {
+        if (worldObjects.containsKey(arg)) {
+            if (!worldObjectsRemoveList.contains(arg)) {
+                worldObjectsRemoveList.add(arg);
+            }
+        } else {
+            checkIfProjectile(o, arg);
+            checkIfCharacter(o, arg);
+            checkIfAmmunition(o, arg);
+            checkIfPowerUp(o, arg);
+        }
+
+        if (arg instanceof String) {
+            if (arg.equals("paused")) {
+                music.pause();
+            } else if (arg.equals("unpaused")) {
+                music.play();
+            }
+        }
+    }
+
+    @Override
+    public void draw() {
+        tiledMapRenderer.render();
+
+        chestView.draw(batch);
+        for (WorldObject o : worldObjects.values()){
+            o.draw(batch);
+        }
+
+        if (!worldObjectsRemoveList.isEmpty()) {
+            removeObjects();
+        }
+
+        batch.begin();
+        ammoLabel.draw(batch, 1);
+        weaponImage.draw(batch, 1);
+        for (Image i : heartIcons) {
+            i.draw(batch, 1);
+            i.setSize(32, 32);
+        }
+        batch.end();
+    }
+
+    public void updateHearts() {
+        if (model.getPlayer().getHealth() < heartIcons.size()) {
+            for (int i=0; i < heartIcons.size()-model.getPlayer().getHealth(); i++) {
+                heartIcons.remove(heartIcons.size()-i-1);
+            }
+        } else if (model.getPlayer().getHealth() > heartIcons.size()) {
+            for (int i=0; i<model.getPlayer().getHealth()-heartIcons.size(); i++) {
+                heartIcons.add(new Image(GraphicalAssets.HEART));
+            }
+        }
+    }
+
+    public void updateHeartPositions() {
         if (!heartIcons.isEmpty()) {
             heartIcons.get(0).setPosition(camera.position.x - Constants.CAMERA_WIDTH / 2 + 15, camera.position.y + Constants.CAMERA_HEIGHT / 2 - 60);
         }
@@ -182,29 +230,6 @@ public class PlayState extends GameState implements Observer{
         tiledMapRenderer.setView(camera);
     }
 
-    @Override
-    public void draw() {
-        tiledMapRenderer.render();
-
-        chestView.draw(batch);
-        for (WorldObject o : worldObjects.values()){
-            o.draw(batch);
-        }
-
-        if (!worldObjectsRemoveList.isEmpty()) {
-            removeObjects();
-        }
-
-        batch.begin();
-        ammoLabel.draw(batch, 1);
-        weaponImage.draw(batch, 1);
-        for (Image i : heartIcons) {
-            i.draw(batch, 1);
-            i.setSize(32, 32);
-        }
-        batch.end();
-    }
-
     public void spawnCharacterViews() {
         for (Character c : model.getCharacters()) {
             if(c.getCharacterType() == Character.CharacterType.PLAYER) {
@@ -224,8 +249,7 @@ public class PlayState extends GameState implements Observer{
                 }
             }
         }
-        int playerMapX;
-        int playerMapY;
+        int playerMapX, playerMapY;
         if (model.getPlayer().isMovingEast()) {
             playerMapX = Math.round((model.getPlayer().getPosition().getX() + playerView.getSprite().getWidth()) / tileWidth) - 1;
         } else {
@@ -276,28 +300,6 @@ public class PlayState extends GameState implements Observer{
         }
         pcs.addPropertyChangeListener(pcl);
         return true;
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        if (worldObjects.containsKey(arg)) {
-            if (!worldObjectsRemoveList.contains(arg)) {
-                worldObjectsRemoveList.add(arg);
-            }
-        } else {
-            checkIfProjectile(o, arg);
-            checkIfCharacter(o, arg);
-            checkIfAmmunition(o, arg);
-            checkIfPowerUp(o, arg);
-        }
-
-        if (arg instanceof String) {
-            if (arg.equals("paused")) {
-                music.pause();
-            } else if (arg.equals("unpaused")) {
-                music.play();
-            }
-        }
     }
 
     /**
