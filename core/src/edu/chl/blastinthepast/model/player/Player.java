@@ -125,9 +125,6 @@ public class Player extends Observable implements Character {
     public int getTotalMovementSpeed() {
         return movementSpeed+bonusMovementSpeed;
     }
-    public void setPrevPos (Position prevPos) {
-        this.prevPos = prevPos;
-    }
 
     public void setPosition(int x, int y) {
         position.setPosition(x, y);
@@ -145,7 +142,6 @@ public class Player extends Observable implements Character {
         if (movementVector.len() != 0) {
             position.setX(x + movementVector.x);
         }
-        //System.out.println("Delta x: " + Math.cos(movementVector.angleRad()));
         position.setY(y + movementVector.y);
     }
 

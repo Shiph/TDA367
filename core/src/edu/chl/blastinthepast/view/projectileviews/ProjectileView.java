@@ -10,13 +10,13 @@ import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
 import java.util.ArrayList;
 
 import edu.chl.blastinthepast.utils.Constants;
-import edu.chl.blastinthepast.view.Collidable;
 import edu.chl.blastinthepast.view.WorldObject;
 
 /**
  * Created by jonas on 2015-04-23.
  */
-public abstract class ProjectileView implements Collidable, WorldObject {
+public abstract class ProjectileView implements WorldObject {
+
     private Texture texture;
     private Sprite sprite;
     private ArrayList<Rectangle> rectangle;
@@ -37,16 +37,10 @@ public abstract class ProjectileView implements Collidable, WorldObject {
         sprite.setY(rectangle.get(0).y);
     }
 
-    /**
-     * @return the texture of the projectile.
-     */
     public Texture getTexture() {
         return texture;
     }
 
-    /**
-     * @return the sprite of the projectile.
-     */
     public Sprite getSprite() {
         return sprite;
     }
@@ -60,13 +54,6 @@ public abstract class ProjectileView implements Collidable, WorldObject {
         sprite.setRotation(projectile.getAimVector().angle());
     }
 
-    /**
-     * @return the rectangle of the projectile.
-     */
-    public ArrayList<Rectangle> getRectangles() {
-        return rectangle;
-    }
-
     @Override
     public Object getObject() {
         return projectile;
@@ -78,11 +65,6 @@ public abstract class ProjectileView implements Collidable, WorldObject {
         batch.begin();
         sprite.draw(batch);
         batch.end();
-    }
-
-    @Override
-    public void setRectangles(ArrayList<Rectangle> rectangles) {
-
     }
 
     public void dispose() {

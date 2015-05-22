@@ -1,6 +1,7 @@
 package edu.chl.blastinthepast.view.characterviews;
 
-import edu.chl.blastinthepast.model.enemy.Enemy;
+import edu.chl.blastinthepast.model.player.Character;
+import edu.chl.blastinthepast.model.enemy.Pleb;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 
 /**
@@ -8,9 +9,9 @@ import edu.chl.blastinthepast.utils.GraphicalAssets;
  */
 public class PlebView extends EnemyView {
 
-    private Enemy pleb;
+    private Pleb pleb;
 
-    public PlebView(Enemy pleb) {
+    public PlebView(Pleb pleb) {
         super(pleb, GraphicalAssets.PLEBDOWN);
         this.pleb = pleb;
     }

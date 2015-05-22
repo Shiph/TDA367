@@ -84,7 +84,6 @@ public class MockPlayer implements Character {
 
     }
 
-
     @Override
     public int getBonusMovementSpeed() {
         return 0;

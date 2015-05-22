@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import edu.chl.blastinthepast.model.player.Character;
-import edu.chl.blastinthepast.view.Collidable;
+import edu.chl.blastinthepast.view.WorldObject;
 import edu.chl.blastinthepast.view.projectileviews.ProjectileView;
 
 import java.util.ArrayList;
@@ -13,19 +13,12 @@ import java.util.ArrayList;
 /**
  * Created by MattiasJ on 2015-04-27.
  */
-public interface CharacterView extends Collidable {
+public interface CharacterView extends WorldObject {
 
-    public ArrayList<Rectangle> getRectangles();
-
-    public Texture getTexture();
-
-    public Sprite getSprite();
-
-    public Character getCharacter();
-
-    public void hit(ProjectileView projectile);
-
-    public void draw(SpriteBatch batch);
-
+    ArrayList<Rectangle> getRectangles();
+    Texture getTexture();
+    Sprite getSprite();
+    Character getCharacter();
+    void draw(SpriteBatch batch);
 
 }

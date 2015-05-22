@@ -50,13 +50,6 @@ public abstract class EnemyView implements CharacterView, WorldObject {
         return rectangle;
     }
 
-    @Override
-    public void setRectangles(ArrayList<Rectangle> rectangles) {
-
-    }
-
-    public void setRectangle(Rectangle rectangle) {}
-
     public Sprite getSprite() {
         return sprite;
     }
@@ -64,11 +57,6 @@ public abstract class EnemyView implements CharacterView, WorldObject {
     @Override
     public Character getCharacter() {
         return enemy;
-    }
-
-    @Override
-    public void hit(ProjectileView projectile) {
-        System.out.println(this);
     }
 
     public PositionInterface getPosition(){
@@ -103,10 +91,6 @@ public abstract class EnemyView implements CharacterView, WorldObject {
     }
 
     public abstract void updateDirection();
-
-    public void setCollision () {
-        collision ^= true;
-    }
 
     public void dispose() {
         texture.dispose();
