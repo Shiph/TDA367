@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.model.level.LevelInterface;
+import edu.chl.blastinthepast.model.menu.GameOverModel;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 import edu.chl.blastinthepast.utils.HighScoreHandler;
 
@@ -18,20 +19,22 @@ import edu.chl.blastinthepast.utils.HighScoreHandler;
 public class GameOverState extends GameState{
 
     private SpriteBatch batch;
-    private boolean newHighScore;
+    //private boolean newHighScore;
     private Sprite sprite;
     private Texture texture;
     private OrthographicCamera camera;
     private final String title = "Game Over";
     private float width;
-    private char[] newName = new char[] {'A', 'A', 'A'};
-    private int currentChar = 0;
+    private char[] newName;
+    private int currentChar;
     private int score;
     private BitmapFont gameOverFont;
     private BitmapFont font;
+    private GameOverModel gameOverModel;
 
-    public GameOverState(GameStateManager gsm, BPModel model) {
+    public GameOverState(GameStateManager gsm, BPModel model, GameOverModel gameOverModel) {
         super(gsm, model);
+        this.gameOverModel = gameOverModel;
     }
 
     @Override
@@ -50,12 +53,11 @@ public class GameOverState extends GameState{
     }
 
     @Override
-    public void update(float dt) {}
-
-    public void setScore(int score) {
-        this.score = score;
-        newHighScore = HighScoreHandler.gameData.isHighScore(score);
+    public void update(float dt) {
+        currentChar = gameOverModel.getCurrentChar();
+        newName = gameOverModel.getNewName();
     }
+
 
     @Override
     public void draw() {
@@ -67,12 +69,12 @@ public class GameOverState extends GameState{
         width = gameOverFont.getBounds(title).width;
         gameOverFont.draw(batch, title, (Gdx.graphics.getWidth() - width) / 2, 4 * Gdx.graphics.getHeight() / 5 + 50);
 
-        if(!newHighScore) {
+        if(!gameOverModel.isNewHighScore()) {
             batch.end();
             return;
         }
 
-        String newHighScore = "New High Score: " + score;
+        String newHighScore = "New High Score: " + gameOverModel.getScore();
         width = font.getBounds(newHighScore).width;
         font.draw(batch, newHighScore, (Gdx.graphics.getWidth() - width) / 2, 3 * Gdx.graphics.getHeight() / 4);
 
@@ -87,50 +89,7 @@ public class GameOverState extends GameState{
         batch.end();
     }
 
-    public void select() {
-        if(newHighScore) {
-            HighScoreHandler.gameData.addHighScore(score, new String(newName));
-            HighScoreHandler.save();
-        }
-    }
 
-    public void moveUp() {
-        if(newName[currentChar] == ' ') {
-            newName[currentChar] = 'A';
-        } else {
-            newName[currentChar] ++;
-            if(newName[currentChar] > 'Z') {
-                newName[currentChar] = ' ';
-            }
-        }
-        draw();
-    }
-
-    public void moveDown() {
-        if(newName[currentChar] == ' ') {
-            newName[currentChar] = 'Z';
-        } else {
-            newName[currentChar] --;
-            if(newName[currentChar] < 'A') {
-                newName[currentChar] = ' ';
-            }
-        }
-        draw();
-    }
-
-    public void moveLeft() {
-        if(currentChar > 0) {
-            currentChar--;
-        }
-        draw();
-    }
-
-    public void moveRight() {
-        if(currentChar < newName.length - 1) {
-            currentChar++;
-        }
-        draw();
-    }
 
     @Override
     public void dispose() {

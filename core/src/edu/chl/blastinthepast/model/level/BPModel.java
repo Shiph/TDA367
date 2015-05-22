@@ -12,7 +12,6 @@ import edu.chl.blastinthepast.model.chest.*;
 import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.model.player.Player;
 import edu.chl.blastinthepast.model.powerUp.PowerUpI;
-import edu.chl.blastinthepast.model.weapon.WeaponFactory;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 
@@ -33,6 +32,7 @@ public class BPModel extends Observable implements Observer {
     private Boss boss;
     private boolean isPaused;
     private ArrayList<PowerUpI> powerUps=new ArrayList<PowerUpI>();
+    //private InGameMenuModel inGameMenuModel;
 
     public BPModel() {
         chest = new Chest(new Magnum(new Position(1000,1500), new Vector2(), new Vector2()));
