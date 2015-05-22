@@ -1,8 +1,11 @@
 package edu.chl.blastinthepast.model.powerUp;
 
 
+import edu.chl.blastinthepast.model.Collidable;
 import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.utils.PositionInterface;
+import edu.chl.blastinthepast.utils.Rectangle;
+import edu.chl.blastinthepast.utils.RectangleAdapter;
 
 /**
  * Created by jonas on 2015-05-19.
@@ -12,14 +15,16 @@ public abstract class PowerUp implements PowerUpI{
     private long activationTime=0;
     private boolean hasExpired=false;
     private boolean firstUpdate=true;
+    private Rectangle rectangle = new RectangleAdapter();
+    private final int size = 64;
     protected int duration=10*1000;
     protected edu.chl.blastinthepast.model.player.Character character;
 
     public void init(Character character){
         this.character=character;
+        rectangle.setSize(size);
     }
 
-    @Override
     public void update(){
         if (System.currentTimeMillis() - activationTime < duration){
             applyPowerUp();
@@ -36,14 +41,22 @@ public abstract class PowerUp implements PowerUpI{
 
     public void setPosition(PositionInterface newPosition){
         position=newPosition;
+        rectangle.setPosition(position);
     }
 
     public PositionInterface getPosition(){
         return position;
     }
 
-    @Override
     public boolean getHasExpired(){
         return hasExpired;
+    }
+
+    public boolean isColliding(Collidable c){
+        return rectangle.contains(c.getRectangle());
+    }
+
+    public Rectangle getRectangle(){
+        return rectangle;
     }
 }

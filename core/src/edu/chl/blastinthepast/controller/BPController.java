@@ -136,7 +136,7 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                 }
                 break;
             case "Collision":
-                model.collision(evt.getOldValue(), evt.getNewValue());
+                //model.collision(evt.getOldValue(), evt.getNewValue());
                 break;
             case "blocked":
                 model.getPlayer().block();

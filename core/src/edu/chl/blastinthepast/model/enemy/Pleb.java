@@ -1,10 +1,13 @@
 package edu.chl.blastinthepast.model.enemy;
 
 import edu.chl.blastinthepast.model.ammunition.Ammunition;
+import edu.chl.blastinthepast.model.ammunition.AmmunitionInterface;
 import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.model.powerUp.PowerUpGenerator;
 import edu.chl.blastinthepast.model.powerUp.PowerUpI;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -17,7 +20,7 @@ public class Pleb extends Enemy {
     }
 
     private Pleb(int movementSpeed, int health, Character player) {
-        super(movementSpeed, health, player);
+        super(movementSpeed, health, player, 64, 64);
     }
 
     @Override
@@ -27,12 +30,14 @@ public class Pleb extends Enemy {
         if (hasAmmo) {
             int amount = random.nextInt(4)*10+20;
             Ammunition ammo = new Ammunition(getPosition(), getWeapon().getProjectile(), amount);
+            ammunitionDrops.add(ammo);
             getLoot().add(ammo);
         }
         boolean hasPowerUp = random.nextBoolean();
         if (hasPowerUp) {
             PowerUpI powerUp = PowerUpGenerator.generatePowerUp();
             powerUp.setPosition(getPosition());
+            powerUpDrops.add(powerUp);
             getLoot().add(powerUp);
         }
     }

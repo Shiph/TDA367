@@ -51,7 +51,6 @@ public abstract class EnemyView implements CharacterView, WorldObject {
         return rectangle;
     }
 
-    @Override
     public void setRectangles(ArrayList<Rectangle> rectangles) {
 
     }

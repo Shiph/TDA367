@@ -9,6 +9,6 @@ import edu.chl.blastinthepast.utils.Position;
 public class AK47Projectile extends Projectile {
 
     public AK47Projectile(Position pos, Vector2 direction, int bonusDamage) {
-        super(pos, direction, 800, 1, bonusDamage);
+        super(pos, direction, 800, 1, bonusDamage, 4, 4);
     }
 }

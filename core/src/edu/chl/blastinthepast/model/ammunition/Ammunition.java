@@ -1,7 +1,10 @@
 package edu.chl.blastinthepast.model.ammunition;
 
+import edu.chl.blastinthepast.model.Collidable;
 import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
 import edu.chl.blastinthepast.utils.PositionInterface;
+import edu.chl.blastinthepast.utils.Rectangle;
+import edu.chl.blastinthepast.utils.RectangleAdapter;
 
 
 /**
@@ -11,11 +14,14 @@ public class Ammunition implements AmmunitionInterface{
     private PositionInterface position;
     private final ProjectileInterface type;
     private final int amount;
+    private int size= 32;
+    private Rectangle rectangle = new RectangleAdapter();
 
     public Ammunition(PositionInterface position, ProjectileInterface type, int amount){
         this.position=position;
         this.type=type;
         this.amount=amount;
+        rectangle.setSize(size);
     }
 
     //@Override
@@ -26,6 +32,7 @@ public class Ammunition implements AmmunitionInterface{
     //@Override
     public void setPosition(PositionInterface position) {
         this.position.setPosition(position);
+        rectangle.setPosition(position);
     }
 
     public ProjectileInterface getType(){
@@ -34,5 +41,13 @@ public class Ammunition implements AmmunitionInterface{
 
     public int getAmount(){
         return amount;
+    }
+
+    public boolean isColliding(Collidable c){
+        return rectangle.contains(c.getRectangle());
+    }
+
+    public Rectangle getRectangle(){
+        return rectangle;
     }
 }

@@ -14,7 +14,7 @@ import edu.chl.blastinthepast.utils.Constants;
 /**
  * Created by jonas on 2015-04-23.
  */
-public abstract class ProjectileView implements Collidable, WorldObject {
+public abstract class ProjectileView implements WorldObject {
     private Texture texture;
     private Sprite sprite;
     private ArrayList<Rectangle> rectangle;
@@ -78,7 +78,6 @@ public abstract class ProjectileView implements Collidable, WorldObject {
         batch.end();
     }
 
-    @Override
     public void setRectangles(ArrayList<Rectangle> rectangles) {
 
     }

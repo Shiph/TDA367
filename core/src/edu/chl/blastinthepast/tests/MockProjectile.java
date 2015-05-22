@@ -1,8 +1,10 @@
 package edu.chl.blastinthepast.tests;
 
 import com.badlogic.gdx.math.Vector2;
+import edu.chl.blastinthepast.model.Collidable;
 import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
 import edu.chl.blastinthepast.utils.PositionInterface;
+import edu.chl.blastinthepast.utils.Rectangle;
 
 /**
  * Created by Shif on 06/05/15.
@@ -49,4 +51,13 @@ public class MockProjectile implements ProjectileInterface {
         return position;
     }
 
+    @Override
+    public boolean isColliding(Collidable c) {
+        return false;
+    }
+
+    @Override
+    public Rectangle getRectangle() {
+        return null;
+    }
 }

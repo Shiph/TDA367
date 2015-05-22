@@ -22,6 +22,7 @@ public interface Rectangle {
     void setCenter(float x, float y);
     void setHeight(float height);
     void setPosition(float x, float y);
+    void setPosition(PositionInterface pos);
     void setSize(float sizeXY);
     void setSize(float width, float height);
     void setWidth(float width);

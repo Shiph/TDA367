@@ -1,15 +1,16 @@
 package edu.chl.blastinthepast.model.player;
 
 import com.badlogic.gdx.math.Vector2;
+import edu.chl.blastinthepast.model.Collidable;
 import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
-import edu.chl.blastinthepast.model.weapon.AK47;
-import edu.chl.blastinthepast.model.weapon.Magnum;
 import edu.chl.blastinthepast.model.weapon.WeaponFactory;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
-import edu.chl.blastinthepast.utils.Constants;
-import edu.chl.blastinthepast.utils.Position;
-import edu.chl.blastinthepast.utils.PositionInterface;
+import edu.chl.blastinthepast.utils.*;
+import edu.chl.blastinthepast.utils.Rectangle;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.lang.*;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -33,12 +34,16 @@ public class Player extends Observable implements Character {
     private ArrayList<ProjectileInterface> projectiles;
     private int bonusMovementSpeed;
     private boolean blockedWest, blockedEast, blockedNorth, blockedSouth = false;
+    private Rectangle rectangle=new RectangleAdapter();
+    private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    private final int width=64;
+    private final int height=64;
 
     /**
      * Default constructor for Player with default movement speed and health.
      */
     public Player() {
-        this(200, 10, new Position(0,0));
+        this(200, 10, new Position(0, 0));
     }
 
     /**
@@ -54,6 +59,8 @@ public class Player extends Observable implements Character {
         weaponArray.add(weapon);
         projectiles = new ArrayList<ProjectileInterface>();
         position=pos;
+        rectangle.setPosition(position.getX(), position.getY());
+        rectangle.setSize(width, height);
     }
 
 
@@ -114,6 +121,7 @@ public class Player extends Observable implements Character {
     @Override
     public void setPosition(PositionInterface newPosition) {
         position=new Position(newPosition);
+        rectangle.setPosition(position);
     }
 
     @Override
@@ -136,10 +144,12 @@ public class Player extends Observable implements Character {
 
     public void setPosition(int x, int y) {
         position.setPosition(x, y);
+        rectangle.setPosition(position);
     }
 
     public void setPosition (Position position) {
         this.position = position;
+        rectangle.setPosition(position);
     }
 
     public void move(float dt) {
@@ -148,15 +158,19 @@ public class Player extends Observable implements Character {
         float y = position.getY();
         if (west && position.getX() >= 0) {
             position.setX(x - movementSpeed * dt);
+            rectangle.setX(position.getX());
         }
         if (east && position.getX() <= Constants.MAP_WIDTH) {
             position.setX(x + movementSpeed * dt);
+            rectangle.setX(position.getX());
         }
         if (north && position.getY() <= Constants.MAP_HEIGHT) {
             position.setY(y + movementSpeed * dt);
+            rectangle.setY(position.getY());
         }
         if (south && position.getY() >= 0) {
             position.setY(y - movementSpeed * dt);
+            rectangle.setY(position.getY());
         }
     }
 
@@ -302,4 +316,23 @@ public class Player extends Observable implements Character {
     public String toString() {
         return "Player";
     }
+
+    @Override
+    public boolean isColliding(Collidable c) {
+        return rectangle.contains(c.getRectangle());
+    }
+
+    @Override
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
+
+    public void addListener(PropertyChangeListener pcl){
+        pcs.addPropertyChangeListener(pcl);
+    }
+
+    public void removeListener (PropertyChangeListener pcl){
+        pcs.removePropertyChangeListener(pcl);
+    }
+
 }

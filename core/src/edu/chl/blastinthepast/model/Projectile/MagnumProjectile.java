@@ -9,7 +9,7 @@ import edu.chl.blastinthepast.utils.Position;
 public class MagnumProjectile extends Projectile {
 
     public MagnumProjectile(Position pos, Vector2 direction, int bonusDamage) {
-        super(pos, direction, 600, 2, bonusDamage);
+        super(pos, direction, 600, 2, bonusDamage, 4, 4);
     }
 
 }

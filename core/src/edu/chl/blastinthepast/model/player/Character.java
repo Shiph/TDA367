@@ -1,8 +1,10 @@
 package edu.chl.blastinthepast.model.player;
 
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
+import edu.chl.blastinthepast.model.Collidable;
 import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.utils.PositionInterface;
@@ -10,7 +12,7 @@ import edu.chl.blastinthepast.utils.PositionInterface;
 /**
  * Created by Mattias on 15-04-23.
  */
-public interface Character {
+public interface Character extends Collidable{
 
     void move(float dt);
     void setMovementSpeed(int newSpeed);

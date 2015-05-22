@@ -1,17 +1,26 @@
 package edu.chl.blastinthepast.model.enemy;
 
 import com.badlogic.gdx.math.Vector2;
+import edu.chl.blastinthepast.model.Collidable;
+import edu.chl.blastinthepast.model.ammunition.AmmunitionInterface;
+import edu.chl.blastinthepast.model.player.*;
+import edu.chl.blastinthepast.model.player.Character;
+import edu.chl.blastinthepast.model.powerUp.PowerUpI;
 import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponFactory;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
-import edu.chl.blastinthepast.utils.Constants;
-import edu.chl.blastinthepast.utils.Position;
-import edu.chl.blastinthepast.utils.PositionInterface;
+import edu.chl.blastinthepast.utils.*;
+import org.w3c.dom.css.Rect;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.lang.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Random;
 
@@ -19,7 +28,7 @@ import java.util.Random;
 /**
  * Created by Mattias on 15-04-21.
  */
-public abstract class Enemy extends Observable implements edu.chl.blastinthepast.model.player.Character {
+public abstract class Enemy extends Observable implements Character {
 
     private final edu.chl.blastinthepast.model.player.Character player;
     private int health;
@@ -37,8 +46,18 @@ public abstract class Enemy extends Observable implements edu.chl.blastinthepast
     private ArrayList<ProjectileInterface> projectiles;
     private ArrayList<Object> loot;
     private int bonusMovementSpeed=0;
+    private Rectangle rectangle = new RectangleAdapter();
+    private HashMap<String, ArrayList<Object>> lootz = new HashMap<String, ArrayList<Object>>();
+    protected ArrayList<PowerUpI> powerUpDrops = new ArrayList<PowerUpI>();
+    protected ArrayList<AmmunitionInterface> ammunitionDrops = new ArrayList<AmmunitionInterface>();
+    private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    private final int width;
+    private final int height;
 
-    public Enemy(int movementSpeed, int health, edu.chl.blastinthepast.model.player.Character player) {
+    public Enemy(int movementSpeed, int health, Character player, int width, int height) {
+        this.width=width;
+        this.height=height;
+        rectangle.setSize(width, height);
         loot= new ArrayList<Object>();
         this.movementSpeed = movementSpeed;
         this.health = health;
@@ -64,6 +83,7 @@ public abstract class Enemy extends Observable implements edu.chl.blastinthepast
                     movementDirection = 1;
                 } else {
                     position.setX(position.getX() - getTotalMovementSpeed() * dt);
+                    rectangle.setX(position.getX());
                     movementDirectionVector.set(position.getX() - range, position.getY());
                 }
                 break;
@@ -72,6 +92,7 @@ public abstract class Enemy extends Observable implements edu.chl.blastinthepast
                     movementDirection = 0;
                 } else {
                     position.setX(position.getX() + getTotalMovementSpeed() * dt);
+                    rectangle.setX(position.getX());
                     movementDirectionVector.set(position.getX() + range, position.getY());
                 }
                 break;
@@ -80,6 +101,7 @@ public abstract class Enemy extends Observable implements edu.chl.blastinthepast
                     movementDirection = 3;
                 } else {
                     position.setY(position.getY() + getTotalMovementSpeed() * dt);
+                    rectangle.setY(position.getY());
                     movementDirectionVector.set(position.getX(), position.getY() + range);
                 }
                 break;
@@ -88,6 +110,7 @@ public abstract class Enemy extends Observable implements edu.chl.blastinthepast
                     movementDirection = 1;
                 } else {
                     position.setY(position.getY() - getTotalMovementSpeed() * dt);
+                    rectangle.setY(position.getY());
                     movementDirectionVector.set(position.getX(), position.getY() - range);
                 }
                 break;
@@ -127,6 +150,7 @@ public abstract class Enemy extends Observable implements edu.chl.blastinthepast
 
     public void setPosition (PositionInterface position) {
         this.position = position;
+        rectangle.setPosition(position);
     }
 
     @Override
@@ -247,7 +271,25 @@ public abstract class Enemy extends Observable implements edu.chl.blastinthepast
     public ArrayList<Object> die()
     {
         generateLoot();
+        pcs.firePropertyChange("PowerUp drops", null, powerUpDrops);
+        pcs.firePropertyChange("Ammunition drops", null, ammunitionDrops);
         return loot;
+    }
+
+    public boolean isColliding(Collidable c){
+        return rectangle.contains(c.getRectangle());
+    }
+
+    public Rectangle getRectangle(){
+        return rectangle;
+    }
+
+    public void addListener(PropertyChangeListener pcl){
+        pcs.addPropertyChangeListener(pcl);
+    }
+
+    public void removeListener (PropertyChangeListener pcl){
+        pcs.removePropertyChangeListener(pcl);
     }
 
 }
