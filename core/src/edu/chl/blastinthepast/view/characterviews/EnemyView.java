@@ -24,11 +24,9 @@ public abstract class EnemyView implements CharacterView, WorldObject {
     private Texture texture;
     private Sprite sprite;
     private static final int DELAY = 2500;
-    private ArrayList<Rectangle> rectangle;
     private Enemy enemy;
     private WeaponViewFactory weaponViewFactory;
     private WeaponView weaponView;
-    private boolean collision;
 
     public EnemyView(Enemy enemy, Texture texture) {
         this.enemy = enemy;
@@ -36,19 +34,10 @@ public abstract class EnemyView implements CharacterView, WorldObject {
         sprite = new Sprite(texture);
         weaponViewFactory = new WeaponViewFactory();
         weaponView = weaponViewFactory.getWeaponView(enemy.getCurrentWeapon());
-        rectangle = new ArrayList<Rectangle>();
-        rectangle.add(new Rectangle());
-        rectangle.get(0).height = getSprite().getHeight();
-        rectangle.get(0).width = getSprite().getWidth();
-        collision = false;
     }
 
     public Texture getTexture() {
         return texture;
-    }
-
-    public ArrayList<Rectangle> getRectangles() {
-        return rectangle;
     }
 
     public void setRectangles(ArrayList<Rectangle> rectangles) {
@@ -64,11 +53,6 @@ public abstract class EnemyView implements CharacterView, WorldObject {
     @Override
     public Character getCharacter() {
         return enemy;
-    }
-
-    @Override
-    public void hit(ProjectileView projectile) {
-        System.out.println(this);
     }
 
     public PositionInterface getPosition(){
@@ -90,36 +74,18 @@ public abstract class EnemyView implements CharacterView, WorldObject {
     }
 
     public void update() {
-        if (!collision) {
-            sprite.setPosition(enemy.getPosition().getX()-sprite.getWidth()/2, enemy.getPosition().getY() - sprite.getHeight()/2);
-            rectangle.get(0).setPosition(enemy.getPosition().getX()-sprite.getWidth()/2, enemy.getPosition().getY()-sprite.getHeight()/2);
-        } else if (collision) {
-            enemy.setPosition(enemy.getPrevPos());
-            sprite.setPosition(enemy.getPosition().getX()-sprite.getWidth()/2, enemy.getPosition().getY() - sprite.getHeight()/2);
-            rectangle.get(0).setPosition(enemy.getPosition().getX()-sprite.getWidth()/2, enemy.getPosition().getY()-sprite.getHeight()/2);
-            collision = false;
-        }
+        sprite.setPosition(enemy.getPosition().getX()-sprite.getWidth()/2, enemy.getPosition().getY() - sprite.getHeight()/2);
         updateDirection();
     }
 
     public abstract void updateDirection();
 
-    public void setCollision () {
-        collision ^= true;
-    }
-
     public void dispose() {
         texture.dispose();
     }
 
-    @Override
-    public Rectangle getRectangle() {
-        return rectangle.get(0);
-    }
-
     public void updatePosition(){
         sprite.setPosition(enemy.getPosition().getX()-sprite.getWidth()/2, enemy.getPosition().getY() - sprite.getHeight()/2);
-        rectangle.get(0).setPosition(enemy.getPosition().getX()-sprite.getWidth()/2, enemy.getPosition().getY()-sprite.getHeight()/2);
     }
     
 }

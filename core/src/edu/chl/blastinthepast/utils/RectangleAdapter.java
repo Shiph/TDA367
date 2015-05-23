@@ -11,6 +11,17 @@ public class RectangleAdapter implements Rectangle {
 
     private com.badlogic.gdx.math.Rectangle rectangle = new com.badlogic.gdx.math.Rectangle();
 
+    public RectangleAdapter(){}
+
+    public RectangleAdapter(float width, float height){
+        rectangle.setSize(width, height);
+    }
+
+    public RectangleAdapter(float x, float y, float width, float height){
+        rectangle.set(x, y, width, height);
+    }
+
+
     @Override
     public float area() {
         return rectangle.area();
@@ -67,7 +78,7 @@ public class RectangleAdapter implements Rectangle {
     public boolean overlaps(Rectangle r) {
         com.badlogic.gdx.math.Rectangle rect = new com.badlogic.gdx.math.Rectangle();
         rect.set(r.getX(), r.getY(), r.getWidth(), r.getHeight());
-        return rectangle.contains(rect);
+        return rectangle.overlaps(rect);
     }
 
     @Override

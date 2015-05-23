@@ -77,7 +77,7 @@ public abstract class Projectile implements  ProjectileInterface {
     }
 
     public boolean isColliding(Collidable c){
-        return rectangle.contains(c.getRectangle());
+        return rectangle.overlaps(c.getRectangle());
     }
 
     public Rectangle getRectangle(){

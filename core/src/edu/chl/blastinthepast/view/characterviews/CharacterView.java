@@ -14,17 +14,10 @@ import java.util.ArrayList;
  */
 public interface CharacterView {
 
-    public ArrayList<Rectangle> getRectangles();
-
-    public Texture getTexture();
-
-    public Sprite getSprite();
-
-    public Character getCharacter();
-
-    public void hit(ProjectileView projectile);
-
-    public void draw(SpriteBatch batch);
+    Texture getTexture();
+    Sprite getSprite();
+    Character getCharacter();
+    void draw(SpriteBatch batch);
 
 
 }

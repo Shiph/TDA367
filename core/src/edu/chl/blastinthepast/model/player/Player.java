@@ -2,6 +2,7 @@ package edu.chl.blastinthepast.model.player;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.Collidable;
+import edu.chl.blastinthepast.model.ammunition.AmmunitionInterface;
 import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponFactory;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
@@ -43,7 +44,7 @@ public class Player extends Observable implements Character {
      * Default constructor for Player with default movement speed and health.
      */
     public Player() {
-        this(200, 10, new Position(0, 0));
+        this(200, 1000, new Position(0, 0));
     }
 
     /**
@@ -157,19 +158,19 @@ public class Player extends Observable implements Character {
         float x = position.getX();
         float y = position.getY();
         if (west && position.getX() >= 0) {
-            position.setX(x - movementSpeed * dt);
+            position.setX(x - getTotalMovementSpeed() * dt);
             rectangle.setX(position.getX());
         }
         if (east && position.getX() <= Constants.MAP_WIDTH) {
-            position.setX(x + movementSpeed * dt);
+            position.setX(x + getTotalMovementSpeed() * dt);
             rectangle.setX(position.getX());
         }
         if (north && position.getY() <= Constants.MAP_HEIGHT) {
-            position.setY(y + movementSpeed * dt);
+            position.setY(y + getTotalMovementSpeed() * dt);
             rectangle.setY(position.getY());
         }
         if (south && position.getY() >= 0) {
-            position.setY(y - movementSpeed * dt);
+            position.setY(y - getTotalMovementSpeed() * dt);
             rectangle.setY(position.getY());
         }
     }
@@ -208,8 +209,7 @@ public class Player extends Observable implements Character {
         ProjectileInterface p=weapon.pullTrigger();
         if (p!=null){
             projectiles.add(p);
-            setChanged();
-            notifyObservers(p);
+            pcs.firePropertyChange("New Projectile", null, p);
         }
     }
 
@@ -319,7 +319,10 @@ public class Player extends Observable implements Character {
 
     @Override
     public boolean isColliding(Collidable c) {
-        return rectangle.contains(c.getRectangle());
+        if (c instanceof AmmunitionInterface){
+            System.out.println(rectangle.overlaps(c.getRectangle()));
+        }
+        return rectangle.overlaps(c.getRectangle());
     }
 
     @Override

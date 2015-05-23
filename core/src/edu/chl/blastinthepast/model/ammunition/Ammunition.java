@@ -18,7 +18,7 @@ public class Ammunition implements AmmunitionInterface{
     private Rectangle rectangle = new RectangleAdapter();
 
     public Ammunition(PositionInterface position, ProjectileInterface type, int amount){
-        this.position=position;
+        setPosition(position);
         this.type=type;
         this.amount=amount;
         rectangle.setSize(size);
@@ -30,8 +30,8 @@ public class Ammunition implements AmmunitionInterface{
     }
 
     //@Override
-    public void setPosition(PositionInterface position) {
-        this.position.setPosition(position);
+    public void setPosition(PositionInterface newPosition) {
+        this.position=newPosition;
         rectangle.setPosition(position);
     }
 
@@ -44,7 +44,7 @@ public class Ammunition implements AmmunitionInterface{
     }
 
     public boolean isColliding(Collidable c){
-        return rectangle.contains(c.getRectangle());
+        return rectangle.overlaps(c.getRectangle());
     }
 
     public Rectangle getRectangle(){

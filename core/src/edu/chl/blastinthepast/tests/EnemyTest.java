@@ -46,6 +46,15 @@ public class EnemyTest {
         assertTrue(!pos.equals(enemy.getPosition()));
     }
 
+    @Test
+    public void testCollision(){
+        MockCollidable collidable = new MockCollidable();
+        collidable.rectangle.setPosition(0, 0);
+        collidable.rectangle.setSize(100, 100);
+        enemy.setPosition(new MockPosition(0, 0));
+        assertTrue(enemy.isColliding(collidable));
+    }
+
     //should we have testUpdate as well?
 
 }

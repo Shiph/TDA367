@@ -5,6 +5,8 @@ import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.model.powerUp.PowerUpGenerator;
 import edu.chl.blastinthepast.model.powerUp.PowerUpI;
 
+import java.util.Random;
+
 /**
  * Created by Mattias on 15-05-07.
  */
@@ -20,12 +22,21 @@ public class Boss extends Enemy {
 
     @Override
     public void generateLoot() {
-        Ammunition ammo = new Ammunition(getPosition(), getWeapon().getProjectile(), 100);
-        getLoot().add(ammo);
-
-        PowerUpI powerUp = PowerUpGenerator.generatePowerUp();
-        powerUp.setPosition(getPosition());
-        getLoot().add(powerUp);
+        Random random = new Random();
+        boolean hasAmmo = true;
+        if (hasAmmo) {
+            int amount = random.nextInt(4)*10+40;
+            Ammunition ammo = new Ammunition(getPosition(), getWeapon().getProjectile(), amount);
+            ammunitionDrops.add(ammo);
+            getLoot().add(ammo);
+        }
+        boolean hasPowerUp =true;
+        if (hasPowerUp) {
+            PowerUpI powerUp = PowerUpGenerator.generatePowerUp();
+            powerUp.setPosition(getPosition());
+            powerUpDrops.add(powerUp);
+            getLoot().add(powerUp);
+        }
     }
 
     @Override

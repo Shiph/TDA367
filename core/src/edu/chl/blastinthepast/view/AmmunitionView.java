@@ -15,17 +15,12 @@ public class AmmunitionView implements WorldObject {
     private Ammunition ammunition;
     private Texture texture;
     private Sprite sprite;
-    private Rectangle rectangle;
 
     public AmmunitionView(Ammunition ammunition, Texture texture){
         this.ammunition=ammunition;
         this.texture=texture;
         sprite = new Sprite(texture);
-        rectangle= new Rectangle();
-        rectangle.setWidth(sprite.getWidth());
-        rectangle.setHeight(sprite.getHeight());
         sprite.setPosition(ammunition.getPosition().getX(), ammunition.getPosition().getY());
-        rectangle.setPosition(ammunition.getPosition().getX(), ammunition.getPosition().getY());
     }
 
     @Override
@@ -50,8 +45,4 @@ public class AmmunitionView implements WorldObject {
         texture.dispose();
     }
 
-    @Override
-    public Rectangle getRectangle() {
-        return rectangle;
-    }
 }

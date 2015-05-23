@@ -17,22 +17,15 @@ import edu.chl.blastinthepast.utils.Constants;
 public abstract class ProjectileView implements WorldObject {
     private Texture texture;
     private Sprite sprite;
-    private ArrayList<Rectangle> rectangle;
     private ProjectileInterface projectile;
 
     public ProjectileView(ProjectileInterface projectile, Texture texture, Sound sound){
         this.projectile=projectile;
         this.texture = texture;
         sprite = new Sprite(texture);
-        rectangle = new ArrayList<Rectangle>();
         sound.play(Constants.masterVolume);
-        rectangle.add(new Rectangle());
-        rectangle.get(0).x = Constants.CAMERA_WIDTH / 2 - sprite.getWidth() / 2;
-        rectangle.get(0).y = Constants.CAMERA_HEIGHT / 2 - sprite.getHeight() / 2;
-        rectangle.get(0).height = sprite.getHeight();
-        rectangle.get(0).width = sprite.getWidth();
-        sprite.setX(rectangle.get(0).x);
-        sprite.setY(rectangle.get(0).y);
+        sprite.setX(projectile.getPosition().getX());
+        sprite.setY(projectile.getPosition().getY());
     }
 
     /**
@@ -51,18 +44,10 @@ public abstract class ProjectileView implements WorldObject {
 
     private void updatePosition() {
         sprite.setPosition(projectile.getPosition().getX(), projectile.getPosition().getY());
-        rectangle.get(0).setPosition(projectile.getPosition().getX(), projectile.getPosition().getY());
     }
 
     private void setRotation(){
         sprite.setRotation(projectile.getDirection().angle());
-    }
-
-    /**
-     * @return the rectangle of the projectile.
-     */
-    public ArrayList<Rectangle> getRectangles() {
-        return rectangle;
     }
 
     @Override
@@ -86,10 +71,6 @@ public abstract class ProjectileView implements WorldObject {
         texture.dispose();
     }
 
-    @Override
-    public Rectangle getRectangle() {
-        return rectangle.get(0);
-    }
 
     public ProjectileInterface getProjectile(){
         return projectile;

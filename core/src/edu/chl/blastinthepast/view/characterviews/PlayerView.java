@@ -3,7 +3,6 @@ package edu.chl.blastinthepast.view.characterviews;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.model.player.Player;
@@ -22,7 +21,6 @@ import java.util.ArrayList;
 public class PlayerView implements CharacterView, WorldObject {
     private Texture texture;
     private Sprite sprite;
-    private ArrayList<Rectangle> rectangle;
     private Player player;
     private Vector2 direction;
     private WeaponViewFactory weaponViewFactory;
@@ -33,11 +31,7 @@ public class PlayerView implements CharacterView, WorldObject {
     public PlayerView(Player newPlayer){
         texture = GraphicalAssets.CHARACTERDOWN;
         sprite = new Sprite(texture);
-        rectangle = new ArrayList<Rectangle>();
-        rectangle.add(new Rectangle());
         direction = new Vector2();
-        rectangle.get(0).height = sprite.getHeight();
-        rectangle.get(0).width = sprite.getWidth();
         player = newPlayer;
         weaponViewFactory = new WeaponViewFactory();
         weaponView = weaponViewFactory.getWeaponView(player.getCurrentWeapon());
@@ -54,19 +48,6 @@ public class PlayerView implements CharacterView, WorldObject {
     }
 
     /**
-     * @return the rectangle of the player character.
-     */
-    public ArrayList<Rectangle> getRectangles() {
-        return rectangle;
-    }
-
-    public void setRectangles(ArrayList<Rectangle> rectangles) {
-
-    }
-
-    public void setRectangle(Rectangle rectangle) {}
-
-    /**
      * @return the sprite of the player character.
      */
     public Sprite getSprite() {
@@ -78,17 +59,9 @@ public class PlayerView implements CharacterView, WorldObject {
         return player;
     }
 
-
-    @Override
-    public void hit(ProjectileView projectile) {
-        System.out.println(this);
-    }
-
     public void updatePosition(){
-        if (!collision) {
-            sprite.setPosition(player.getPosition().getX() - sprite.getWidth() / 2, player.getPosition().getY() - sprite.getWidth() / 2);
-            rectangle.get(0).setPosition(player.getPosition().getX() - sprite.getWidth() / 2, player.getPosition().getY() - sprite.getHeight() / 2);
-        }
+        sprite.setPosition(player.getPosition().getX() - sprite.getWidth() / 2, player.getPosition().getY() - sprite.getWidth() / 2);
+
     }
 
     public void updateDirection() {
@@ -127,11 +100,6 @@ public class PlayerView implements CharacterView, WorldObject {
 
     public void dispose() {
         //texture.dispose();
-    }
-
-    @Override
-    public Rectangle getRectangle() {
-        return rectangle.get(0);
     }
 
     public WeaponView getWeaponView() {

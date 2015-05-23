@@ -109,7 +109,7 @@ public class PlayState extends GameState implements Observer{
         updateHeartPositions();
         pcs=new PropertyChangeSupport(this);
         music.stop();
-        music.play();
+        //music.play();
         setCrosshairCursor();
         spawnCharacterViews();
     }
@@ -132,15 +132,16 @@ public class PlayState extends GameState implements Observer{
                     heartIcons.add(new Image(GraphicalAssets.HEART));
                 }
             }
+            camera.position.set(playerView.getCharacter().getPosition().getX(), playerView.getCharacter().getPosition().getY(), 0);
             updateHeartPositions();
-            if (playerView.getRectangles().get(0).getX() + playerView.getRectangles().get(0).getWidth() / 2 - Constants.CAMERA_WIDTH/2 > 0 &&
+            /*if (playerView.getRectangles().get(0).getX() + playerView.getRectangles().get(0).getWidth() / 2 - Constants.CAMERA_WIDTH/2 > 0 &&
                     playerView.getRectangles().get(0).getX() + playerView.getRectangles().get(0).getWidth() / 2 + Constants.CAMERA_WIDTH/2 < Constants.MAP_WIDTH) {
                 camera.position.x = playerView.getRectangles().get(0).getX() + playerView.getRectangles().get(0).getWidth() / 2;
             }
             if (playerView.getRectangles().get(0).getY() + playerView.getRectangles().get(0).getWidth() / 2 + Constants.CAMERA_HEIGHT/2 < Constants.MAP_HEIGHT &&
                     playerView.getRectangles().get(0).getY() + playerView.getRectangles().get(0).getWidth() / 2 - Constants.CAMERA_HEIGHT/2 > 0) {
                 camera.position.y = playerView.getRectangles().get(0).getY() + playerView.getRectangles().get(0).getWidth() / 2;
-            }
+            }*/
             camera.update();
             batch.setProjectionMatrix(camera.combined);
             tiledMapRenderer.setView(camera);
@@ -196,13 +197,6 @@ public class PlayState extends GameState implements Observer{
     }
 
     public void checkForCollision(){
-        for (WorldObject o1 : worldObjects.values()){
-            for (WorldObject o2 : worldObjects.values()){
-                if (o1.getRectangle().overlaps(o2.getRectangle()) && o1!=o2){
-                    pcs.firePropertyChange("Collision", o1.getObject(), o2.getObject());
-                }
-            }
-        }
         int playerMapX;
         int playerMapY;
         if (model.getPlayer().isMovingEast()) {

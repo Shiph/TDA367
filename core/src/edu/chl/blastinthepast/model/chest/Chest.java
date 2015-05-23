@@ -37,7 +37,7 @@ public class Chest implements ChestInterface{
     }
 
     public boolean isColliding(Collidable c){
-        return rectangle.contains(c.getRectangle());
+        return rectangle.overlaps(c.getRectangle());
     }
 
     public Rectangle getRectangle(){

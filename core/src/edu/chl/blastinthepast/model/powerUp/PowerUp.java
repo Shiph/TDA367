@@ -15,14 +15,14 @@ public abstract class PowerUp implements PowerUpI{
     private long activationTime=0;
     private boolean hasExpired=false;
     private boolean firstUpdate=true;
-    private Rectangle rectangle = new RectangleAdapter();
     private final int size = 64;
+    private Rectangle rectangle = new RectangleAdapter(size, size);
     protected int duration=10*1000;
     protected edu.chl.blastinthepast.model.player.Character character;
 
     public void init(Character character){
         this.character=character;
-        rectangle.setSize(size);
+        activationTime=System.currentTimeMillis();
     }
 
     public void update(){
@@ -53,7 +53,7 @@ public abstract class PowerUp implements PowerUpI{
     }
 
     public boolean isColliding(Collidable c){
-        return rectangle.contains(c.getRectangle());
+        return rectangle.overlaps(c.getRectangle());
     }
 
     public Rectangle getRectangle(){

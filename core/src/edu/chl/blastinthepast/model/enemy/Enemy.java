@@ -3,14 +3,12 @@ package edu.chl.blastinthepast.model.enemy;
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.Collidable;
 import edu.chl.blastinthepast.model.ammunition.AmmunitionInterface;
-import edu.chl.blastinthepast.model.player.*;
 import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.model.powerUp.PowerUpI;
 import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponFactory;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.utils.*;
-import org.w3c.dom.css.Rect;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -18,7 +16,6 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.lang.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
@@ -30,7 +27,7 @@ import java.util.Random;
  */
 public abstract class Enemy extends Observable implements Character {
 
-    private final edu.chl.blastinthepast.model.player.Character player;
+    private final Character player;
     private int health;
     private int movementSpeed;
     private PositionInterface position;
@@ -83,7 +80,6 @@ public abstract class Enemy extends Observable implements Character {
                     movementDirection = 1;
                 } else {
                     position.setX(position.getX() - getTotalMovementSpeed() * dt);
-                    rectangle.setX(position.getX());
                     movementDirectionVector.set(position.getX() - range, position.getY());
                 }
                 break;
@@ -92,7 +88,6 @@ public abstract class Enemy extends Observable implements Character {
                     movementDirection = 0;
                 } else {
                     position.setX(position.getX() + getTotalMovementSpeed() * dt);
-                    rectangle.setX(position.getX());
                     movementDirectionVector.set(position.getX() + range, position.getY());
                 }
                 break;
@@ -101,7 +96,6 @@ public abstract class Enemy extends Observable implements Character {
                     movementDirection = 3;
                 } else {
                     position.setY(position.getY() + getTotalMovementSpeed() * dt);
-                    rectangle.setY(position.getY());
                     movementDirectionVector.set(position.getX(), position.getY() + range);
                 }
                 break;
@@ -110,14 +104,13 @@ public abstract class Enemy extends Observable implements Character {
                     movementDirection = 1;
                 } else {
                     position.setY(position.getY() - getTotalMovementSpeed() * dt);
-                    rectangle.setY(position.getY());
                     movementDirectionVector.set(position.getX(), position.getY() - range);
                 }
                 break;
             default:
                 break;
         }
-
+        rectangle.setPosition(position);
     }
 
     public void setMovementSpeed(int newSpeed) {
@@ -209,8 +202,7 @@ public abstract class Enemy extends Observable implements Character {
             ProjectileInterface p=weapon.pullTrigger();
             if (p!=null){
                 projectiles.add(p);
-                setChanged();
-                notifyObservers(p);
+                pcs.firePropertyChange("New Projectile", null, p);
             }
         } else {
             updateMovementDirectionVector(movementDirection);
@@ -277,7 +269,7 @@ public abstract class Enemy extends Observable implements Character {
     }
 
     public boolean isColliding(Collidable c){
-        return rectangle.contains(c.getRectangle());
+        return rectangle.overlaps(c.getRectangle());
     }
 
     public Rectangle getRectangle(){

@@ -18,22 +18,14 @@ import java.util.ArrayList;
  * Created by qwerty458 on 5/4/15.
  */
 public class ChestView implements WorldObject {
-    private ArrayList<Rectangle> rectangles;
     private Sprite sprite;
     private Chest chest;
 
     public ChestView (Chest chest) {
         this.chest = chest;
-        rectangles = new ArrayList<Rectangle>();
-        rectangles.add(new Rectangle());
         sprite = new Sprite(GraphicalAssets.CHESTCLOSED);
         sprite.setX(chest.getPosition().getX());
         sprite.setY(chest.getPosition().getY());
-        rectangles.get(0).height = sprite.getHeight();
-        rectangles.get(0).width = sprite.getWidth();
-
-        //No ChestObjectLayer exists in the map yet.
-        //rectangle.addAll(mapToRectangles(new TideMapLoader().load("GrassTestMap1.tmx")));
     }
 
     @Override
@@ -57,11 +49,6 @@ public class ChestView implements WorldObject {
 
     }
 
-    @Override
-    public Rectangle getRectangle() {
-        return null;
-    }
-
     public void openChest() {
         sprite.setTexture(GraphicalAssets.CHESTOPEN);
     }
@@ -70,23 +57,5 @@ public class ChestView implements WorldObject {
         if (chest.isOpened()) {
             openChest();
         }
-    }
-
-    public ArrayList<Rectangle> getRectangles() {
-        return rectangles;
-    }
-
-
-    public void setRectangles(ArrayList<Rectangle> rectangles) {}
-
-    private ArrayList<Rectangle> mapToRectangles(TiledMap map) {
-        MapLayer objectLayer = map.getLayers().get("ChestObjectLayer");
-        MapObjects objects = objectLayer.getObjects();
-        Array<RectangleMapObject> rectangleObjects = objects.getByType(RectangleMapObject.class);
-        ArrayList<Rectangle> rectangles = new ArrayList<Rectangle>();
-        for(int i = 0; i < rectangleObjects.size; i++) {
-            rectangles.add(rectangleObjects.get(i).getRectangle());
-        }
-        return rectangles;
     }
 }

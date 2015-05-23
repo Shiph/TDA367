@@ -9,7 +9,7 @@ import edu.chl.blastinthepast.utils.PositionInterface;
  */
 public interface AmmunitionInterface extends Collidable{
     public PositionInterface getPosition();
-    public void setPosition(PositionInterface position);
+    public void setPosition(PositionInterface newPosition);
     public ProjectileInterface getType();
     public int getAmount();
 }

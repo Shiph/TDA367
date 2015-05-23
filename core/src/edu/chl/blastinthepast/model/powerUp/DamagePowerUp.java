@@ -9,7 +9,7 @@ import java.lang.*;
  */
 public class DamagePowerUp extends PowerUp{
 
-    private int bonus=5;
+    private int bonus=2;
 
     @Override
     public void applyPowerUp() {

@@ -54,11 +54,6 @@ public abstract class WeaponView implements WorldObject {
         texture.dispose();
     }
 
-    @Override
-    public Rectangle getRectangle() {
-        return null;
-    }
-
     public Texture getTexture() {
         return texture;
     }

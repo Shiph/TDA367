@@ -29,11 +29,12 @@ public class Pleb extends Enemy {
         boolean hasAmmo = random.nextBoolean();
         if (hasAmmo) {
             int amount = random.nextInt(4)*10+20;
-            Ammunition ammo = new Ammunition(getPosition(), getWeapon().getProjectile(), amount);
+            Ammunition ammo = new Ammunition(getPosition(), getWeapon().getNewProjectile(), amount);
             ammunitionDrops.add(ammo);
             getLoot().add(ammo);
         }
-        boolean hasPowerUp = random.nextBoolean();
+        //boolean hasPowerUp = random.nextBoolean();
+        boolean hasPowerUp = true;
         if (hasPowerUp) {
             PowerUpI powerUp = PowerUpGenerator.generatePowerUp();
             powerUp.setPosition(getPosition());
