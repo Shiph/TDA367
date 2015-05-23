@@ -2,6 +2,8 @@ package edu.chl.blastinthepast.tests;
 
 import edu.chl.blastinthepast.model.enemy.EnemyFactory;
 import edu.chl.blastinthepast.model.enemy.Enemy;
+import edu.chl.blastinthepast.model.player.*;
+import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.utils.PositionInterface;
 import org.junit.Before;
@@ -19,7 +21,7 @@ public class EnemyTest {
     @Before
     public void before(){
         enemyFactory = new EnemyFactory();
-        enemy = enemyFactory.getEnemy("Pleb", new MockPlayer());
+        enemy = enemyFactory.getEnemy(new MockPlayer(), Character.CharacterType.PLEB);
     }
 
     @Test

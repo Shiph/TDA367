@@ -1,8 +1,12 @@
 package edu.chl.blastinthepast.view.gamestates;
 
 import com.badlogic.gdx.Gdx;
+import edu.chl.blastinthepast.model.menu.GameOverModel;
+import edu.chl.blastinthepast.model.menu.InGameMenuModel;
 import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.model.level.LevelManager;
+import edu.chl.blastinthepast.model.menu.MainMenuModel;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -28,13 +32,13 @@ public class GameStateManager {
     private PropertyChangeSupport pcs;
     private LevelManager levelManager;
 
-    public GameStateManager(BPModel model, LevelManager levelManager) {
+    public GameStateManager(BPModel model, MainMenuModel mainMenuModel, InGameMenuModel inGameMenuModel, GameOverModel gameOvermodel, LevelManager levelManager) {
         this.model = model;
         this.levelManager = levelManager;
-        mainMenu = new MainMenu(this, model);
-        inGameMenu = new InGameMenu(this, model);
+        mainMenu = new MainMenu(this, model, mainMenuModel);
+        inGameMenu = new InGameMenu(this, model, inGameMenuModel);
         highScoreState = new HighScoreState(this, model);
-        gameOverState = new GameOverState(this, model);
+        gameOverState = new GameOverState(this, model, gameOvermodel);
         pcs = new PropertyChangeSupport(this);
         setState(MAIN_MENU, false);
     }
@@ -106,6 +110,10 @@ public class GameStateManager {
 
     public InGameMenu getInGameMenu() {
         return inGameMenu;
+    }
+
+    public MainMenu getMainMenu() {
+        return mainMenu;
     }
 
     public void addListener(PropertyChangeListener pcl) {

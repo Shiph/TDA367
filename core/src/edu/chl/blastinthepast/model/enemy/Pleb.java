@@ -1,5 +1,6 @@
 package edu.chl.blastinthepast.model.enemy;
 
+import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.ammunition.Ammunition;
 import edu.chl.blastinthepast.model.ammunition.AmmunitionInterface;
 import edu.chl.blastinthepast.model.player.Character;
@@ -44,7 +45,8 @@ public class Pleb extends Enemy {
     }
 
     @Override
-    public String toString() {
-        return "Pleb";
+    public CharacterType getCharacterType() {
+        return CharacterType.PLEB;
     }
+
 }

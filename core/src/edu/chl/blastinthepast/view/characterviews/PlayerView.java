@@ -8,8 +8,7 @@ import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.model.player.Player;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 import edu.chl.blastinthepast.view.*;
-import edu.chl.blastinthepast.view.weaponviews.AK47View;
-import edu.chl.blastinthepast.view.weaponviews.MagnumView;
+import edu.chl.blastinthepast.view.projectileviews.ProjectileView;
 import edu.chl.blastinthepast.view.weaponviews.WeaponView;
 import edu.chl.blastinthepast.view.weaponviews.WeaponViewFactory;
 
@@ -18,25 +17,21 @@ import java.util.ArrayList;
 /**
  * Created by jonas on 2015-04-23.
  */
-public class PlayerView implements CharacterView, WorldObject {
+public class PlayerView implements CharacterView {
     private Texture texture;
     private Sprite sprite;
     private Player player;
-    private Vector2 direction;
     private WeaponViewFactory weaponViewFactory;
     private WeaponView weaponView;
     private String currentWeapon;
-    private boolean collision;
 
-    public PlayerView(Player newPlayer){
+    public PlayerView(Player player){
         texture = GraphicalAssets.CHARACTERDOWN;
         sprite = new Sprite(texture);
-        direction = new Vector2();
-        player = newPlayer;
+        this.player = player;
         weaponViewFactory = new WeaponViewFactory();
         weaponView = weaponViewFactory.getWeaponView(player.getCurrentWeapon());
         currentWeapon = player.getCurrentWeapon().toString();
-        collision = false;
         updatePosition();
     }
 
@@ -99,7 +94,7 @@ public class PlayerView implements CharacterView, WorldObject {
     }
 
     public void dispose() {
-        //texture.dispose();
+        texture.dispose();
     }
 
     public WeaponView getWeaponView() {

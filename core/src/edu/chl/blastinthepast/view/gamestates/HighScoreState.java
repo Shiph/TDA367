@@ -43,14 +43,14 @@ public class HighScoreState extends GameState {
         texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         sprite = new Sprite(texture);
         sprite.setOrigin(0,0);
-        highScoreHandler = new HighScoreHandler();
+        //highScoreHandler = new HighScoreHandler();
         camera = new OrthographicCamera();
         batch = new SpriteBatch();
         font = new BitmapFont();
         font.setColor(Color.WHITE);
-        highScoreHandler.load();
-        highScores = highScoreHandler.gameData.getHighScores();
-        names = highScoreHandler.gameData.getNames();
+        //highScoreHandler.load();
+        //highScores = highScoreHandler.gameData.getHighScores();
+        //names = highScoreHandler.gameData.getNames();
     }
 
     @Override
@@ -74,9 +74,12 @@ public class HighScoreState extends GameState {
 
     @Override
     public void dispose() {
+
     }
 
     @Override
-    public void update(float dt) {}
+    public void update(float dt) {
+
+    }
 
 }

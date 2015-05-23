@@ -2,7 +2,7 @@ package edu.chl.blastinthepast.tests;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.Collidable;
-import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
+import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.utils.PositionInterface;
 import edu.chl.blastinthepast.utils.Rectangle;
 
@@ -37,8 +37,8 @@ public class MockProjectile implements ProjectileInterface {
     }
 
     @Override
-    public Vector2 getDirection() {
-        return direction;
+    public Vector2 getAimVector() {
+        return null;
     }
 
     @Override
@@ -60,4 +60,9 @@ public class MockProjectile implements ProjectileInterface {
     public Rectangle getRectangle() {
         return null;
     }
+
+    public ProjectileType getProjectileType() {
+        return null;
+    }
+
 }

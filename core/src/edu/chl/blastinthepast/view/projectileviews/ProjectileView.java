@@ -1,15 +1,13 @@
-package edu.chl.blastinthepast.view;
+package edu.chl.blastinthepast.view.projectileviews;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.audio.Sound;
-import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
-
-import java.util.ArrayList;
+import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 
 import edu.chl.blastinthepast.utils.Constants;
+import edu.chl.blastinthepast.view.WorldObject;
 
 /**
  * Created by jonas on 2015-04-23.
@@ -28,16 +26,10 @@ public abstract class ProjectileView implements WorldObject {
         sprite.setY(projectile.getPosition().getY());
     }
 
-    /**
-     * @return the texture of the projectile.
-     */
     public Texture getTexture() {
         return texture;
     }
 
-    /**
-     * @return the sprite of the projectile.
-     */
     public Sprite getSprite() {
         return sprite;
     }
@@ -47,7 +39,7 @@ public abstract class ProjectileView implements WorldObject {
     }
 
     private void setRotation(){
-        sprite.setRotation(projectile.getDirection().angle());
+        sprite.setRotation(projectile.getAimVector().angle());
     }
 
     @Override
@@ -61,10 +53,6 @@ public abstract class ProjectileView implements WorldObject {
         batch.begin();
         sprite.draw(batch);
         batch.end();
-    }
-
-    public void setRectangles(ArrayList<Rectangle> rectangles) {
-
     }
 
     public void dispose() {

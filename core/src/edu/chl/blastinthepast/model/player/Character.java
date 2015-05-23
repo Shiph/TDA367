@@ -1,11 +1,10 @@
 package edu.chl.blastinthepast.model.player;
 
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.Collidable;
-import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
+import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.utils.PositionInterface;
 
@@ -13,6 +12,10 @@ import edu.chl.blastinthepast.utils.PositionInterface;
  * Created by Mattias on 15-04-23.
  */
 public interface Character extends Collidable{
+
+    enum CharacterType {
+        PLAYER, PLEB, BOSS
+    }
 
     void move(float dt);
     void setMovementSpeed(int newSpeed);
@@ -31,5 +34,8 @@ public interface Character extends Collidable{
     int getTotalMovementSpeed();
     ArrayList<WeaponInterface> getAllWeapons();
     void resetBonuses();
-    Vector2 getDirection();
+    Vector2 getMovementVector();
+    Vector2 getAimVector();
+    CharacterType getCharacterType();
+
 }

@@ -12,10 +12,10 @@ public class WeaponViewFactory {
         if(weapon == null) {
             return null;
         }
-        switch(weapon.toString()) {
-            case "AK47":
+        switch(weapon.getWeaponType()) {
+            case AK47:
                 return new AK47View(weapon);
-            case "Magnum":
+            case MAGNUM:
                 return new MagnumView(weapon);
         }
         return null;

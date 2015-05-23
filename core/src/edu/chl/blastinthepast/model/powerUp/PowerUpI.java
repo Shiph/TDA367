@@ -9,16 +9,16 @@ import edu.chl.blastinthepast.utils.PositionInterface;
  */
 public interface PowerUpI extends Collidable{
 
+    public enum PowerUpType {
+        DAMAGE, FIRERATE, HEALTH, MOVEMENTSPEED
+    }
+
     void init(Character character);
-
     void update();
-
     void applyPowerUp();
-
     void setPosition(PositionInterface newPosition);
-
     PositionInterface getPosition();
-
     boolean getHasExpired();
+    PowerUpType getPowerUpType();
 
 }

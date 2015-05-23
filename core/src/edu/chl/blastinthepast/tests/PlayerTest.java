@@ -25,7 +25,7 @@ public class PlayerTest {
         player.calculateDirection(new Position(1, 1));
         Vector2 v = new Vector2(1, 1);
         v.scl(1 / v.len());
-        assertTrue(player.getDirection().equals(v));
+        assertTrue(player.getAimVector().equals(v));
     }
 
     @Test

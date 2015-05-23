@@ -3,7 +3,7 @@ package edu.chl.blastinthepast.tests;
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.Collidable;
 import edu.chl.blastinthepast.model.player.Character;
-import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
+import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
@@ -86,7 +86,6 @@ public class MockPlayer implements Character {
 
     }
 
-
     @Override
     public int getBonusMovementSpeed() {
         return 0;
@@ -108,10 +107,19 @@ public class MockPlayer implements Character {
     }
 
     @Override
-    public Vector2 getDirection() {
+    public Vector2 getMovementVector() {
         return null;
     }
 
+    @Override
+    public Vector2 getAimVector() {
+        return null;
+    }
+
+    @Override
+    public CharacterType getCharacterType() {
+        return null;
+    }
 
     @Override
     public boolean isColliding(Collidable c) {

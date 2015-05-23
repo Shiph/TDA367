@@ -3,38 +3,27 @@ package edu.chl.blastinthepast.model.player;
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.Collidable;
 import edu.chl.blastinthepast.model.ammunition.AmmunitionInterface;
-import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
+import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponFactory;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.utils.*;
 import edu.chl.blastinthepast.utils.Rectangle;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.lang.*;
 import java.util.ArrayList;
 import java.util.Observable;
+import edu.chl.blastinthepast.utils.Position;
+import edu.chl.blastinthepast.utils.PositionInterface;
+
 
 /**
  * Created by Shif on 21/04/15.
  */
 public class Player extends Observable implements Character {
 
-    private int health;
-    private int movementSpeed;
-    private ArrayList<WeaponInterface> weaponArray;
-    private WeaponInterface weapon;
-    private WeaponFactory weaponFactory;
-    private boolean north, south, west, east, shooting;
-    private PositionInterface position;
-    private int score = 0;
-    private boolean playerIsDead = false;
-    private PositionInterface prevPos;
     private Vector2 aimDirection = new Vector2(1,0);
-    private ArrayList<ProjectileInterface> projectiles;
-    private int bonusMovementSpeed;
-    private boolean blockedWest, blockedEast, blockedNorth, blockedSouth = false;
     private Rectangle rectangle=new RectangleAdapter();
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private final int width=64;
@@ -56,7 +45,7 @@ public class Player extends Observable implements Character {
         this.health = health;
         weaponFactory = new WeaponFactory();
         weaponArray = new ArrayList<WeaponInterface>();
-        weapon = weaponFactory.getWeapon(this, "AK47");
+        weapon = weaponFactory.getWeapon(this, WeaponInterface.WeaponType.AK47);
         weaponArray.add(weapon);
         projectiles = new ArrayList<ProjectileInterface>();
         position=pos;
@@ -92,7 +81,7 @@ public class Player extends Observable implements Character {
 
     public void addWeapon(WeaponInterface weapon) {
         WeaponInterface newWeapon;
-        newWeapon = weaponFactory.getWeapon(this, weapon.toString());
+        newWeapon = weaponFactory.getWeapon(this, weapon.getWeaponType());
         weaponArray.add(newWeapon);
         setWeapon(newWeapon);
 
@@ -154,7 +143,7 @@ public class Player extends Observable implements Character {
     }
 
     public void move(float dt) {
-        prevPos = new Position(position);
+        /*prevPos = new Position(position);
         float x = position.getX();
         float y = position.getY();
         if (west && position.getX() >= 0) {
@@ -172,7 +161,16 @@ public class Player extends Observable implements Character {
         if (south && position.getY() >= 0) {
             position.setY(y - getTotalMovementSpeed() * dt);
             rectangle.setY(position.getY());
+        }*/
+        prevPos = new Position(position);
+        float x = position.getX();
+        float y = position.getY();
+        updateMovementVector(dt);
+        if (movementVector.len() != 0) {
+            position.setX(x + movementVector.x);
         }
+        position.setY(y + movementVector.y);
+        rectangle.setPosition(position);
     }
 
     public void update(float dt) {
@@ -226,6 +224,7 @@ public class Player extends Observable implements Character {
         float length=direction.len();
         direction.scl(1 / length);
         setAimDirection(direction.angle());
+        weapon.getAimVector().set(aimDirection);
     }
 
     public int getScore() {
@@ -274,10 +273,6 @@ public class Player extends Observable implements Character {
 
     public boolean isMovingEast(){
         return east;
-    }
-
-    public ArrayList<ProjectileInterface> getProjectiles(){
-        return projectiles;
     }
 
     public void resetBonuses(){
@@ -338,4 +333,73 @@ public class Player extends Observable implements Character {
         pcs.removePropertyChangeListener(pcl);
     }
 
+    private int health;
+    private int movementSpeed;
+    private ArrayList<WeaponInterface> weaponArray;
+    private WeaponInterface weapon;
+    private WeaponFactory weaponFactory;
+    private boolean north, south, west, east, shooting;
+    private PositionInterface position;
+    private int score = 0;
+    private boolean playerIsDead = false;
+    private PositionInterface prevPos;
+    private Vector2 aimVector = new Vector2(1,0);
+    private Vector2 movementVector = new Vector2(1, 0);
+    private ArrayList<ProjectileInterface> projectiles;
+    private int bonusMovementSpeed;
+    private boolean blockedWest, blockedEast, blockedNorth, blockedSouth = false;
+
+    private void updateMovementVector(float dt) {
+        movementVector.set(1, 0);
+        if (north) {
+            if (east) {
+                movementVector.setAngle(45);
+            } else if (west) {
+                movementVector.setAngle(90+45);
+            } else {
+                movementVector.setAngle(90);
+            }
+            movementVector.setLength(getTotalMovementSpeed() * dt);
+        } else if (south) {
+            if (east) {
+                movementVector.setAngle(360-45);
+            } else if (west) {
+                movementVector.setAngle(180 + 45);
+            } else {
+                movementVector.setAngle(270);
+            }
+            movementVector.setLength(getTotalMovementSpeed() * dt);
+        } else if (west) {
+            movementVector.setAngle(180);
+            movementVector.setLength(getTotalMovementSpeed() * dt);
+        } else if (east) {
+            movementVector.setAngle(0);
+            movementVector.setLength(getTotalMovementSpeed() * dt);
+        } else {
+            movementVector.setLength(0);
+        }
+    }
+
+    public void setAimVector(float aimVector){
+        this.aimVector.setAngle(aimVector);
+    }
+
+    public ArrayList<ProjectileInterface> getProjectiles(){
+        return projectiles;
+    }
+
+    @Override
+    public Vector2 getMovementVector() {
+        return movementVector;
+    }
+
+    @Override
+    public Vector2 getAimVector() {
+        return aimVector;
+    }
+
+    @Override
+    public CharacterType getCharacterType() {
+        return CharacterType.PLAYER;
+    }
 }

@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.model.level.LevelInterface;
+import edu.chl.blastinthepast.model.menu.MainMenuModel;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 import edu.chl.blastinthepast.utils.SoundAssets;
 
@@ -27,10 +28,12 @@ public class MainMenu extends GameState {
     private String[] menuItems;
     private Music music;
     private Sprite sprite;
+    private MainMenuModel mainMenuModel;
 
-    public MainMenu(GameStateManager gsm, BPModel model) {
+    public MainMenu(GameStateManager gsm, BPModel model, MainMenuModel mainMenuModel) {
         super(gsm, model);
-        currentItem = 0;
+        this.mainMenuModel = mainMenuModel;
+        menuItems = mainMenuModel.getMenuItems();
     }
 
     @Override
@@ -50,12 +53,12 @@ public class MainMenu extends GameState {
         music.setVolume(0.4f);
         titleFont = new BitmapFont(Gdx.files.internal("font.fnt"));
         font = new BitmapFont();
-        menuItems = new String[]{"New game", "Load game", "Highscores", "Options", "Quit"};
     }
 
     @Override
     public void update(float dt) {
-        music.play();
+        //music.play();
+        currentItem = mainMenuModel.getCurrentItem();
     }
 
     @Override
@@ -80,45 +83,14 @@ public class MainMenu extends GameState {
         batch.end();
     }
 
-    public void select() {
-        if(currentItem == 0) {
-            //gsm.setState(GameStateManager.PLAY, false);
-            gsm.getPropertyChangeSupport().firePropertyChange("new game", false, true);
-            gsm.setState(GameStateManager.PLAY, false);
-        } else if (currentItem == 1) {
-            //gsm.setState(GameStateManager.SAVES);
-        } else if (currentItem == 2) {
-            gsm.setState(GameStateManager.HIGHSCORES, false);
-        } else if (currentItem == 3) {
-            //gsm.setState(GameStateManager.OPTIONS, false);
-        } else if (currentItem == 4) {
-            Gdx.app.exit();
-        }
+    public void playMusic() {
+        music.play();
     }
 
     @Override
     public void dispose() {
         music.stop();
         music.dispose();
-    }
-
-    public void moveUp() {
-        if (currentItem > 0) {
-            currentItem--;
-            draw();
-        } else {
-            currentItem = menuItems.length-1;
-            draw();
-        }
-    }
-
-    public void moveDown() {
-        if(currentItem < menuItems.length-1) {
-            currentItem++;
-            draw();
-        } else {
-            currentItem = 0;
-        }
     }
 
 }

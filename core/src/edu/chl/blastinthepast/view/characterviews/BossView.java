@@ -1,6 +1,6 @@
 package edu.chl.blastinthepast.view.characterviews;
 
-import edu.chl.blastinthepast.model.enemy.Enemy;
+import edu.chl.blastinthepast.model.enemy.Boss;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 
 /**
@@ -8,9 +8,9 @@ import edu.chl.blastinthepast.utils.GraphicalAssets;
  */
 public class BossView extends EnemyView {
 
-    private Enemy boss;
+    private Boss boss;
 
-    public BossView(Enemy boss) {
+    public BossView(Boss boss) {
         super(boss, GraphicalAssets.BOSSDOWN);
         this.boss = boss;
     }

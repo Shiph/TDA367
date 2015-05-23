@@ -9,8 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.model.enemy.Enemy;
 import edu.chl.blastinthepast.utils.PositionInterface;
-import edu.chl.blastinthepast.view.weaponviews.AK47View;
-import edu.chl.blastinthepast.view.ProjectileView;
+import edu.chl.blastinthepast.view.projectileviews.ProjectileView;
 import edu.chl.blastinthepast.view.weaponviews.WeaponView;
 import edu.chl.blastinthepast.view.WorldObject;
 import edu.chl.blastinthepast.view.weaponviews.WeaponViewFactory;
@@ -20,7 +19,7 @@ import java.util.ArrayList;
 /**
  * Created by jonas on 2015-04-23.
  */
-public abstract class EnemyView implements CharacterView, WorldObject {
+public abstract class EnemyView implements CharacterView {
     private Texture texture;
     private Sprite sprite;
     private static final int DELAY = 2500;
@@ -39,12 +38,6 @@ public abstract class EnemyView implements CharacterView, WorldObject {
     public Texture getTexture() {
         return texture;
     }
-
-    public void setRectangles(ArrayList<Rectangle> rectangles) {
-
-    }
-
-    public void setRectangle(Rectangle rectangle) {}
 
     public Sprite getSprite() {
         return sprite;

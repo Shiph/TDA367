@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import edu.chl.blastinthepast.model.menu.InGameMenuModel;
 import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.model.level.LevelInterface;
 import edu.chl.blastinthepast.utils.Constants;
@@ -31,17 +32,19 @@ public class InGameMenu extends GameState {
     private boolean soundOn = true;
     private Image soundImage;
     private Texture soundTexture;
+    private InGameMenuModel inGameMenuModel;
 
-    public InGameMenu (GameStateManager gsm, BPModel model ) {
+    public InGameMenu (GameStateManager gsm, BPModel model, InGameMenuModel inGameMenuModel) {
         super(gsm, model);
-        currentItem = 0;
+        this.inGameMenuModel = inGameMenuModel;
+        menuItems = inGameMenuModel.getMenuItems();
     }
 
     @Override
     public void init(BPModel model, LevelInterface level) {}
 
     @Override
-    public void init(BPModel mode ) {
+    public void init(BPModel model) {
         texture = GraphicalAssets.INGAMEMENU;
         texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         sprite = new Sprite(texture);
@@ -49,7 +52,6 @@ public class InGameMenu extends GameState {
         camera = new OrthographicCamera();
         batch = new SpriteBatch();
         font = new BitmapFont();
-        menuItems = new String[]{"Continue", "Save game", "Options", "Exit to main menu"};
         soundTexture = GraphicalAssets.SOUND;
         soundImage = new Image(soundTexture);
         soundImage.setSize(24, 24);
@@ -61,7 +63,9 @@ public class InGameMenu extends GameState {
     }
 
     @Override
-    public void update(float dt) {}
+    public void update(float dt) {
+        currentItem = inGameMenuModel.getCurrentItem();
+    }
 
     @Override
     public void draw() {
@@ -85,41 +89,8 @@ public class InGameMenu extends GameState {
         batch.end();
     }
 
-    public void select() {
-        if(currentItem == 0) {
-            gsm.setState(GameStateManager.PLAY, true);
-        } else if (currentItem == 1) {
-            //gsm.setState(GameStateManager.SAVES);
-        } else if (currentItem == 2) {
-            //gsm.setState(GameStateManager.OPTIONS, true);
-        } else if (currentItem == 3) {
-            gsm.setState(GameStateManager.MAIN_MENU, false);
-        }
-    }
-
     @Override
-    public void dispose() {
-        currentItem = 0;
-    }
-
-    public void moveUp() {
-        if (currentItem > 0) {
-            currentItem--;
-            draw();
-        } else {
-            currentItem = menuItems.length-1;
-            draw();
-        }
-    }
-
-    public void moveDown() {
-        if(currentItem < menuItems.length-1) {
-            currentItem++;
-            draw();
-        } else {
-            currentItem = 0;
-        }
-    }
+    public void dispose() {}
 
     public void toggleSoundSprite() {
         if (soundOn) {

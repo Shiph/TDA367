@@ -2,7 +2,7 @@ package edu.chl.blastinthepast.tests;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.weapon.AK47;
-import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
+import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import org.junit.After;
 import org.junit.Before;
@@ -18,7 +18,7 @@ public class WeaponTest {
 
     @Before
     public void setUp() {
-        weapon = new AK47(new MockPosition(), new Vector2(0,0));
+        weapon = new AK47(new MockPosition(), new Vector2(0,0), new Vector2(0,0));
     }
 
     /**

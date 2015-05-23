@@ -3,8 +3,7 @@ package edu.chl.blastinthepast.model.level;
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.ammunition.AmmunitionInterface;
 import edu.chl.blastinthepast.model.enemy.EnemyFactory;
-import edu.chl.blastinthepast.model.projectile.Projectile;
-import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
+import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.Magnum;
 import edu.chl.blastinthepast.model.enemy.Boss;
 import edu.chl.blastinthepast.model.enemy.Enemy;
@@ -14,10 +13,8 @@ import edu.chl.blastinthepast.model.player.Player;
 import edu.chl.blastinthepast.model.powerUp.PowerUpI;
 import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.*;
 
 /**
@@ -30,16 +27,15 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
     private ArrayList<ProjectileInterface> projectiles = new ArrayList<ProjectileInterface>();
     private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     private ArrayList<Character> characters;
-    private Boss boss;
     private Chest chest;
+    private Boss boss;
     private boolean isPaused;
     private ArrayList<PowerUpI> ActivePowerUps =new ArrayList<PowerUpI>();
     private ArrayList<PowerUpI> powerUpDrops = new ArrayList<PowerUpI>();
     private ArrayList<AmmunitionInterface> ammunitionDrops = new ArrayList<AmmunitionInterface>();
 
-
     public BPModel() {
-        chest = new Chest(new Magnum(new Position(1000,1500), new Vector2()));
+        chest = new Chest(new Magnum(new Position(1000,1500), new Vector2(), new Vector2()));
         characters = new ArrayList<Character>();
         player = new Player();
         enemyFactory = new EnemyFactory();
@@ -50,7 +46,8 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
     }
 
     public void spawnBoss(Position pos) {
-        boss = (Boss)enemyFactory.getEnemy("Boss", player);
+        boss = (Boss)enemyFactory.getEnemy(player, Character.CharacterType.BOSS);
+        boss.addObserver(this);
         enemies.add(boss);
         characters.add(boss);
         setChanged();
@@ -60,12 +57,12 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
 
     public void spawnEnemies(int amount) {
         for (int i = 0; i < amount; i++) {
-            Enemy e = enemyFactory.getEnemy("Pleb", player);
-            enemies.add(e);
-            characters.add(e);
+            Enemy pleb = enemyFactory.getEnemy(player, Character.CharacterType.PLEB);
+            enemies.add(pleb);
+            characters.add(pleb);
             setChanged();
-            notifyObservers(e);
-            e.addListener(this);
+            notifyObservers(pleb);
+            pleb.addListener(this);
         }
     }
 
@@ -145,7 +142,7 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
 
     private void spawnEnemies() {
         for (int i = 0; i < 5; i++) {
-            Enemy e = enemyFactory.getEnemy("Pleb", player);
+            Enemy e = enemyFactory.getEnemy(player, Character.CharacterType.PLEB);
             enemies.add(e);
             characters.add(e);
             e.addListener(this);
@@ -202,13 +199,11 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
         while (projIter.hasNext()){
             ProjectileInterface projectile = projIter.next();
             for (Character character : characters){
-                if (character.isColliding(projectile)) {
-                    if (!character.getProjectiles().contains(projectile)) {
-                        character.setHealth(character.getHealth() - projectile.getDamage());
-                        projIter.remove();
-                        setChanged();
-                        notifyObservers(projectile);
-                    }
+                if (character.isColliding(projectile) && !character.getProjectiles().contains(projectile)) {
+                    character.setHealth(character.getHealth() - projectile.getDamage());
+                    projIter.remove();
+                    setChanged();
+                    notifyObservers(projectile);
                 }
             }
         }
@@ -241,7 +236,7 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
         }
     }
 
-    private void characterCollision(Character character1, Character character2){
+    private void characterCollision(Character character1, Character character2) {
         character1.setPosition(character1.getPrevPos());
         character2.setPosition(character2.getPrevPos());
     }

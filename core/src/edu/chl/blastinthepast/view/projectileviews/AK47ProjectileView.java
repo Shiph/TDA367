@@ -1,6 +1,6 @@
-package edu.chl.blastinthepast.view;
+package edu.chl.blastinthepast.view.projectileviews;
 
-import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
+import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 import edu.chl.blastinthepast.utils.SoundAssets;
 

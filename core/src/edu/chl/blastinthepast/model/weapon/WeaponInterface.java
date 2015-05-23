@@ -1,13 +1,17 @@
 package edu.chl.blastinthepast.model.weapon;
 
 import com.badlogic.gdx.math.Vector2;
-import edu.chl.blastinthepast.model.projectile.ProjectileInterface;
+import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.utils.PositionInterface;
 
 /**
  * Created by Shif on 06/05/15.
  */
 public interface WeaponInterface {
+
+    enum WeaponType {
+        AK47, MAGNUM
+    }
 
     void setFireRate(int fireRate);
     int getFireRate();
@@ -20,7 +24,8 @@ public interface WeaponInterface {
     PositionInterface getPosition();
     ProjectileInterface pullTrigger();
     void reloadIfNeeded();
-    Vector2 getDirection();
+    Vector2 getAimVector();
+    Vector2 getMovementVector();
     int getbulletsLeftInMagazine();
     void reload();
     int getTotalBullets();
@@ -32,4 +37,6 @@ public interface WeaponInterface {
     void resetBonuses();
     ProjectileInterface getNewProjectile();
     int getMagazineCapacity();
+    WeaponType getWeaponType();
+
 }
