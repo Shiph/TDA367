@@ -156,14 +156,6 @@ public class PlayState extends GameState implements Observer{
             checkIfAmmunition(o, arg);
             checkIfPowerUp(o, arg);
         }
-
-        if (arg instanceof String) {
-            if (arg.equals("paused")) {
-                music.pause();
-            } else if (arg.equals("unpaused")) {
-                music.play();
-            }
-        }
     }
 
     @Override
@@ -342,7 +334,6 @@ public class PlayState extends GameState implements Observer{
                 worldObjects.put(ammo, new AmmunitionView(ammo, GraphicalAssets.TRIFORCE_BULLET));
             }
         }
-
     }
 
     public void checkIfPowerUp(Observable o, Object arg){

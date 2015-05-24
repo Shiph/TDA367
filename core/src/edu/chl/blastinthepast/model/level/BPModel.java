@@ -257,13 +257,11 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
     public void pause() {
         isPaused = true;
         setChanged();
-        //notifyObservers("paused");
     }
 
     public void unPause() {
         isPaused = false;
         setChanged();
-        //notifyObservers("unpaused");
     }
 
     public boolean isPaused() {
