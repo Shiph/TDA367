@@ -26,14 +26,14 @@ public class Player extends Observable implements Character {
     private Vector2 aimDirection = new Vector2(1,0);
     private Rectangle rectangle=new RectangleAdapter();
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-    private final int width=64;
-    private final int height=64;
+    private final int width = 64;
+    private final int height = 64;
 
     /**
      * Default constructor for Player with default movement speed and health.
      */
     public Player() {
-        this(200, 1000, new Position(0, 0));
+        this(200, 10, new Position(0,0));
     }
 
     /**
@@ -110,7 +110,7 @@ public class Player extends Observable implements Character {
 
     @Override
     public void setPosition(PositionInterface newPosition) {
-        position=new Position(newPosition);
+        position = new Position(newPosition);
         rectangle.setPosition(position);
     }
 
@@ -143,25 +143,6 @@ public class Player extends Observable implements Character {
     }
 
     public void move(float dt) {
-        /*prevPos = new Position(position);
-        float x = position.getX();
-        float y = position.getY();
-        if (west && position.getX() >= 0) {
-            position.setX(x - getTotalMovementSpeed() * dt);
-            rectangle.setX(position.getX());
-        }
-        if (east && position.getX() <= Constants.MAP_WIDTH) {
-            position.setX(x + getTotalMovementSpeed() * dt);
-            rectangle.setX(position.getX());
-        }
-        if (north && position.getY() <= Constants.MAP_HEIGHT) {
-            position.setY(y + getTotalMovementSpeed() * dt);
-            rectangle.setY(position.getY());
-        }
-        if (south && position.getY() >= 0) {
-            position.setY(y - getTotalMovementSpeed() * dt);
-            rectangle.setY(position.getY());
-        }*/
         prevPos = new Position(position);
         float x = position.getX();
         float y = position.getY();
@@ -314,9 +295,6 @@ public class Player extends Observable implements Character {
 
     @Override
     public boolean isColliding(Collidable c) {
-        if (c instanceof AmmunitionInterface){
-            System.out.println(rectangle.overlaps(c.getRectangle()));
-        }
         return rectangle.overlaps(c.getRectangle());
     }
 

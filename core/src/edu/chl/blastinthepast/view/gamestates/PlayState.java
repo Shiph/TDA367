@@ -71,8 +71,8 @@ public class PlayState extends GameState implements Observer{
         characterViewFactory = new CharacterViewFactory();
         projectileViewFactory = new ProjectileViewFactory();
         powerUpViewFactory = new PowerUpViewFactory();
-        worldObjects = new HashMap <Object, WorldObject>();
-        worldObjectsRemoveList = new ArrayList<Object>();
+        worldObjects = new HashMap <>();
+        worldObjectsRemoveList = new ArrayList<>();
         chestView = new ChestView(model.getChest());
         batch = new SpriteBatch();
         pcs = new PropertyChangeSupport(this);
@@ -113,7 +113,7 @@ public class PlayState extends GameState implements Observer{
 
         //Paints out hearts representing the players health.
         heartIcons = new ArrayList<>(model.getPlayer().getHealth());
-        for (int i=0; i<model.getPlayer().getHealth(); i++) {
+        for (int i=0; i < model.getPlayer().getHealth(); i++) {
             Texture heartTexture = GraphicalAssets.HEART;
             heartIcons.add(new Image(heartTexture));
         }
@@ -182,20 +182,20 @@ public class PlayState extends GameState implements Observer{
         batch.begin();
         ammoLabel.draw(batch, 1);
         weaponImage.draw(batch, 1);
-        for (Image i : heartIcons) {
-            i.draw(batch, 1);
-            i.setSize(32, 32);
+        for (Image image : heartIcons) {
+            image.draw(batch, 1);
+            image.setSize(32, 32);
         }
         batch.end();
     }
 
     public void updateHearts() {
         if (model.getPlayer().getHealth() < heartIcons.size()) {
-            for (int i=0; i < heartIcons.size()-model.getPlayer().getHealth(); i++) {
-                heartIcons.remove(heartIcons.size()-i-1);
+            for (int i = 0; i < heartIcons.size() - model.getPlayer().getHealth(); i++) {
+                heartIcons.remove(heartIcons.size() - 1);
             }
         } else if (model.getPlayer().getHealth() > heartIcons.size()) {
-            for (int i=0; i<model.getPlayer().getHealth()-heartIcons.size(); i++) {
+            for (int i=0; i < model.getPlayer().getHealth()-heartIcons.size(); i++) {
                 heartIcons.add(new Image(GraphicalAssets.HEART));
             }
         }
@@ -217,14 +217,8 @@ public class PlayState extends GameState implements Observer{
     }
 
     public void updateCameraPosition() {
-       // if (playerView.getRectangles().get(0).getX() + playerView.getRectangles().get(0).getWidth() / 2 - Constants.CAMERA_WIDTH/2 > 0 &&
-                  //playerView.getRectangles().get(0).getX() + playerView.getRectangles().get(0).getWidth() / 2 + Constants.CAMERA_WIDTH/2 < Constants.MAP_WIDTH) {
-            camera.position.x = playerView.getCharacter().getPosition().getX();
-        //}
-        //if (playerView.getRectangles().get(0).getY() + playerView.getRectangles().get(0).getWidth() / 2 + Constants.CAMERA_HEIGHT/2 < Constants.MAP_HEIGHT &&
-                //playerView.getRectangles().get(0).getY() + playerView.getRectangles().get(0).getWidth() / 2 - Constants.CAMERA_HEIGHT/2 > 0) {
-            camera.position.y = playerView.getCharacter().getPosition().getY();
-        //}
+        camera.position.x = playerView.getCharacter().getPosition().getX();
+        camera.position.y = playerView.getCharacter().getPosition().getY();
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         tiledMapRenderer.setView(camera);

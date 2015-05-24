@@ -12,13 +12,13 @@ public class HighScoreHandler {
     public static GameData gameData;
 
     public HighScoreHandler() {
-        init();
+        load();
     }
 
     public static void init() {
         gameData = new GameData();
         gameData.init();
-        load();
+        save();
     }
 
     public static void save() {

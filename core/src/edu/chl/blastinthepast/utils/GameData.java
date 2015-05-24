@@ -12,13 +12,11 @@ public class GameData implements Serializable {
     private final int MAX_SCORES = 10;
     private long [] highScores;
     private String[] names;
-    private long tentativeScore;
 
     public GameData() {
         highScores = new long[MAX_SCORES];
         names = new String[MAX_SCORES];
         init();
-        tentativeScore = highScores[MAX_SCORES-1];
     }
 
     public void init() {
@@ -34,14 +32,6 @@ public class GameData implements Serializable {
 
     public String [] getNames() {
         return names;
-    }
-
-    public long getTentativeScore() {
-        return tentativeScore;
-    }
-
-    public void setTentativeScore(long newTentativeScore) {
-        tentativeScore = newTentativeScore;
     }
 
     public boolean isHighScore(long score) {

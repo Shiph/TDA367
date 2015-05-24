@@ -19,7 +19,6 @@ import edu.chl.blastinthepast.utils.HighScoreHandler;
 public class GameOverState extends GameState{
 
     private SpriteBatch batch;
-    //private boolean newHighScore;
     private Sprite sprite;
     private Texture texture;
     private OrthographicCamera camera;
@@ -27,7 +26,6 @@ public class GameOverState extends GameState{
     private float width;
     private char[] newName;
     private int currentChar;
-    private int score;
     private BitmapFont gameOverFont;
     private BitmapFont font;
     private GameOverModel gameOverModel;
@@ -95,7 +93,6 @@ public class GameOverState extends GameState{
     public void dispose() {
         newName = new char[] {'A', 'A', 'A'};
         currentChar = 0;
-        score = 0;
     }
 
 }
