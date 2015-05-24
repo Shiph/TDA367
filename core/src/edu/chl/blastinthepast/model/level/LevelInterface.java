@@ -7,6 +7,11 @@ import java.util.Observer;
  */
 public interface LevelInterface extends Observer {
 
-    public void placeEnemies();
+    enum Level {
+        ONE
+    }
+
+    void placeEnemies();
+    Level getLevel();
 
 }

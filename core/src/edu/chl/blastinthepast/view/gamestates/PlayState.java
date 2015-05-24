@@ -96,7 +96,7 @@ public class PlayState extends GameState implements Observer{
         camera.update();
 
         //Configures and sets the game map.
-        if (level instanceof LevelOne) {
+        if (level.getLevel() == LevelInterface.Level.ONE) {
             tiledMap = new TmxMapLoader().load("big_grass.tmx");
         }
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
