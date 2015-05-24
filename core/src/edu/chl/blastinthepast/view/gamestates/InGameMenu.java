@@ -32,12 +32,9 @@ public class InGameMenu extends GameState {
     private boolean soundOn = true;
     private Image soundImage;
     private Texture soundTexture;
-    private InGameMenuModel inGameMenuModel;
 
-    public InGameMenu (GameStateManager gsm, BPModel model, InGameMenuModel inGameMenuModel) {
+    public InGameMenu (GameStateManager gsm, BPModel model) {
         super(gsm, model);
-        this.inGameMenuModel = inGameMenuModel;
-        menuItems = inGameMenuModel.getMenuItems();
     }
 
     @Override
@@ -64,7 +61,6 @@ public class InGameMenu extends GameState {
 
     @Override
     public void update(float dt) {
-        currentItem = inGameMenuModel.getCurrentItem();
     }
 
     @Override
@@ -74,16 +70,16 @@ public class InGameMenu extends GameState {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         sprite.draw(batch);
-
-        for (int i = 0; i < menuItems.length; i++) {
-            if (currentItem == i) {
-                font.setColor(Color.RED);
-            } else {
-                font.setColor(Color.WHITE);
+        if (menuItems != null) {
+            for (int i = 0; i < menuItems.length; i++) {
+                if (currentItem == i) {
+                    font.setColor(Color.RED);
+                } else {
+                    font.setColor(Color.WHITE);
+                }
+                font.draw(batch, menuItems[i], Gdx.graphics.getWidth() / 2 - 30, 140 - 35 * i);
             }
-            font.draw(batch, menuItems[i], Gdx.graphics.getWidth() / 2 - 30, 140 - 35 * i);
         }
-
         soundImage.draw(batch, 1);
         soundTextLabel.draw(batch, 1);
         batch.end();
@@ -106,6 +102,14 @@ public class InGameMenu extends GameState {
             soundImage.setPosition(Constants.CAMERA_WIDTH - 40, 20);
             soundOn = true;
         }
+    }
+
+    public void setCurrentItem(int currentItem) {
+        this.currentItem = currentItem;
+    }
+
+    public void setMenuItems(String[] menuItems) {
+        this.menuItems = menuItems;
     }
 
 }

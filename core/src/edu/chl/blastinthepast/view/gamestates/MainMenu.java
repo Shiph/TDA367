@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import edu.chl.blastinthepast.controller.MainMenuController;
 import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.model.level.LevelInterface;
 import edu.chl.blastinthepast.model.menu.MainMenuModel;
@@ -28,12 +29,9 @@ public class MainMenu extends GameState {
     private String[] menuItems;
     private Music music;
     private Sprite sprite;
-    private MainMenuModel mainMenuModel;
 
-    public MainMenu(GameStateManager gsm, BPModel model, MainMenuModel mainMenuModel) {
+    public MainMenu(GameStateManager gsm, BPModel model) {
         super(gsm, model);
-        this.mainMenuModel = mainMenuModel;
-        menuItems = mainMenuModel.getMenuItems();
     }
 
     @Override
@@ -57,8 +55,6 @@ public class MainMenu extends GameState {
 
     @Override
     public void update(float dt) {
-        //music.play();
-        currentItem = mainMenuModel.getCurrentItem();
     }
 
     @Override
@@ -70,7 +66,7 @@ public class MainMenu extends GameState {
         sprite.draw(batch);
         float width = titleFont.getBounds(title).width;
         titleFont.draw(batch, title, (Gdx.graphics.getWidth() - width) / 2, 4 * Gdx.graphics.getHeight() / 5);
-
+        if (menuItems != null) {
             for (int i = 0; i < menuItems.length; i++) {
                 if (currentItem == i) {
                     font.setColor(Color.RED);
@@ -79,12 +75,20 @@ public class MainMenu extends GameState {
                 }
                 font.draw(batch, menuItems[i], Gdx.graphics.getWidth() / 2 - 30, 170 - 35 * i);
             }
-
+        }
         batch.end();
     }
 
     public void playMusic() {
         music.play();
+    }
+
+    public void setMenuItems(String[] menuItems) {
+        this.menuItems = menuItems;
+    }
+
+    public void setCurrentItem(int currentItem) {
+        this.currentItem = currentItem;
     }
 
     @Override
