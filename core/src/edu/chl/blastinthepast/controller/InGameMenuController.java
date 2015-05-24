@@ -9,11 +9,15 @@ import edu.chl.blastinthepast.view.gamestates.GameStateManager;
  */
 public class InGameMenuController extends GameStateController {
 
-    private InGameMenuModel inGameMenuModel;
+    private int currentItem;
+    private String[] menuItems;
 
-    public InGameMenuController(BPController bpController, GameStateManager gsm, InGameMenuModel inGameMenuModel) {
+    public InGameMenuController(BPController bpController, GameStateManager gsm) {
         super(bpController, gsm);
-        this.inGameMenuModel = inGameMenuModel;
+        currentItem = 0;
+        menuItems = new String[]{"Continue", "Save game", "Options", "Exit to main menu"};
+        gsm.getInGameMenu().setMenuItems(menuItems);
+        gsm.getInGameMenu().setCurrentItem(currentItem);
     }
 
     @Override
@@ -22,30 +26,50 @@ public class InGameMenuController extends GameStateController {
             case Input.Keys.ESCAPE:
                 gsm.setState(GameStateManager.PLAY, true);
                 gsm.setState(GameStateManager.PLAY, true);
-                inGameMenuModel.resetCurrentItem();
+                currentItem = 0;
+                gsm.getInGameMenu().setCurrentItem(currentItem);
                 bpController.setActiveController(BPController.ActiveController.PLAY);
                 break;
             case Input.Keys.ENTER:
-                if (inGameMenuModel.getCurrentItem() == 0) { // continue
+                if (currentItem == 0) { // continue
                     gsm.setState(GameStateManager.PLAY, true);
                     bpController.setActiveController(BPController.ActiveController.PLAY);
-                } else if (inGameMenuModel.getCurrentItem() == 3) { // exit
-                    inGameMenuModel.resetCurrentItem();
+                } else if (currentItem == 3) { // exit
+                    currentItem = 0;
+                    gsm.getInGameMenu().setCurrentItem(currentItem);
                     gsm.setState(GameStateManager.MAIN_MENU, false);
                     bpController.setActiveController(BPController.ActiveController.MAIN_MENU);
                 }
                 break;
             case Input.Keys.UP:
-                inGameMenuModel.moveUp();
+                moveUp();
                 break;
             case Input.Keys.DOWN:
-                inGameMenuModel.moveDown();
+                moveDown();
                 break;
             case Input.Keys.SPACE:
                 gsm.getInGameMenu().toggleSoundSprite();
                 gsm.getPlayState().toggleSound();
                 break;
         }
+    }
+
+    public void moveUp() {
+        if (currentItem > 0) {
+            currentItem--;
+        } else {
+            currentItem = menuItems.length-1;
+        }
+        gsm.getInGameMenu().setCurrentItem(currentItem);
+    }
+
+    public void moveDown() {
+        if(currentItem < menuItems.length-1) {
+            currentItem++;
+        } else {
+            currentItem = 0;
+        }
+        gsm.getInGameMenu().setCurrentItem(currentItem);
     }
 
 }

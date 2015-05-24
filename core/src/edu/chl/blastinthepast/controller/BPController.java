@@ -9,6 +9,7 @@ import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.model.level.LevelManager;
 import edu.chl.blastinthepast.model.level.LevelOne;
 import edu.chl.blastinthepast.model.menu.MainMenuModel;
+import edu.chl.blastinthepast.utils.HighScoreHandler;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.view.gamestates.*;
 import java.beans.PropertyChangeEvent;
@@ -31,9 +32,6 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
     private HighScoreController highScoreController;
     private GameOverController gameOverController;
     private ActiveController activeController = ActiveController.MAIN_MENU;
-    private MainMenuModel mainMenuModel;
-    private InGameMenuModel inGameMenuModel;
-    private GameOverModel gameOverModel;
 
     public enum ActiveController {
         MAIN_MENU, PLAY, INGAME_MENU, HIGHSCORE, GAME_OVER
@@ -54,14 +52,11 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
     public void create() {
         inputHandler = new InputHandler(this);
         Gdx.input.setInputProcessor(inputHandler);
-        mainMenuModel = new MainMenuModel();
-        inGameMenuModel = new InGameMenuModel();
-        gameOverModel = new GameOverModel();
-        gsm = new GameStateManager(model, mainMenuModel, inGameMenuModel, gameOverModel, levelManager);
-        mainMenuController = new MainMenuController(this, gsm, mainMenuModel);
-        inGameMenuController = new InGameMenuController(this, gsm, inGameMenuModel);
+        gsm = new GameStateManager(model, levelManager);
+        inGameMenuController = new InGameMenuController(this, gsm);
         highScoreController = new HighScoreController(this, gsm);
-        gameOverController = new GameOverController(this, gsm, gameOverModel);
+        gameOverController = new GameOverController(this, gsm);
+        mainMenuController = new MainMenuController(this, gsm);
         gsm.addListener(this);
     }
 
@@ -158,9 +153,9 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
     @Override
     public void update(Observable o, Object arg) {
         if (arg.equals("player is kill")) {
-            gsm.setState(GameStateManager.GAMEOVER, true);
-            gameOverModel.setScore(model.getPlayer().getScore());
+            gameOverController.setScore(model.getPlayer().getScore());
             setActiveController(ActiveController.GAME_OVER);
+            gsm.setState(GameStateManager.GAMEOVER, true);
         }
     }
 

@@ -9,9 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.model.level.LevelInterface;
-import edu.chl.blastinthepast.model.menu.GameOverModel;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
-import edu.chl.blastinthepast.utils.HighScoreHandler;
 
 /**
  * Created by MattiasJ on 2015-05-03.
@@ -28,11 +26,11 @@ public class GameOverState extends GameState{
     private int currentChar;
     private BitmapFont gameOverFont;
     private BitmapFont font;
-    private GameOverModel gameOverModel;
+    private int score;
+    private boolean isNewHighScore = false;
 
-    public GameOverState(GameStateManager gsm, BPModel model, GameOverModel gameOverModel) {
+    public GameOverState(GameStateManager gsm, BPModel model) {
         super(gsm, model);
-        this.gameOverModel = gameOverModel;
     }
 
     @Override
@@ -52,10 +50,7 @@ public class GameOverState extends GameState{
 
     @Override
     public void update(float dt) {
-        currentChar = gameOverModel.getCurrentChar();
-        newName = gameOverModel.getNewName();
     }
-
 
     @Override
     public void draw() {
@@ -66,33 +61,43 @@ public class GameOverState extends GameState{
         sprite.draw(batch);
         width = gameOverFont.getBounds(title).width;
         gameOverFont.draw(batch, title, (Gdx.graphics.getWidth() - width) / 2, 4 * Gdx.graphics.getHeight() / 5 + 50);
-
-        if(!gameOverModel.isNewHighScore()) {
+        if(!isNewHighScore) {
             batch.end();
             return;
         }
-
-        String newHighScore = "New High Score: " + gameOverModel.getScore();
+        String newHighScore = "New High Score: " + score;
         width = font.getBounds(newHighScore).width;
         font.draw(batch, newHighScore, (Gdx.graphics.getWidth() - width) / 2, 3 * Gdx.graphics.getHeight() / 4);
-
-        for(int i = 0; i < newName.length; i++) {
-            if(i == currentChar) {
-                font.setColor(Color.RED);
+        if (newName != null) {
+            for (int i = 0; i < newName.length; i++) {
+                if (i == currentChar) {
+                    font.setColor(Color.RED);
+                }
+                font.draw(batch, Character.toString(newName[i]), (Gdx.graphics.getWidth() - 60) / 2 + 20 * i, 3 * Gdx.graphics.getHeight() / 5);
+                font.setColor(Color.WHITE);
             }
-            font.draw(batch, Character.toString(newName[i]), (Gdx.graphics.getWidth() - 60) / 2 + 20 * i, 3 * Gdx.graphics.getHeight() / 5);
-            font.setColor(Color.WHITE);
         }
-
         batch.end();
     }
 
+    public void setCurrentChar(int currentChar) {
+        this.currentChar = currentChar;
+    }
 
+    public void setNewName(char[] newName) {
+        this.newName = newName;
+    }
+
+    public void setIsNewHighScore(boolean b) {
+        isNewHighScore = b;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
 
     @Override
     public void dispose() {
-        newName = new char[] {'A', 'A', 'A'};
-        currentChar = 0;
     }
 
 }

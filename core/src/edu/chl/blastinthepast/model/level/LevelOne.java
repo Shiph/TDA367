@@ -55,4 +55,8 @@ public class LevelOne implements LevelInterface {
         }
     }
 
+    public Level getLevel() {
+        return Level.ONE;
+    }
+
 }

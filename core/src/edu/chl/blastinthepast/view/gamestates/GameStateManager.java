@@ -1,6 +1,7 @@
 package edu.chl.blastinthepast.view.gamestates;
 
 import com.badlogic.gdx.Gdx;
+import edu.chl.blastinthepast.controller.MainMenuController;
 import edu.chl.blastinthepast.model.menu.GameOverModel;
 import edu.chl.blastinthepast.model.menu.InGameMenuModel;
 import edu.chl.blastinthepast.model.level.BPModel;
@@ -32,13 +33,13 @@ public class GameStateManager {
     private PropertyChangeSupport pcs;
     private LevelManager levelManager;
 
-    public GameStateManager(BPModel model, MainMenuModel mainMenuModel, InGameMenuModel inGameMenuModel, GameOverModel gameOvermodel, LevelManager levelManager) {
+    public GameStateManager(BPModel model, LevelManager levelManager) {
         this.model = model;
         this.levelManager = levelManager;
-        mainMenu = new MainMenu(this, model, mainMenuModel);
-        inGameMenu = new InGameMenu(this, model, inGameMenuModel);
+        mainMenu = new MainMenu(this, model);
+        inGameMenu = new InGameMenu(this, model);
         highScoreState = new HighScoreState(this, model);
-        gameOverState = new GameOverState(this, model, gameOvermodel);
+        gameOverState = new GameOverState(this, model);
         pcs = new PropertyChangeSupport(this);
         setState(MAIN_MENU, false);
     }
@@ -106,6 +107,10 @@ public class GameStateManager {
 
     public PlayState getPlayState() {
         return playState;
+    }
+
+    public GameOverState getGameOverState() {
+        return gameOverState;
     }
 
     public InGameMenu getInGameMenu() {

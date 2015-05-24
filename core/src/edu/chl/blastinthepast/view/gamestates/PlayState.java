@@ -96,7 +96,7 @@ public class PlayState extends GameState implements Observer{
         camera.update();
 
         //Configures and sets the game map.
-        if (level instanceof LevelOne) {
+        if (level.getLevel() == LevelInterface.Level.ONE) {
             tiledMap = new TmxMapLoader().load("big_grass.tmx");
         }
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
@@ -155,14 +155,6 @@ public class PlayState extends GameState implements Observer{
             checkIfCharacter(o, arg);
             checkIfAmmunition(o, arg);
             checkIfPowerUp(o, arg);
-        }
-
-        if (arg instanceof String) {
-            if (arg.equals("paused")) {
-                music.pause();
-            } else if (arg.equals("unpaused")) {
-                music.play();
-            }
         }
     }
 
@@ -342,7 +334,6 @@ public class PlayState extends GameState implements Observer{
                 worldObjects.put(ammo, new AmmunitionView(ammo, GraphicalAssets.TRIFORCE_BULLET));
             }
         }
-
     }
 
     public void checkIfPowerUp(Observable o, Object arg){
