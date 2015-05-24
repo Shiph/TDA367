@@ -242,13 +242,6 @@ public class PlayState extends GameState implements Observer{
     }
 
     public void checkForCollision() {
-        /*for (WorldObject o1 : worldObjects.values()){
-            for (WorldObject o2 : worldObjects.values()){
-                if (o1.getRectangle().overlaps(o2.getRectangle()) && o1!=o2){
-                    pcs.firePropertyChange("Collision", o1.getObject(), o2.getObject());
-                }
-            }
-        }*/
         int playerMapX, playerMapY;
         if (model.getPlayer().isMovingEast()) {
             playerMapX = Math.round((model.getPlayer().getPosition().getX() + playerView.getSprite().getWidth()) / tileWidth) - 1;

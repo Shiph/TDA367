@@ -34,8 +34,7 @@ public class Pleb extends Enemy {
             ammunitionDrops.add(ammo);
             getLoot().add(ammo);
         }
-        //boolean hasPowerUp = random.nextBoolean();
-        boolean hasPowerUp = true;
+        boolean hasPowerUp = random.nextBoolean();
         if (hasPowerUp) {
             PowerUpI powerUp = PowerUpGenerator.generatePowerUp();
             powerUp.setPosition(getPosition());
