@@ -84,6 +84,7 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
     public void newGame() {
         model = new BPModel();
         model.addObserver(this);
+        model.getPlayer().addObserver(this);
         gsm.setModel(model);
         if (levelManager == null) {
             levelManager = new LevelManager(new LevelOne(model));

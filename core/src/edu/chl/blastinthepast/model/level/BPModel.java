@@ -120,12 +120,12 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
     private void removeDeadEnemies(){
         Iterator<Enemy> iter = enemies.iterator();
         while (iter.hasNext()){
-            Enemy e=iter.next();
+            Enemy e = iter.next();
             if (e.getHealth() <= 0) {
                 e.die();
-                if(e.toString().equals("Boss")) {
+                if(e.getCharacterType() == Character.CharacterType.BOSS) {
                     player.setScore(player.getScore() + 50);
-                } else if (e.toString().equals("Pleb")) {
+                } else if (e.getCharacterType() == Character.CharacterType.PLEB) {
                     player.setScore(player.getScore() + 10);
                 }
                 iter.remove();
@@ -176,25 +176,6 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
     }
 
     private void checkForProjectileCollision(){
-        /*Iterator<Character> charIter1 = characters.iterator();
-        while(charIter1.hasNext()){
-            Character character = charIter1.next();
-            Iterator<ProjectileInterface> projIter = projectiles.iterator();
-            while (projIter.hasNext()){
-                ProjectileInterface projectile = projIter.next();
-                Iterator<Character> charIter = characters.iterator();
-                while (charIter.hasNext()){
-                    Character c = charIter.next();
-                    if (c.isColliding(projectile) && !c.getProjectiles().contains(projectile)){
-                        character.getProjectiles().remove(projectile);
-                        projectiles.remove(projectile);
-                        projIter.remove();
-                        setChanged();
-                        notifyObservers(projectile);
-                    }
-                }
-            }
-        }*/
         Iterator<ProjectileInterface> projIter = projectiles.iterator();
         while (projIter.hasNext()){
             ProjectileInterface projectile = projIter.next();
@@ -276,13 +257,13 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
     public void pause() {
         isPaused = true;
         setChanged();
-        notifyObservers("paused");
+        //notifyObservers("paused");
     }
 
     public void unPause() {
         isPaused = false;
         setChanged();
-        notifyObservers("unpaused");
+        //notifyObservers("unpaused");
     }
 
     public boolean isPaused() {
