@@ -47,14 +47,10 @@ public abstract class Enemy extends Observable implements Character {
     protected ArrayList<PowerUpI> powerUpDrops = new ArrayList<PowerUpI>();
     protected ArrayList<AmmunitionInterface> ammunitionDrops = new ArrayList<AmmunitionInterface>();
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-    private final int width;
-    private final int height;
 
     public Enemy(int movementSpeed, int health, Character player, int width, int height) {
-        this.width=width;
-        this.height=height;
         rectangle.setSize(width, height);
-        loot= new ArrayList<Object>();
+        loot= new ArrayList<>();
         this.movementSpeed = movementSpeed;
         this.health = health;
         this.player = player;
@@ -66,11 +62,11 @@ public abstract class Enemy extends Observable implements Character {
         movementVector = new Vector2(1, 0);
         playerDirectionVector = new Vector2();
         weaponFactory = new WeaponFactory();
-        weapon = weaponFactory.getWeapon(this, WeaponInterface.WeaponType.AK47);
+        weapon = weaponFactory.getWeapon(position, aimVector, movementVector, WeaponInterface.WeaponType.AK47);
         timer = new Timer(1000, actionListener);
         timer.setRepeats(true);
         timer.start();
-        projectiles=new ArrayList<ProjectileInterface>();
+        projectiles=new ArrayList<>();
     }
 
     public void move(float dt) {
@@ -273,10 +269,6 @@ public abstract class Enemy extends Observable implements Character {
 
     public void addListener(PropertyChangeListener pcl){
         pcs.addPropertyChangeListener(pcl);
-    }
-
-    public void removeListener (PropertyChangeListener pcl){
-        pcs.removePropertyChangeListener(pcl);
     }
 
     @Override

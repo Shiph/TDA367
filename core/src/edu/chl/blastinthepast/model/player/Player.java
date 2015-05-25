@@ -44,10 +44,10 @@ public class Player extends Observable implements Character {
         this.movementSpeed = movementSpeed;
         this.health = health;
         weaponFactory = new WeaponFactory();
-        weaponArray = new ArrayList<WeaponInterface>();
-        weapon = weaponFactory.getWeapon(this, WeaponInterface.WeaponType.AK47);
+        weaponArray = new ArrayList<>();
+        weapon = weaponFactory.getWeapon(position, aimVector, movementVector, WeaponInterface.WeaponType.AK47);
         weaponArray.add(weapon);
-        projectiles = new ArrayList<ProjectileInterface>();
+        projectiles = new ArrayList<>();
         position=pos;
         rectangle.setPosition(position.getX(), position.getY());
         rectangle.setSize(width, height);
@@ -81,7 +81,7 @@ public class Player extends Observable implements Character {
 
     public void addWeapon(WeaponInterface weapon) {
         WeaponInterface newWeapon;
-        newWeapon = weaponFactory.getWeapon(this, weapon.getWeaponType());
+        newWeapon = weaponFactory.getWeapon(position, aimVector, movementVector, weapon.getWeaponType());
         weaponArray.add(newWeapon);
         setWeapon(newWeapon);
 
