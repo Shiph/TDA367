@@ -5,9 +5,9 @@ import edu.chl.blastinthepast.model.Collidable;
 import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
-import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
 import edu.chl.blastinthepast.utils.Rectangle;
+import edu.chl.blastinthepast.utils.RectangleAdapter;
 
 import java.util.ArrayList;
 
@@ -16,10 +16,17 @@ import java.util.ArrayList;
  */
 public class MockPlayer implements Character {
 
-    public PositionInterface position = new Position(0,0);
+    public PositionInterface position;
+    public Rectangle rectangle;
     public int movementSpeed = 100;
     public WeaponInterface weapon;
     private int health = 100;
+
+    public MockPlayer() {
+        position = new MockPosition();
+        rectangle = new RectangleAdapter();
+        rectangle.setSize(10);
+    }
 
     @Override
     public void move(float dt) {
@@ -78,7 +85,8 @@ public class MockPlayer implements Character {
 
     @Override
     public void setPosition(PositionInterface newPosition) {
-
+        position.setPosition(newPosition);
+        rectangle.setPosition(position);
     }
 
     @Override
@@ -128,6 +136,6 @@ public class MockPlayer implements Character {
 
     @Override
     public Rectangle getRectangle() {
-        return null;
+        return rectangle;
     }
 }

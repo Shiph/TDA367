@@ -3,6 +3,7 @@ package edu.chl.blastinthepast.tests;
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.Collidable;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
+import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
 import edu.chl.blastinthepast.utils.Rectangle;
 
@@ -15,6 +16,11 @@ public class MockProjectile implements ProjectileInterface {
     private int damage;
     private MockPosition position;
     private Vector2 direction;
+
+    public MockProjectile() {
+        position = new MockPosition(0,0);
+        direction = new Vector2(0,0);
+    }
 
     @Override
     public void setSpeed(int newSpeed) {
