@@ -24,12 +24,12 @@ public class Ammunition implements AmmunitionInterface{
         rectangle.setSize(size);
     }
 
-    //@Override
+    @Override
     public PositionInterface getPosition(){
         return position;
     }
 
-    //@Override
+    @Override
     public void setPosition(PositionInterface newPosition) {
         this.position=newPosition;
         rectangle.setPosition(position);

@@ -37,6 +37,7 @@ public class PlayerTest {
         player.setPosition(0, 0);
         player.setMovementDirection("south");
         player.move(200f);
+        System.out.println(player.getPosition().getY());
         assertTrue(player.getPosition().getY()<0);
         player.setPosition(0, 0);
         player.setMovementDirection("west");
@@ -47,6 +48,8 @@ public class PlayerTest {
         player.move(200f);
         assertTrue(player.getPosition().getX()>0);
     }
+
+
 
 
     @After

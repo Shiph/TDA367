@@ -15,6 +15,7 @@ import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.*;
 
 /**
@@ -33,37 +34,29 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
     private ArrayList<PowerUpI> ActivePowerUps =new ArrayList<PowerUpI>();
     private ArrayList<PowerUpI> powerUpDrops = new ArrayList<PowerUpI>();
     private ArrayList<AmmunitionInterface> ammunitionDrops = new ArrayList<AmmunitionInterface>();
+    private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     public BPModel() {
         chest = new Chest(new Magnum(new Position(1000,1500), new Vector2(), new Vector2()));
         characters = new ArrayList<Character>();
         player = new Player();
+        newCharacter(player);
         enemyFactory = new EnemyFactory();
-        setChanged();
-        notifyObservers(player);
-        player.addListener(this);
-        characters.add(player);
+        //setChanged();
+        //notifyObservers(player);
+        //player.addListener(this);
+        //characters.add(player);
     }
 
     public void spawnBoss(Position pos) {
         boss = (Boss)enemyFactory.getEnemy(player, Character.CharacterType.BOSS);
-        boss.addObserver(this);
-        enemies.add(boss);
-        characters.add(boss);
-        setChanged();
-        notifyObservers(boss);
-        boss.addListener(this);
-    }
-
-    public void spawnEnemies(int amount) {
-        for (int i = 0; i < amount; i++) {
-            Enemy pleb = enemyFactory.getEnemy(player, Character.CharacterType.PLEB);
-            enemies.add(pleb);
-            characters.add(pleb);
-            setChanged();
-            notifyObservers(pleb);
-            pleb.addListener(this);
-        }
+        newEnemy(boss);
+        //boss.addObserver(this);
+        //enemies.add(boss);
+        //characters.add(boss);
+        //setChanged();
+        //notifyObservers(boss);
+        //boss.addListener(this);
     }
 
     public void update(float dt){
@@ -136,25 +129,24 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
             }
         }
         if (enemies.size()<1){
-            spawnEnemies();
+            spawnEnemies(5);
         }
     }
 
-    private void spawnEnemies() {
-        for (int i = 0; i < 5; i++) {
-            Enemy e = enemyFactory.getEnemy(player, Character.CharacterType.PLEB);
-            enemies.add(e);
-            characters.add(e);
-            e.addListener(this);
+    private void spawnEnemies(int amount) {
+        for (int i = 0; i < amount; i++) {
+            Enemy pleb = enemyFactory.getEnemy(player, Character.CharacterType.PLEB);
+            newEnemy(pleb);
+            /*enemies.add(pleb);
+            characters.add(pleb);
             setChanged();
-            notifyObservers(e);
-        }
-        for (Enemy e : enemies) {
+            notifyObservers(pleb);
+            pleb.addListener(this);*/
             Random r = new Random();
             float x = r.nextFloat() * Constants.MAP_WIDTH;
             float y = r.nextFloat() * Constants.MAP_HEIGHT;
-            e.getPosition().setX(x);
-            e.getPosition().setY(y);
+            pleb.getPosition().setX(x);
+            pleb.getPosition().setY(y);
         }
     }
 
@@ -236,8 +228,8 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
 
     public void addProjectile(ProjectileInterface p) {
         projectiles.add(p);
-        setChanged();
-        notifyObservers(p);
+        //setChanged();
+        //notifyObservers(p);
     }
 
     @Override
@@ -274,11 +266,13 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
             case "New Projectile":
                 ProjectileInterface p = (ProjectileInterface)evt.getNewValue();
                 addProjectile(p);
+                pcs.firePropertyChange("New Projectile", null, p);
                 break;
             case "PowerUp drops":
                 ArrayList<PowerUpI> powerUpArray = (ArrayList<PowerUpI>)evt.getNewValue();
                 powerUpDrops.addAll(powerUpArray);
                 for (PowerUpI powerUp : powerUpArray) {
+                    pcs.firePropertyChange("New PowerUp", null, powerUp);
                     setChanged();
                     notifyObservers(powerUp);
                 }
@@ -287,10 +281,34 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
                 ArrayList<AmmunitionInterface> ammoArray = (ArrayList<AmmunitionInterface>)evt.getNewValue();
                 ammunitionDrops.addAll(ammoArray);
                 for (AmmunitionInterface ammo : ammoArray) {
+                    pcs.firePropertyChange("New Ammunition", null, ammo);
                     setChanged();
                     notifyObservers(ammo);
                 }
                 break;
         }
+    }
+
+    public void newCharacter(Character character){
+        character.addListener(this);
+        characters.add(character);
+        pcs.firePropertyChange("New Character", null, character);
+    }
+
+    public void newEnemy(Enemy enemy){
+        enemies.add(enemy);
+        newCharacter(enemy);
+    }
+
+    public void addListener(PropertyChangeListener pcl){
+        pcs.addPropertyChangeListener(pcl);
+    }
+
+    public void removeObject(Object obj){
+        pcs.firePropertyChange("Remove Object", null, obj);
+    }
+
+    public void removeCollidedProjectiles(ArrayList<ProjectileInterface> projs){
+
     }
 }

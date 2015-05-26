@@ -31,6 +31,7 @@ import edu.chl.blastinthepast.view.characterviews.CharacterViewFactory;
 import edu.chl.blastinthepast.view.characterviews.PlayerView;
 import edu.chl.blastinthepast.view.projectileviews.ProjectileViewFactory;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.*;
@@ -39,7 +40,7 @@ import java.util.*;
 /**
  * Created by Shif on 23/04/15.
  */
-public class PlayState extends GameState implements Observer{
+public class PlayState extends GameState implements Observer, PropertyChangeListener{
 
     private BPModel model;
     private PlayerView playerView;
@@ -78,6 +79,7 @@ public class PlayState extends GameState implements Observer{
         pcs = new PropertyChangeSupport(this);
         model.addObserver(this);
         init(model, level);
+        model.addListener(this);
     }
 
     @Override
@@ -283,7 +285,7 @@ public class PlayState extends GameState implements Observer{
 
     /**
      *  Since removing objects without using the iterator while iterating through a list is met with an error
-     *  it is necessary to mark them for removal and remove when the iteration is complete.
+     *  it is necessary to mark them for removal and remove them when the iteration is complete.
      */
     public void removeObjects(){
         Iterator<Object> objectIterator = worldObjectsRemoveList.iterator();
@@ -343,4 +345,34 @@ public class PlayState extends GameState implements Observer{
         }
     }
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        switch (evt.getPropertyName()){
+            case "New Projectile":
+                ProjectileInterface p = (ProjectileInterface)evt.getNewValue();
+                worldObjects.put(p, projectileViewFactory.getProjectileView(p));
+                break;
+            case "New PowerUp":
+                PowerUpI powerUp = (PowerUpI) evt.getNewValue();
+                worldObjects.put(powerUp, powerUpViewFactory.getPowerUpView(powerUp));
+                break;
+            case "New Ammunition":
+                Ammunition ammo = (Ammunition) evt.getNewValue();
+                if (ammo.getType() instanceof AK47Projectile) {
+                    worldObjects.put(ammo, new AmmunitionView(ammo, GraphicalAssets.TRIFORCE_BULLET));
+                }
+                break;
+            case "New Character":
+                Character character = (Character) evt.getNewValue();
+                worldObjects.put(character, characterViewFactory.getCharacterView(character));
+                break;
+            case "Remove Object":
+                if (worldObjects.containsKey(evt.getNewValue())) {
+                    if (!worldObjectsRemoveList.contains(evt.getNewValue())) {
+                        worldObjectsRemoveList.add(evt.getNewValue());
+                    }
+                }
+                break;
+        }
+    }
 }

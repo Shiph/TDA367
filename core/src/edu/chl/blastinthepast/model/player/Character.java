@@ -1,5 +1,6 @@
 package edu.chl.blastinthepast.model.player;
 
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
@@ -37,5 +38,6 @@ public interface Character extends Collidable{
     Vector2 getMovementVector();
     Vector2 getAimVector();
     CharacterType getCharacterType();
+    void addListener(PropertyChangeListener pcl);
 
 }
