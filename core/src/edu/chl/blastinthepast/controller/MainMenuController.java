@@ -15,7 +15,7 @@ public class MainMenuController extends GameStateController {
     public MainMenuController(BPController bpController, GameStateManager gsm) {
         super(bpController, gsm);
         currentItem = 0;
-        menuItems = new String[]{"New game", "Load game", "Highscores", "Options", "Quit"};
+        menuItems = new String[]{"New game", "Load game", "High scores", "Options", "Quit"};
         gsm.getMainMenu().setMenuItems(menuItems);
         gsm.getMainMenu().setCurrentItem(currentItem);
     }
