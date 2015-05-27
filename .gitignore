@@ -1,5 +1,4 @@
 ## Java
-
 *.class
 *.war
 *.ear
@@ -23,7 +22,6 @@ www-test/
 *.iws
 
 ## Gradle
-
 .gradle
 gradle-app.setting
 build/
@@ -37,3 +35,6 @@ gitinspector/
 ## Stan
 .project
 .stan
+
+## Saves
+*.sav
