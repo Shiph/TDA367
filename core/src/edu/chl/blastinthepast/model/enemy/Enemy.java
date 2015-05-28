@@ -73,40 +73,24 @@ public abstract class Enemy extends Observable implements Character {
         movementVector.setLength(movementSpeed * dt);
         switch (movementDirection) {
             case 0: // move west
-                if (!(position.getX() > 0)) {
-                    movementDirection = 1;
-                } else {
-                    movementVector.setAngle(180);
-                    position.setX(position.getX() + movementVector.x);
-                    aimVector.set(position.getX() - range, position.getY());
-                }
+                movementVector.setAngle(180);
+                position.setX(position.getX() + movementVector.x);
+                aimVector.set(position.getX() - range, position.getY());
                 break;
             case 1: // move east
-                if (!(position.getX() < Constants.MAP_WIDTH)) {
-                    movementDirection = 0;
-                } else {
-                    movementVector.setAngle(0);
-                    position.setX(position.getX() + movementVector.x);
-                    aimVector.set(position.getX() + range, position.getY());
-                }
+                movementVector.setAngle(0);
+                position.setX(position.getX() + movementVector.x);
+                aimVector.set(position.getX() + range, position.getY());
                 break;
             case 2: // move north
-                if (!(position.getY() < Constants.MAP_HEIGHT)) {
-                    movementDirection = 3;
-                } else {
-                    movementVector.setAngle(90);
-                    position.setY(position.getY() + movementVector.y);
-                    aimVector.set(position.getX(), position.getY() + range);
-                }
+                movementVector.setAngle(90);
+                position.setY(position.getY() + movementVector.y);
+                aimVector.set(position.getX(), position.getY() + range);
                 break;
             case 3: // move south
-                if (!(position.getY() > 2)) {
-                    movementDirection = 1;
-                } else {
-                    movementVector.setAngle(270);
-                    position.setY(position.getY() + movementVector.y);
-                    aimVector.set(position.getX(), position.getY() - range);
-                }
+                movementVector.setAngle(270);
+                position.setY(position.getY() + movementVector.y);
+                aimVector.set(position.getX(), position.getY() - range);
                 break;
             default:
                 break;
@@ -204,7 +188,7 @@ public abstract class Enemy extends Observable implements Character {
         } else {
             updateMovementDirectionVector(movementDirection);
         }
-        move(dt);
+        //move(dt);
 
     }
 
@@ -234,6 +218,10 @@ public abstract class Enemy extends Observable implements Character {
             return true;
         }
         return false;
+    }
+
+    public void setMovementDirection(int movementDirection) {
+        this.movementDirection = movementDirection;
     }
 
     private class MyActionListener implements ActionListener {

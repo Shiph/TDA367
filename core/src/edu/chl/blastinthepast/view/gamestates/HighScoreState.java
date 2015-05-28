@@ -9,9 +9,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.model.level.LevelInterface;
-import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 import edu.chl.blastinthepast.utils.HighScoreHandler;
+import edu.chl.blastinthepast.view.ViewConstants;
 
 /**
  * Created by MattiasJ on 2015-05-03.
@@ -68,7 +68,7 @@ public class HighScoreState extends GameState {
             font.draw(batch, temp, (Gdx.graphics.getWidth()-width) / 2, 4 *Gdx.graphics.getHeight() / 5 - 35 * i);
         }
         width = font.getBounds(backToMenu).width;
-        font.draw(batch, backToMenu, (Constants.CAMERA_WIDTH - (width + 10)), 35);
+        font.draw(batch, backToMenu, (ViewConstants.CAMERA_WIDTH - (width + 10)), 35);
         batch.end();
     }
 

@@ -1,7 +1,6 @@
 package edu.chl.blastinthepast.controller;
 
 import com.badlogic.gdx.Input;
-import edu.chl.blastinthepast.model.menu.InGameMenuModel;
 import edu.chl.blastinthepast.view.gamestates.GameStateManager;
 
 /**

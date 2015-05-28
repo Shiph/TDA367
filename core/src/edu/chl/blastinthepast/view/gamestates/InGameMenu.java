@@ -9,11 +9,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import edu.chl.blastinthepast.model.menu.InGameMenuModel;
 import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.model.level.LevelInterface;
-import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
+import edu.chl.blastinthepast.view.ViewConstants;
 
 /**
  * Created by MattiasJ on 2015-05-03.
@@ -52,7 +51,7 @@ public class InGameMenu extends GameState {
         soundTexture = GraphicalAssets.SOUND;
         soundImage = new Image(soundTexture);
         soundImage.setSize(24, 24);
-        soundImage.setPosition(Constants.CAMERA_WIDTH - 40, 20);
+        soundImage.setPosition(ViewConstants.CAMERA_WIDTH - 40, 20);
         soundTextLabelStyle = new Label.LabelStyle();
         soundTextLabelStyle.font = font;
         soundTextLabel = new Label("Press SPACE to toggle sound", soundTextLabelStyle);
@@ -93,13 +92,13 @@ public class InGameMenu extends GameState {
             soundTexture = GraphicalAssets.SOUND_OFF;
             soundImage = new Image(soundTexture);
             soundImage.setSize(24, 24);
-            soundImage.setPosition(Constants.CAMERA_WIDTH - 40, 20);
+            soundImage.setPosition(ViewConstants.CAMERA_WIDTH - 40, 20);
             soundOn = false;
         } else {
             soundTexture = GraphicalAssets.SOUND;
             soundImage = new Image(soundTexture);
             soundImage.setSize(24, 24);
-            soundImage.setPosition(Constants.CAMERA_WIDTH - 40, 20);
+            soundImage.setPosition(ViewConstants.CAMERA_WIDTH - 40, 20);
             soundOn = true;
         }
     }

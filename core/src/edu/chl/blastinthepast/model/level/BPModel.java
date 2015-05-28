@@ -11,7 +11,6 @@ import edu.chl.blastinthepast.model.chest.*;
 import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.model.player.Player;
 import edu.chl.blastinthepast.model.powerUp.PowerUpI;
-import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -33,6 +32,8 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
     private ArrayList<PowerUpI> ActivePowerUps =new ArrayList<PowerUpI>();
     private ArrayList<PowerUpI> powerUpDrops = new ArrayList<PowerUpI>();
     private ArrayList<AmmunitionInterface> ammunitionDrops = new ArrayList<AmmunitionInterface>();
+    private int mapHeight;
+    private int mapWidth;
 
     public BPModel() {
         chest = new Chest(new Magnum(new Position(1000,1500), new Vector2(), new Vector2()));
@@ -81,6 +82,18 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
             }
             for (Enemy e : enemies) {
                 e.update(dt);
+                int i = e.getMovementDirection();
+                if (i == 0 && !(e.getPosition().getX() > 0)) {
+                    e.setMovementDirection(1);
+                } else if (i == 1 && !(e.getPosition().getX() < mapWidth)) {
+                    e.setMovementDirection(0);
+                } else if (i == 2 && !(e.getPosition().getY() < mapHeight)) {
+                    e.setMovementDirection(3);
+                } else if (i == 3 && !(e.getPosition().getY() > 0)) {
+                    e.setMovementDirection(2);
+                } else {
+                    e.move(dt);
+                }
             }
             checkForCollision();
         }
@@ -94,8 +107,8 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
             Iterator<ProjectileInterface> iter = c.getProjectiles().iterator();
             while (iter.hasNext()) {
                 ProjectileInterface p = iter.next();
-                if ((p.getPosition().getY() < 0) || (p.getPosition().getY() > Constants.MAP_HEIGHT) ||
-                        (p.getPosition().getX() > Constants.MAP_WIDTH) || (p.getPosition().getX() < 0)) {
+                if ((p.getPosition().getY() < 0) || (p.getPosition().getY() > mapHeight) ||
+                        (p.getPosition().getX() > mapWidth) || (p.getPosition().getX() < 0)) {
                     iter.remove();
                     c.getProjectiles().remove(p);
                     projectiles.remove(p);
@@ -151,8 +164,8 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
         }
         for (Enemy e : enemies) {
             Random r = new Random();
-            float x = r.nextFloat() * Constants.MAP_WIDTH;
-            float y = r.nextFloat() * Constants.MAP_HEIGHT;
+            float x = r.nextFloat() * mapWidth;
+            float y = r.nextFloat() * mapHeight;
             e.getPosition().setX(x);
             e.getPosition().setY(y);
         }
@@ -292,5 +305,21 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
                 }
                 break;
         }
+    }
+
+    public void setMapWidth(int mapWidth) {
+        this.mapWidth = mapWidth;
+    }
+
+    public void setMapHeight(int mapHeight) {
+        this.mapHeight = mapHeight;
+    }
+
+    public int getMapWidth() {
+        return mapWidth;
+    }
+
+    public int getMapHeight() {
+        return mapHeight;
     }
 }
