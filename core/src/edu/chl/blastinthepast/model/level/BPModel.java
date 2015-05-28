@@ -21,7 +21,7 @@ import java.util.*;
 /**
  * Created by Shif on 20/04/15.
  */
-public class BPModel extends Observable implements Observer, PropertyChangeListener {
+public class BPModel extends Observable implements PropertyChangeListener {
 
     private Player player;
     private EnemyFactory enemyFactory;
@@ -211,16 +211,6 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
         projectiles.add(p);
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        if(arg instanceof String) {
-            if (arg.equals("player is kill")) {
-                setChanged();
-                notifyObservers("player is kill");
-            }
-        }
-    }
-
     public ArrayList<Character> getCharacters(){
         return characters;
     }
@@ -260,6 +250,9 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
                 for (AmmunitionInterface ammo : ammoArray) {
                     pcs.firePropertyChange("New Ammunition", null, ammo);
                 }
+                break;
+            case "Player died":
+                pcs.firePropertyChange(evt);
                 break;
         }
     }

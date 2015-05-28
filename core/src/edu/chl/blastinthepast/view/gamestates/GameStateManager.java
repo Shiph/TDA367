@@ -8,6 +8,7 @@ import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.model.level.LevelManager;
 import edu.chl.blastinthepast.model.menu.MainMenuModel;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -136,5 +137,4 @@ public class GameStateManager {
     public void setLevelManager(LevelManager levelManager) {
         this.levelManager = levelManager;
     }
-
 }

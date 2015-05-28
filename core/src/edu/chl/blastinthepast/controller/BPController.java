@@ -20,7 +20,7 @@ import java.util.Observer;
 /**
  * Created by Shif on 20/04/15.
  */
-public class BPController extends ApplicationAdapter implements PropertyChangeListener, Observer {
+public class BPController extends ApplicationAdapter implements PropertyChangeListener{
 
     private BPModel model;
     private InputHandler inputHandler;
@@ -73,13 +73,16 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
             case "unblocked":
                 model.getPlayer().unBlock();
                 break;
+            case "Player died":
+                gameOverController.setScore(model.getPlayer().getScore());
+                setActiveController(ActiveController.GAME_OVER);
+                gsm.setState(GameStateManager.GAMEOVER, true);
         }
     }
 
     public void newGame() {
         model = new BPModel();
-        model.addObserver(this);
-        model.getPlayer().addObserver(this);
+        model.addListener(this);
         gsm.setModel(model);
         if (levelManager == null) {
             levelManager = new LevelManager(new LevelOne(model));
@@ -147,15 +150,6 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
     public void mouseMoved(int screenX, int screenY) {
         if (activeController == ActiveController.PLAY) {
             playController.mouseMoved(screenX, screenY);
-        }
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        if (arg.equals("player is kill")) {
-            gameOverController.setScore(model.getPlayer().getScore());
-            setActiveController(ActiveController.GAME_OVER);
-            gsm.setState(GameStateManager.GAMEOVER, true);
         }
     }
 

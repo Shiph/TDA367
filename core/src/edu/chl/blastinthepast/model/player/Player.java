@@ -21,7 +21,7 @@ import edu.chl.blastinthepast.utils.PositionInterface;
 /**
  * Created by Shif on 21/04/15.
  */
-public class Player extends Observable implements Character {
+public class Player implements Character {
 
     private Vector2 aimDirection = new Vector2(1,0);
     private Rectangle rectangle=new RectangleAdapter();
@@ -173,11 +173,7 @@ public class Player extends Observable implements Character {
     }
 
     public void die() {
-        setChanged();
-        if(!playerIsDead) {
-            playerIsDead = true;
-            notifyObservers("player is kill");
-        }
+        pcs.firePropertyChange("Player died", null, "Player died");
     }
 
     public void isShooting(boolean shoot){
