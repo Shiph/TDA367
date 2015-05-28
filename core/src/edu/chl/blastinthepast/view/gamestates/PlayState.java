@@ -15,6 +15,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import edu.chl.blastinthepast.model.ammunition.Ammunition;
+import edu.chl.blastinthepast.model.player.CharacterTypeEnum;
 import edu.chl.blastinthepast.model.projectiles.AK47Projectile;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.player.Character;
@@ -217,7 +218,7 @@ public class PlayState extends GameState implements Observer{
 
     public void spawnCharacterViews() {
         for (Character c : model.getCharacters()) {
-            if(c.getCharacterType() == Character.CharacterType.PLAYER) {
+            if(c.getCharacterType() == CharacterTypeEnum.PLAYER) {
                 playerView = (PlayerView)characterViewFactory.getCharacterView(c);
                 worldObjects.put(c, playerView);
             } else {

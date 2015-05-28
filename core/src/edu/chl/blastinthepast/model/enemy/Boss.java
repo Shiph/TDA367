@@ -2,6 +2,7 @@ package edu.chl.blastinthepast.model.enemy;
 
 import edu.chl.blastinthepast.model.ammunition.Ammunition;
 import edu.chl.blastinthepast.model.player.Character;
+import edu.chl.blastinthepast.model.player.CharacterTypeEnum;
 import edu.chl.blastinthepast.model.powerUp.PowerUpGenerator;
 import edu.chl.blastinthepast.model.powerUp.PowerUpI;
 
@@ -40,7 +41,7 @@ public class Boss extends Enemy {
     }
 
     @Override
-    public CharacterType getCharacterType() {
-        return CharacterType.BOSS;
+    public CharacterTypeEnum getCharacterType() {
+        return CharacterTypeEnum.BOSS;
     }
 }

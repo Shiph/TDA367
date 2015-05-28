@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.Weapon;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
+import edu.chl.blastinthepast.model.weapon.WeaponTypeEnum;
 import edu.chl.blastinthepast.utils.PositionInterface;
 
 /**
@@ -115,7 +116,7 @@ public class MockWeapon implements WeaponInterface {
     }
 
     @Override
-    public Weapon.WeaponType getWeaponType() {
+    public WeaponTypeEnum getWeaponType() {
         return null;
     }
 

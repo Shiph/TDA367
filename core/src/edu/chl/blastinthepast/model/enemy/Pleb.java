@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.ammunition.Ammunition;
 import edu.chl.blastinthepast.model.ammunition.AmmunitionInterface;
 import edu.chl.blastinthepast.model.player.Character;
+import edu.chl.blastinthepast.model.player.CharacterTypeEnum;
 import edu.chl.blastinthepast.model.powerUp.PowerUpGenerator;
 import edu.chl.blastinthepast.model.powerUp.PowerUpI;
 
@@ -34,8 +35,7 @@ public class Pleb extends Enemy {
             ammunitionDrops.add(ammo);
             getLoot().add(ammo);
         }
-        //boolean hasPowerUp = random.nextBoolean();
-        boolean hasPowerUp = true;
+        boolean hasPowerUp = random.nextBoolean();
         if (hasPowerUp) {
             PowerUpI powerUp = PowerUpGenerator.generatePowerUp();
             powerUp.setPosition(getPosition());
@@ -45,8 +45,7 @@ public class Pleb extends Enemy {
     }
 
     @Override
-    public CharacterType getCharacterType() {
-        return CharacterType.PLEB;
+    public CharacterTypeEnum getCharacterType() {
+        return CharacterTypeEnum.PLEB;
     }
-
 }

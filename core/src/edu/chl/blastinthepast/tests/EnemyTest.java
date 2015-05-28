@@ -21,7 +21,7 @@ public class EnemyTest {
     @Before
     public void before(){
         enemyFactory = new EnemyFactory();
-        enemy = enemyFactory.getEnemy(new MockPlayer(), Character.CharacterType.PLEB);
+        enemy = enemyFactory.getEnemy(new MockPlayer(), CharacterTypeEnum.PLEB);
     }
 
     @Test

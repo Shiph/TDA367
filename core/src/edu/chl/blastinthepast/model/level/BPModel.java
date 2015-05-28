@@ -3,6 +3,7 @@ package edu.chl.blastinthepast.model.level;
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.ammunition.AmmunitionInterface;
 import edu.chl.blastinthepast.model.enemy.EnemyFactory;
+import edu.chl.blastinthepast.model.player.CharacterTypeEnum;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.Magnum;
 import edu.chl.blastinthepast.model.enemy.Boss;
@@ -46,7 +47,7 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
     }
 
     public void spawnBoss(Position pos) {
-        boss = (Boss)enemyFactory.getEnemy(player, Character.CharacterType.BOSS);
+        boss = (Boss)enemyFactory.getEnemy(player, CharacterTypeEnum.BOSS);
         boss.addObserver(this);
         enemies.add(boss);
         characters.add(boss);
@@ -57,7 +58,7 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
 
     public void spawnEnemies(int amount) {
         for (int i = 0; i < amount; i++) {
-            Enemy pleb = enemyFactory.getEnemy(player, Character.CharacterType.PLEB);
+            Enemy pleb = enemyFactory.getEnemy(player, CharacterTypeEnum.PLEB);
             enemies.add(pleb);
             characters.add(pleb);
             setChanged();
@@ -123,9 +124,9 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
             Enemy e = iter.next();
             if (e.getHealth() <= 0) {
                 e.die();
-                if(e.getCharacterType() == Character.CharacterType.BOSS) {
+                if(e.getCharacterType().getID().equals("Boss")) {
                     player.setScore(player.getScore() + 50);
-                } else if (e.getCharacterType() == Character.CharacterType.PLEB) {
+                } else if (e.getCharacterType().getID().equals("Pleb")) {
                     player.setScore(player.getScore() + 10);
                 }
                 iter.remove();
@@ -142,7 +143,7 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
 
     private void spawnEnemies() {
         for (int i = 0; i < 5; i++) {
-            Enemy e = enemyFactory.getEnemy(player, Character.CharacterType.PLEB);
+            Enemy e = enemyFactory.getEnemy(player, CharacterTypeEnum.PLEB);
             enemies.add(e);
             characters.add(e);
             e.addListener(this);

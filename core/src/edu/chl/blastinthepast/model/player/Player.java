@@ -2,10 +2,10 @@ package edu.chl.blastinthepast.model.player;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.Collidable;
-import edu.chl.blastinthepast.model.ammunition.AmmunitionInterface;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponFactory;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
+import edu.chl.blastinthepast.model.weapon.WeaponTypeEnum;
 import edu.chl.blastinthepast.utils.*;
 import edu.chl.blastinthepast.utils.Rectangle;
 
@@ -45,7 +45,7 @@ public class Player extends Observable implements Character {
         this.health = health;
         weaponFactory = new WeaponFactory();
         weaponArray = new ArrayList<>();
-        weapon = weaponFactory.getWeapon(position, aimVector, movementVector, WeaponInterface.WeaponType.AK47);
+        weapon = weaponFactory.getWeapon(position, aimVector, movementVector, WeaponTypeEnum.AK47);
         weaponArray.add(weapon);
         projectiles = new ArrayList<>();
         position=pos;
@@ -377,7 +377,7 @@ public class Player extends Observable implements Character {
     }
 
     @Override
-    public CharacterType getCharacterType() {
-        return CharacterType.PLAYER;
+    public CharacterTypeEnum getCharacterType() {
+        return CharacterTypeEnum.PLAYER;
     }
 }

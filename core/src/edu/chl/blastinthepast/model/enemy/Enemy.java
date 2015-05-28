@@ -8,6 +8,7 @@ import edu.chl.blastinthepast.model.powerUp.PowerUpI;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponFactory;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
+import edu.chl.blastinthepast.model.weapon.WeaponTypeEnum;
 import edu.chl.blastinthepast.utils.*;
 
 import javax.swing.*;
@@ -62,7 +63,7 @@ public abstract class Enemy extends Observable implements Character {
         movementVector = new Vector2(1, 0);
         playerDirectionVector = new Vector2();
         weaponFactory = new WeaponFactory();
-        weapon = weaponFactory.getWeapon(position, aimVector, movementVector, WeaponInterface.WeaponType.AK47);
+        weapon = weaponFactory.getWeapon(position, aimVector, movementVector, WeaponTypeEnum.AK47);
         timer = new Timer(1000, actionListener);
         timer.setRepeats(true);
         timer.start();

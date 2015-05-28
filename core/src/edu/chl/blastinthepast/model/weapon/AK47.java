@@ -21,13 +21,8 @@ public class AK47 extends Weapon {
     }
 
     @Override
-    public String toString() {
-        return "AK47";
-    }
-
-    @Override
-    public WeaponType getWeaponType() {
-        return WeaponType.AK47;
+    public WeaponTypeEnum getWeaponType() {
+        return WeaponTypeEnum.AK47;
     }
 
 }

@@ -8,7 +8,7 @@ import edu.chl.blastinthepast.utils.PositionInterface;
  */
 public class WeaponFactory {
 
-    public WeaponInterface getWeapon(PositionInterface position, Vector2 aimVector, Vector2 movementVector, WeaponInterface.WeaponType weaponType) {
+    public WeaponInterface getWeapon(PositionInterface position, Vector2 aimVector, Vector2 movementVector, WeaponTypeEnum weaponType) {
 
         switch(weaponType) {
             case AK47:
