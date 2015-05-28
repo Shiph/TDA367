@@ -9,6 +9,7 @@ import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.PositionInterface;
 import edu.chl.blastinthepast.utils.Rectangle;
 
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
 /**
@@ -119,6 +120,11 @@ public class MockPlayer implements Character {
     @Override
     public CharacterType getCharacterType() {
         return null;
+    }
+
+    @Override
+    public void addListener(PropertyChangeListener pcl) {
+
     }
 
     @Override

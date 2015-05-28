@@ -16,7 +16,7 @@ public class LevelOne implements LevelInterface {
     public LevelOne(BPModel model) {
         this.model = model;
         model.addObserver(this);
-        model.spawnEnemies(5);
+        //model.spawnEnemies(5);
         model.spawnBoss(new Position(500, 500));
         placeEnemies();
         placePlayer();

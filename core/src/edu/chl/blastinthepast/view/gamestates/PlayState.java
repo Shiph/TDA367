@@ -366,13 +366,31 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
                 Character character = (Character) evt.getNewValue();
                 worldObjects.put(character, characterViewFactory.getCharacterView(character));
                 break;
-            case "Remove Object":
-                if (worldObjects.containsKey(evt.getNewValue())) {
-                    if (!worldObjectsRemoveList.contains(evt.getNewValue())) {
-                        worldObjectsRemoveList.add(evt.getNewValue());
-                    }
-                }
+            case "Remove Character":
+                removeObject(evt.getNewValue());
+                //Play sound
+                break;
+            case "Remove PowerUp":
+                removeObject(evt.getNewValue());
+                //Play sound
+                break;
+            case "Remove Ammunition":
+                removeObject(evt.getNewValue());
+                //Play sound
+                break;
+            case "Remove Projectile":
+                removeObject(evt.getNewValue());
+                //Play sound
                 break;
         }
     }
+
+    public void removeObject(Object obj){
+        if (worldObjects.containsKey(obj)) {
+            if (!worldObjectsRemoveList.contains(obj)) {
+                worldObjectsRemoveList.add(obj);
+            }
+        }
+    }
+
 }

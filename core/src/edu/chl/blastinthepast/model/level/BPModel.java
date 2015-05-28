@@ -31,7 +31,7 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
     private Chest chest;
     private Boss boss;
     private boolean isPaused;
-    private ArrayList<PowerUpI> ActivePowerUps =new ArrayList<PowerUpI>();
+    private ArrayList<PowerUpI> activePowerUps =new ArrayList<PowerUpI>();
     private ArrayList<PowerUpI> powerUpDrops = new ArrayList<PowerUpI>();
     private ArrayList<AmmunitionInterface> ammunitionDrops = new ArrayList<AmmunitionInterface>();
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
@@ -42,21 +42,12 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
         player = new Player();
         newCharacter(player);
         enemyFactory = new EnemyFactory();
-        //setChanged();
-        //notifyObservers(player);
-        //player.addListener(this);
-        //characters.add(player);
+        spawnEnemies(5);
     }
 
     public void spawnBoss(Position pos) {
         boss = (Boss)enemyFactory.getEnemy(player, Character.CharacterType.BOSS);
         newEnemy(boss);
-        //boss.addObserver(this);
-        //enemies.add(boss);
-        //characters.add(boss);
-        //setChanged();
-        //notifyObservers(boss);
-        //boss.addListener(this);
     }
 
     public void update(float dt){
@@ -92,15 +83,14 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
                     iter.remove();
                     c.getProjectiles().remove(p);
                     projectiles.remove(p);
-                    setChanged();
-                    notifyObservers(p);
+                    pcs.firePropertyChange("Remove Projectile", null, p);
                 }
             }
         }
     }
 
     private void updatePowerUps(){
-        Iterator<PowerUpI> powerUpIterator = ActivePowerUps.iterator();
+        Iterator<PowerUpI> powerUpIterator = activePowerUps.iterator();
         while(powerUpIterator.hasNext()){
             PowerUpI powerUp = powerUpIterator.next();
             powerUp.update();
@@ -124,8 +114,7 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
                 iter.remove();
                 characters.remove(e);
                 enemies.remove(e);
-                setChanged();
-                notifyObservers(e);
+                pcs.firePropertyChange("Remove Character", null, e);
             }
         }
         if (enemies.size()<1){
@@ -133,15 +122,10 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
         }
     }
 
-    private void spawnEnemies(int amount) {
+    public void spawnEnemies(int amount) {
         for (int i = 0; i < amount; i++) {
             Enemy pleb = enemyFactory.getEnemy(player, Character.CharacterType.PLEB);
             newEnemy(pleb);
-            /*enemies.add(pleb);
-            characters.add(pleb);
-            setChanged();
-            notifyObservers(pleb);
-            pleb.addListener(this);*/
             Random r = new Random();
             float x = r.nextFloat() * Constants.MAP_WIDTH;
             float y = r.nextFloat() * Constants.MAP_HEIGHT;
@@ -175,8 +159,7 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
                 if (character.isColliding(projectile) && !character.getProjectiles().contains(projectile)) {
                     character.setHealth(character.getHealth() - projectile.getDamage());
                     projIter.remove();
-                    setChanged();
-                    notifyObservers(projectile);
+                    pcs.firePropertyChange("Remove Projectile", null, projectile);
                 }
             }
         }
@@ -189,8 +172,7 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
             if (player.isColliding(ammo)) {
                 player.getCurrentWeapon().addAmmo(ammo.getAmount());
                 ammoIter.remove();
-                setChanged();
-                notifyObservers(ammo);
+                pcs.firePropertyChange("Remove Ammunition", null, ammo);
             }
         }
     }
@@ -201,10 +183,9 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
             PowerUpI powerUp = powerUpIter.next();
             if (player.isColliding(powerUp)) {
                 powerUp.init(player);
-                ActivePowerUps.add(powerUp);
+                activePowerUps.add(powerUp);
                 powerUpIter.remove();
-                setChanged();
-                notifyObservers(powerUp);
+                pcs.firePropertyChange("Remove PowerUp", null, powerUp);
             }
         }
     }
@@ -228,8 +209,6 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
 
     public void addProjectile(ProjectileInterface p) {
         projectiles.add(p);
-        //setChanged();
-        //notifyObservers(p);
     }
 
     @Override
@@ -273,8 +252,6 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
                 powerUpDrops.addAll(powerUpArray);
                 for (PowerUpI powerUp : powerUpArray) {
                     pcs.firePropertyChange("New PowerUp", null, powerUp);
-                    setChanged();
-                    notifyObservers(powerUp);
                 }
                 break;
             case "Ammunition drops":
@@ -282,8 +259,6 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
                 ammunitionDrops.addAll(ammoArray);
                 for (AmmunitionInterface ammo : ammoArray) {
                     pcs.firePropertyChange("New Ammunition", null, ammo);
-                    setChanged();
-                    notifyObservers(ammo);
                 }
                 break;
         }
@@ -302,13 +277,5 @@ public class BPModel extends Observable implements Observer, PropertyChangeListe
 
     public void addListener(PropertyChangeListener pcl){
         pcs.addPropertyChangeListener(pcl);
-    }
-
-    public void removeObject(Object obj){
-        pcs.firePropertyChange("Remove Object", null, obj);
-    }
-
-    public void removeCollidedProjectiles(ArrayList<ProjectileInterface> projs){
-
     }
 }
