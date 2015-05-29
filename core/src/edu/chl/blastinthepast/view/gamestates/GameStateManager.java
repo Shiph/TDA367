@@ -1,12 +1,8 @@
 package edu.chl.blastinthepast.view.gamestates;
 
 import com.badlogic.gdx.Gdx;
-import edu.chl.blastinthepast.controller.MainMenuController;
-import edu.chl.blastinthepast.model.menu.GameOverModel;
-import edu.chl.blastinthepast.model.menu.InGameMenuModel;
 import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.model.level.LevelManager;
-import edu.chl.blastinthepast.model.menu.MainMenuModel;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

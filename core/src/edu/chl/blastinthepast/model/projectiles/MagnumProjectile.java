@@ -13,7 +13,7 @@ public class MagnumProjectile extends Projectile {
     }
 
     @Override
-    public ProjectileType getProjectileType() {
-        return ProjectileType.MAGNUM;
+    public ProjectileTypeEnum getProjectileType() {
+        return ProjectileTypeEnum.MAGNUM;
     }
 }

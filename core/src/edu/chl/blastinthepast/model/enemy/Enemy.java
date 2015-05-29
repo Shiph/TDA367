@@ -8,6 +8,7 @@ import edu.chl.blastinthepast.model.powerUp.PowerUpI;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponFactory;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
+import edu.chl.blastinthepast.model.weapon.WeaponTypeEnum;
 import edu.chl.blastinthepast.utils.*;
 
 import javax.swing.*;
@@ -47,14 +48,10 @@ public abstract class Enemy extends Observable implements Character {
     protected ArrayList<PowerUpI> powerUpDrops = new ArrayList<PowerUpI>();
     protected ArrayList<AmmunitionInterface> ammunitionDrops = new ArrayList<AmmunitionInterface>();
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-    private final int width;
-    private final int height;
 
     public Enemy(int movementSpeed, int health, Character player, int width, int height) {
-        this.width=width;
-        this.height=height;
         rectangle.setSize(width, height);
-        loot= new ArrayList<Object>();
+        loot= new ArrayList<>();
         this.movementSpeed = movementSpeed;
         this.health = health;
         this.player = player;
@@ -66,51 +63,35 @@ public abstract class Enemy extends Observable implements Character {
         movementVector = new Vector2(1, 0);
         playerDirectionVector = new Vector2();
         weaponFactory = new WeaponFactory();
-        weapon = weaponFactory.getWeapon(this, WeaponInterface.WeaponType.AK47);
+        weapon = weaponFactory.getWeapon(position, aimVector, movementVector, WeaponTypeEnum.AK47);
         timer = new Timer(1000, actionListener);
         timer.setRepeats(true);
         timer.start();
-        projectiles=new ArrayList<ProjectileInterface>();
+        projectiles=new ArrayList<>();
     }
 
     public void move(float dt) {
         movementVector.setLength(movementSpeed * dt);
         switch (movementDirection) {
             case 0: // move west
-                if (!(position.getX() > 0)) {
-                    movementDirection = 1;
-                } else {
-                    movementVector.setAngle(180);
-                    position.setX(position.getX() + movementVector.x);
-                    aimVector.set(position.getX() - range, position.getY());
-                }
+                movementVector.setAngle(180);
+                position.setX(position.getX() + movementVector.x);
+                aimVector.set(position.getX() - range, position.getY());
                 break;
             case 1: // move east
-                if (!(position.getX() < Constants.MAP_WIDTH)) {
-                    movementDirection = 0;
-                } else {
-                    movementVector.setAngle(0);
-                    position.setX(position.getX() + movementVector.x);
-                    aimVector.set(position.getX() + range, position.getY());
-                }
+                movementVector.setAngle(0);
+                position.setX(position.getX() + movementVector.x);
+                aimVector.set(position.getX() + range, position.getY());
                 break;
             case 2: // move north
-                if (!(position.getY() < Constants.MAP_HEIGHT)) {
-                    movementDirection = 3;
-                } else {
-                    movementVector.setAngle(90);
-                    position.setY(position.getY() + movementVector.y);
-                    aimVector.set(position.getX(), position.getY() + range);
-                }
+                movementVector.setAngle(90);
+                position.setY(position.getY() + movementVector.y);
+                aimVector.set(position.getX(), position.getY() + range);
                 break;
             case 3: // move south
-                if (!(position.getY() > 2)) {
-                    movementDirection = 1;
-                } else {
-                    movementVector.setAngle(270);
-                    position.setY(position.getY() + movementVector.y);
-                    aimVector.set(position.getX(), position.getY() - range);
-                }
+                movementVector.setAngle(270);
+                position.setY(position.getY() + movementVector.y);
+                aimVector.set(position.getX(), position.getY() - range);
                 break;
             default:
                 break;
@@ -208,7 +189,7 @@ public abstract class Enemy extends Observable implements Character {
         } else {
             updateMovementDirectionVector(movementDirection);
         }
-        move(dt);
+        //move(dt);
 
     }
 
@@ -238,6 +219,10 @@ public abstract class Enemy extends Observable implements Character {
             return true;
         }
         return false;
+    }
+
+    public void setMovementDirection(int movementDirection) {
+        this.movementDirection = movementDirection;
     }
 
     private class MyActionListener implements ActionListener {
@@ -273,10 +258,6 @@ public abstract class Enemy extends Observable implements Character {
 
     public void addListener(PropertyChangeListener pcl){
         pcs.addPropertyChangeListener(pcl);
-    }
-
-    public void removeListener (PropertyChangeListener pcl){
-        pcs.removePropertyChangeListener(pcl);
     }
 
     @Override

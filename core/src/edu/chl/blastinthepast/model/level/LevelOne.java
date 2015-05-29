@@ -1,7 +1,6 @@
 package edu.chl.blastinthepast.model.level;
 
 import edu.chl.blastinthepast.model.enemy.Enemy;
-import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.Position;
 import java.util.Observable;
 import java.util.Random;
@@ -12,9 +11,13 @@ import java.util.Random;
 public class LevelOne implements LevelInterface {
 
     private BPModel model;
+    private int mapWidth = 3200;
+    private int mapHeight = 3200;
 
     public LevelOne(BPModel model) {
         this.model = model;
+        model.setMapWidth(mapWidth);
+        model.setMapHeight(mapHeight);
         model.addObserver(this);
         //model.spawnEnemies(5);
         model.spawnBoss(new Position(500, 500));
@@ -23,22 +26,14 @@ public class LevelOne implements LevelInterface {
     }
 
     private void placePlayer() {
-        model.getPlayer().setPosition(Constants.MAP_WIDTH/2, Constants.MAP_HEIGHT/2);
+        model.getPlayer().setPosition(mapWidth/2, mapHeight/2);
     }
 
     public void placeEnemies() {
         for (Enemy e : model.getEnemies()) {
             Random r = new Random();
-            float x = r.nextFloat() * Constants.MAP_WIDTH;
-            float y = r.nextFloat() * Constants.MAP_HEIGHT;
-            while (x <= model.getPlayer().getPosition().getX() + Constants.CAMERA_WIDTH/2 && //Makes enemies spawn outside the players view
-                    x >= model.getPlayer().getPosition().getX() - Constants.CAMERA_WIDTH/2) {
-                while (y <= model.getPlayer().getPosition().getY() + Constants.CAMERA_HEIGHT/2 &&
-                        y >= model.getPlayer().getPosition().getY() - Constants.CAMERA_HEIGHT/2) {
-                    y = r.nextFloat() * Constants.MAP_HEIGHT;
-                }
-                x = r.nextFloat() * Constants.MAP_WIDTH;
-            }
+            float x = r.nextFloat() * mapWidth;
+            float y = r.nextFloat() * mapHeight;
             e.getPosition().setX(x);
             e.getPosition().setY(y);
         }

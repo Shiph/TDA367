@@ -1,21 +1,20 @@
 package edu.chl.blastinthepast.model.weapon;
 
-import edu.chl.blastinthepast.model.player.Character;
+import com.badlogic.gdx.math.Vector2;
+import edu.chl.blastinthepast.utils.PositionInterface;
 
 /**
  * Created by Mattias on 15-05-21.
  */
 public class WeaponFactory {
 
-    public WeaponInterface getWeapon(Character character, WeaponInterface.WeaponType weaponType) {
-        if(character == null) {
-            return null;
-        }
+    public WeaponInterface getWeapon(PositionInterface position, Vector2 aimVector, Vector2 movementVector, WeaponTypeEnum weaponType) {
+
         switch(weaponType) {
             case AK47:
-                return new AK47(character.getPosition(), character.getAimVector(), character.getMovementVector());
+                return new AK47(position, aimVector, movementVector);
             case MAGNUM:
-                return new Magnum(character.getPosition(), character.getAimVector(), character.getMovementVector());
+                return new Magnum(position, aimVector, movementVector);
         }
         return null;
     }

@@ -14,7 +14,7 @@ public class Ammunition implements AmmunitionInterface{
     private PositionInterface position;
     private final ProjectileInterface type;
     private final int amount;
-    private int size= 32;
+    private int size = 32;
     private Rectangle rectangle = new RectangleAdapter();
 
     public Ammunition(PositionInterface position, ProjectileInterface type, int amount){
@@ -31,7 +31,7 @@ public class Ammunition implements AmmunitionInterface{
 
     @Override
     public void setPosition(PositionInterface newPosition) {
-        this.position=newPosition;
+        this.position = newPosition;
         rectangle.setPosition(position);
     }
 

@@ -5,8 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.audio.Sound;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
-
-import edu.chl.blastinthepast.utils.Constants;
+import edu.chl.blastinthepast.view.ViewConstants;
 import edu.chl.blastinthepast.view.WorldObject;
 
 /**
@@ -21,7 +20,7 @@ public abstract class ProjectileView implements WorldObject {
         this.projectile=projectile;
         this.texture = texture;
         sprite = new Sprite(texture);
-        sound.play(Constants.masterVolume);
+        sound.play(ViewConstants.masterVolume);
         sprite.setX(projectile.getPosition().getX());
         sprite.setY(projectile.getPosition().getY());
     }

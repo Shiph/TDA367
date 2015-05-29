@@ -9,10 +9,6 @@ import edu.chl.blastinthepast.utils.PositionInterface;
  */
 public interface ProjectileInterface extends Collidable{
 
-    enum ProjectileType {
-        AK47, MAGNUM
-    }
-
     void setSpeed(int newSpeed);
     void move(float dt);
     int getDamage();
@@ -20,5 +16,6 @@ public interface ProjectileInterface extends Collidable{
     Vector2 getAimVector();
     float getSpeed();
     PositionInterface getPosition();
-    ProjectileType getProjectileType();
+    ProjectileTypeEnum getProjectileType();
+
 }

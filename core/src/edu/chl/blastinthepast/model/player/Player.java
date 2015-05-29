@@ -2,10 +2,10 @@ package edu.chl.blastinthepast.model.player;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.Collidable;
-import edu.chl.blastinthepast.model.ammunition.AmmunitionInterface;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponFactory;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
+import edu.chl.blastinthepast.model.weapon.WeaponTypeEnum;
 import edu.chl.blastinthepast.utils.*;
 import edu.chl.blastinthepast.utils.Rectangle;
 
@@ -44,10 +44,10 @@ public class Player implements Character {
         this.movementSpeed = movementSpeed;
         this.health = health;
         weaponFactory = new WeaponFactory();
-        weaponArray = new ArrayList<WeaponInterface>();
-        weapon = weaponFactory.getWeapon(this, WeaponInterface.WeaponType.AK47);
+        weaponArray = new ArrayList<>();
+        weapon = weaponFactory.getWeapon(position, aimVector, movementVector, WeaponTypeEnum.AK47);
         weaponArray.add(weapon);
-        projectiles = new ArrayList<ProjectileInterface>();
+        projectiles = new ArrayList<>();
         position=pos;
         rectangle.setPosition(position.getX(), position.getY());
         rectangle.setSize(width, height);
@@ -81,7 +81,7 @@ public class Player implements Character {
 
     public void addWeapon(WeaponInterface weapon) {
         WeaponInterface newWeapon;
-        newWeapon = weaponFactory.getWeapon(this, weapon.getWeaponType());
+        newWeapon = weaponFactory.getWeapon(position, aimVector, movementVector, weapon.getWeaponType());
         weaponArray.add(newWeapon);
         setWeapon(newWeapon);
 
@@ -373,7 +373,7 @@ public class Player implements Character {
     }
 
     @Override
-    public CharacterType getCharacterType() {
-        return CharacterType.PLAYER;
+    public CharacterTypeEnum getCharacterType() {
+        return CharacterTypeEnum.PLAYER;
     }
 }

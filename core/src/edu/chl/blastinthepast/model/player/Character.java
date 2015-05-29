@@ -14,10 +14,6 @@ import edu.chl.blastinthepast.utils.PositionInterface;
  */
 public interface Character extends Collidable{
 
-    enum CharacterType {
-        PLAYER, PLEB, BOSS
-    }
-
     void move(float dt);
     void setMovementSpeed(int newSpeed);
     int getMovementSpeed();
@@ -37,7 +33,7 @@ public interface Character extends Collidable{
     void resetBonuses();
     Vector2 getMovementVector();
     Vector2 getAimVector();
-    CharacterType getCharacterType();
     void addListener(PropertyChangeListener pcl);
+    CharacterTypeEnum getCharacterType();
 
 }

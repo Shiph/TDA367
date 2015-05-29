@@ -15,14 +15,13 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import edu.chl.blastinthepast.model.ammunition.Ammunition;
+import edu.chl.blastinthepast.model.player.CharacterTypeEnum;
 import edu.chl.blastinthepast.model.projectiles.AK47Projectile;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.model.level.LevelInterface;
-import edu.chl.blastinthepast.model.level.LevelOne;
 import edu.chl.blastinthepast.model.powerUp.*;
-import edu.chl.blastinthepast.utils.Constants;
 import edu.chl.blastinthepast.utils.GraphicalAssets;
 import edu.chl.blastinthepast.utils.Position;
 import edu.chl.blastinthepast.utils.SoundAssets;
@@ -30,7 +29,6 @@ import edu.chl.blastinthepast.view.*;
 import edu.chl.blastinthepast.view.characterviews.CharacterViewFactory;
 import edu.chl.blastinthepast.view.characterviews.PlayerView;
 import edu.chl.blastinthepast.view.projectileviews.ProjectileViewFactory;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -94,7 +92,7 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.update();
-        camera.position.set(Constants.MAP_WIDTH / 2, Constants.MAP_HEIGHT / 2, 0);
+        camera.position.set(model.getMapWidth() / 2, model.getMapHeight() / 2, 0);
         camera.update();
 
         //Configures and sets the game map.
@@ -123,7 +121,7 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
 
         //Sets the music for the game.
         music = SoundAssets.SANIC_THEME;
-        music.setVolume(Constants.masterVolume);
+        music.setVolume(ViewConstants.masterVolume);
         music.setLooping(true);
         music.stop();
         setCrosshairCursor();
@@ -197,7 +195,7 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
 
     public void updateHeartPositions() {
         if (!heartIcons.isEmpty()) {
-            heartIcons.get(0).setPosition(camera.position.x - Constants.CAMERA_WIDTH / 2 + 15, camera.position.y + Constants.CAMERA_HEIGHT / 2 - 60);
+            heartIcons.get(0).setPosition(camera.position.x - ViewConstants.CAMERA_WIDTH / 2 + 15, camera.position.y + ViewConstants.CAMERA_HEIGHT / 2 - 60);
         }
         for (int i=1; i<heartIcons.size(); i++) {
             heartIcons.get(i).setPosition(heartIcons.get(i - 1).getX() + 40, heartIcons.get(i - 1).getY());
@@ -205,7 +203,7 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
     }
 
     public void updateWeaponGUI() {
-        ammoLabel.setPosition(camera.position.x - Constants.CAMERA_WIDTH / 2 + 10, camera.position.y - Constants.CAMERA_HEIGHT / 2 + 10);
+        ammoLabel.setPosition(camera.position.x - ViewConstants.CAMERA_WIDTH / 2 + 10, camera.position.y - ViewConstants.CAMERA_HEIGHT / 2 + 10);
         weaponImage.setPosition(ammoLabel.getX(), ammoLabel.getY() + ammoLabel.getHeight());
         ammoLabel.setText(model.getPlayer().getCurrentWeapon().getTotalBullets() + "/" + model.getPlayer().getCurrentWeapon().getbulletsLeftInMagazine());
     }
@@ -220,7 +218,7 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
 
     public void spawnCharacterViews() {
         for (Character c : model.getCharacters()) {
-            if(c.getCharacterType() == Character.CharacterType.PLAYER) {
+            if(c.getCharacterType() == CharacterTypeEnum.PLAYER) {
                 playerView = (PlayerView)characterViewFactory.getCharacterView(c);
                 worldObjects.put(c, playerView);
             } else {
@@ -298,13 +296,13 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
     }
 
     public void toggleSound() {
-        if (Constants.masterVolume == 0) {
-            Constants.masterVolume = 0.2f;
+        if (ViewConstants.masterVolume == 0) {
+            ViewConstants.masterVolume = 0.2f;
         } else {
-            Constants.masterVolume = 0;
+            ViewConstants.masterVolume = 0;
 
         }
-        music.setVolume(Constants.masterVolume);
+        music.setVolume(ViewConstants.masterVolume);
     }
 
     public void updateGUIWeapon() {

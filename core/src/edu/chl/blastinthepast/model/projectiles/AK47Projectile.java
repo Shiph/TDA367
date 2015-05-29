@@ -14,7 +14,7 @@ public class AK47Projectile extends Projectile {
     }
 
     @Override
-    public ProjectileType getProjectileType() {
-        return ProjectileType.AK47;
+    public ProjectileTypeEnum getProjectileType() {
+        return ProjectileTypeEnum.AK47;
     }
 }

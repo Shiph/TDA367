@@ -22,8 +22,8 @@ public class Magnum extends Weapon {
     }
 
     @Override
-    public WeaponType getWeaponType() {
-        return WeaponType.MAGNUM;
+    public WeaponTypeEnum getWeaponType() {
+        return WeaponTypeEnum.MAGNUM;
     }
 
 }
