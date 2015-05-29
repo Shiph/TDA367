@@ -13,31 +13,12 @@ import java.util.Random;
  */
 public class Boss extends Enemy {
 
-    public Boss(Character player) {
-        this(200, 15, player);
+    public Boss(Character player, LootInterface lootStyle) {
+        this(200, 15, player, lootStyle);
     }
 
-    private Boss(int movementSpeed, int health, Character player) {
-        super(movementSpeed, health, player, 128, 128);
-    }
-
-    @Override
-    public void generateLoot() {
-        Random random = new Random();
-        boolean hasAmmo = true;
-        if (hasAmmo) {
-            int amount = random.nextInt(4)*10+40;
-            Ammunition ammo = new Ammunition(getPosition(), getWeapon().getProjectile(), amount);
-            ammunitionDrops.add(ammo);
-            getLoot().add(ammo);
-        }
-        boolean hasPowerUp =true;
-        if (hasPowerUp) {
-            PowerUpI powerUp = PowerUpGenerator.generatePowerUp();
-            powerUp.setPosition(getPosition());
-            powerUpDrops.add(powerUp);
-            getLoot().add(powerUp);
-        }
+    private Boss(int movementSpeed, int health, Character player, LootInterface lootStyle) {
+        super(movementSpeed, health, player, 128, 128, lootStyle);
     }
 
     @Override

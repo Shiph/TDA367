@@ -18,6 +18,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.lang.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Random;
 
@@ -45,11 +46,10 @@ public abstract class Enemy extends Observable implements Character {
     private ArrayList<Object> loot;
     private int bonusMovementSpeed=0;
     private Rectangle rectangle = new RectangleAdapter();
-    protected ArrayList<PowerUpI> powerUpDrops = new ArrayList<PowerUpI>();
-    protected ArrayList<AmmunitionInterface> ammunitionDrops = new ArrayList<AmmunitionInterface>();
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    private LootInterface lootStuff;
 
-    public Enemy(int movementSpeed, int health, Character player, int width, int height) {
+    public Enemy(int movementSpeed, int health, Character player, int width, int height, LootInterface lootStyle) {
         rectangle.setSize(width, height);
         loot= new ArrayList<>();
         this.movementSpeed = movementSpeed;
@@ -68,6 +68,7 @@ public abstract class Enemy extends Observable implements Character {
         timer.setRepeats(true);
         timer.start();
         projectiles=new ArrayList<>();
+        lootStuff=lootStyle;
     }
 
     public void move(float dt) {
@@ -239,12 +240,10 @@ public abstract class Enemy extends Observable implements Character {
         return projectiles;
     }
 
-    public abstract void generateLoot();
-
     public ArrayList<Object> die() {
-        generateLoot();
-        pcs.firePropertyChange("PowerUp drops", null, powerUpDrops);
-        pcs.firePropertyChange("Ammunition drops", null, ammunitionDrops);
+        HashMap<String, ArrayList<? extends Object>> newLoot = lootStuff.generateLoot(position, weapon);
+        pcs.firePropertyChange("PowerUp drops", null, newLoot.get("PowerUp Loot"));
+        pcs.firePropertyChange("Ammunition drops", null, newLoot.get("Ammunition Loot"));
         return loot;
     }
 

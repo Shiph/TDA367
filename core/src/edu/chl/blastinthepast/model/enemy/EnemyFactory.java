@@ -14,9 +14,9 @@ public class EnemyFactory {
         }
         switch(characterType) {
             case PLEB:
-                return new Pleb(player);
+                return new Pleb(player, RandomLootGenerator.generateLoot());
             case BOSS:
-                return new Boss(player);
+                return new Boss(player, new GenerousLoot());
         }
         return null;
     }
