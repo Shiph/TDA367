@@ -32,8 +32,8 @@ public class LevelOne extends Level  {
     }
 
     @Override
-    public Level getLevel() {
-        return Level.ONE;
+    public LevelTypeEnum getLevel() {
+        return LevelTypeEnum.ONE;
     }
 
 }

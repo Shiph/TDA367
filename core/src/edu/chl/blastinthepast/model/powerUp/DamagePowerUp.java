@@ -19,8 +19,8 @@ public class DamagePowerUp extends PowerUp{
     }
 
     @Override
-    public PowerUpType getPowerUpType() {
-        return PowerUpType.DAMAGE;
+    public PowerUpTypeEnum getPowerUpType() {
+        return PowerUpTypeEnum.DAMAGE;
     }
 
     @Override

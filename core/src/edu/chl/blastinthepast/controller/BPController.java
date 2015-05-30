@@ -25,11 +25,7 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
     private InGameMenuController inGameMenuController;
     private HighScoreController highScoreController;
     private GameOverController gameOverController;
-    private ActiveController activeController = ActiveController.MAIN_MENU;
-
-    public enum ActiveController {
-        MAIN_MENU, PLAY, INGAME_MENU, HIGHSCORE, GAME_OVER
-    }
+    private ActiveController activeController = ActiveControllerEnum.MAIN_MENU;
 
     @Override
     public void render () {
@@ -69,7 +65,7 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
                 break;
             case "Player died":
                 gameOverController.setScore(model.getPlayer().getScore());
-                setActiveController(ActiveController.GAME_OVER);
+                setActiveController(ActiveControllerEnum.GAME_OVER);
                 gsm.setState(GameStateManager.GAMEOVER, true);
         }
     }
@@ -86,63 +82,63 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
         model.addListener(this);
         gsm.setModel(model);
         playController = new PlayController(this, gsm, model);
-        setActiveController(ActiveController.PLAY);
+        setActiveController(ActiveControllerEnum.PLAY);
         gsm.setState(GameStateManager.PLAY, false);
     }
 
     public void keyDown(int keyCode) {
-        switch (activeController) {
-            case MAIN_MENU:
+        switch (activeController.getID()) {
+            case "Main menu":
                 mainMenuController.keyDown(keyCode);
                 break;
-            case INGAME_MENU:
+            case "Ingame menu":
                 inGameMenuController.keyDown(keyCode);
                 break;
-            case PLAY:
+            case "Play":
                 playController.keyDown(keyCode);
                 break;
-            case HIGHSCORE:
+            case "High score":
                 highScoreController.keyDown(keyCode);
                 break;
-            case GAME_OVER:
+            case "Game over":
                 gameOverController.keyDown(keyCode);
                 break;
         }
     }
 
     public void keyUp(int keyCode) {
-        if (activeController == ActiveController.PLAY) {
+        if (activeController.getID().equals("Play")) {
             playController.keyUp(keyCode);
         }
     }
 
     public void touchDragged(Position p) {
-        if (activeController == ActiveController.PLAY) {
+        if (activeController.getID().equals("Play")) {
             playController.touchDragged(p);
         }
     }
 
     public void touchDown() {
-        if(activeController == ActiveController.PLAY) {
+        if(activeController.getID().equals("Play")) {
             playController.touchDown();
         }
     }
 
     public void touchUp() {
-        if(activeController == ActiveController.PLAY) {
+        if(activeController.getID().equals("Play")) {
             playController.touchUp();
         }
     }
 
     public void setActiveController(ActiveController ac) {
         activeController = ac;
-        if (ac == ActiveController.MAIN_MENU) {
+        if (ac.toString().equals("Main menu")) {
             gsm.getMainMenu().playMusic();
         }
     }
 
     public void mouseMoved(int screenX, int screenY) {
-        if (activeController == ActiveController.PLAY) {
+        if (activeController.getID().equals("Play")) {
             playController.mouseMoved(screenX, screenY);
         }
     }

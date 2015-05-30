@@ -105,7 +105,6 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
     @Override
     public void update(float dt) {
         if(!model.isPaused()) {
-            //checkForCollision();
             updateCameraPosition();
             gui.updateWeaponGUI(camera, model.getPlayer());
             gui.updateHearts(model.getPlayer());

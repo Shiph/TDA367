@@ -27,7 +27,7 @@ public class HealthPowerUp extends PowerUp {
     }
 
     @Override
-    public PowerUpType getPowerUpType() {
-        return PowerUpType.HEALTH;
+    public PowerUpTypeEnum getPowerUpType() {
+        return PowerUpTypeEnum.HEALTH;
     }
 }

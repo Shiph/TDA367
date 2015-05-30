@@ -2,6 +2,8 @@ package edu.chl.blastinthepast.tests;
 
 import edu.chl.blastinthepast.model.player.*;
 import edu.chl.blastinthepast.model.powerUp.PowerUp;
+import edu.chl.blastinthepast.model.powerUp.PowerUpType;
+import edu.chl.blastinthepast.model.powerUp.PowerUpTypeEnum;
 
 /**
  * Created by jonas on 2015-05-30.
@@ -16,7 +18,7 @@ public class MockPowerUp extends PowerUp{
     }
 
     @Override
-    public PowerUpType getPowerUpType() {
+    public PowerUpTypeEnum getPowerUpType() {
         return null;
     }
 

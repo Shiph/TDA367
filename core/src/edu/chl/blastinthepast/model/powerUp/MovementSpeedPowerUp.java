@@ -12,8 +12,8 @@ public class MovementSpeedPowerUp extends PowerUp {
     }
 
     @Override
-    public PowerUpType getPowerUpType() {
-        return PowerUpType.MOVEMENTSPEED;
+    public PowerUpTypeEnum getPowerUpType() {
+        return PowerUpTypeEnum.MOVEMENTSPEED;
     }
 
     @Override
