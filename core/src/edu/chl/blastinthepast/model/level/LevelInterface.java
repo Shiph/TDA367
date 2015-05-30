@@ -12,14 +12,10 @@ import java.util.Observer;
  */
 public interface LevelInterface {
 
-    enum Level {
-        ONE
-    }
-
     float getMapWidth();
     float getMapHeight();
     String getMapName();
-    Level getLevel();
+    LevelTypeEnum getLevel();
     ArrayList<Enemy> getEnemies();
     Player getPlayer();
     Boss getBoss();
