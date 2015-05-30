@@ -7,7 +7,7 @@ import java.awt.*;
 /**
  * Created by jonas on 2015-05-21.
  *
- * Adaptor for the LibGDX Rectangle class.
+ * Adapter for the LibGDX Rectangle class.
  */
 public class RectangleAdapter implements Rectangle {
 
