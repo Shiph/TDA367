@@ -1,6 +1,7 @@
 package edu.chl.blastinthepast.tests;
 
 import edu.chl.blastinthepast.model.chest.Chest;
+import edu.chl.blastinthepast.model.position.Position;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import org.junit.After;
 import org.junit.Before;
@@ -20,7 +21,7 @@ public class ChestTest {
     public void setUp() {
         mockPlayer = new MockPlayer();
         mockWeapon = new MockWeapon();
-        chest = new Chest(mockWeapon);
+        chest = new Chest(mockWeapon, new Position(0,0));
     }
 
     /**
@@ -38,10 +39,18 @@ public class ChestTest {
      */
     @Test
     public void testIsOpened() {
-        chest = new Chest(mockWeapon);
+        chest = new Chest(mockWeapon, new Position(0,0));
         assertFalse(chest.isOpened());
         chest.open(mockPlayer);
         assertTrue(chest.isOpened());
+    }
+
+    @Test
+    public void testCollision(){
+        chest.getPosition().setPosition(0, 0);
+        MockCollidable collidable = new MockCollidable();
+        collidable.rectangle.set(0, 0, 100, 100);
+        assertTrue(chest.isColliding(collidable));
     }
 
     @After

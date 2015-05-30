@@ -48,6 +48,7 @@ public class PositionTest {
         assertTrue(pos.overlaps(position));
     }
 
+
     @After
     public void tearDown() {}
 

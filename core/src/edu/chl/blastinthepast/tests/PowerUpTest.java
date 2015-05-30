@@ -80,6 +80,8 @@ public class PowerUpTest {
 
         Object hp3 = new HealthPowerUp();
         assertTrue(hp1.equals(hp3));
+
+        assertFalse(healthPowerUp.equals(damagePowerUp));
     }
 
     @Test
@@ -102,6 +104,8 @@ public class PowerUpTest {
 
         Object dp3 = new DamagePowerUp();
         assertTrue(dp1.equals(dp3));
+
+        assertFalse(damagePowerUp.equals(healthPowerUp));
     }
 
     @Test
@@ -118,6 +122,8 @@ public class PowerUpTest {
 
         Object fp3 = new FireRatePowerUp();
         assertTrue(fp1.equals(fp3));
+
+        assertFalse(fireRatePowerUp.equals(movementSpeedPowerUp));
     }
 
     @Test
@@ -132,6 +138,8 @@ public class PowerUpTest {
 
         Object mp3 = new MovementSpeedPowerUp();
         assertTrue(mp1.equals(mp3));
+
+        assertFalse(movementSpeedPowerUp.equals(fireRatePowerUp));
     }
 
 }

@@ -18,9 +18,9 @@ public class Chest implements ChestInterface{
     private int height=64;
     private Rectangle rectangle = new RectangleAdapter();
 
-    public Chest(WeaponInterface weapon) {
+    public Chest(WeaponInterface weapon, PositionInterface position) {
         this.weapon = weapon;
-        position = weapon.getPosition();
+        this.position = position;
         rectangle.setSize(width, height);
     }
 
