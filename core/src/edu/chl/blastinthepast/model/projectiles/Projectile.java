@@ -8,6 +8,10 @@ import edu.chl.blastinthepast.utils.Rectangle;
 import edu.chl.blastinthepast.utils.RectangleAdapter;
 
 /**
+ * This is a generic class including all the functionality for a projectile.
+ * If a projectile were to be added to the game, it should extend this class and call the
+ * super constructor with the appropriate values for speed and damage.
+ *
  * Created by Shif on 21/04/15.
  */
 public abstract class Projectile implements ProjectileInterface {
