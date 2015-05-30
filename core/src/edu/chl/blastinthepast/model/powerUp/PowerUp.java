@@ -41,7 +41,7 @@ public abstract class PowerUp implements PowerUpI{
 
     public void setPosition(PositionInterface newPosition){
         position=newPosition;
-        rectangle.setPosition(position);
+        rectangle.setPosition(position.getX(), position.getY());
     }
 
     public PositionInterface getPosition(){

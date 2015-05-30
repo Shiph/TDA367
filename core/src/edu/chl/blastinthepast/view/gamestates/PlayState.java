@@ -24,6 +24,7 @@ import edu.chl.blastinthepast.view.assets.SoundAssets;
 import edu.chl.blastinthepast.view.*;
 import edu.chl.blastinthepast.view.characterviews.CharacterViewFactory;
 import edu.chl.blastinthepast.view.characterviews.PlayerView;
+import edu.chl.blastinthepast.view.gui.GUI;
 import edu.chl.blastinthepast.view.projectileviews.ProjectileViewFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

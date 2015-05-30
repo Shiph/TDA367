@@ -32,7 +32,7 @@ public class Ammunition implements AmmunitionInterface{
     @Override
     public void setPosition(PositionInterface newPosition) {
         this.position = newPosition;
-        rectangle.setPosition(position);
+        rectangle.setPosition(position.getX(), position.getY());
     }
 
     public ProjectileInterface getType(){

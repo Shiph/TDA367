@@ -1,13 +1,10 @@
 package edu.chl.blastinthepast.model.player;
 
 import com.badlogic.gdx.math.Vector2;
-import edu.chl.blastinthepast.model.Collidable;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponFactory;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponTypeEnum;
-import edu.chl.blastinthepast.utils.*;
-import edu.chl.blastinthepast.utils.Rectangle;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -65,7 +62,7 @@ public class Player extends Character {
             getPosition().setX(x + getMovementVector().x);
         }
         getPosition().setY(y + getMovementVector().y);
-        getRectangle().setPosition(getPosition());
+        getRectangle().setPosition(getPosition().getX(), getPosition().getY());
     }
 
     public void update(float dt) {

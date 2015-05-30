@@ -1,6 +1,6 @@
 package edu.chl.blastinthepast.utils;
 
-import edu.chl.blastinthepast.model.position.PositionInterface;
+import java.awt.*;
 
 /**
  * Created by jonas on 2015-05-21.
@@ -11,7 +11,7 @@ public interface Rectangle {
     boolean	contains(Rectangle rectangle);
     boolean	equals(java.lang.Object obj);
     float getAspectRatio();
-    PositionInterface getCenter();
+    Point getCenter();
     float getHeight();
     float getWidth();
     float getX();
@@ -24,7 +24,6 @@ public interface Rectangle {
     void setCenter(float x, float y);
     void setHeight(float height);
     void setPosition(float x, float y);
-    void setPosition(PositionInterface pos);
     void setSize(float sizeXY);
     void setSize(float width, float height);
     void setWidth(float width);

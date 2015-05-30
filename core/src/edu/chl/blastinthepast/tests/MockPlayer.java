@@ -88,7 +88,7 @@ public class MockPlayer implements CharacterI {
     @Override
     public void setPosition(PositionInterface newPosition) {
         position.setPosition(newPosition);
-        rectangle.setPosition(position);
+        rectangle.setPosition(position.getX(), position.getY());
     }
 
     @Override

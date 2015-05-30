@@ -1,8 +1,8 @@
 package edu.chl.blastinthepast.utils;
 
 import com.badlogic.gdx.math.Vector2;
-import edu.chl.blastinthepast.model.position.Position;
-import edu.chl.blastinthepast.model.position.PositionInterface;
+
+import java.awt.*;
 
 /**
  * Created by jonas on 2015-05-21.
@@ -47,12 +47,11 @@ public class RectangleAdapter implements Rectangle {
     }
 
     @Override
-    public PositionInterface getCenter() {
+    public Point getCenter() {
         Vector2 v2 = new Vector2();
         v2 = rectangle.getCenter(v2);
-        PositionInterface pos = new Position(0, 0);
-        pos.setX(v2.x);
-        pos.setY(v2.y);
+        Point pos = new Point(0, 0);
+        pos.setLocation(v2.x, v2.y);
         return pos;
     }
 
@@ -97,7 +96,7 @@ public class RectangleAdapter implements Rectangle {
     @Override
     public void set(Rectangle rect) {
         rectangle.set(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
-        rectangle.setCenter(rect.getCenter().getX(), rect.getCenter().getY());
+        rectangle.setCenter((float)rect.getCenter().getX(), (float)rect.getCenter().getY());
     }
 
     @Override
@@ -115,12 +114,6 @@ public class RectangleAdapter implements Rectangle {
     public void setPosition(float x, float y) {
         rectangle.setPosition(x, y);
     }
-
-    @Override
-    public void setPosition(PositionInterface pos) {
-        rectangle.setPosition(pos.getX(), pos.getY());
-    }
-
 
     @Override
     public void setSize(float sizeXY) {

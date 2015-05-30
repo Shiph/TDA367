@@ -25,7 +25,7 @@ public abstract class Projectile implements ProjectileInterface {
         this.speed = speed;
         this.damage = damage + bonusDamage;
         rectangle.setSize(width, height);
-        rectangle.setPosition(position);
+        rectangle.setPosition(position.getX(), position.getY());
     }
 
     @Override
@@ -36,7 +36,7 @@ public abstract class Projectile implements ProjectileInterface {
         movementVector = oldMovementVector;
         position.setY(position.getY() + totalDirection.y);
         position.setX(position.getX() + totalDirection.x);
-        rectangle.setPosition(position);
+        rectangle.setPosition(position.getX(), position.getY());
     }
 
     @Override

@@ -57,7 +57,7 @@ public abstract class Character implements CharacterI {
     }
 
     public void setRectangle (PositionInterface position) {
-        rectangle.setPosition(position);
+        rectangle.setPosition(position.getX(), position.getY());
     }
 
     public Vector2 getAimVector() {
@@ -120,7 +120,7 @@ public abstract class Character implements CharacterI {
 
     public void setPosition (PositionInterface position) {
         this.position = position;
-        rectangle.setPosition(position);
+        rectangle.setPosition(position.getX(), position.getY());
     }
 
     public boolean isColliding(Collidable c){

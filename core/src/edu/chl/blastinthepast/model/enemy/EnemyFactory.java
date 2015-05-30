@@ -1,7 +1,7 @@
 package edu.chl.blastinthepast.model.enemy;
 
-import edu.chl.blastinthepast.loot.GenerousLoot;
-import edu.chl.blastinthepast.loot.RandomLootGenerator;
+import edu.chl.blastinthepast.model.loot.GenerousLoot;
+import edu.chl.blastinthepast.model.loot.RandomLootGenerator;
 import edu.chl.blastinthepast.model.player.CharacterI;
 import edu.chl.blastinthepast.model.player.CharacterTypeEnum;
 

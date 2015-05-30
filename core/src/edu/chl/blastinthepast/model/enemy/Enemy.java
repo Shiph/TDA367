@@ -1,7 +1,7 @@
 package edu.chl.blastinthepast.model.enemy;
 
 import com.badlogic.gdx.math.Vector2;
-import edu.chl.blastinthepast.loot.LootInterface;
+import edu.chl.blastinthepast.model.loot.LootInterface;
 import edu.chl.blastinthepast.model.player.CharacterI;
 import edu.chl.blastinthepast.model.position.Position;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;

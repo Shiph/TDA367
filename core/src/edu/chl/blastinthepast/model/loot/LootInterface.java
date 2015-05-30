@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.loot;
+package edu.chl.blastinthepast.model.loot;
 
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.model.position.PositionInterface;

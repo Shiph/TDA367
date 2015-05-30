@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.loot;
+package edu.chl.blastinthepast.model.loot;
 
 import edu.chl.blastinthepast.model.ammunition.Ammunition;
 import edu.chl.blastinthepast.model.ammunition.AmmunitionInterface;
@@ -12,11 +12,9 @@ import java.util.HashMap;
 import java.util.Random;
 
 /**
- * Created by jonas on 2015-05-21.
+ * Created by jonas on 2015-05-29.
  */
-public class StandardLoot implements LootInterface{
-
-
+public class GenerousLoot implements LootInterface {
 
     @Override
     public HashMap<String, ArrayList<? extends Object>> generateLoot(PositionInterface spawnPosition, WeaponInterface weapon) {
@@ -24,18 +22,12 @@ public class StandardLoot implements LootInterface{
         ArrayList<PowerUpI> powerUpLoot = new ArrayList<PowerUpI>();
         ArrayList<AmmunitionInterface> ammoLoot = new ArrayList<AmmunitionInterface>();
         Random random = new Random();
-        boolean hasAmmo = random.nextBoolean();
-        if (hasAmmo) {
-            int amount = random.nextInt(4)*10+20;
-            Ammunition ammo = new Ammunition(spawnPosition, weapon.getProjectile(), amount);
-            ammoLoot.add(ammo);
-        }
-        boolean hasPowerUp = random.nextBoolean();
-        if (hasPowerUp) {
-            PowerUpI powerUp = PowerUpGenerator.generatePowerUp();
-            powerUp.setPosition(spawnPosition);
-            powerUpLoot.add(powerUp);
-        }
+        int amount = random.nextInt(4)*10+20;
+        Ammunition ammo = new Ammunition(spawnPosition, weapon.getProjectile(), amount);
+        ammoLoot.add(ammo);
+        PowerUpI powerUp = PowerUpGenerator.generatePowerUp();
+        powerUp.setPosition(spawnPosition);
+        powerUpLoot.add(powerUp);
         loot.put("Ammunition Loot", ammoLoot);
         loot.put("PowerUp Loot", powerUpLoot);
         return loot;
