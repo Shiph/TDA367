@@ -9,7 +9,12 @@ import edu.chl.blastinthepast.utils.RectangleAdapter;
  */
 public class MockCollidable implements Collidable {
 
-    public Rectangle rectangle = new RectangleAdapter();
+    public Rectangle rectangle;
+
+    public MockCollidable() {
+        rectangle = new RectangleAdapter();
+        rectangle.setSize(1);
+    }
 
     @Override
     public boolean isColliding(Collidable c) {

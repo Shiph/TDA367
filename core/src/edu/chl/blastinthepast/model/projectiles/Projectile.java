@@ -3,6 +3,7 @@ package edu.chl.blastinthepast.model.projectiles;
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.Collidable;
 import edu.chl.blastinthepast.model.position.Position;
+import edu.chl.blastinthepast.model.position.PositionInterface;
 import edu.chl.blastinthepast.utils.Rectangle;
 import edu.chl.blastinthepast.utils.RectangleAdapter;
 
@@ -15,10 +16,10 @@ public abstract class Projectile implements ProjectileInterface {
     private Vector2 movementVector;
     private float speed;
     private int damage;
-    private Position position;
+    private PositionInterface position;
     private Rectangle rectangle = new RectangleAdapter();
 
-    public Projectile(Position pos, Vector2 aimVector, Vector2 movementVector, int speed, int damage, int bonusDamage, int width, int height) {
+    public Projectile(PositionInterface pos, Vector2 aimVector, Vector2 movementVector, int speed, int damage, int bonusDamage, int width, int height) {
         this.aimVector = new Vector2(aimVector);
         this.movementVector = new Vector2(movementVector);
         position = pos;
@@ -65,7 +66,7 @@ public abstract class Projectile implements ProjectileInterface {
     }
 
     @Override
-    public Position getPosition(){
+    public PositionInterface getPosition(){
         return position;
     }
 
