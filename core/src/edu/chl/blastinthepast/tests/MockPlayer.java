@@ -2,8 +2,8 @@ package edu.chl.blastinthepast.tests;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.Collidable;
-import edu.chl.blastinthepast.model.player.CharacterI;
-import edu.chl.blastinthepast.model.player.CharacterTypeEnum;
+import edu.chl.blastinthepast.model.player.*;
+import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.model.position.PositionInterface;
@@ -22,9 +22,12 @@ public class MockPlayer implements CharacterI {
     public Rectangle rectangle;
     public int movementSpeed = 100;
     public WeaponInterface weapon;
-    private int health = 100;
+    public int health = 100;
+    public ArrayList<WeaponInterface> weapons = new ArrayList<WeaponInterface>();
+    public int bonusMovementSpeed = 0;
 
     public MockPlayer() {
+        super();
         position = new MockPosition();
         rectangle = new RectangleAdapter();
         rectangle.setSize(10);
@@ -93,27 +96,27 @@ public class MockPlayer implements CharacterI {
 
     @Override
     public void addBonusMovementSpeed(int bonusSpeed) {
-
+        bonusMovementSpeed+=bonusSpeed;
     }
 
     @Override
     public int getBonusMovementSpeed() {
-        return 0;
+        return bonusMovementSpeed;
     }
 
     @Override
     public int getTotalMovementSpeed() {
-        return 0;
+        return movementSpeed+bonusMovementSpeed;
     }
 
     @Override
     public ArrayList<WeaponInterface> getAllWeapons() {
-        return null;
+        return weapons;
     }
 
     @Override
     public void resetBonuses() {
-
+        bonusMovementSpeed=0;
     }
 
     @Override
@@ -150,4 +153,11 @@ public class MockPlayer implements CharacterI {
     public Rectangle getRectangle() {
         return rectangle;
     }
+
+    public void addWeapon(WeaponInterface w){
+        weapons.add(w);
+        setWeapon(w);
+    }
+
+
 }

@@ -18,6 +18,8 @@ public class MockWeapon implements WeaponInterface {
     public int magazineCapacity=10;
     public int ammo = 100;
     public int bulletsInMag = 10;
+    public int bonusDamage = 0;
+    public int bonusFireRate = 0;
 
     @Override
     public void setFireRate(int fireRate) {
@@ -102,11 +104,12 @@ public class MockWeapon implements WeaponInterface {
 
     @Override
     public int getBonusDamage() {
-        return 0;
+        return bonusDamage;
     }
 
     @Override
     public void addBonusDamage(int bonusDamage) {
+        this.bonusDamage+=bonusDamage;
     }
 
     @Override
@@ -121,22 +124,23 @@ public class MockWeapon implements WeaponInterface {
 
     @Override
     public void addBonusFireRate(int bonusFireRate) {
-
+        this.bonusFireRate+=bonusFireRate;
     }
 
     @Override
     public int getBonusFireRate() {
-        return 0;
+        return bonusFireRate;
     }
 
     @Override
     public int getTotalFireRate() {
-        return 0;
+        return fireRate+bonusFireRate;
     }
 
     @Override
     public void resetBonuses() {
-
+        bonusDamage=0;
+        bonusFireRate=0;
     }
 
     @Override

@@ -17,6 +17,16 @@ public class HealthPowerUp extends PowerUp {
     }
 
     @Override
+    public boolean equals(Object obj){
+        if (obj != null){
+            if (obj instanceof HealthPowerUp){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public PowerUpType getPowerUpType() {
         return PowerUpType.HEALTH;
     }
