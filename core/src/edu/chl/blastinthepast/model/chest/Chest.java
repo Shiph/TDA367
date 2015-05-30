@@ -1,6 +1,7 @@
 package edu.chl.blastinthepast.model.chest;
 
 import edu.chl.blastinthepast.model.Collidable;
+import edu.chl.blastinthepast.model.player.CharacterI;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.model.position.PositionInterface;
 import edu.chl.blastinthepast.utils.Rectangle;
@@ -23,7 +24,7 @@ public class Chest implements ChestInterface{
         rectangle.setSize(width, height);
     }
 
-    public WeaponInterface open(edu.chl.blastinthepast.model.player.Character character) {
+    public WeaponInterface open(CharacterI characterI) {
             isOpen = true;
             return weapon;
     }

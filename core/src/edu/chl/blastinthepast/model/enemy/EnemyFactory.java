@@ -1,6 +1,8 @@
 package edu.chl.blastinthepast.model.enemy;
 
-import edu.chl.blastinthepast.model.player.Character;
+import edu.chl.blastinthepast.loot.GenerousLoot;
+import edu.chl.blastinthepast.loot.RandomLootGenerator;
+import edu.chl.blastinthepast.model.player.CharacterI;
 import edu.chl.blastinthepast.model.player.CharacterTypeEnum;
 
 /**
@@ -8,7 +10,7 @@ import edu.chl.blastinthepast.model.player.CharacterTypeEnum;
  */
 public class EnemyFactory {
 
-    public Enemy getEnemy(Character player, CharacterTypeEnum characterType) {
+    public Enemy getEnemy(CharacterI player, CharacterTypeEnum characterType) {
         if(player == null) {
             return null;
         }

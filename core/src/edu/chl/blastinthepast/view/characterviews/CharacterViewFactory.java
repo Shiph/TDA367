@@ -2,7 +2,7 @@ package edu.chl.blastinthepast.view.characterviews;
 
 import edu.chl.blastinthepast.model.enemy.Boss;
 import edu.chl.blastinthepast.model.enemy.Pleb;
-import edu.chl.blastinthepast.model.player.Character;
+import edu.chl.blastinthepast.model.player.CharacterI;
 import edu.chl.blastinthepast.model.player.Player;
 
 /**
@@ -10,19 +10,19 @@ import edu.chl.blastinthepast.model.player.Player;
  */
 public class CharacterViewFactory {
 
-    public CharacterView getCharacterView(Character character) {
-        if(character == null) {
+    public CharacterView getCharacterView(CharacterI characterI) {
+        if(characterI == null) {
             return null;
         }
-        switch (character.getCharacterType()) {
+        switch (characterI.getCharacterType()) {
             case PLAYER:
-                Player player = (Player) character;
+                Player player = (Player) characterI;
                 return new PlayerView(player);
             case PLEB:
-                Pleb pleb = (Pleb) character;
+                Pleb pleb = (Pleb) characterI;
                 return new PlebView(pleb);
             case BOSS:
-                Boss boss = (Boss) character;
+                Boss boss = (Boss) characterI;
                 return new BossView(boss);
         }
         return null;

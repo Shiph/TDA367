@@ -3,7 +3,7 @@ package edu.chl.blastinthepast.view.characterviews;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import edu.chl.blastinthepast.model.player.Character;
+import edu.chl.blastinthepast.model.player.CharacterI;
 import edu.chl.blastinthepast.model.player.Player;
 import edu.chl.blastinthepast.view.assets.GraphicalAssets;
 import edu.chl.blastinthepast.view.weaponviews.WeaponView;
@@ -45,7 +45,7 @@ public class PlayerView implements CharacterView {
     }
 
     @Override
-    public Character getCharacter() {
+    public CharacterI getCharacter() {
         return player;
     }
 

@@ -1,7 +1,7 @@
 package edu.chl.blastinthepast.model.powerUp;
 
 import edu.chl.blastinthepast.model.Collidable;
-import edu.chl.blastinthepast.model.player.Character;
+import edu.chl.blastinthepast.model.player.CharacterI;
 import edu.chl.blastinthepast.model.position.PositionInterface;
 
 /**
@@ -13,7 +13,7 @@ public interface PowerUpI extends Collidable{
         DAMAGE, FIRERATE, HEALTH, MOVEMENTSPEED
     }
 
-    void init(Character character);
+    void init(CharacterI characterI);
     void update();
     void applyPowerUp();
     void setPosition(PositionInterface newPosition);

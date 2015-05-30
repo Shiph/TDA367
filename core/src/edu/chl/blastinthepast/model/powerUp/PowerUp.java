@@ -2,7 +2,7 @@ package edu.chl.blastinthepast.model.powerUp;
 
 
 import edu.chl.blastinthepast.model.Collidable;
-import edu.chl.blastinthepast.model.player.Character;
+import edu.chl.blastinthepast.model.player.CharacterI;
 import edu.chl.blastinthepast.model.position.PositionInterface;
 import edu.chl.blastinthepast.utils.Rectangle;
 import edu.chl.blastinthepast.utils.RectangleAdapter;
@@ -18,10 +18,10 @@ public abstract class PowerUp implements PowerUpI{
     private final int size = 64;
     private Rectangle rectangle = new RectangleAdapter(size, size);
     protected int duration=10*1000;
-    protected edu.chl.blastinthepast.model.player.Character character;
+    protected CharacterI characterI;
 
-    public void init(Character character){
-        this.character=character;
+    public void init(CharacterI characterI){
+        this.characterI = characterI;
         activationTime=System.currentTimeMillis();
     }
 

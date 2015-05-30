@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.model.enemy;
+package edu.chl.blastinthepast.loot;
 
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.model.position.PositionInterface;
@@ -19,6 +19,6 @@ import java.util.HashMap;
  */
 public interface LootInterface {
 
-    public HashMap<String, ArrayList<? extends Object>> generateLoot(PositionInterface spawnPosition, WeaponInterface weapon);
+    HashMap<String, ArrayList<? extends Object>> generateLoot(PositionInterface spawnPosition, WeaponInterface weapon);
 
 }

@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.model.enemy;
+package edu.chl.blastinthepast.loot;
 
 import java.util.ArrayList;
 import java.util.Random;

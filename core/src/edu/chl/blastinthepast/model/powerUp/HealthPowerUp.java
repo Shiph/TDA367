@@ -13,7 +13,7 @@ public class HealthPowerUp extends PowerUp {
 
     @Override
     public void applyPowerUp() {
-        character.setHealth(character.getHealth()+bonusHealth);
+        characterI.setHealth(characterI.getHealth()+bonusHealth);
     }
 
     @Override
