@@ -1,6 +1,6 @@
 package edu.chl.blastinthepast.tests;
 
-import edu.chl.blastinthepast.utils.PositionInterface;
+import edu.chl.blastinthepast.model.position.PositionInterface;
 
 /**
  * Created by Shif on 06/05/15.

@@ -1,6 +1,8 @@
 package edu.chl.blastinthepast.utils;
 
 import com.badlogic.gdx.math.Vector2;
+import edu.chl.blastinthepast.model.position.Position;
+import edu.chl.blastinthepast.model.position.PositionInterface;
 
 /**
  * Created by jonas on 2015-05-21.

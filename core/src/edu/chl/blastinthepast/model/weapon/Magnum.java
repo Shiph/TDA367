@@ -3,8 +3,8 @@ package edu.chl.blastinthepast.model.weapon;
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.projectiles.MagnumProjectile;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
-import edu.chl.blastinthepast.utils.Position;
-import edu.chl.blastinthepast.utils.PositionInterface;
+import edu.chl.blastinthepast.model.position.Position;
+import edu.chl.blastinthepast.model.position.PositionInterface;
 
 /**
  * Created by Shif on 12/05/15.

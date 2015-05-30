@@ -3,16 +3,11 @@ package edu.chl.blastinthepast.view.characterviews;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.model.player.Player;
-import edu.chl.blastinthepast.utils.GraphicalAssets;
-import edu.chl.blastinthepast.view.*;
-import edu.chl.blastinthepast.view.projectileviews.ProjectileView;
+import edu.chl.blastinthepast.view.assets.GraphicalAssets;
 import edu.chl.blastinthepast.view.weaponviews.WeaponView;
 import edu.chl.blastinthepast.view.weaponviews.WeaponViewFactory;
-
-import java.util.ArrayList;
 
 /**
  * Created by jonas on 2015-04-23.

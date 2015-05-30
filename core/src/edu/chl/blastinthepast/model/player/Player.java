@@ -13,9 +13,9 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.lang.*;
 import java.util.ArrayList;
-import java.util.Observable;
-import edu.chl.blastinthepast.utils.Position;
-import edu.chl.blastinthepast.utils.PositionInterface;
+
+import edu.chl.blastinthepast.model.position.Position;
+import edu.chl.blastinthepast.model.position.PositionInterface;
 
 
 /**
@@ -32,8 +32,8 @@ public class Player implements Character {
     /**
      * Default constructor for Player with default movement speed and health.
      */
-    public Player() {
-        this(200, 10, new Position(0,0));
+    public Player(PositionInterface position) {
+        this(200, 10, new Position(position));
     }
 
     /**
@@ -116,7 +116,9 @@ public class Player implements Character {
 
     @Override
     public void addBonusMovementSpeed(int bonusSpeed) {
-        bonusMovementSpeed+=bonusSpeed;
+        if (bonusSpeed>0) {
+            bonusMovementSpeed += bonusSpeed;
+        }
     }
 
     @Override
@@ -134,11 +136,6 @@ public class Player implements Character {
 
     public void setPosition(int x, int y) {
         position.setPosition(x, y);
-        rectangle.setPosition(position);
-    }
-
-    public void setPosition (Position position) {
-        this.position = position;
         rectangle.setPosition(position);
     }
 
@@ -196,7 +193,7 @@ public class Player implements Character {
         this.aimDirection.setAngle(aimDirection);
     }
 
-    public void calculateDirection(Position mousePoint){
+    public void calculateDirection(PositionInterface mousePoint){
         Vector2 direction=new Vector2(mousePoint.getX()-position.getX(), mousePoint.getY()-position.getY());
         float length=direction.len();
         direction.scl(1 / length);
@@ -216,15 +213,19 @@ public class Player implements Character {
         switch (movementDirection) {
             case "north":
                 north = !north;
+                south = false;
                 break;
             case "south":
                 south = !south;
+                north = false;
                 break;
             case "west":
                 west = !west;
+                east = false;
                 break;
             case "east":
                 east = !east;
+                west = false;
                 break;
         }
     }

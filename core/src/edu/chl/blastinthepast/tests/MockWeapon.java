@@ -2,10 +2,9 @@ package edu.chl.blastinthepast.tests;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
-import edu.chl.blastinthepast.model.weapon.Weapon;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponTypeEnum;
-import edu.chl.blastinthepast.utils.PositionInterface;
+import edu.chl.blastinthepast.model.position.PositionInterface;
 
 /**
  * Created by Shif on 06/05/15.

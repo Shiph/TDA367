@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.utils;
+package edu.chl.blastinthepast.model.position;
 
 /**
  * Created by jonas on 2015-04-23.

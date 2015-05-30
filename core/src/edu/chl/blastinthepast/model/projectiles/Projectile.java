@@ -2,7 +2,7 @@ package edu.chl.blastinthepast.model.projectiles;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.Collidable;
-import edu.chl.blastinthepast.utils.Position;
+import edu.chl.blastinthepast.model.position.Position;
 import edu.chl.blastinthepast.utils.Rectangle;
 import edu.chl.blastinthepast.utils.RectangleAdapter;
 

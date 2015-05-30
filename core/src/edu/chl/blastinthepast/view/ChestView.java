@@ -3,16 +3,8 @@ package edu.chl.blastinthepast.view;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
 import edu.chl.blastinthepast.model.chest.Chest;
-import edu.chl.blastinthepast.utils.GraphicalAssets;
-
-import java.util.ArrayList;
+import edu.chl.blastinthepast.view.assets.GraphicalAssets;
 
 /**
  * Created by qwerty458 on 5/4/15.

@@ -1,6 +1,6 @@
 package edu.chl.blastinthepast.tests;
 
-import edu.chl.blastinthepast.utils.Position;
+import edu.chl.blastinthepast.model.position.Position;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

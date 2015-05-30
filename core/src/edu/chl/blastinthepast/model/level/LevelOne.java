@@ -1,7 +1,7 @@
 package edu.chl.blastinthepast.model.level;
 
 import edu.chl.blastinthepast.model.enemy.Enemy;
-import edu.chl.blastinthepast.utils.Position;
+import edu.chl.blastinthepast.model.position.Position;
 import java.util.Observable;
 import java.util.Random;
 

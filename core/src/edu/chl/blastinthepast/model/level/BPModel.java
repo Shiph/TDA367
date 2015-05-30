@@ -12,7 +12,7 @@ import edu.chl.blastinthepast.model.chest.*;
 import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.model.player.Player;
 import edu.chl.blastinthepast.model.powerUp.PowerUpI;
-import edu.chl.blastinthepast.utils.Position;
+import edu.chl.blastinthepast.model.position.Position;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -41,7 +41,7 @@ public class BPModel extends Observable implements PropertyChangeListener {
     public BPModel() {
         chest = new Chest(new Magnum(new Position(1000,1500), new Vector2(), new Vector2()));
         characters = new ArrayList<Character>();
-        player = new Player();
+        player = new Player(new Position(0, 0));
         newCharacter(player);
         enemyFactory = new EnemyFactory();
         spawnEnemies(5);

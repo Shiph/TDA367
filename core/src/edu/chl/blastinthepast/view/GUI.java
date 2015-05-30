@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import edu.chl.blastinthepast.model.player.Player;
-import edu.chl.blastinthepast.utils.GraphicalAssets;
+import edu.chl.blastinthepast.view.assets.GraphicalAssets;
 import edu.chl.blastinthepast.view.characterviews.PlayerView;
 import edu.chl.blastinthepast.view.weaponviews.WeaponView;
 

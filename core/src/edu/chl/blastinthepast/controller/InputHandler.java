@@ -1,7 +1,7 @@
 package edu.chl.blastinthepast.controller;
 
 import com.badlogic.gdx.InputProcessor;
-import edu.chl.blastinthepast.utils.Position;
+import edu.chl.blastinthepast.model.position.Position;
 
 /**
  * Created by jonas on 2015-04-22.
