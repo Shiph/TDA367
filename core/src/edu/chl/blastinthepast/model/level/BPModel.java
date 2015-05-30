@@ -2,6 +2,7 @@ package edu.chl.blastinthepast.model.level;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.ammunition.AmmunitionInterface;
+import edu.chl.blastinthepast.model.projectiles.Projectile;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.Magnum;
 import edu.chl.blastinthepast.model.enemy.Enemy;
@@ -144,7 +145,7 @@ public class BPModel extends Observable implements PropertyChangeListener {
         checkForPowerUpCollision();
     }
 
-    private void checkForCharacterCollision(){
+    public void checkForCharacterCollision(){
         for (CharacterI c1 : characterIs){
             for (CharacterI c2 : characterIs){
                 if (c1.isColliding(c2) && c1!=c2){
@@ -154,7 +155,7 @@ public class BPModel extends Observable implements PropertyChangeListener {
         }
     }
 
-    private void checkForProjectileCollision(){
+    public void checkForProjectileCollision(){
         Iterator<ProjectileInterface> projIter = projectiles.iterator();
         while (projIter.hasNext()){
             ProjectileInterface projectile = projIter.next();
@@ -264,6 +265,10 @@ public class BPModel extends Observable implements PropertyChangeListener {
         characterI.addListener(this);
         characterIs.add(characterI);
         pcs.firePropertyChange("New Character", null, characterI);
+    }
+
+    public ArrayList<ProjectileInterface> getProjectiles() {
+        return projectiles;
     }
 
     public void addListener(PropertyChangeListener pcl) {
