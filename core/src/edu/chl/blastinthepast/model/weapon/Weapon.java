@@ -10,6 +10,11 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 /**
+ * This is a generic class including all the functionality for a weapon.
+ * If a weapon were to be added to the game, it should extend this class
+ * and call the super constructor with the fitting values for such as reload time and fire rate.
+ * It should also override the abstract method getNewProjectile().
+ *
  * Created by Shif on 21/04/15.
  */
 public abstract class Weapon implements WeaponInterface {
@@ -30,6 +35,17 @@ public abstract class Weapon implements WeaponInterface {
     private int bonusDamage = 0;
     private int bonusFireRate = 0;
 
+    /**
+     * Creates a new weapon with given values.
+     * @param pos Position that the weapon will be placed at.
+     * @param aimVector
+     * @param movementVector
+     * @param reloadTime The time it should take to reaload the weapon (in milliseconds).
+     * @param fireRate
+     * @param magazineCapacity
+     * @param totalBullets
+     * @param offset Position offset to make it look like the character is actually holding the weapon.
+     */
     public Weapon(PositionInterface pos, Vector2 aimVector, Vector2 movementVector, int reloadTime, int fireRate, final int magazineCapacity, int totalBullets, PositionInterface offset) {
         position = new Position(pos);
         this.aimVector = aimVector;
@@ -77,6 +93,11 @@ public abstract class Weapon implements WeaponInterface {
         return ((totalBullets + bulletsLeftInMagazine) > 0);
     }
 
+    /**
+     * The method takes the weapons fire rate into account and assures that it isn't exceeded.
+     * If it isn't, it will return a new projectile.
+     * @return a new projectile if the fire rate isn't exceeded.
+     */
     @Override
     public ProjectileInterface fire() {
         long currentTime = System.currentTimeMillis();
@@ -95,6 +116,20 @@ public abstract class Weapon implements WeaponInterface {
         }
     }
 
+    /**
+     * Checks if the magazine is empty and will in that case call the reload method.
+     */
+    @Override
+    public void reloadIfNeeded() {
+        if (bulletsLeftInMagazine == 0) {
+            reload();
+        }
+    }
+
+    /**
+     * This method flags the Weapon for reloading and starts a timer.
+     * It then calls the actual reload method, which is reloadWeapon().
+     */
     @Override
     public void reload() {
         isReloading = true;
@@ -102,6 +137,10 @@ public abstract class Weapon implements WeaponInterface {
         reloadWeapon();
     }
 
+    /**
+     * Checks that the weapon has enough bullets to reload a full magazine.
+     * If not, the magazine will be filled with what's left of the total bullets.
+     */
     private void reloadWeapon() {
         if ((totalBullets + bulletsLeftInMagazine) >= magazineCapacity) {
             totalBullets -= (magazineCapacity - bulletsLeftInMagazine);
@@ -138,6 +177,12 @@ public abstract class Weapon implements WeaponInterface {
         return totalBullets;
     }
 
+    /**
+     * This is the method that is called when the mouse is clicked in game.
+     * It will first ensure that the weapon actually has ammo and then reload if nessecary.
+     * After all that is passed, it will call the fire method.
+     * @return a new projectile if the player has ammo left.
+     */
     @Override
     public ProjectileInterface pullTrigger() {
         if (hasAmmo()) {
@@ -148,13 +193,6 @@ public abstract class Weapon implements WeaponInterface {
             return fire();
         }
         return null;
-    }
-
-    @Override
-    public void reloadIfNeeded() {
-        if (bulletsLeftInMagazine == 0) {
-            reload();
-        }
     }
 
     @Override

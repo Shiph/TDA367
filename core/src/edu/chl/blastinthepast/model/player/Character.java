@@ -12,6 +12,11 @@ import edu.chl.blastinthepast.utils.RectangleAdapter;
 import java.util.ArrayList;
 
 /**
+ * This is a generic class for characters in the game. It holds the basic functionality
+ * and information that is needed, but excludes behaviour (and some few other things).
+ * If a new character were to be added to the game, it should simply extend this class
+ * and implement the missing methods from the character interface.
+ *
  * Created by MattiasJ on 2015-05-30.
  */
 public abstract class Character implements CharacterI {
