@@ -30,7 +30,7 @@ public class MainMenuController extends GameStateController {
                     //gsm.setState(GameStateManager.SAVES);
                 } else if (currentItem == 2) {
                     gsm.setState(GameStateManager.HIGHSCORES, false);
-                    bpController.setActiveController(BPController.ActiveController.HIGHSCORE);
+                    bpController.setActiveController(ActiveControllerEnum.HIGHSCORE);
                     currentItem = 0;
                     gsm.getMainMenu().setCurrentItem(currentItem);
                 } else if (currentItem == 3) {

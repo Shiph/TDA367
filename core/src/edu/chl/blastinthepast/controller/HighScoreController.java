@@ -18,7 +18,7 @@ public class HighScoreController extends GameStateController {
         switch (keyCode) {
             case Input.Keys.ESCAPE:
                 gsm.setState(GameStateManager.MAIN_MENU, false);
-                bpController.setActiveController(BPController.ActiveController.MAIN_MENU);
+                bpController.setActiveController(ActiveControllerEnum.MAIN_MENU);
                 break;
         }
     }

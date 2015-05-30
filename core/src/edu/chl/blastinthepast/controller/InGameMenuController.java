@@ -27,17 +27,17 @@ public class InGameMenuController extends GameStateController {
                 gsm.setState(GameStateManager.PLAY, true);
                 currentItem = 0;
                 gsm.getInGameMenu().setCurrentItem(currentItem);
-                bpController.setActiveController(BPController.ActiveController.PLAY);
+                bpController.setActiveController(ActiveControllerEnum.PLAY);
                 break;
             case Input.Keys.ENTER:
                 if (currentItem == 0) { // continue
                     gsm.setState(GameStateManager.PLAY, true);
-                    bpController.setActiveController(BPController.ActiveController.PLAY);
+                    bpController.setActiveController(ActiveControllerEnum.PLAY);
                 } else if (currentItem == 3) { // exit
                     currentItem = 0;
                     gsm.getInGameMenu().setCurrentItem(currentItem);
                     gsm.setState(GameStateManager.MAIN_MENU, false);
-                    bpController.setActiveController(BPController.ActiveController.MAIN_MENU);
+                    bpController.setActiveController(ActiveControllerEnum.MAIN_MENU);
                 }
                 break;
             case Input.Keys.UP:

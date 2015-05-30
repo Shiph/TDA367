@@ -72,7 +72,7 @@ public class PlayController extends GameStateController {
             case Input.Keys.ESCAPE:
                 gsm.setState(GameStateManager.IN_GAME_MENU, true);
                 model.getPlayer().resetMovementDirection();
-                bpController.setActiveController(BPController.ActiveController.INGAME_MENU);
+                bpController.setActiveController(ActiveControllerEnum.INGAME_MENU);
                 break;
         }
     }

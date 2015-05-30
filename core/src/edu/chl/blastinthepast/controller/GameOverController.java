@@ -26,7 +26,7 @@ public class GameOverController extends GameStateController {
                     saveScore();
                 }
                 gsm.setState(GameStateManager.MAIN_MENU, false);
-                bpController.setActiveController(BPController.ActiveController.MAIN_MENU);
+                bpController.setActiveController(ActiveControllerEnum.MAIN_MENU);
                 break;
             case Input.Keys.UP:
                 moveUp();
