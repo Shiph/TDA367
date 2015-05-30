@@ -19,8 +19,8 @@ public class FireRatePowerUp extends PowerUp {
     }
 
     @Override
-    public PowerUpType getPowerUpType() {
-        return PowerUpType.FIRERATE;
+    public PowerUpTypeEnum getPowerUpType() {
+        return PowerUpTypeEnum.FIRERATE;
     }
 
     @Override
