@@ -7,9 +7,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import static org.junit.Assert.*;
 
 /**
@@ -21,7 +18,7 @@ public class PlayerTest {
 
     @Before
     public void before(){
-        player=new Player(new MockPosition(0, 0));
+        player=new Player(new MockPosition());
     }
 
     @Test

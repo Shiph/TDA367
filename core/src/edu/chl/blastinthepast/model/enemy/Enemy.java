@@ -4,12 +4,12 @@ import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.loot.LootInterface;
 import edu.chl.blastinthepast.model.player.CharacterI;
 import edu.chl.blastinthepast.model.position.Position;
+import edu.chl.blastinthepast.model.position.PositionInterface;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponFactory;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponTypeEnum;
 import edu.chl.blastinthepast.model.player.Character;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,12 +40,13 @@ public abstract class Enemy extends Character {
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private LootInterface lootStuff;
 
-    public Enemy(int movementSpeed, int health, CharacterI player, int width, int height, LootInterface lootStyle) {
+    public Enemy(int movementSpeed, int health, CharacterI player, int width, int height, LootInterface lootStyle, PositionInterface position) {
         getRectangle().setSize(width, height);
         loot= new ArrayList<>();
         this.movementSpeed = movementSpeed;
         setHealth(health);
         this.player = player;
+        setPosition(position);
         actionListener = new MyActionListener();
         Random r = new Random();
         movementDirection = r.nextInt(4);

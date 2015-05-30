@@ -3,6 +3,7 @@ package edu.chl.blastinthepast.view.gamestates;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector3;
@@ -10,6 +11,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import edu.chl.blastinthepast.model.ammunition.Ammunition;
 import edu.chl.blastinthepast.model.player.CharacterTypeEnum;
 import edu.chl.blastinthepast.model.projectiles.AK47Projectile;
@@ -28,7 +31,6 @@ import edu.chl.blastinthepast.view.gui.GUI;
 import edu.chl.blastinthepast.view.projectileviews.ProjectileViewFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.*;
 
 
@@ -49,12 +51,8 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
     private TiledMapRenderer tiledMapRenderer;
     private TiledMap tiledMap;
     private Music music;
-    private PropertyChangeSupport pcs;
     private HashMap <Object, WorldObject> worldObjects;
     private ArrayList <Object> worldObjectsRemoveList;
-    private TiledMapTileLayer collisionLayer;
-    private float tileWidth, tileHeight;
-    private boolean playerBlocked = false;
 
     public PlayState(GameStateManager gsm, BPModel model, LevelInterface level) {
         super(gsm, model, level);
@@ -67,7 +65,6 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
         worldObjectsRemoveList = new ArrayList<>();
         chestView = new ChestView(model.getChest());
         batch = new SpriteBatch();
-        pcs = new PropertyChangeSupport(this);
         gui = new GUI();
         model.addObserver(this);
         init(model, level);
@@ -85,7 +82,7 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.update();
-        camera.position.set(model.getMapWidth() / 2, model.getMapHeight() / 2, 0);
+        camera.position.set(level.getMapWidth() / 2, level.getMapHeight() / 2, 0);
         camera.update();
 
         //Updates GUI.
@@ -94,13 +91,8 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
         gui.updateHeartPositions(camera);
 
         //Configures and sets the game map.
-        if (level.getLevel() == LevelInterface.Level.ONE) {
-            tiledMap = new TmxMapLoader().load("big_grass.tmx");
-        }
+        tiledMap = new TmxMapLoader().load(level.getMapName());
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
-        collisionLayer = (TiledMapTileLayer)tiledMap.getLayers().get(1);
-        tileWidth = collisionLayer.getTileWidth();
-        tileHeight = collisionLayer.getTileHeight();
 
         //Sets the music for the game.
         music = SoundAssets.SANIC_THEME;
@@ -113,7 +105,7 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
     @Override
     public void update(float dt) {
         if(!model.isPaused()) {
-            checkForCollision();
+            //checkForCollision();
             updateCameraPosition();
             gui.updateWeaponGUI(camera, model.getPlayer());
             gui.updateHearts(model.getPlayer());
@@ -173,34 +165,6 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
         }
     }
 
-    public void checkForCollision() {
-        int playerMapX, playerMapY;
-        if (model.getPlayer().isMovingEast()) {
-            playerMapX = Math.round((model.getPlayer().getPosition().getX() + playerView.getSprite().getWidth()) / tileWidth) - 1;
-        } else {
-            playerMapX = Math.round(model.getPlayer().getPosition().getX() / tileWidth) - 1;
-        }
-        if (model.getPlayer().isMovingNorth()) {
-            playerMapY = Math.round((model.getPlayer().getPosition().getY() + playerView.getSprite().getHeight())/ tileHeight) - 1;
-        } else {
-            playerMapY = Math.round(model.getPlayer().getPosition().getY()/ tileHeight) - 1;
-        }
-
-        if (collisionLayer.getCell(playerMapX, playerMapY) != null) {
-            if (collisionLayer.getCell(playerMapX, playerMapY).getTile().getProperties().containsKey("blocked")) {
-                if (!playerBlocked) {
-                    pcs.firePropertyChange("blocked", false, "");
-                    playerBlocked = true;
-                }
-            }
-        } else {
-            if (playerBlocked) {
-                playerBlocked = false;
-                pcs.firePropertyChange("unblocked", false, true);
-            }
-        }
-    }
-
     @Override
     public void dispose() {
         music.pause();
@@ -219,16 +183,6 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
         Vector3 worldCoordinatesVector = camera.unproject(screenCordinatesVector);
         Position worldCoordinates = new Position(worldCoordinatesVector.x, worldCoordinatesVector.y);
         return worldCoordinates;
-    }
-
-    public boolean addListener(PropertyChangeListener pcl) {
-        for (int i = 0; i < pcs.getPropertyChangeListeners().length; i++){
-            if (pcs.getPropertyChangeListeners()[i] == pcl){
-                return false;
-            }
-        }
-        pcs.addPropertyChangeListener(pcl);
-        return true;
     }
 
     /**

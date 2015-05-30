@@ -75,19 +75,19 @@ public class BPController extends ApplicationAdapter implements PropertyChangeLi
     }
 
     public void newGame() {
-        model = new BPModel();
-        model.addListener(this);
-        gsm.setModel(model);
+        LevelOne levelOne = new LevelOne();
         if (levelManager == null) {
-            levelManager = new LevelManager(new LevelOne(model));
+            levelManager = new LevelManager(levelOne);
             gsm.setLevelManager(levelManager);
         } else {
-            levelManager.setLevel(new LevelOne(model));
+            levelManager.setLevel(levelOne);
         }
+        model = new BPModel(levelOne);
+        model.addListener(this);
+        gsm.setModel(model);
         playController = new PlayController(this, gsm, model);
         setActiveController(ActiveController.PLAY);
         gsm.setState(GameStateManager.PLAY, false);
-        gsm.getPlayState().addListener(this);
     }
 
     public void keyDown(int keyCode) {
