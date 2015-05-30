@@ -14,6 +14,10 @@ public class MockPosition implements PositionInterface {
         this(0,0);
     }
 
+    public MockPosition(PositionInterface p) {
+        this(p.getX(), p.getY());
+    }
+
     public MockPosition(float x, float y) {
         this.x = x;
         this.y = y;

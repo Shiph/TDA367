@@ -119,33 +119,31 @@ public abstract class Enemy extends Character {
         } else {
             updateMovementDirectionVector(movementDirection);
         }
-        //move(dt);
 
     }
 
     private void updateMovementDirectionVector(int movementDirection) {
         switch (movementDirection) {
             case 0: // moving west
-                    aimVector.set(getPosition().getX() - range, getPosition().getY());
+                aimVector.set(getPosition().getX() - range, getPosition().getY());
                 break;
             case 1: // moving east
-                    aimVector.set(getPosition().getX() + range, getPosition().getY());
+                aimVector.set(getPosition().getX() + range, getPosition().getY());
                 break;
             case 2: // moving north
-                    aimVector.set(getPosition().getX(), getPosition().getY() + range);
+                aimVector.set(getPosition().getX(), getPosition().getY() + range);
                 break;
             case 3: // moving south
-                    aimVector.set(getPosition().getX(), getPosition().getY() - range);
+                aimVector.set(getPosition().getX(), getPosition().getY() - range);
                 break;
             default:
                 break;
         }
     }
 
-    private boolean isPlayerInRange() {
+    public boolean isPlayerInRange() {
         if (Math.abs(playerDirectionVector.angle(aimVector)) < 150 &&
-               Math.abs(player.getPosition().getX() - getPosition().getX()) < 300 &&
-                Math.abs(player.getPosition().getY() - getPosition().getY()) < 300) {
+               playerDirectionVector.len() < 300) {
             return true;
         }
         return false;

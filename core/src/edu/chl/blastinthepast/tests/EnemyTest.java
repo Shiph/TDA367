@@ -7,6 +7,10 @@ import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.model.position.PositionInterface;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import static org.junit.Assert.*;
 
 /**
@@ -25,12 +29,27 @@ public class EnemyTest {
 
     @Test
     public void testMove() throws Exception {
-        enemy.setPosition(new MockPosition(500, 500));
-        PositionInterface pos = new MockPosition();
-        pos.setPosition(enemy.getPosition());
-        System.out.println("Mock position: " + pos.toString());
-        enemy.move(1000);
-        assertTrue(!pos.equals(enemy.getPosition()));
+        MockPosition p = new MockPosition(500, 500);
+        // move west
+        enemy.setPosition(new MockPosition(p));
+        enemy.setMovementDirection(0);
+        enemy.move(100);
+        assertTrue(p.getX() > enemy.getPosition().getX());
+        // move east
+        enemy.setMovementDirection(1);
+        enemy.setPosition(new MockPosition(p));
+        enemy.move(100);
+        assertTrue(p.getX() < enemy.getPosition().getX());
+        // move north
+        enemy.setMovementDirection(2);
+        enemy.setPosition(new MockPosition(p));
+        enemy.move(100);
+        assertTrue(p.getY() < enemy.getPosition().getY());
+        // move south
+        enemy.setMovementDirection(3);
+        enemy.setPosition(new MockPosition(p));
+        enemy.move(100);
+        assertTrue(p.getY() > enemy.getPosition().getY());
     }
 
     @Test
@@ -54,6 +73,53 @@ public class EnemyTest {
         collidable.rectangle.setSize(100, 100);
         enemy.setPosition(new MockPosition(0, 0));
         assertTrue(enemy.isColliding(collidable));
+    }
+
+    @Test
+    public void testIsPlayerInRange() {
+        MockPlayer player = new MockPlayer();
+        player.setPosition(new MockPosition(500, 500));
+        enemy = enemyFactory.getEnemy(player, CharacterTypeEnum.PLEB, new MockPosition());
+        // west
+        enemy.setPosition(new MockPosition(799, 500));
+        enemy.setMovementDirection(0);
+        assertTrue(enemy.isPlayerInRange());
+        enemy.setPosition(new MockPosition(801, 500));
+        enemy.update(100);
+        assertFalse(enemy.isPlayerInRange());
+        // east
+        enemy.setPosition(new MockPosition(201, 500));
+        enemy.setMovementDirection(1);
+        enemy.update(100);
+        assertTrue(enemy.isPlayerInRange());
+        enemy.setPosition(new MockPosition(199, 500));
+        enemy.update(100);
+        assertFalse(enemy.isPlayerInRange());
+        // north
+        enemy.setPosition(new MockPosition(500, 201));
+        enemy.setMovementDirection(2);
+        enemy.update(100);
+        assertTrue(enemy.isPlayerInRange());
+        enemy.setPosition(new MockPosition(500, 199));
+        enemy.update(100);
+        assertFalse(enemy.isPlayerInRange());
+        // south
+        enemy.setPosition(new MockPosition(500, 799));
+        enemy.setMovementDirection(3);
+        enemy.update(100);
+        assertTrue(enemy.isPlayerInRange());
+        enemy.setPosition(new MockPosition(199, 801));
+        enemy.update(100);
+        assertFalse(enemy.isPlayerInRange());
+    }
+
+    @Test
+    public void testDie() {
+        MockPCL pcl = new MockPCL();
+        enemy.addListener(pcl);
+        enemy.die();
+        assertTrue(pcl.eventName.equals("Ammunition drops"));
+        assertTrue(pcl.newValue instanceof ArrayList);
     }
 
     //should we have testUpdate as well?
