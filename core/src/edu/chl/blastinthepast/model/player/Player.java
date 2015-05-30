@@ -86,10 +86,8 @@ public class Player extends Character {
     }
 
     public void addWeapon(WeaponInterface weapon) {
-        WeaponInterface newWeapon;
-        newWeapon = weaponFactory.getWeapon(getPosition(), getAimVector(), getMovementVector(), weapon.getWeaponType());
-        weaponArray.add(newWeapon);
-        setWeapon(newWeapon);
+        weaponArray.add(weapon);
+        setWeapon(weapon);
     }
 
     public ArrayList<WeaponInterface> getAllWeapons(){

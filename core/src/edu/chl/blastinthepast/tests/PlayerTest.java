@@ -6,6 +6,10 @@ import edu.chl.blastinthepast.model.position.Position;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import static org.junit.Assert.*;
 
 /**
@@ -130,20 +134,42 @@ public class PlayerTest {
 
     @Test
     public void testShoot(){
-        assertTrue(player.getProjectiles().size()==0);
+        MockWeapon w = new MockWeapon();
+        player.addWeapon(w);
+        assertTrue(player.getProjectiles().size() == 0);
+        w.bulletsInMag=0;
+        player.shoot();
+        assertTrue(player.getProjectiles().size() == 0);
+        w.bulletsInMag=5;
         player.shoot();
         assertTrue(player.getProjectiles().size()>0);
+
     }
 
     @Test
     public void testReloadCurrentWeapon(){
+        MockWeapon w = new MockWeapon();
+        player.addWeapon(w);
         player.shoot();
         assertTrue(player.getCurrentWeapon().getbulletsLeftInMagazine()<player.getCurrentWeapon().getMagazineCapacity());
         player.reloadCurrentWeapon();
         assertTrue(player.getCurrentWeapon().getbulletsLeftInMagazine()==player.getCurrentWeapon().getMagazineCapacity());
     }
 
+    @Test
+    public void testAddWeapon(){
+        MockWeapon w = new MockWeapon();
+        player.addWeapon(w);
+        assertTrue(w.equals(player.getWeapon()));
+    }
 
+    @Test
+    public void testDie(){
+        MockPCL deathPcl = new MockPCL();
+        player.addListener(deathPcl);
+        player.die();
+        assertTrue(deathPcl.eventName.equals("Player died"));
+    }
 
     @After
     public void tearDown() throws Exception {

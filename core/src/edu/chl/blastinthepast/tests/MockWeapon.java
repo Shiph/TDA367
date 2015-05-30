@@ -11,13 +11,13 @@ import edu.chl.blastinthepast.model.position.PositionInterface;
  */
 public class MockWeapon implements WeaponInterface {
 
-    private int fireRate = 100;
-    private MockProjectile projectile = new MockProjectile();
-    private MockPosition position = new MockPosition();
-    private Vector2 direction = new Vector2();
-    private int magazineCapacity;
-    private int ammo = 100;
-    private int bulletsInMag = 10;
+    public int fireRate = 100;
+    public MockProjectile projectile = new MockProjectile();
+    public MockPosition position = new MockPosition();
+    public Vector2 direction = new Vector2();
+    public int magazineCapacity=10;
+    public int ammo = 100;
+    public int bulletsInMag = 10;
 
     @Override
     public void setFireRate(int fireRate) {
@@ -73,7 +73,7 @@ public class MockWeapon implements WeaponInterface {
 
     @Override
     public ProjectileInterface pullTrigger() {
-        if (hasAmmo()) {
+        if (bulletsInMag>0) {
             return fire();
         }
         return null;
@@ -97,7 +97,7 @@ public class MockWeapon implements WeaponInterface {
     }
 
     public int getTotalBullets() {
-        return 0;
+        return ammo;
     }
 
     @Override
@@ -151,11 +151,11 @@ public class MockWeapon implements WeaponInterface {
 
     @Override
     public void reload() {
-        if (ammo >= 10) {
-            ammo = ammo - 10;
-            bulletsInMag = 10;
+        if ((ammo + bulletsInMag) >= magazineCapacity) {
+            ammo -= (magazineCapacity - bulletsInMag);
+            bulletsInMag = magazineCapacity;
         } else {
-            bulletsInMag = ammo;
+            bulletsInMag += ammo;
             ammo = 0;
         }
     }
