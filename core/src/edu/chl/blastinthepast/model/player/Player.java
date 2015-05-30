@@ -155,11 +155,12 @@ public class Player implements Character {
         if (health <= 0) {
             die();
         }
-        weapon.setPosition(position);
+        if (weapon!=null) {
+            weapon.setPosition(position);
+        }
         if (!(blockedEast || blockedNorth || blockedSouth || blockedWest)) {
             move(dt);
         }
-
         if (shooting) {
             shoot();
         }
@@ -178,10 +179,12 @@ public class Player implements Character {
     }
 
     public void shoot(){
-        ProjectileInterface p=weapon.pullTrigger();
-        if (p!=null){
-            projectiles.add(p);
-            pcs.firePropertyChange("New Projectile", null, p);
+        if (weapon!=null) {
+            ProjectileInterface p = weapon.pullTrigger();
+            if (p != null) {
+                projectiles.add(p);
+                pcs.firePropertyChange("New Projectile", null, p);
+            }
         }
     }
 
@@ -198,7 +201,9 @@ public class Player implements Character {
         float length=direction.len();
         direction.scl(1 / length);
         setAimDirection(direction.angle());
-        weapon.getAimVector().set(aimDirection);
+        if (weapon!=null) {
+            weapon.getAimVector().set(aimDirection);
+        }
     }
 
     public int getScore() {
@@ -280,8 +285,10 @@ public class Player implements Character {
     }
 
     public void reloadCurrentWeapon(){
-        if (weapon.getbulletsLeftInMagazine()<weapon.getMagazineCapacity() && weapon.getTotalBullets()>0){
-            weapon.reload();
+        if (weapon!=null) {
+            if (weapon.getbulletsLeftInMagazine() < weapon.getMagazineCapacity() && weapon.getTotalBullets() > 0) {
+                weapon.reload();
+            }
         }
     }
 

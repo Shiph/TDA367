@@ -2,6 +2,8 @@ package edu.chl.blastinthepast.tests;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.player.Player;
+import edu.chl.blastinthepast.utils.Rectangle;
+import edu.chl.blastinthepast.utils.RectangleAdapter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,6 +27,8 @@ public class PlayerTest {
         Vector2 v = new Vector2(1, 1);
         v.scl(1 / v.len());
         assertTrue(player.getAimVector().equals(v));
+        Vector2 v2 = new Vector2(5, 2);
+        assertFalse(player.getAimVector().equals(v2));
     }
 
     @Test
@@ -98,6 +102,46 @@ public class PlayerTest {
         assertTrue(player.getMovementSpeed()>=0);
         player.addBonusMovementSpeed(5);
         assertTrue(player.getTotalMovementSpeed()== (player.getBonusMovementSpeed() + player.getMovementSpeed()) );
+    }
+
+    @Test
+    public void testCollision(){
+        MockCollidable c = new MockCollidable();
+        c.getRectangle().setSize(100, 100);
+        c.getRectangle().setPosition(0, 0);
+        assertTrue(player.isColliding(c));
+
+        c.getRectangle().setPosition(player.getRectangle().getWidth(), player.getRectangle().getHeight());
+        assertFalse(player.isColliding(c));
+
+        c.getRectangle().setPosition(-10, -10);
+        assertTrue(player.isColliding(c));
+
+        c.getRectangle().setSize(-1, -1);
+        c.getRectangle().setPosition(player.getRectangle().getWidth()/2, player.getRectangle().getHeight()/2);
+        assertTrue(player.isColliding(c));
+
+        c.getRectangle().setSize(0, 0);
+        assertTrue(player.isColliding(c));
+
+        c.getRectangle().setSize(1, 1);
+        c.getRectangle().setSize(player.getRectangle().getWidth()-1, player.getRectangle().getHeight()-1);
+        assertTrue(player.isColliding(c));
+    }
+
+    @Test
+    public void testShoot(){
+        assertTrue(player.getProjectiles().size()==0);
+        player.shoot();
+        assertTrue(player.getProjectiles().size()>0);
+    }
+
+    @Test
+    public void testReloadCurrentWeapon(){
+        player.shoot();
+        assertTrue(player.getCurrentWeapon().getbulletsLeftInMagazine()<player.getCurrentWeapon().getMagazineCapacity());
+        player.reloadCurrentWeapon();
+        assertTrue(player.getCurrentWeapon().getbulletsLeftInMagazine()==player.getCurrentWeapon().getMagazineCapacity());
     }
 
 
