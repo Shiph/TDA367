@@ -2,7 +2,7 @@ package edu.chl.blastinthepast.tests;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.Collidable;
-import edu.chl.blastinthepast.model.player.Character;
+import edu.chl.blastinthepast.model.player.CharacterI;
 import edu.chl.blastinthepast.model.player.CharacterTypeEnum;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 /**
  * Created by Shif on 11/05/15.
  */
-public class MockPlayer implements Character {
+public class MockPlayer implements CharacterI {
 
     public PositionInterface position;
     public Rectangle rectangle;

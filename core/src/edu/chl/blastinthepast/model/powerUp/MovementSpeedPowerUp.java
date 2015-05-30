@@ -8,7 +8,7 @@ public class MovementSpeedPowerUp extends PowerUp {
 
     @Override
     public void applyPowerUp() {
-        character.addBonusMovementSpeed(bonus);
+        characterI.addBonusMovementSpeed(bonus);
     }
 
     @Override

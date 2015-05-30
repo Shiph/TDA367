@@ -13,7 +13,7 @@ public class DamagePowerUp extends PowerUp{
 
     @Override
     public void applyPowerUp() {
-        for (WeaponInterface w : character.getAllWeapons()) {
+        for (WeaponInterface w : characterI.getAllWeapons()) {
             w.addBonusDamage(bonus);
         }
     }

@@ -9,7 +9,7 @@ import edu.chl.blastinthepast.model.weapon.Magnum;
 import edu.chl.blastinthepast.model.enemy.Boss;
 import edu.chl.blastinthepast.model.enemy.Enemy;
 import edu.chl.blastinthepast.model.chest.*;
-import edu.chl.blastinthepast.model.player.Character;
+import edu.chl.blastinthepast.model.player.CharacterI;
 import edu.chl.blastinthepast.model.player.Player;
 import edu.chl.blastinthepast.model.powerUp.PowerUpI;
 import edu.chl.blastinthepast.model.position.Position;
@@ -27,7 +27,7 @@ public class BPModel extends Observable implements PropertyChangeListener {
     private EnemyFactory enemyFactory;
     private ArrayList<ProjectileInterface> projectiles = new ArrayList<ProjectileInterface>();
     private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-    private ArrayList<Character> characters;
+    private ArrayList<CharacterI> characterIs;
     private Chest chest;
     private Boss boss;
     private boolean isPaused;
@@ -40,7 +40,7 @@ public class BPModel extends Observable implements PropertyChangeListener {
 
     public BPModel() {
         chest = new Chest(new Magnum(new Position(1000,1500), new Vector2(), new Vector2()));
-        characters = new ArrayList<Character>();
+        characterIs = new ArrayList<CharacterI>();
         player = new Player(new Position(0, 0));
         newCharacter(player);
         enemyFactory = new EnemyFactory();
@@ -88,7 +88,7 @@ public class BPModel extends Observable implements PropertyChangeListener {
      * Checks if a projectile is outside the map and if so, removes it
      */
     private void removeProjectiles() {
-        for (Character c: characters) {
+        for (CharacterI c: characterIs) {
             Iterator<ProjectileInterface> iter = c.getProjectiles().iterator();
             while (iter.hasNext()) {
                 ProjectileInterface p = iter.next();
@@ -126,7 +126,7 @@ public class BPModel extends Observable implements PropertyChangeListener {
                     player.setScore(player.getScore() + 10);
                 }
                 iter.remove();
-                characters.remove(e);
+                characterIs.remove(e);
                 enemies.remove(e);
                 pcs.firePropertyChange("Remove Character", null, e);
             }
@@ -156,8 +156,8 @@ public class BPModel extends Observable implements PropertyChangeListener {
     }
 
     private void checkForCharacterCollision(){
-        for (Character c1 : characters){
-            for (Character c2 : characters){
+        for (CharacterI c1 : characterIs){
+            for (CharacterI c2 : characterIs){
                 if (c1.isColliding(c2) && c1!=c2){
                     characterCollision(c1, c2);
                 }
@@ -169,9 +169,9 @@ public class BPModel extends Observable implements PropertyChangeListener {
         Iterator<ProjectileInterface> projIter = projectiles.iterator();
         while (projIter.hasNext()){
             ProjectileInterface projectile = projIter.next();
-            for (Character character : characters){
-                if (character.isColliding(projectile) && !character.getProjectiles().contains(projectile)) {
-                    character.setHealth(character.getHealth() - projectile.getDamage());
+            for (CharacterI characterI : characterIs){
+                if (characterI.isColliding(projectile) && !characterI.getProjectiles().contains(projectile)) {
+                    characterI.setHealth(characterI.getHealth() - projectile.getDamage());
                     projIter.remove();
                     pcs.firePropertyChange("Remove Projectile", null, projectile);
                 }
@@ -204,9 +204,9 @@ public class BPModel extends Observable implements PropertyChangeListener {
         }
     }
 
-    private void characterCollision(Character character1, Character character2) {
-        character1.setPosition(character1.getPrevPos());
-        character2.setPosition(character2.getPrevPos());
+    private void characterCollision(CharacterI characterI1, CharacterI characterI2) {
+        characterI1.setPosition(characterI1.getPrevPos());
+        characterI2.setPosition(characterI2.getPrevPos());
     }
 
     public Player getPlayer(){
@@ -225,8 +225,8 @@ public class BPModel extends Observable implements PropertyChangeListener {
         projectiles.add(p);
     }
 
-    public ArrayList<Character> getCharacters(){
-        return characters;
+    public ArrayList<CharacterI> getCharacterIs(){
+        return characterIs;
     }
 
     public void pause() {
@@ -271,10 +271,10 @@ public class BPModel extends Observable implements PropertyChangeListener {
         }
     }
 
-    public void newCharacter(Character character){
-        character.addListener(this);
-        characters.add(character);
-        pcs.firePropertyChange("New Character", null, character);
+    public void newCharacter(CharacterI characterI){
+        characterI.addListener(this);
+        characterIs.add(characterI);
+        pcs.firePropertyChange("New Character", null, characterI);
     }
 
     public void newEnemy(Enemy enemy){

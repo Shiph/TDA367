@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import edu.chl.blastinthepast.model.player.Character;
+import edu.chl.blastinthepast.model.player.CharacterI;
 import edu.chl.blastinthepast.model.enemy.Enemy;
 import edu.chl.blastinthepast.model.position.PositionInterface;
 import edu.chl.blastinthepast.view.weaponviews.WeaponView;
@@ -39,7 +39,7 @@ public abstract class EnemyView implements CharacterView {
     }
 
     @Override
-    public Character getCharacter() {
+    public CharacterI getCharacter() {
         return enemy;
     }
 

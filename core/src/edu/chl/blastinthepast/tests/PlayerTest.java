@@ -2,6 +2,7 @@ package edu.chl.blastinthepast.tests;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.player.Player;
+import edu.chl.blastinthepast.model.position.Position;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,7 +52,7 @@ public class PlayerTest {
         assertTrue(player.getPosition().getY()>0);
         assertTrue(player.getRectangle().getY()>0);
 
-        player.setPosition(0, 0);
+        player.setPosition(new Position(0,0));
         player.setMovementDirection("east");
         player.move(200f);
         assertTrue(player.getPosition().getY()>0);
@@ -59,7 +60,7 @@ public class PlayerTest {
         assertTrue(player.getRectangle().getY()>0);
         assertTrue(player.getRectangle().getX()>0);
 
-        player.setPosition(0, 0);
+        player.setPosition(new Position(0,0));
         player.setMovementDirection("west");
         player.move(200f);
         assertTrue(player.getPosition().getY()>0);
@@ -75,7 +76,7 @@ public class PlayerTest {
         assertTrue(player.getPosition().getY()<0);
         assertTrue(player.getRectangle().getY()<0);
 
-        player.setPosition(0, 0);
+        player.setPosition(new Position(0,0));
         player.setMovementDirection("east");
         player.move(200f);
         assertTrue(player.getPosition().getY()<0);
@@ -83,7 +84,7 @@ public class PlayerTest {
         assertTrue(player.getRectangle().getY()<0);
         assertTrue(player.getRectangle().getX()>0);
 
-        player.setPosition(0, 0);
+        player.setPosition(new Position(0,0));
         player.setMovementDirection("west");
         player.move(200f);
         assertTrue(player.getPosition().getY()<0);

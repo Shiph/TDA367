@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -15,7 +14,7 @@ import edu.chl.blastinthepast.model.ammunition.Ammunition;
 import edu.chl.blastinthepast.model.player.CharacterTypeEnum;
 import edu.chl.blastinthepast.model.projectiles.AK47Projectile;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
-import edu.chl.blastinthepast.model.player.Character;
+import edu.chl.blastinthepast.model.player.CharacterI;
 import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.model.level.LevelInterface;
 import edu.chl.blastinthepast.model.powerUp.*;
@@ -163,7 +162,7 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
     }
 
     public void spawnCharacterViews() {
-        for (Character c : model.getCharacters()) {
+        for (CharacterI c : model.getCharacterIs()) {
             if(c.getCharacterType() == CharacterTypeEnum.PLAYER) {
                 playerView = (PlayerView)characterViewFactory.getCharacterView(c);
                 worldObjects.put(c, playerView);
@@ -263,9 +262,9 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
     }
 
     public void checkIfCharacter(Observable o, Object arg){
-        if (arg instanceof Character) {
-            Character character = (Character) arg;
-            worldObjects.put(character, characterViewFactory.getCharacterView(character));
+        if (arg instanceof CharacterI) {
+            CharacterI characterI = (CharacterI) arg;
+            worldObjects.put(characterI, characterViewFactory.getCharacterView(characterI));
         }
     }
 
@@ -303,8 +302,8 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
                 }
                 break;
             case "New Character":
-                Character character = (Character) evt.getNewValue();
-                worldObjects.put(character, characterViewFactory.getCharacterView(character));
+                CharacterI characterI = (CharacterI) evt.getNewValue();
+                worldObjects.put(characterI, characterViewFactory.getCharacterView(characterI));
                 break;
             case "Remove Character":
                 removeObject(evt.getNewValue());

@@ -24,6 +24,7 @@ public class GUI {
     private BitmapFont font;
     private ArrayList<Image> heartIcons;
     private Image weaponImage;
+    private int opacity = 1;
 
     public void init(Player player, PlayerView playerView) {
 
@@ -67,7 +68,7 @@ public class GUI {
                 heartIcons.remove(heartIcons.size() - 1);
             }
         } else if (player.getHealth() > heartIcons.size()) {
-            for (int i=0; i < player.getHealth()-heartIcons.size(); i++) {
+            for (int i = 0; i < player.getHealth()-heartIcons.size(); i++) {
                 heartIcons.add(new Image(GraphicalAssets.HEART));
             }
         }
@@ -79,10 +80,10 @@ public class GUI {
 
     public void draw(SpriteBatch batch) {
         batch.begin();
-        ammoLabel.draw(batch, 1);
-        weaponImage.draw(batch, 1);
+        ammoLabel.draw(batch, opacity);
+        weaponImage.draw(batch, opacity);
         for (Image image : heartIcons) {
-            image.draw(batch, 1);
+            image.draw(batch, opacity);
             image.setSize(32, 32);
         }
         batch.end();

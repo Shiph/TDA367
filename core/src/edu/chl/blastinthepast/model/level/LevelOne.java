@@ -26,7 +26,7 @@ public class LevelOne implements LevelInterface {
     }
 
     private void placePlayer() {
-        model.getPlayer().setPosition(mapWidth/2, mapHeight/2);
+        model.getPlayer().setPosition(new Position(mapWidth/2, mapHeight/2));
     }
 
     public void placeEnemies() {

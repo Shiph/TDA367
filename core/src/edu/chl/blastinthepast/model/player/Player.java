@@ -21,13 +21,17 @@ import edu.chl.blastinthepast.model.position.PositionInterface;
 /**
  * Created by Shif on 21/04/15.
  */
-public class Player implements Character {
+public class Player extends Character {
 
     private Vector2 aimDirection = new Vector2(1,0);
-    private Rectangle rectangle=new RectangleAdapter();
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private final int width = 64;
     private final int height = 64;
+    private ArrayList<WeaponInterface> weaponArray;
+    private WeaponFactory weaponFactory;
+    private boolean north, south, west, east, shooting;
+    private int score = 0;
+    private boolean blockedWest, blockedEast, blockedNorth, blockedSouth = false;
 
     /**
      * Default constructor for Player with default movement speed and health.
@@ -40,122 +44,35 @@ public class Player implements Character {
      * Creates a new player character with texture, rectangle and sprite.
      */
     private Player(int movementSpeed, int health, PositionInterface pos) {
-        position = new Position(pos);
-        this.movementSpeed = movementSpeed;
-        this.health = health;
+        setPosition(new Position(pos));
+        setMovementSpeed(movementSpeed);
+        setHealth(health);
         weaponFactory = new WeaponFactory();
         weaponArray = new ArrayList<>();
-        weapon = weaponFactory.getWeapon(position, aimVector, movementVector, WeaponTypeEnum.AK47);
-        weaponArray.add(weapon);
-        projectiles = new ArrayList<>();
-        position=pos;
-        rectangle.setPosition(position.getX(), position.getY());
-        rectangle.setSize(width, height);
-    }
-
-
-
-    public int getMovementSpeed() {
-        return movementSpeed;
-    }
-
-    /**
-     * Sets the players new movement speed.
-     * @param newSpeed
-     */
-    public void setMovementSpeed(int newSpeed) {
-        movementSpeed = newSpeed;
-    }
-
-    /**
-     * Sets the players new health.
-     * @param newHealth
-     */
-    public void setHealth(int newHealth) {
-        health = newHealth;
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
-    public void addWeapon(WeaponInterface weapon) {
-        WeaponInterface newWeapon;
-        newWeapon = weaponFactory.getWeapon(position, aimVector, movementVector, weapon.getWeaponType());
-        weaponArray.add(newWeapon);
-        setWeapon(newWeapon);
-
-    }
-
-    public void setWeapon(WeaponInterface weapon) {
-        this.weapon = weapon;
-    }
-
-    public WeaponInterface getCurrentWeapon() {
-        return weapon;
-    }
-
-    public ArrayList<WeaponInterface> getAllWeapons(){
-        return weaponArray;
-    }
-
-    public PositionInterface getPosition(){
-        return position;
-    }
-
-    @Override
-    public PositionInterface getPrevPos() {
-        return prevPos;
-    }
-
-    @Override
-    public void setPosition(PositionInterface newPosition) {
-        position = new Position(newPosition);
-        rectangle.setPosition(position);
-    }
-
-    @Override
-    public void addBonusMovementSpeed(int bonusSpeed) {
-        if (bonusSpeed>0) {
-            bonusMovementSpeed += bonusSpeed;
-        }
-    }
-
-    @Override
-    public int getBonusMovementSpeed() {
-        return bonusMovementSpeed;
-    }
-
-    @Override
-    public int getTotalMovementSpeed() {
-        return movementSpeed+bonusMovementSpeed;
-    }
-    public void setPrevPos (Position prevPos) {
-        this.prevPos = prevPos;
-    }
-
-    public void setPosition(int x, int y) {
-        position.setPosition(x, y);
-        rectangle.setPosition(position);
+        setWeapon(weaponFactory.getWeapon(getPosition(), getAimVector(), getMovementVector(), WeaponTypeEnum.AK47));
+        weaponArray.add(getWeapon());
+        setPosition(pos);
+        setRectangle(pos);
+        getRectangle().setSize(width, height);
     }
 
     public void move(float dt) {
-        prevPos = new Position(position);
-        float x = position.getX();
-        float y = position.getY();
+        setPrevpos(new Position(getPosition()));
+        float x = getPosition().getX();
+        float y = getPosition().getY();
         updateMovementVector(dt);
-        if (movementVector.len() != 0) {
-            position.setX(x + movementVector.x);
+        if (getMovementVector().len() != 0) {
+            getPosition().setX(x + getMovementVector().x);
         }
-        position.setY(y + movementVector.y);
-        rectangle.setPosition(position);
+        getPosition().setY(y + getMovementVector().y);
+        getRectangle().setPosition(getPosition());
     }
 
     public void update(float dt) {
-        if (health <= 0) {
+        if (getHealth() <= 0) {
             die();
         }
-        weapon.setPosition(position);
+        getWeapon().setPosition(getPosition());
         if (!(blockedEast || blockedNorth || blockedSouth || blockedWest)) {
             move(dt);
         }
@@ -169,24 +86,31 @@ public class Player implements Character {
         resetBonuses();
     }
 
+    public void addWeapon(WeaponInterface weapon) {
+        WeaponInterface newWeapon;
+        newWeapon = weaponFactory.getWeapon(getPosition(), getAimVector(), getMovementVector(), weapon.getWeaponType());
+        weaponArray.add(newWeapon);
+        setWeapon(newWeapon);
+    }
+
+    public ArrayList<WeaponInterface> getAllWeapons(){
+        return weaponArray;
+    }
+
     public void die() {
         pcs.firePropertyChange("Player died", null, "Player died");
     }
 
     public void isShooting(boolean shoot){
-        shooting=shoot;
+        shooting = shoot;
     }
 
     public void shoot(){
-        ProjectileInterface p=weapon.pullTrigger();
+        ProjectileInterface p = getWeapon().pullTrigger();
         if (p!=null){
-            projectiles.add(p);
+            getProjectiles().add(p);
             pcs.firePropertyChange("New Projectile", null, p);
         }
-    }
-
-    public Vector2 getDirection(){
-        return aimDirection;
     }
 
     public void setAimDirection(float aimDirection){
@@ -194,11 +118,11 @@ public class Player implements Character {
     }
 
     public void calculateDirection(PositionInterface mousePoint){
-        Vector2 direction=new Vector2(mousePoint.getX()-position.getX(), mousePoint.getY()-position.getY());
+        Vector2 direction=new Vector2(mousePoint.getX() - getPosition().getX(), mousePoint.getY() - getPosition().getY());
         float length=direction.len();
         direction.scl(1 / length);
         setAimDirection(direction.angle());
-        weapon.getAimVector().set(aimDirection);
+        getWeapon().getAimVector().set(aimDirection);
     }
 
     public int getScore() {
@@ -253,10 +177,6 @@ public class Player implements Character {
         return east;
     }
 
-    public void resetBonuses(){
-        bonusMovementSpeed=0;
-    }
-
     public void block() {
         if (north) {
             blockedNorth = true;
@@ -280,97 +200,44 @@ public class Player implements Character {
     }
 
     public void reloadCurrentWeapon(){
-        if (weapon.getbulletsLeftInMagazine()<weapon.getMagazineCapacity() && weapon.getTotalBullets()>0){
-            weapon.reload();
+        if (getWeapon().getbulletsLeftInMagazine() < getWeapon().getMagazineCapacity() && getWeapon().getTotalBullets()>0){
+            getWeapon().reload();
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Player";
-    }
-
-    @Override
-    public boolean isColliding(Collidable c) {
-        return rectangle.overlaps(c.getRectangle());
-    }
-
-    @Override
-    public Rectangle getRectangle() {
-        return rectangle;
     }
 
     public void addListener(PropertyChangeListener pcl){
         pcs.addPropertyChangeListener(pcl);
     }
 
-    public void removeListener (PropertyChangeListener pcl){
-        pcs.removePropertyChangeListener(pcl);
-    }
-
-    private int health;
-    private int movementSpeed;
-    private ArrayList<WeaponInterface> weaponArray;
-    private WeaponInterface weapon;
-    private WeaponFactory weaponFactory;
-    private boolean north, south, west, east, shooting;
-    private PositionInterface position;
-    private int score = 0;
-    private boolean playerIsDead = false;
-    private PositionInterface prevPos;
-    private Vector2 aimVector = new Vector2(1,0);
-    private Vector2 movementVector = new Vector2(1, 0);
-    private ArrayList<ProjectileInterface> projectiles;
-    private int bonusMovementSpeed;
-    private boolean blockedWest, blockedEast, blockedNorth, blockedSouth = false;
-
     private void updateMovementVector(float dt) {
-        movementVector.set(1, 0);
+        getMovementVector().set(1, 0);
         if (north) {
             if (east) {
-                movementVector.setAngle(45);
+                getMovementVector().setAngle(45);
             } else if (west) {
-                movementVector.setAngle(90+45);
+                getMovementVector().setAngle(90 + 45);
             } else {
-                movementVector.setAngle(90);
+                getMovementVector().setAngle(90);
             }
-            movementVector.setLength(getTotalMovementSpeed() * dt);
+            getMovementVector().setLength(getTotalMovementSpeed() * dt);
         } else if (south) {
             if (east) {
-                movementVector.setAngle(360-45);
+                getMovementVector().setAngle(360 - 45);
             } else if (west) {
-                movementVector.setAngle(180 + 45);
+                getMovementVector().setAngle(180 + 45);
             } else {
-                movementVector.setAngle(270);
+                getMovementVector().setAngle(270);
             }
-            movementVector.setLength(getTotalMovementSpeed() * dt);
+            getMovementVector().setLength(getTotalMovementSpeed() * dt);
         } else if (west) {
-            movementVector.setAngle(180);
-            movementVector.setLength(getTotalMovementSpeed() * dt);
+            getMovementVector().setAngle(180);
+            getMovementVector().setLength(getTotalMovementSpeed() * dt);
         } else if (east) {
-            movementVector.setAngle(0);
-            movementVector.setLength(getTotalMovementSpeed() * dt);
+            getMovementVector().setAngle(0);
+            getMovementVector().setLength(getTotalMovementSpeed() * dt);
         } else {
-            movementVector.setLength(0);
+            getMovementVector().setLength(0);
         }
-    }
-
-    public void setAimVector(float aimVector){
-        this.aimVector.setAngle(aimVector);
-    }
-
-    public ArrayList<ProjectileInterface> getProjectiles(){
-        return projectiles;
-    }
-
-    @Override
-    public Vector2 getMovementVector() {
-        return movementVector;
-    }
-
-    @Override
-    public Vector2 getAimVector() {
-        return aimVector;
     }
 
     @Override
