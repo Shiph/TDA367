@@ -16,8 +16,6 @@ import java.util.Random;
  */
 public class StandardLoot implements LootInterface{
 
-
-
     @Override
     public HashMap<String, ArrayList<? extends Object>> generateLoot(PositionInterface spawnPosition, WeaponInterface weapon) {
         HashMap<String, ArrayList<? extends Object>> loot = new HashMap<String, ArrayList<? extends Object>>();
