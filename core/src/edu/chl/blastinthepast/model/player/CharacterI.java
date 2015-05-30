@@ -34,6 +34,7 @@ public interface CharacterI extends Collidable{
     Vector2 getMovementVector();
     Vector2 getAimVector();
     void addListener(PropertyChangeListener pcl);
+    void removeListener(PropertyChangeListener pcl);
     CharacterTypeEnum getCharacterType();
 
 }

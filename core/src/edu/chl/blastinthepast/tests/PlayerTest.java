@@ -35,6 +35,13 @@ public class PlayerTest {
     }
 
     @Test
+    public void move(){
+        player.move(100);
+        assertTrue(player.getPosition().getX()==0);
+        assertTrue(player.getPosition().getY()==0);
+    }
+
+    @Test
     public void testMoveWest(){
         player.setMovementDirection("west");
         player.move(200f);
@@ -58,7 +65,7 @@ public class PlayerTest {
         assertTrue(player.getPosition().getY()>0);
         assertTrue(player.getRectangle().getY()>0);
 
-        player.setPosition(new Position(0,0));
+        player.setPosition(new MockPosition(0,0));
         player.setMovementDirection("east");
         player.move(200f);
         assertTrue(player.getPosition().getY()>0);
@@ -66,7 +73,7 @@ public class PlayerTest {
         assertTrue(player.getRectangle().getY()>0);
         assertTrue(player.getRectangle().getX()>0);
 
-        player.setPosition(new Position(0,0));
+        player.setPosition(new MockPosition(0,0));
         player.setMovementDirection("west");
         player.move(200f);
         assertTrue(player.getPosition().getY()>0);
@@ -169,6 +176,44 @@ public class PlayerTest {
         player.addListener(deathPcl);
         player.die();
         assertTrue(deathPcl.eventName.equals("Player died"));
+    }
+
+    @Test
+    public void testResetBonusUpdate(){
+        player.addBonusMovementSpeed(100);
+        player.update(1);
+        assertTrue(player.getBonusMovementSpeed()==0);
+    }
+
+    @Test
+    public void testShootUpdate(){
+        MockPCL pcl = new MockPCL();
+        player.addListener(pcl);
+        player.addWeapon(new MockWeapon());
+        player.update(1);
+        assertTrue(pcl.eventName.equals("No event"));
+        player.isShooting(true);
+        player.update(1);
+        assertTrue(pcl.eventName.equals("New Projectile"));
+    }
+
+    @Test
+    public void testDeathUpdate(){
+        MockPCL pcl = new MockPCL();
+        player.addListener(pcl);
+        player.setHealth(0);
+        player.update(1);
+        assertTrue(pcl.eventName.equals("Player died"));
+    }
+
+    @Test
+    public void testWeaponUpdate(){
+        MockWeapon w = new MockWeapon();
+        w.setPosition(100, 100);
+        player.setPosition(new MockPosition(50, 50));
+        player.addWeapon(w);
+        player.update(1);
+        assertTrue(player.getPosition().equals(player.getWeapon().getPosition()));
     }
 
     @After

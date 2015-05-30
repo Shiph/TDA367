@@ -72,7 +72,6 @@ public class Player extends Character {
         if (getWeapon()!=null) {
             getWeapon().setPosition(getPosition());
         }
-        getWeapon().setPosition(getPosition());
         if (!(blockedEast || blockedNorth || blockedSouth || blockedWest)) {
             move(dt);
         }
@@ -210,6 +209,11 @@ public class Player extends Character {
 
     public void addListener(PropertyChangeListener pcl){
         pcs.addPropertyChangeListener(pcl);
+    }
+
+    @Override
+    public void removeListener(PropertyChangeListener pcl) {
+        pcs.removePropertyChangeListener(pcl);
     }
 
     private void updateMovementVector(float dt) {

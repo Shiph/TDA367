@@ -15,7 +15,7 @@ public class MockPCL implements PropertyChangeListener{
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         eventName = evt.getPropertyName();
-        oldValue=evt.getOldValue();
-        newValue=evt.getNewValue();
+        oldValue = evt.getOldValue();
+        newValue = evt.getNewValue();
     }
 }
