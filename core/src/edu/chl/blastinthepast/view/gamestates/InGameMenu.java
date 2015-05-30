@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.model.level.LevelInterface;
-import edu.chl.blastinthepast.utils.GraphicalAssets;
+import edu.chl.blastinthepast.view.assets.GraphicalAssets;
 import edu.chl.blastinthepast.view.ViewConstants;
 
 /**

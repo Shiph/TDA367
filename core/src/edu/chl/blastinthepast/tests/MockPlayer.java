@@ -6,7 +6,7 @@ import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.model.player.CharacterTypeEnum;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
-import edu.chl.blastinthepast.utils.PositionInterface;
+import edu.chl.blastinthepast.model.position.PositionInterface;
 import edu.chl.blastinthepast.utils.Rectangle;
 import edu.chl.blastinthepast.utils.RectangleAdapter;
 

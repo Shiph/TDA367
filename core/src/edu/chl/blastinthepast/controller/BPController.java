@@ -6,12 +6,10 @@ import com.badlogic.gdx.graphics.GL20;
 import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.model.level.LevelManager;
 import edu.chl.blastinthepast.model.level.LevelOne;
-import edu.chl.blastinthepast.utils.Position;
+import edu.chl.blastinthepast.model.position.Position;
 import edu.chl.blastinthepast.view.gamestates.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * Created by Shif on 20/04/15.

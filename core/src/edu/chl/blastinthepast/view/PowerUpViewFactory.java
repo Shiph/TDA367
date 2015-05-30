@@ -1,8 +1,7 @@
 package edu.chl.blastinthepast.view;
 
-import edu.chl.blastinthepast.model.powerUp.PowerUp;
 import edu.chl.blastinthepast.model.powerUp.PowerUpI;
-import edu.chl.blastinthepast.utils.GraphicalAssets;
+import edu.chl.blastinthepast.view.assets.GraphicalAssets;
 
 /**
  * Created by jonas on 2015-05-21.

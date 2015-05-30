@@ -3,7 +3,7 @@ package edu.chl.blastinthepast.model.powerUp;
 
 import edu.chl.blastinthepast.model.Collidable;
 import edu.chl.blastinthepast.model.player.Character;
-import edu.chl.blastinthepast.utils.PositionInterface;
+import edu.chl.blastinthepast.model.position.PositionInterface;
 import edu.chl.blastinthepast.utils.Rectangle;
 import edu.chl.blastinthepast.utils.RectangleAdapter;
 

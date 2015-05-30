@@ -10,8 +10,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.model.level.LevelInterface;
-import edu.chl.blastinthepast.utils.GraphicalAssets;
-import edu.chl.blastinthepast.utils.SoundAssets;
+import edu.chl.blastinthepast.view.assets.GraphicalAssets;
+import edu.chl.blastinthepast.view.assets.SoundAssets;
 
 /**
  * Created by MattiasJ on 2015-05-03.

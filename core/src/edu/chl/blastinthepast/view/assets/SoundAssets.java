@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.utils;
+package edu.chl.blastinthepast.view.assets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;

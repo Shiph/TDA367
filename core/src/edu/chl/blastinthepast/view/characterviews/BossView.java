@@ -1,7 +1,7 @@
 package edu.chl.blastinthepast.view.characterviews;
 
 import edu.chl.blastinthepast.model.enemy.Boss;
-import edu.chl.blastinthepast.utils.GraphicalAssets;
+import edu.chl.blastinthepast.view.assets.GraphicalAssets;
 
 /**
  * Created by Mattias on 15-05-07.

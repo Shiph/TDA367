@@ -4,8 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.Collidable;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.projectiles.ProjectileTypeEnum;
-import edu.chl.blastinthepast.utils.Position;
-import edu.chl.blastinthepast.utils.PositionInterface;
+import edu.chl.blastinthepast.model.position.PositionInterface;
 import edu.chl.blastinthepast.utils.Rectangle;
 
 /**

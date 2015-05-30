@@ -1,7 +1,7 @@
 package edu.chl.blastinthepast.model.enemy;
 
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
-import edu.chl.blastinthepast.utils.PositionInterface;
+import edu.chl.blastinthepast.model.position.PositionInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;

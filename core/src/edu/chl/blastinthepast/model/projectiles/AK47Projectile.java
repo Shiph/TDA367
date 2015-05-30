@@ -1,8 +1,7 @@
 package edu.chl.blastinthepast.model.projectiles;
 
 import com.badlogic.gdx.math.Vector2;
-import edu.chl.blastinthepast.model.weapon.WeaponInterface;
-import edu.chl.blastinthepast.utils.Position;
+import edu.chl.blastinthepast.model.position.Position;
 
 /**
  * Created by Mattias on 15-05-05.

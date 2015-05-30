@@ -1,8 +1,7 @@
 package edu.chl.blastinthepast.view.characterviews;
 
-import edu.chl.blastinthepast.model.player.Character;
 import edu.chl.blastinthepast.model.enemy.Pleb;
-import edu.chl.blastinthepast.utils.GraphicalAssets;
+import edu.chl.blastinthepast.view.assets.GraphicalAssets;
 
 /**
  * Created by MattiasJ on 2015-05-20.

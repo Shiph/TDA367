@@ -2,8 +2,8 @@ package edu.chl.blastinthepast.model.weapon;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
-import edu.chl.blastinthepast.utils.Position;
-import edu.chl.blastinthepast.utils.PositionInterface;
+import edu.chl.blastinthepast.model.position.Position;
+import edu.chl.blastinthepast.model.position.PositionInterface;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

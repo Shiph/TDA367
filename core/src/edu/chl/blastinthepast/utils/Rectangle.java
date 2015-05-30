@@ -1,5 +1,7 @@
 package edu.chl.blastinthepast.utils;
 
+import edu.chl.blastinthepast.model.position.PositionInterface;
+
 /**
  * Created by jonas on 2015-05-21.
  */
