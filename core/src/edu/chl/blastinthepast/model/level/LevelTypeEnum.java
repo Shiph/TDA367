@@ -3,7 +3,7 @@ package edu.chl.blastinthepast.model.level;
 /**
  * Created by MattiasJ on 2015-05-30.
  */
-enum LevelTypeEnum implements LevelType {
+public enum LevelTypeEnum implements LevelType {
     ONE("One");
 
     private String type;

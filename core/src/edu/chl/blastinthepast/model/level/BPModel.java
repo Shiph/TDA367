@@ -20,9 +20,9 @@ import java.util.*;
  */
 public class BPModel extends Observable implements PropertyChangeListener {
 
-    private Player player;
+    private CharacterI player;
     private ArrayList<ProjectileInterface> projectiles = new ArrayList<ProjectileInterface>();
-    private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+    private ArrayList<CharacterI> enemies = new ArrayList<CharacterI>();
     private ArrayList<CharacterI> characterIs;
     private Chest chest;
     private boolean isPaused;
@@ -40,7 +40,7 @@ public class BPModel extends Observable implements PropertyChangeListener {
         player = level.getPlayer();
         newCharacter(player);
         enemies = level.getEnemies();
-        for (Enemy e : enemies) {
+        for (CharacterI e : enemies) {
             newCharacter(e);
         }
     }
@@ -53,7 +53,7 @@ public class BPModel extends Observable implements PropertyChangeListener {
                 System.out.println("all enemies are dead");
                 level.spawnNewEnemies();
                 enemies = level.getEnemies();
-                for (Enemy e : enemies) {
+                for (CharacterI e : enemies) {
                     newCharacter(e);
                 }
             }
@@ -69,17 +69,17 @@ public class BPModel extends Observable implements PropertyChangeListener {
             for (ProjectileInterface p : projectiles) {
                 p.move(dt);
             }
-            for (Enemy e : enemies) {
+            for (CharacterI e : enemies) {
                 e.update(dt);
-                int i = e.getMovementDirection();
+                int i = ((Enemy)e).getMovementDirection();
                 if (i == 0 && !(e.getPosition().getX() > 0)) {
-                    e.setMovementDirection(1);
+                    ((Enemy)e).setMovementDirection(1);
                 } else if (i == 1 && !(e.getPosition().getX() < level.getMapWidth())) {
-                    e.setMovementDirection(0);
+                    ((Enemy)e).setMovementDirection(0);
                 } else if (i == 2 && !(e.getPosition().getY() < level.getMapHeight())) {
-                    e.setMovementDirection(3);
+                    ((Enemy)e).setMovementDirection(3);
                 } else if (i == 3 && !(e.getPosition().getY() > 0)) {
-                    e.setMovementDirection(2);
+                    ((Enemy)e).setMovementDirection(2);
                 } else {
                     e.move(dt);
                 }
@@ -119,15 +119,15 @@ public class BPModel extends Observable implements PropertyChangeListener {
     }
 
     private void removeDeadEnemies(){
-        Iterator<Enemy> iter = enemies.iterator();
+        Iterator<CharacterI> iter = enemies.iterator();
         while (iter.hasNext()){
-            Enemy e = iter.next();
+            Enemy e = (Enemy)iter.next();
             if (e.getHealth() <= 0) {
                 e.die();
                 if(e.getCharacterType().getID().equals("Boss")) {
-                    player.setScore(player.getScore() + 50);
+                    ((Player)player).setScore(((Player)player).getScore() + 50);
                 } else if (e.getCharacterType().getID().equals("Pleb")) {
-                    player.setScore(player.getScore() + 10);
+                    ((Player)player).setScore(((Player)player).getScore() + 10);
                 }
                 iter.remove();
                 characterIs.remove(e);
@@ -144,7 +144,7 @@ public class BPModel extends Observable implements PropertyChangeListener {
         checkForPowerUpCollision();
     }
 
-    private void checkForCharacterCollision(){
+    public void checkForCharacterCollision(){
         for (CharacterI c1 : characterIs){
             for (CharacterI c2 : characterIs){
                 if (c1.isColliding(c2) && c1!=c2){
@@ -154,7 +154,7 @@ public class BPModel extends Observable implements PropertyChangeListener {
         }
     }
 
-    private void checkForProjectileCollision(){
+    public void checkForProjectileCollision(){
         Iterator<ProjectileInterface> projIter = projectiles.iterator();
         while (projIter.hasNext()){
             ProjectileInterface projectile = projIter.next();
@@ -199,14 +199,14 @@ public class BPModel extends Observable implements PropertyChangeListener {
     }
 
     public Player getPlayer(){
-        return player;
+        return ((Player)player);
     }
 
     public Chest getChest() {
         return chest;
     }
 
-    public ArrayList<Enemy> getEnemies(){
+    public ArrayList<CharacterI> getEnemies(){
         return enemies;
     }
 
@@ -264,6 +264,10 @@ public class BPModel extends Observable implements PropertyChangeListener {
         characterI.addListener(this);
         characterIs.add(characterI);
         pcs.firePropertyChange("New Character", null, characterI);
+    }
+
+    public ArrayList<ProjectileInterface> getProjectiles() {
+        return projectiles;
     }
 
     public void addListener(PropertyChangeListener pcl) {
