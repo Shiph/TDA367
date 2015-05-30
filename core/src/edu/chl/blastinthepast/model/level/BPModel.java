@@ -2,11 +2,8 @@ package edu.chl.blastinthepast.model.level;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.ammunition.AmmunitionInterface;
-import edu.chl.blastinthepast.model.enemy.EnemyFactory;
-import edu.chl.blastinthepast.model.player.CharacterTypeEnum;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.Magnum;
-import edu.chl.blastinthepast.model.enemy.Boss;
 import edu.chl.blastinthepast.model.enemy.Enemy;
 import edu.chl.blastinthepast.model.chest.*;
 import edu.chl.blastinthepast.model.player.CharacterI;
@@ -24,32 +21,28 @@ import java.util.*;
 public class BPModel extends Observable implements PropertyChangeListener {
 
     private Player player;
-    private EnemyFactory enemyFactory;
     private ArrayList<ProjectileInterface> projectiles = new ArrayList<ProjectileInterface>();
     private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     private ArrayList<CharacterI> characterIs;
     private Chest chest;
-    private Boss boss;
     private boolean isPaused;
     private ArrayList<PowerUpI> activePowerUps =new ArrayList<PowerUpI>();
     private ArrayList<PowerUpI> powerUpDrops = new ArrayList<PowerUpI>();
     private ArrayList<AmmunitionInterface> ammunitionDrops = new ArrayList<AmmunitionInterface>();
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-    private int mapHeight;
-    private int mapWidth;
+    private LevelInterface level;
+    private boolean playerBlocked = false;
 
-    public BPModel() {
+    public BPModel(LevelInterface level) {
+        this.level = level;
         chest = new Chest(new Magnum(new Position(1000,1500), new Vector2(), new Vector2()));
         characterIs = new ArrayList<CharacterI>();
-        player = new Player(new Position(0, 0));
+        player = level.getPlayer();
         newCharacter(player);
-        enemyFactory = new EnemyFactory();
-        spawnEnemies(5);
-    }
-
-    public void spawnBoss(Position pos) {
-        boss = (Boss)enemyFactory.getEnemy(player, CharacterTypeEnum.BOSS);
-        newEnemy(boss);
+        enemies = level.getEnemies();
+        for (Enemy e : enemies) {
+            newCharacter(e);
+        }
     }
 
     public void update(float dt){
@@ -57,10 +50,21 @@ public class BPModel extends Observable implements PropertyChangeListener {
             removeProjectiles();
             removeDeadEnemies();
             if (enemies.size() < 1) {
-                setChanged();
-                notifyObservers("all enemies is kill");
+                System.out.println("all enemies are dead");
+                level.spawnNewEnemies();
+                enemies = level.getEnemies();
+                for (Enemy e : enemies) {
+                    newCharacter(e);
+                }
             }
             updatePowerUps();
+            if (!playerBlocked && level.playerIsColliding()) {
+                pcs.firePropertyChange("blocked", false, "");
+                playerBlocked = true;
+            } else if (playerBlocked && !level.playerIsColliding()) {
+                pcs.firePropertyChange("unblocked", false, "");
+                playerBlocked = false;
+            }
             player.update(dt);
             for (ProjectileInterface p : projectiles) {
                 p.move(dt);
@@ -70,9 +74,9 @@ public class BPModel extends Observable implements PropertyChangeListener {
                 int i = e.getMovementDirection();
                 if (i == 0 && !(e.getPosition().getX() > 0)) {
                     e.setMovementDirection(1);
-                } else if (i == 1 && !(e.getPosition().getX() < mapWidth)) {
+                } else if (i == 1 && !(e.getPosition().getX() < level.getMapWidth())) {
                     e.setMovementDirection(0);
-                } else if (i == 2 && !(e.getPosition().getY() < mapHeight)) {
+                } else if (i == 2 && !(e.getPosition().getY() < level.getMapHeight())) {
                     e.setMovementDirection(3);
                 } else if (i == 3 && !(e.getPosition().getY() > 0)) {
                     e.setMovementDirection(2);
@@ -92,8 +96,8 @@ public class BPModel extends Observable implements PropertyChangeListener {
             Iterator<ProjectileInterface> iter = c.getProjectiles().iterator();
             while (iter.hasNext()) {
                 ProjectileInterface p = iter.next();
-                if ((p.getPosition().getY() < 0) || (p.getPosition().getY() > mapHeight) ||
-                        (p.getPosition().getX() > mapWidth) || (p.getPosition().getX() < 0)) {
+                if ((p.getPosition().getY() < 0) || (p.getPosition().getY() > level.getMapHeight()) ||
+                        (p.getPosition().getX() > level.getMapWidth()) || (p.getPosition().getX() < 0)) {
                     iter.remove();
                     c.getProjectiles().remove(p);
                     projectiles.remove(p);
@@ -130,21 +134,6 @@ public class BPModel extends Observable implements PropertyChangeListener {
                 enemies.remove(e);
                 pcs.firePropertyChange("Remove Character", null, e);
             }
-        }
-        if (enemies.size()<1){
-            spawnEnemies(5);
-        }
-    }
-
-    public void spawnEnemies(int amount) {
-        for (int i = 0; i < amount; i++) {
-            Enemy e = enemyFactory.getEnemy(player, CharacterTypeEnum.PLEB);
-            newEnemy(e);
-            Random r = new Random();
-            float x = r.nextFloat() * mapWidth;
-            float y = r.nextFloat() * mapHeight;
-            e.getPosition().setX(x);
-            e.getPosition().setY(y);
         }
     }
 
@@ -277,28 +266,8 @@ public class BPModel extends Observable implements PropertyChangeListener {
         pcs.firePropertyChange("New Character", null, characterI);
     }
 
-    public void newEnemy(Enemy enemy){
-        enemies.add(enemy);
-        newCharacter(enemy);
-    }
-
     public void addListener(PropertyChangeListener pcl) {
         pcs.addPropertyChangeListener(pcl);
     }
 
-    public void setMapWidth(int mapWidth) {
-        this.mapWidth = mapWidth;
-    }
-
-    public void setMapHeight(int mapHeight) {
-        this.mapHeight = mapHeight;
-    }
-
-    public int getMapWidth() {
-        return mapWidth;
-    }
-
-    public int getMapHeight() {
-        return mapHeight;
-    }
 }

@@ -20,7 +20,7 @@ public class EnemyTest {
     @Before
     public void before(){
         enemyFactory = new EnemyFactory();
-        enemy = enemyFactory.getEnemy(new MockPlayer(), CharacterTypeEnum.PLEB);
+        enemy = enemyFactory.getEnemy(new MockPlayer(), CharacterTypeEnum.PLEB, new MockPosition());
     }
 
     @Test

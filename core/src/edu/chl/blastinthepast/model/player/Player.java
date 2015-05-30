@@ -247,4 +247,5 @@ public class Player extends Character {
     public CharacterTypeEnum getCharacterType() {
         return CharacterTypeEnum.PLAYER;
     }
+
 }
