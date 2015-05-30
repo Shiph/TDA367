@@ -62,7 +62,7 @@ public class GameStateManager {
                     gameState = playState;
                 } else {
                     gameState = playState;
-                    playState.setCrosshairCursor();
+                    playState.getGUI().setCrosshairCursor();
                 }
                 model.unPause();
                 break;

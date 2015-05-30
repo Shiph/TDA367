@@ -3,13 +3,10 @@ package edu.chl.blastinthepast.view.gamestates;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -42,6 +39,7 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
 
     private BPModel model;
     private PlayerView playerView;
+    private GUI gui;
     private ChestView chestView;
     private CharacterViewFactory characterViewFactory;
     private ProjectileViewFactory projectileViewFactory;
@@ -52,13 +50,8 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
     private TiledMap tiledMap;
     private Music music;
     private PropertyChangeSupport pcs;
-    private Label ammoLabel;
-    private Label.LabelStyle labelStyle;
-    private BitmapFont font;
-    private Image weaponImage;
     private HashMap <Object, WorldObject> worldObjects;
     private ArrayList <Object> worldObjectsRemoveList;
-    private ArrayList<Image> heartIcons;
     private TiledMapTileLayer collisionLayer;
     private float tileWidth, tileHeight;
     private boolean playerBlocked = false;
@@ -75,6 +68,7 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
         chestView = new ChestView(model.getChest());
         batch = new SpriteBatch();
         pcs = new PropertyChangeSupport(this);
+        gui = new GUI();
         model.addObserver(this);
         init(model, level);
         model.addListener(this);
@@ -85,7 +79,6 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
 
     @Override
     public void init(BPModel model, LevelInterface level) {
-        setCrosshairCursor();
         spawnCharacterViews();
 
         //Configures and sets up the camera.
@@ -94,6 +87,11 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
         camera.update();
         camera.position.set(model.getMapWidth() / 2, model.getMapHeight() / 2, 0);
         camera.update();
+
+        //Updates GUI.
+        gui.setCrosshairCursor();
+        gui.init(model.getPlayer(), playerView);
+        gui.updateHeartPositions(camera);
 
         //Configures and sets the game map.
         if (level.getLevel() == LevelInterface.Level.ONE) {
@@ -104,28 +102,11 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
         tileWidth = collisionLayer.getTileWidth();
         tileHeight = collisionLayer.getTileHeight();
 
-        // Sets the font and GUI representation of equipped weapon and ammo count.
-        font = new BitmapFont();
-        labelStyle = new Label.LabelStyle();
-        labelStyle.font = font;
-        ammoLabel = new Label("ammo", labelStyle);
-        weaponImage = new Image(playerView.getWeaponView().getTexture());
-
-        //Paints out hearts representing the players health.
-        heartIcons = new ArrayList<>(model.getPlayer().getHealth());
-        for (int i=0; i < model.getPlayer().getHealth(); i++) {
-            Texture heartTexture = GraphicalAssets.HEART;
-            heartIcons.add(new Image(heartTexture));
-        }
-        updateHeartPositions();
-
         //Sets the music for the game.
         music = SoundAssets.SANIC_THEME;
         music.setVolume(ViewConstants.masterVolume);
         music.setLooping(true);
         music.stop();
-        setCrosshairCursor();
-        spawnCharacterViews();
         music.play();
     }
 
@@ -133,10 +114,10 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
     public void update(float dt) {
         if(!model.isPaused()) {
             checkForCollision();
-            updateWeaponGUI();
-            updateHearts();
-            updateHeartPositions();
             updateCameraPosition();
+            gui.updateWeaponGUI(camera, model.getPlayer());
+            gui.updateHearts(model.getPlayer());
+            gui.updateHeartPositions(camera);
             if (!music.isPlaying()) {
                 music.play();
             }
@@ -161,6 +142,7 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
     @Override
     public void draw() {
         tiledMapRenderer.render();
+        gui.draw(batch);
 
         chestView.draw(batch);
         for (WorldObject o : worldObjects.values()){
@@ -170,42 +152,6 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
         if (!worldObjectsRemoveList.isEmpty()) {
             removeObjects();
         }
-
-        batch.begin();
-        ammoLabel.draw(batch, 1);
-        weaponImage.draw(batch, 1);
-        for (Image image : heartIcons) {
-            image.draw(batch, 1);
-            image.setSize(32, 32);
-        }
-        batch.end();
-    }
-
-    public void updateHearts() {
-        if (model.getPlayer().getHealth() < heartIcons.size()) {
-            for (int i = 0; i < heartIcons.size() - model.getPlayer().getHealth(); i++) {
-                heartIcons.remove(heartIcons.size() - 1);
-            }
-        } else if (model.getPlayer().getHealth() > heartIcons.size()) {
-            for (int i=0; i < model.getPlayer().getHealth()-heartIcons.size(); i++) {
-                heartIcons.add(new Image(GraphicalAssets.HEART));
-            }
-        }
-    }
-
-    public void updateHeartPositions() {
-        if (!heartIcons.isEmpty()) {
-            heartIcons.get(0).setPosition(camera.position.x - ViewConstants.CAMERA_WIDTH / 2 + 15, camera.position.y + ViewConstants.CAMERA_HEIGHT / 2 - 60);
-        }
-        for (int i=1; i<heartIcons.size(); i++) {
-            heartIcons.get(i).setPosition(heartIcons.get(i - 1).getX() + 40, heartIcons.get(i - 1).getY());
-        }
-    }
-
-    public void updateWeaponGUI() {
-        ammoLabel.setPosition(camera.position.x - ViewConstants.CAMERA_WIDTH / 2 + 10, camera.position.y - ViewConstants.CAMERA_HEIGHT / 2 + 10);
-        weaponImage.setPosition(ammoLabel.getX(), ammoLabel.getY() + ammoLabel.getHeight());
-        ammoLabel.setText(model.getPlayer().getCurrentWeapon().getTotalBullets() + "/" + model.getPlayer().getCurrentWeapon().getbulletsLeftInMagazine());
     }
 
     public void updateCameraPosition() {
@@ -264,6 +210,10 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
         return playerView;
     }
 
+    public GUI getGUI() {
+        return gui;
+    }
+
     public Position screenToWorldCoordinates(Position screenCoordinates){
         Vector3 screenCordinatesVector = new Vector3(screenCoordinates.getX(), screenCoordinates.getY(), 0);
         Vector3 worldCoordinatesVector = camera.unproject(screenCordinatesVector);
@@ -303,14 +253,6 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
 
         }
         music.setVolume(ViewConstants.masterVolume);
-    }
-
-    public void updateGUIWeapon() {
-        weaponImage = new Image(playerView.getWeaponView().getTexture());
-    }
-
-    public void setCrosshairCursor() {
-        Gdx.input.setCursorImage(GraphicalAssets.CROSSHAIR, GraphicalAssets.CROSSHAIR.getWidth() / 2, GraphicalAssets.CROSSHAIR.getHeight() / 2);
     }
 
     public void checkIfProjectile(Observable o, Object arg){

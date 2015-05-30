@@ -3,8 +3,10 @@ package edu.chl.blastinthepast.controller;
 import com.badlogic.gdx.Input;
 import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.utils.Position;
+import edu.chl.blastinthepast.view.characterviews.PlayerView;
 import edu.chl.blastinthepast.view.gamestates.GameStateManager;
 import edu.chl.blastinthepast.view.gamestates.PlayState;
+import edu.chl.blastinthepast.view.weaponviews.WeaponView;
 
 /**
  * Created by Shif on 21/05/15.
@@ -37,7 +39,8 @@ public class PlayController extends GameStateController {
                 if (!model.getChest().isOpened() && model.getPlayer().getPosition().overlaps(model.getChest().getPosition())) {
                     model.getPlayer().addWeapon(model.getChest().open(model.getPlayer()));
                     gsm.getPlayState().getPlayer().changeWeaponView();
-                    gsm.getPlayState().updateGUIWeapon();
+                    WeaponView weaponView  = ((PlayState) gsm.getGameState()).getPlayer().getWeaponView();
+                    gsm.getPlayState().getGUI().updateGUIWeapon(weaponView);
                 }
                 break;
             case Input.Keys.R:
@@ -47,15 +50,21 @@ public class PlayController extends GameStateController {
                 try {
                     model.getPlayer().setWeapon(model.getPlayer().getAllWeapons().get(0));
                     ((PlayState) gsm.getGameState()).getPlayer().changeWeaponView();
-                    ((PlayState) gsm.getGameState()).updateGUIWeapon();
-                } catch (IndexOutOfBoundsException e) {}
+                    WeaponView weaponView  = ((PlayState) gsm.getGameState()).getPlayer().getWeaponView();
+                    ((PlayState) gsm.getGameState()).getGUI().updateGUIWeapon(weaponView);
+                } catch (IndexOutOfBoundsException e) {
+                    e.printStackTrace();
+                }
                 break;
             case Input.Keys.NUM_2:
                 try {
                     model.getPlayer().setWeapon(model.getPlayer().getAllWeapons().get(1));
                     ((PlayState) gsm.getGameState()).getPlayer().changeWeaponView();
-                    ((PlayState) gsm.getGameState()).updateGUIWeapon();
-                } catch (IndexOutOfBoundsException e) {}
+                    WeaponView weaponView  = ((PlayState) gsm.getGameState()).getPlayer().getWeaponView();
+                    ((PlayState) gsm.getGameState()).getGUI().updateGUIWeapon(weaponView);
+                } catch (IndexOutOfBoundsException e) {
+                    e.printStackTrace();
+                }
                 break;
             case Input.Keys.SPACE:
                 gsm.getPlayState().toggleSound();
