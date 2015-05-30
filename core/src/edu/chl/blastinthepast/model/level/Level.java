@@ -3,6 +3,7 @@ package edu.chl.blastinthepast.model.level;
 import edu.chl.blastinthepast.model.enemy.Boss;
 import edu.chl.blastinthepast.model.enemy.Enemy;
 import edu.chl.blastinthepast.model.enemy.EnemyFactory;
+import edu.chl.blastinthepast.model.player.CharacterI;
 import edu.chl.blastinthepast.model.player.Player;
 import edu.chl.blastinthepast.utils.CollisionLayerAdapter;
 import java.util.ArrayList;
@@ -12,9 +13,9 @@ import java.util.ArrayList;
  */
 public abstract class Level implements LevelInterface {
 
-    protected Player player;
+    protected CharacterI player;
     protected Boss boss;
-    protected ArrayList<Enemy> enemies;
+    protected ArrayList<CharacterI> enemies;
     protected EnemyFactory enemyFactory = new EnemyFactory();
     protected int mapWidth;
     protected int mapHeight;
@@ -29,7 +30,7 @@ public abstract class Level implements LevelInterface {
     }
 
     @Override
-    public Player getPlayer() {
+    public CharacterI getPlayer() {
         return player;
     }
 
@@ -39,7 +40,7 @@ public abstract class Level implements LevelInterface {
     }
 
     @Override
-    public ArrayList<Enemy> getEnemies() {
+    public ArrayList<CharacterI> getEnemies() {
         return enemies;
     }
 
@@ -61,12 +62,12 @@ public abstract class Level implements LevelInterface {
     @Override
     public boolean playerIsColliding() {
         int playerMapX, playerMapY;
-        if (player.isMovingEast()) {
-            playerMapX = Math.round((player.getPosition().getX() + player.getRectangle().getWidth()) / layer.getTileWidth()) - 1;
+        if (((Player)player).isMovingEast()) {
+            playerMapX = Math.round((((Player)player).getPosition().getX() + ((Player)player).getRectangle().getWidth()) / layer.getTileWidth()) - 1;
         } else {
-            playerMapX = Math.round(player.getPosition().getX() / layer.getTileWidth()) - 1;
+            playerMapX = Math.round(((Player)player).getPosition().getX() / layer.getTileWidth()) - 1;
         }
-        if (player.isMovingNorth()) {
+        if (((Player)player).isMovingNorth()) {
             playerMapY = Math.round((player.getPosition().getY() + player.getRectangle().getHeight())/ layer.getTileHeight()) - 1;
         } else {
             playerMapY = Math.round(player.getPosition().getY()/ layer.getTileHeight()) - 1;

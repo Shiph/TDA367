@@ -3,6 +3,7 @@ package edu.chl.blastinthepast.tests;
 import edu.chl.blastinthepast.model.enemy.Boss;
 import edu.chl.blastinthepast.model.enemy.Enemy;
 import edu.chl.blastinthepast.model.level.LevelInterface;
+import edu.chl.blastinthepast.model.player.CharacterI;
 import edu.chl.blastinthepast.model.player.Player;
 import java.util.ArrayList;
 
@@ -11,12 +12,12 @@ import java.util.ArrayList;
  */
 public class MockLevel implements LevelInterface {
 
-    public ArrayList<MockEnemy> enemies;
+    public ArrayList<CharacterI> enemies;
     public MockPlayer player;
 
     public MockLevel() {
         player = new MockPlayer();
-        enemies = new ArrayList<MockEnemy>();
+        enemies = new ArrayList<CharacterI>();
         for (int i=0; i<10; i++) {
             MockEnemy e = new MockEnemy();
         }
@@ -43,13 +44,13 @@ public class MockLevel implements LevelInterface {
     }
 
     @Override
-    public ArrayList<Enemy> getEnemies() {
-        return null;
+    public ArrayList<CharacterI> getEnemies() {
+        return enemies;
     }
 
     @Override
-    public Player getPlayer() {
-        return null;
+    public CharacterI getPlayer() {
+        return player;
     }
 
     @Override

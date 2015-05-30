@@ -3,15 +3,15 @@ package edu.chl.blastinthepast.tests;
 import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.model.player.CharacterI;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
-import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
+import static org.junit.Assert.*;
 
 /**
  * Created by Shif on 2015-05-30.
  */
-public class BPModelTest extends TestCase {
+public class BPModelTest {
 
     private BPModel model;
     private MockLevel level;
@@ -52,7 +52,7 @@ public class BPModelTest extends TestCase {
         characterIs = model.getCharacterIs();
         int newSize = characterIs.size();
         assertTrue(oldSize != newSize);
-        assertTrue(pcl.eventName.equals("New character"));
+        assertTrue(pcl.eventName.equals("New Character"));
     }
 
 }
