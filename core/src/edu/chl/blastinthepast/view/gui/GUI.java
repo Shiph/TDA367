@@ -44,12 +44,21 @@ public class GUI {
         weaponImage = new Image(playerView.getWeaponView().getTexture());
     }
 
+    /**
+     * Sets the ammo and weapon labels positions retrieving positions from the camera and updates the ammo count.
+     * @param camera The given camera in which the update will occur.
+     * @param player The given player character from which the weapon information will be retrieved.
+     */
     public void updateWeaponGUI(OrthographicCamera camera, Player player) {
         ammoLabel.setPosition(camera.position.x - ViewConstants.CAMERA_WIDTH / 2 + 10, camera.position.y - ViewConstants.CAMERA_HEIGHT / 2 + 10);
         weaponImage.setPosition(ammoLabel.getX(), ammoLabel.getY() + ammoLabel.getHeight());
         ammoLabel.setText(player.getCurrentWeapon().getTotalBullets() + "/" + player.getCurrentWeapon().getbulletsLeftInMagazine());
     }
 
+    /**
+     * Updates the heart positions retrieving positions from the camera.
+     * @param camera The given camera in which the update will occur.
+     */
     public void updateHeartPositions(OrthographicCamera camera) {
         if (!heartIcons.isEmpty()) {
             heartIcons.get(0).setPosition(camera.position.x - ViewConstants.CAMERA_WIDTH / 2 + 15, camera.position.y + ViewConstants.CAMERA_HEIGHT / 2 - 60);
@@ -59,10 +68,18 @@ public class GUI {
         }
     }
 
+    /**
+     * If a new weapon is equipped, this method will change the weapon label.
+     * @param weaponView The according weapon view from which the texture will be retrieved.
+     */
     public void updateGUIWeapon(WeaponView weaponView) {
         weaponImage = new Image(weaponView.getTexture());
     }
 
+    /**
+     * Updates the number of hearts displayed depending on the player characters health.
+     * @param player The given player character which health will determine the number of hearts.
+     */
     public void updateHearts(Player player) {
         if (player.getHealth() < heartIcons.size()) {
             for (int i = 0; i < heartIcons.size() - player.getHealth(); i++) {
@@ -75,6 +92,9 @@ public class GUI {
         }
     }
 
+    /**
+     * Sets the image for the crosshair cursor.
+     */
     public void setCrosshairCursor() {
         Gdx.input.setCursorImage(GraphicalAssets.CROSSHAIR, GraphicalAssets.CROSSHAIR.getWidth() / 2, GraphicalAssets.CROSSHAIR.getHeight() / 2);
     }
