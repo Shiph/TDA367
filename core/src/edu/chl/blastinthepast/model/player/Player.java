@@ -20,8 +20,8 @@ public class Player extends Character {
 
     private Vector2 aimDirection = new Vector2(1,0);
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-    private final int width = 64;
-    private final int height = 64;
+    private final int width = 32;
+    private final int height = 32;
     private ArrayList<WeaponInterface> weaponArray;
     private WeaponFactory weaponFactory;
     private boolean north, south, west, east, shooting;
