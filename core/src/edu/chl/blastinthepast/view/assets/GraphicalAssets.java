@@ -13,7 +13,7 @@ public class GraphicalAssets {
     public static final Texture CHARACTERLEFT = new Texture(Gdx.files.internal("characterleft.png"));
     public static final Texture CHARACTERRIGHT = new Texture(Gdx.files.internal("characterright.png"));
     public static final Texture CHARACTERDOWN = new Texture(Gdx.files.internal("characterdown.png"));
-    public static final Texture PLAYER = new Texture(Gdx.files.internal("Player.png"));
+    public static final Texture PLAYER = new Texture(Gdx.files.internal("Player3.png"));
     public static final Texture PLEBUP = new Texture(Gdx.files.internal("plebup.png"));
     public static final Texture PLEBLEFT = new Texture(Gdx.files.internal("plebleft.png"));
     public static final Texture PLEBRIGHT = new Texture(Gdx.files.internal("plebright.png"));
@@ -22,7 +22,7 @@ public class GraphicalAssets {
     public static final Texture BOSSLEFT = new Texture(Gdx.files.internal("bossleft.png"));
     public static final Texture BOSSRIGHT = new Texture(Gdx.files.internal("bossright.png"));
     public static final Texture BOSSDOWN = new Texture(Gdx.files.internal("bossdown.png"));
-    public static final Texture AK47_BULLET = new Texture(Gdx.files.internal("triforce.png"));
+    public static final Texture AK47_BULLET = new Texture(Gdx.files.internal("magnumprojectile.png"));
     public static final Texture MAGNUM_BULLET = new Texture(Gdx.files.internal("magnumprojectile.png"));
     public static final Texture AK47 = new Texture(Gdx.files.internal("ak47.gif"));
     public static final Texture CHESTOPEN = new Texture (Gdx.files.internal("open_chest.png"));

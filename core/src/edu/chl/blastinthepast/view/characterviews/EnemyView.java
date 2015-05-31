@@ -62,7 +62,7 @@ public abstract class EnemyView implements CharacterView {
     }
 
     public void update() {
-        sprite.setPosition(enemy.getPosition().getX()-sprite.getWidth()/2, enemy.getPosition().getY() - sprite.getHeight()/2);
+        sprite.setPosition(enemy.getPosition().getX(), enemy.getPosition().getY());
         updateDirection();
     }
 
@@ -73,7 +73,7 @@ public abstract class EnemyView implements CharacterView {
     }
 
     public void updatePosition(){
-        sprite.setPosition(enemy.getPosition().getX()-sprite.getWidth()/2, enemy.getPosition().getY() - sprite.getHeight()/2);
+        sprite.setPosition(enemy.getPosition().getX(), enemy.getPosition().getY());
     }
     
 }

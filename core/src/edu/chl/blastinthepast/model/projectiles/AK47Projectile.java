@@ -9,7 +9,7 @@ import edu.chl.blastinthepast.model.position.PositionInterface;
 public class AK47Projectile extends Projectile {
 
     public AK47Projectile(PositionInterface pos, Vector2 aimDirection, Vector2 movementDirection, int bonusDamage) {
-        super(pos, aimDirection, movementDirection, 800, 1, bonusDamage, 4, 4);
+        super(pos, aimDirection, movementDirection, 1000, 1, bonusDamage, 4, 4);
     }
 
     @Override
@@ -17,3 +17,4 @@ public class AK47Projectile extends Projectile {
         return ProjectileTypeEnum.AK47;
     }
 }
+

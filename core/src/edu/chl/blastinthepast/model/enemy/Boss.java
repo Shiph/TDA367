@@ -20,7 +20,7 @@ public class Boss extends Enemy {
     }
 
     private Boss(int movementSpeed, int health, CharacterI player, LootInterface lootStyle, PositionInterface position) {
-        super(movementSpeed, health, player, 128, 128, lootStyle, position);
+        super(movementSpeed, health, player, 40, 60, lootStyle, position);
     }
 
     @Override
