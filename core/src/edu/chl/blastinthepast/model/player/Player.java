@@ -136,20 +136,33 @@ public class Player extends Character {
     public void setMovementDirection(String movementDirection){
         switch (movementDirection) {
             case "north":
-                north = !north;
-                south = false;
+                north = true;
                 break;
             case "south":
-                south = !south;
-                north = false;
+                south = true;
                 break;
             case "west":
-                west = !west;
-                east = false;
+                west = true;
                 break;
             case "east":
-                east = !east;
+                east = true;
+                break;
+        }
+    }
+
+    public void resetMovementDirection(String movementDirection){
+        switch (movementDirection) {
+            case "north":
+                north = false;
+                break;
+            case "south":
+                south = false;
+                break;
+            case "west":
                 west = false;
+                break;
+            case "east":
+                east = false;
                 break;
         }
     }

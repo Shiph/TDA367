@@ -157,8 +157,14 @@ public abstract class Enemy extends Character {
         }
     }
 
+    /**
+     * Generate loot by randomly choosing one of the player's weapons and possibly generating ammo for it
+     * @return
+     */
     public ArrayList<Object> die() {
-        HashMap<String, ArrayList<? extends Object>> newLoot = lootStuff.generateLoot(getPosition(), getWeapon());
+        Random r = new Random();
+        WeaponInterface w = player.getAllWeapons().get(r.nextInt(player.getAllWeapons().size()));
+        HashMap<String, ArrayList<? extends Object>> newLoot = lootStuff.generateLoot(getPosition(), w);
         pcs.firePropertyChange("PowerUp drops", null, newLoot.get("PowerUp Loot"));
         pcs.firePropertyChange("Ammunition drops", null, newLoot.get("Ammunition Loot"));
         return loot;

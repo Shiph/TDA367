@@ -97,9 +97,16 @@ public class PlayController extends GameStateController {
     }
 
     public void keyUp(int keyCode) {
-        if (keyCode == Input.Keys.W || keyCode == Input.Keys.A || keyCode == Input.Keys.S || keyCode == Input.Keys.D) {
-            keyDown(keyCode);
+        if (keyCode == Input.Keys.W){
+            model.getPlayer().resetMovementDirection("north");
+        } else if (keyCode == Input.Keys.S){
+            model.getPlayer().resetMovementDirection("south");
+        } else if (keyCode == Input.Keys.D){
+            model.getPlayer().resetMovementDirection("east");
+        } else if (keyCode == Input.Keys.A){
+            model.getPlayer().resetMovementDirection("west");
         }
     }
+
 
 }

@@ -23,7 +23,7 @@ public class GenerousLoot implements LootInterface {
         ArrayList<AmmunitionInterface> ammoLoot = new ArrayList<AmmunitionInterface>();
         Random random = new Random();
         int amount = random.nextInt(4)*10+20;
-        Ammunition ammo = new Ammunition(spawnPosition, weapon.getProjectile(), amount);
+        Ammunition ammo = new Ammunition(spawnPosition, weapon.getNewProjectile(), amount);
         ammoLoot.add(ammo);
         PowerUpI powerUp = PowerUpGenerator.generatePowerUp();
         powerUp.setPosition(spawnPosition);
