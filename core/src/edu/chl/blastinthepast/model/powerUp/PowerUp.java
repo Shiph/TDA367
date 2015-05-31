@@ -12,51 +12,59 @@ import edu.chl.blastinthepast.utils.RectangleAdapter;
  */
 public abstract class PowerUp implements PowerUpI{
     private PositionInterface position;
-    private long activationTime=0;
-    private boolean hasExpired=false;
-    private boolean firstUpdate=true;
+    private long activationTime = 0;
+    private boolean hasExpired = false;
+    private boolean firstUpdate = true;
     private final int size = 64;
     private Rectangle rectangle = new RectangleAdapter(size, size);
-    protected int duration=10*1000;
+    protected int duration = 10*1000;
     protected CharacterI characterI;
 
-    public void init(CharacterI characterI){
+    @Override
+    public void init(CharacterI characterI) {
         this.characterI = characterI;
-        activationTime=System.currentTimeMillis();
+        activationTime = System.currentTimeMillis();
     }
 
+    @Override
     public void update(){
         if (System.currentTimeMillis() - activationTime < duration){
             applyPowerUp();
         } else if (firstUpdate){
             applyPowerUp();
-            firstUpdate=false;
+            firstUpdate = false;
         } else {
-            hasExpired=true;
+            hasExpired = true;
         }
     }
 
+    @Override
     public abstract void applyPowerUp();
 
-
+    @Override
     public void setPosition(PositionInterface newPosition){
         position=newPosition;
         rectangle.setPosition(position.getX(), position.getY());
     }
 
+    @Override
     public PositionInterface getPosition(){
         return position;
     }
 
+    @Override
     public boolean getHasExpired(){
         return hasExpired;
     }
 
+    @Override
     public boolean isColliding(Collidable c){
         return rectangle.overlaps(c.getRectangle());
     }
 
+    @Override
     public Rectangle getRectangle(){
         return rectangle;
     }
+
 }

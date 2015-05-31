@@ -8,6 +8,9 @@ import edu.chl.blastinthepast.model.position.PositionInterface;
 import java.util.Random;
 
 /**
+ * A tougher enemy than the pleb.
+ * Guarantees to loot both ammunition and a power-up when killed.
+ *
  * Created by Mattias on 15-05-07.
  */
 public class Boss extends Enemy {

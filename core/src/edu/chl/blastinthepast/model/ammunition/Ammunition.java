@@ -9,6 +9,8 @@ import edu.chl.blastinthepast.utils.RectangleAdapter;
 
 /**
  * Created by jonas on 2015-05-13.
+ *
+ * Ammunition can be dropped by an enemy when it dies.
  */
 public class Ammunition implements AmmunitionInterface{
     private PositionInterface position;
@@ -17,6 +19,11 @@ public class Ammunition implements AmmunitionInterface{
     private int size = 32;
     private Rectangle rectangle = new RectangleAdapter();
 
+    /**
+     * @param position - the position of the Ammuntition
+     * @param type -
+     * @param amount
+     */
     public Ammunition(PositionInterface position, ProjectileInterface type, int amount){
         setPosition(position);
         this.type=type;
@@ -35,19 +42,30 @@ public class Ammunition implements AmmunitionInterface{
         rectangle.setPosition(position.getX(), position.getY());
     }
 
+    @Override
     public ProjectileInterface getType(){
         return type;
     }
 
+    @Override
     public int getAmount(){
         return amount;
     }
 
+    @Override
+    /**
+     * Checks if two collidables are colliding.
+     *
+     * @param c - an object that can collide
+     * @return <code>true</code>  if a collidable's rectangle overlaps the given collidables rectangle. <code>false</code> otherwise.
+     */
     public boolean isColliding(Collidable c){
         return rectangle.overlaps(c.getRectangle());
     }
 
+    @Override
     public Rectangle getRectangle(){
         return rectangle;
     }
+
 }
