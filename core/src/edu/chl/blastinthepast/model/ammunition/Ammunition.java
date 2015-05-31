@@ -19,11 +19,6 @@ public class Ammunition implements AmmunitionInterface{
     private int size = 32;
     private Rectangle rectangle = new RectangleAdapter();
 
-    /**
-     * @param position - the position of the Ammuntition
-     * @param type -
-     * @param amount
-     */
     public Ammunition(PositionInterface position, ProjectileInterface type, int amount){
         setPosition(position);
         this.type=type;
@@ -53,12 +48,6 @@ public class Ammunition implements AmmunitionInterface{
     }
 
     @Override
-    /**
-     * Checks if two collidables are colliding.
-     *
-     * @param c - an object that can collide
-     * @return <code>true</code>  if a collidable's rectangle overlaps the given collidables rectangle. <code>false</code> otherwise.
-     */
     public boolean isColliding(Collidable c){
         return rectangle.overlaps(c.getRectangle());
     }

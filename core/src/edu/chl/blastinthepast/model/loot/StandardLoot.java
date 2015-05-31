@@ -13,6 +13,8 @@ import java.util.Random;
 
 /**
  * Created by jonas on 2015-05-21.
+ *
+ * Standard loot has a chance to drop a random power-up and/or 20-60 ammunition.
  */
 public class StandardLoot implements LootInterface{
 

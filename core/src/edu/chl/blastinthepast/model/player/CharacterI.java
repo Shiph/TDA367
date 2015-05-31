@@ -15,26 +15,52 @@ import edu.chl.blastinthepast.model.position.PositionInterface;
 public interface CharacterI extends Collidable{
 
     void move(float dt);
-    void setMovementSpeed(int newSpeed);
-    int getMovementSpeed();
+
+    /**
+     * Returns the currently equipped weapon.
+     * @return
+     */
     WeaponInterface getCurrentWeapon();
+
+    /**
+     * Returns the character type represented as an enum.
+     * @return an enum representing the character type.
+     */
+    CharacterTypeEnum getCharacterType();
+
+    /**
+     * Returns a position containing x and y coordinates.
+     * @return
+     */
+    PositionInterface getPosition();
+
+    /**
+     * Updates the state of the character.
+     * Typically this means the application checks if the character has ran out of health or if a power-up is still active.
+     * @param dt
+     */
+    void update(float dt);
+
+    /**
+     * If a movement power-up is active, more movement speed is added through this method.
+     * @param bonusSpeed
+     */
+    void addBonusMovementSpeed(int bonusSpeed);
+
+    int getBonusMovementSpeed();
+    int getTotalMovementSpeed();
+    PositionInterface getPrevPos();
+    void setPosition(PositionInterface newPosition);
+    void setMovementSpeed(int newSpeed);
     void setWeapon (WeaponInterface weapon);
     int getHealth();
     void setHealth(int newHealth);
     ArrayList<ProjectileInterface> getProjectiles();
-    PositionInterface getPosition();
-    void update(float dt);
-    PositionInterface getPrevPos();
-    void setPosition(PositionInterface newPosition);
-    void addBonusMovementSpeed(int bonusSpeed);
-    int getBonusMovementSpeed();
-    int getTotalMovementSpeed();
+    int getMovementSpeed();
     ArrayList<WeaponInterface> getAllWeapons();
     void resetBonuses();
     Vector2 getMovementVector();
     Vector2 getAimVector();
     void addListener(PropertyChangeListener pcl);
-    void removeListener(PropertyChangeListener pcl);
-    CharacterTypeEnum getCharacterType();
 
 }

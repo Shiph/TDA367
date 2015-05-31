@@ -257,13 +257,9 @@ public class Player extends Character {
         }
     }
 
+    @Override
     public void addListener(PropertyChangeListener pcl){
         pcs.addPropertyChangeListener(pcl);
-    }
-
-    @Override
-    public void removeListener(PropertyChangeListener pcl) {
-        pcs.removePropertyChangeListener(pcl);
     }
 
     /**

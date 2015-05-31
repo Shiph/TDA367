@@ -14,8 +14,8 @@ public class Chest implements ChestInterface{
     private boolean isOpen = false;
     private WeaponInterface weapon;
     private final PositionInterface position;
-    private int width=64;
-    private int height=64;
+    private int width = 64;
+    private int height = 64;
     private Rectangle rectangle = new RectangleAdapter();
 
     public Chest(WeaponInterface weapon, PositionInterface position) {
@@ -24,23 +24,28 @@ public class Chest implements ChestInterface{
         rectangle.setSize(width, height);
     }
 
+    @Override
     public WeaponInterface open(CharacterI characterI) {
             isOpen = true;
             return weapon;
     }
 
+    @Override
     public boolean isOpened() {
         return isOpen;
     }
 
+    @Override
     public PositionInterface getPosition() {
         return position;
     }
 
+    @Override
     public boolean isColliding(Collidable c){
         return rectangle.overlaps(c.getRectangle());
     }
 
+    @Override
     public Rectangle getRectangle(){
         return rectangle;
     }

@@ -69,11 +69,6 @@ public abstract class Weapon implements WeaponInterface {
     }
 
     @Override
-    public void setFireRate(int newFireRate) {
-        fireRate = newFireRate;
-    }
-
-    @Override
     public int getFireRate() {
         return fireRate;
     }
@@ -93,11 +88,6 @@ public abstract class Weapon implements WeaponInterface {
         return ((totalBullets + bulletsLeftInMagazine) > 0);
     }
 
-    /**
-     * The method takes the weapons fire rate into account and assures that it isn't exceeded.
-     * If it isn't, it will return a new projectile.
-     * @return a new projectile if the fire rate isn't exceeded.
-     */
     @Override
     public ProjectileInterface fire() {
         long currentTime = System.currentTimeMillis();
@@ -116,9 +106,6 @@ public abstract class Weapon implements WeaponInterface {
         }
     }
 
-    /**
-     * Checks if the magazine is empty and will in that case call the reload method.
-     */
     @Override
     public void reloadIfNeeded() {
         if (bulletsLeftInMagazine == 0) {
@@ -126,10 +113,6 @@ public abstract class Weapon implements WeaponInterface {
         }
     }
 
-    /**
-     * This method flags the Weapon for reloading and starts a timer.
-     * It then calls the actual reload method, which is reloadWeapon().
-     */
     @Override
     public void reload() {
         isReloading = true;
@@ -177,12 +160,6 @@ public abstract class Weapon implements WeaponInterface {
         return totalBullets;
     }
 
-    /**
-     * This is the method that is called when the mouse is clicked in game.
-     * It will first ensure that the weapon actually has ammo and then reload if nessecary.
-     * After all that is passed, it will call the fire method.
-     * @return a new projectile if the player has ammo left.
-     */
     @Override
     public ProjectileInterface pullTrigger() {
         if (hasAmmo()) {

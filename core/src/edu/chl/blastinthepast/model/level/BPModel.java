@@ -19,6 +19,9 @@ import java.util.*;
 
 /**
  * Created by Shif on 20/04/15.
+ *
+ * BPModel is the class that ties the other model classes together to make a functioning game.
+ *
  */
 public class BPModel extends Observable implements PropertyChangeListener {
 
@@ -47,6 +50,11 @@ public class BPModel extends Observable implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Updates and checks up on objects that need to constantly be updated.
+     * Remove projectiles that have characters or are outside the map, dead enemies are removed from the list of enemies.
+     * Applies power-ups to the player and updates the player and enemies, also checks for collisions.
+     */
     public void update(float dt){
         if (!isPaused) {
             removeProjectiles();
@@ -73,6 +81,9 @@ public class BPModel extends Observable implements PropertyChangeListener {
         }
     }
 
+    /**
+     *
+     */
     public void checkIfPlayerBlocked() {
         if (!playerBlocked && level.playerIsColliding()) {
             pcs.firePropertyChange("blocked", false, "");
@@ -120,6 +131,9 @@ public class BPModel extends Observable implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Applies active power-ups to the player and removes them if they've expired
+     */
     private void updatePowerUps(){
         Iterator<PowerUpI> powerUpIterator = activePowerUps.iterator();
         while(powerUpIterator.hasNext()){
@@ -157,6 +171,10 @@ public class BPModel extends Observable implements PropertyChangeListener {
         checkForPowerUpCollision();
     }
 
+    /**
+     * Checks if two characters are colliding and if sets the character positions to the
+     * position they had the previous update cycle
+     */
     public void checkForCharacterCollision(){
         for (CharacterI c1 : characterIs){
             for (CharacterI c2 : characterIs){
@@ -167,6 +185,11 @@ public class BPModel extends Observable implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Checks if a character has been hit by a projectile. If the character that has collided with the projectile is the one
+     * who fired it, the collision is ignored. Otherwise, the character takes damage from the projectile and the projectile
+     * is then removed.
+     */
     public void checkForProjectileCollision(){
         Iterator<ProjectileInterface> projIter = projectiles.iterator();
         while (projIter.hasNext()){
@@ -181,6 +204,11 @@ public class BPModel extends Observable implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Checks if the player is colliding with an ammunition object, if so the ammunition is added
+     * to the weapon which uses the type of ammunition that the player has collided with.
+     * The ammunition object is then removed.
+     */
     public void checkForAmmoCollision(){
         Iterator<AmmunitionInterface> ammoIter = ammunitionDrops.iterator();
         while (ammoIter.hasNext()) {
@@ -197,6 +225,10 @@ public class BPModel extends Observable implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Checks if the player is colliding with a power-up object. If so, the power-up is initialized and the power-up
+     * is removed from the list of dropped power-ups and added to the list of active power-ups.
+     */
     public void checkForPowerUpCollision(){
         Iterator<PowerUpI> powerUpIter = powerUpDrops.iterator();
         if (powerUpIter.hasNext()) {

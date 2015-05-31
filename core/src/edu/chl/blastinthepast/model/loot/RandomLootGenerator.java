@@ -5,6 +5,9 @@ import java.util.Random;
 
 /**
  * Created by jonas on 2015-05-29.
+ *
+ * Returns an instance of a random concrete loot class.
+ *
  */
 public class RandomLootGenerator {
 

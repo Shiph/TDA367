@@ -99,6 +99,10 @@ public class GUI {
         Gdx.input.setCursorImage(GraphicalAssets.CROSSHAIR, GraphicalAssets.CROSSHAIR.getWidth() / 2, GraphicalAssets.CROSSHAIR.getHeight() / 2);
     }
 
+    /**
+     * Draws the labels and hearts with the updated positions.
+     * @param batch
+     */
     public void draw(SpriteBatch batch) {
         batch.begin();
         ammoLabel.draw(batch, opacity);

@@ -10,11 +10,24 @@ import edu.chl.blastinthepast.model.position.PositionInterface;
 public interface PowerUpI extends Collidable{
 
     void init(CharacterI characterI);
+
+    /**
+     * Checks if the power-up is still active.
+     */
     void update();
+
     void applyPowerUp();
+
     void setPosition(PositionInterface newPosition);
+
     PositionInterface getPosition();
+
     boolean getHasExpired();
+
+    /**
+     * Returns an enum value representing the power-up type.
+     * @return
+     */
     PowerUpTypeEnum getPowerUpType();
 
 }
