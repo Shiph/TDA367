@@ -24,11 +24,20 @@ public class Chest implements ChestInterface{
         rectangle.setSize(width, height);
     }
 
+    /**
+     * Flags the chest that it's opened and returns a weapon.
+     * @param characterI The character that loots the chest.
+     * @return a new weapon.
+     */
     public WeaponInterface open(CharacterI characterI) {
             isOpen = true;
             return weapon;
     }
 
+    /**
+     * This method is called before (and if) the player character actually opens the chest.
+     * @return true if the chest is already opened.
+     */
     public boolean isOpened() {
         return isOpen;
     }

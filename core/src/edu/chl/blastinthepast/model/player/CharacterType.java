@@ -5,6 +5,10 @@ package edu.chl.blastinthepast.model.player;
  */
 public interface CharacterType {
 
+    /**
+     * Returns a String representing the character type.
+     * @return
+     */
     String getID();
 
 }

@@ -53,6 +53,7 @@ public class Player extends Character {
         getRectangle().setSize(width, height);
     }
 
+    @Override
     public void move(float dt) {
         setPrevpos(new Position(getPosition()));
         float x = getPosition().getX();
@@ -65,6 +66,7 @@ public class Player extends Character {
         getRectangle().setPosition(getPosition().getX(), getPosition().getY());
     }
 
+    @Override
     public void update(float dt) {
         if (getHealth() <= 0) {
             die();
@@ -89,6 +91,7 @@ public class Player extends Character {
         setWeapon(weapon);
     }
 
+    @Override
     public ArrayList<WeaponInterface> getAllWeapons(){
         return weaponArray;
     }
@@ -220,13 +223,9 @@ public class Player extends Character {
         }
     }
 
+    @Override
     public void addListener(PropertyChangeListener pcl){
         pcs.addPropertyChangeListener(pcl);
-    }
-
-    @Override
-    public void removeListener(PropertyChangeListener pcl) {
-        pcs.removePropertyChangeListener(pcl);
     }
 
     private void updateMovementVector(float dt) {
