@@ -57,8 +57,8 @@ public class PlayerView implements CharacterView {
 
     public void updateDirection() {
         sprite.setOrigin(32, 32);
-        if (!(player.getAimVector() == null)) {
-            sprite.setRotation(player.getAimVector().angle());
+        if (!(player.getCurrentWeapon().getAimVector() == null)) {
+            sprite.setRotation(player.getCurrentWeapon().getAimVector().angle());
         }
         /*if (player.isMovingWest()) {
             sprite.setTexture(GraphicalAssets.CHARACTERLEFT);

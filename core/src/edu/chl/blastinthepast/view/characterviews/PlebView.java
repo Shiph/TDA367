@@ -15,6 +15,7 @@ public class PlebView extends EnemyView {
         this.pleb = pleb;
     }
 
+
     @Override
     public void updateDirection() {
         try {
