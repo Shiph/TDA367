@@ -1,14 +1,15 @@
-package edu.chl.blastinthepast.view;
+package edu.chl.blastinthepast.view.powerupview;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import edu.chl.blastinthepast.model.powerUp.PowerUpI;
+import edu.chl.blastinthepast.view.WorldObject;
 
 /**
  * Created by jonas on 2015-05-15.
  */
-public class PowerUpView implements WorldObject{
+public class PowerUpView implements WorldObject {
 
     private Texture texture;
     private PowerUpI powerUp;

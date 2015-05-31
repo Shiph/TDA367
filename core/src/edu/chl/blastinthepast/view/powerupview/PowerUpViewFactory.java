@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.view;
+package edu.chl.blastinthepast.view.powerupview;
 
 import edu.chl.blastinthepast.model.powerUp.PowerUpI;
 import edu.chl.blastinthepast.view.assets.GraphicalAssets;
