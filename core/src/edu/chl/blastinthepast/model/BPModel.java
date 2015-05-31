@@ -41,9 +41,9 @@ public class BPModel extends Observable implements PropertyChangeListener {
 
     public BPModel(LevelInterface level) {
         this.level = level;
-        chest = new Chest(new Magnum(new Position(1000,1500), new Vector2(), new Vector2()), new Position(1000,1500));
         characterIs = new ArrayList<CharacterI>();
         player = level.getPlayer();
+        chest = new Chest(new Magnum(new Position(1000,1500), player.getAimVector(), player.getMovementVector()), new Position(1000,1500));
         newCharacter(player);
         enemies = level.getEnemies();
         for (CharacterI e : enemies) {

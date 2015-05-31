@@ -9,7 +9,7 @@ import edu.chl.blastinthepast.model.position.PositionInterface;
 public class MagnumProjectile extends Projectile {
 
     public MagnumProjectile(PositionInterface pos, Vector2 aimDirection, Vector2 movementDirection, int bonusDamage) {
-        super(pos, aimDirection, movementDirection, 600, 2, bonusDamage, 4 , 4);
+        super(pos, aimDirection, movementDirection, 600, 2, bonusDamage, 4, 4);
     }
 
     @Override
