@@ -15,6 +15,7 @@ public abstract class WeaponView implements WorldObject {
     private Texture texture;
     private Sprite sprite;
     private WeaponInterface weapon;
+    private boolean spriteIsFlipped = false;
 
     public WeaponView(WeaponInterface weapon, Texture weaponTexture) {
         this.weapon = weapon;
@@ -41,6 +42,13 @@ public abstract class WeaponView implements WorldObject {
         sprite.setOrigin(0, 0);
         if (!(weapon.getAimVector() == null)) {
             sprite.setRotation(weapon.getAimVector().angle());
+            if (!spriteIsFlipped && weapon.getAimVector().angle() > 90 && weapon.getAimVector().angle() < 270) {
+                sprite.flip(false, true);
+                spriteIsFlipped = true;
+            } else if (spriteIsFlipped && !(weapon.getAimVector().angle() > 90 && weapon.getAimVector().angle() < 270)) {
+                sprite.flip(false, true);
+                spriteIsFlipped = false;
+            }
         }
     }
 

@@ -37,6 +37,7 @@ public class InGameMenuController extends GameStateController {
                     currentItem = 0;
                     gsm.getInGameMenu().setCurrentItem(currentItem);
                     gsm.setState(GameStateManager.MAIN_MENU, false);
+                    gsm.getMainMenu().playMusic();
                     bpController.setActiveController(ActiveControllerEnum.MAIN_MENU);
                 }
                 break;
