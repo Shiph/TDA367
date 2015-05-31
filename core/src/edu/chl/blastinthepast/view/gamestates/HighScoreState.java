@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.model.level.LevelInterface;
 import edu.chl.blastinthepast.view.assets.GraphicalAssets;
-import edu.chl.blastinthepast.utils.HighScoreHandler;
+import edu.chl.blastinthepast.data.HighScoreHandler;
 import edu.chl.blastinthepast.view.ViewConstants;
 
 /**

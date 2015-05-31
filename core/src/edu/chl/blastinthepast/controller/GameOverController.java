@@ -1,7 +1,7 @@
 package edu.chl.blastinthepast.controller;
 
 import com.badlogic.gdx.Input;
-import edu.chl.blastinthepast.utils.HighScoreHandler;
+import edu.chl.blastinthepast.data.HighScoreHandler;
 import edu.chl.blastinthepast.view.gamestates.GameStateManager;
 
 /**

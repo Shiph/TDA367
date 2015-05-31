@@ -11,7 +11,6 @@ import edu.chl.blastinthepast.model.ammunition.Ammunition;
  */
 public class AmmunitionView implements WorldObject {
 
-
     private Ammunition ammunition;
     private Texture texture;
     private Sprite sprite;
