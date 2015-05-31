@@ -1,4 +1,4 @@
-package edu.chl.blastinthepast.utils;
+package edu.chl.blastinthepast.data;
 
 import com.badlogic.gdx.Gdx;
 
