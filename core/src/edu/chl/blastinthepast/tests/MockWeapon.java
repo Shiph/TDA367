@@ -22,11 +22,6 @@ public class MockWeapon implements WeaponInterface {
     public int bonusFireRate = 0;
 
     @Override
-    public void setFireRate(int fireRate) {
-        this.fireRate = fireRate;
-    }
-
-    @Override
     public int getFireRate() {
         return fireRate;
     }
@@ -145,7 +140,7 @@ public class MockWeapon implements WeaponInterface {
 
     @Override
     public ProjectileInterface getNewProjectile() {
-        return null;
+        return new MockProjectile();
     }
 
     @Override

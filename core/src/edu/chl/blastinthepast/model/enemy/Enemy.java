@@ -202,10 +202,12 @@ public abstract class Enemy extends Character {
      */
     public ArrayList<Object> die() {
         Random r = new Random();
-        WeaponInterface w = player.getAllWeapons().get(r.nextInt(player.getAllWeapons().size()));
-        HashMap<String, ArrayList<? extends Object>> newLoot = lootStuff.generateLoot(getPosition(), w);
-        pcs.firePropertyChange("PowerUp drops", null, newLoot.get("PowerUp Loot"));
-        pcs.firePropertyChange("Ammunition drops", null, newLoot.get("Ammunition Loot"));
+        if (player.getAllWeapons()!=null && player.getAllWeapons().size()>0) {
+            WeaponInterface w = player.getAllWeapons().get(r.nextInt(player.getAllWeapons().size()));
+            HashMap<String, ArrayList<? extends Object>> newLoot = lootStuff.generateLoot(getPosition(), w);
+            pcs.firePropertyChange("PowerUp drops", null, newLoot.get("PowerUp Loot"));
+            pcs.firePropertyChange("Ammunition drops", null, newLoot.get("Ammunition Loot"));
+        }
         return loot;
     }
 
