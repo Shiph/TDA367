@@ -10,8 +10,19 @@ import edu.chl.blastinthepast.model.player.CharacterI;
  */
 public interface ChestInterface extends Collidable {
 
+    /**
+     * Flags the chest that it's opened and returns a weapon.
+     * @param characterI The character that loots the chest.
+     * @return a new weapon.
+     */
     WeaponInterface open(CharacterI characterI);
+
+    /**
+     * This method is called before (and if) the player character actually opens the chest.
+     * @return <code>true</code> if the chest is already opened.
+     */
     boolean isOpened();
+
     PositionInterface getPosition();
 
 }

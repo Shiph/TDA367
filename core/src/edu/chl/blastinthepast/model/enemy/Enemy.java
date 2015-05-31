@@ -215,8 +215,4 @@ public abstract class Enemy extends Character {
         pcs.addPropertyChangeListener(pcl);
     }
 
-    public void removeListener(PropertyChangeListener pcl){
-        pcs.removePropertyChangeListener(pcl);
-    }
-
 }

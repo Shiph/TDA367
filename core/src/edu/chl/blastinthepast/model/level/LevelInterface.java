@@ -1,7 +1,5 @@
 package edu.chl.blastinthepast.model.level;
 
-import edu.chl.blastinthepast.model.enemy.Boss;
-import edu.chl.blastinthepast.model.enemy.Enemy;
 import edu.chl.blastinthepast.model.player.CharacterI;
 import java.util.ArrayList;
 

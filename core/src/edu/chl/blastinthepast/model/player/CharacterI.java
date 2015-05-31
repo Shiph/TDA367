@@ -48,33 +48,19 @@ public interface CharacterI extends Collidable{
     void addBonusMovementSpeed(int bonusSpeed);
 
     int getBonusMovementSpeed();
-
     int getTotalMovementSpeed();
-
     PositionInterface getPrevPos();
-
     void setPosition(PositionInterface newPosition);
-
     void setMovementSpeed(int newSpeed);
-
     void setWeapon (WeaponInterface weapon);
-
     int getHealth();
-
     void setHealth(int newHealth);
-
     ArrayList<ProjectileInterface> getProjectiles();
-
     int getMovementSpeed();
-
     ArrayList<WeaponInterface> getAllWeapons();
-
     void resetBonuses();
-
     Vector2 getMovementVector();
-
     Vector2 getAimVector();
-
     void addListener(PropertyChangeListener pcl);
 
 }

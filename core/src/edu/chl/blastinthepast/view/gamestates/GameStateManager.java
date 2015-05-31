@@ -39,6 +39,12 @@ public class GameStateManager {
         setState(MAIN_MENU, false);
     }
 
+    /**
+     * Sets the active state.
+     *
+     * @param state - the state to be activated
+     * @param inGame - if a game already has been started or not
+     */
     public void setState(int state, boolean inGame) {
         if (gameState != null) {
             gameState.dispose();
