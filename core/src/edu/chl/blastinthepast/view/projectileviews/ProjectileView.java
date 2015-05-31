@@ -20,7 +20,7 @@ public abstract class ProjectileView implements WorldObject {
         this.projectile=projectile;
         this.texture = texture;
         sprite = new Sprite(texture);
-        sound.play(ViewConstants.masterVolume);
+        sound.play(0.05f);
         sprite.setX(projectile.getPosition().getX());
         sprite.setY(projectile.getPosition().getY());
     }
