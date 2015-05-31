@@ -5,12 +5,10 @@ import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponFactory;
 import edu.chl.blastinthepast.model.weapon.WeaponInterface;
 import edu.chl.blastinthepast.model.weapon.WeaponTypeEnum;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.lang.*;
 import java.util.ArrayList;
-
 import edu.chl.blastinthepast.model.position.Position;
 import edu.chl.blastinthepast.model.position.PositionInterface;
 
@@ -53,6 +51,12 @@ public class Player extends Character {
         getRectangle().setSize(width, height);
     }
 
+    @Override
+    /**
+     * Updates the movement vector based on delta time and moves the position and rectangle to where the vector points.
+     *
+     * @param dt - delta time (the time span between the current frame and the last frame in seconds)
+     */
     public void move(float dt) {
         setPrevpos(new Position(getPosition()));
         float x = getPosition().getX();
@@ -65,6 +69,7 @@ public class Player extends Character {
         getRectangle().setPosition(getPosition().getX(), getPosition().getY());
     }
 
+    @Override
     public void update(float dt) {
         if (getHealth() <= 0) {
             die();
@@ -89,10 +94,14 @@ public class Player extends Character {
         setWeapon(weapon);
     }
 
+    @Override
     public ArrayList<WeaponInterface> getAllWeapons(){
         return weaponArray;
     }
 
+    /**
+     * Executed when the player runs out of health. Notifies observers that the player is dead.
+     */
     public void die() {
         pcs.firePropertyChange("Player died", null, "Player died");
     }
@@ -101,6 +110,9 @@ public class Player extends Character {
         shooting = shoot;
     }
 
+    /**
+     * Fires the weapon and notifes observers if a Projectile was created.
+     */
     public void shoot(){
         if (getWeapon()!=null) {
             ProjectileInterface p = getWeapon().pullTrigger();
@@ -115,6 +127,11 @@ public class Player extends Character {
         this.aimDirection.setAngle(aimDirection);
     }
 
+    /**
+     * Calculates the vector between the player and the mouse pointer. Sets the weapon aim vector to that vector.
+     *
+     * @param mousePoint - position of the mouse pointer
+     */
     public void calculateDirection(PositionInterface mousePoint){
         Vector2 direction=new Vector2(mousePoint.getX() - getPosition().getX(), mousePoint.getY() - getPosition().getY());
         float length=direction.len();
@@ -133,6 +150,12 @@ public class Player extends Character {
         this.score += score;
     }
 
+
+    /**
+     * Sets which movement direction the player should have, based on a string.
+     *
+     * @param movementDirection - should be "north", "south", "west" or "east"
+     */
     public void setMovementDirection(String movementDirection){
         switch (movementDirection) {
             case "north":
@@ -150,6 +173,11 @@ public class Player extends Character {
         }
     }
 
+    /**
+     * Resets the movement direction of the player in the given direction.
+     *
+     * @param movementDirection - should be "north", "south", "west" or "east"
+     */
     public void resetMovementDirection(String movementDirection){
         switch (movementDirection) {
             case "north":
@@ -167,6 +195,9 @@ public class Player extends Character {
         }
     }
 
+    /**
+     * Resets all movement directions.
+     */
     public void resetMovementDirection() {
         north = false;
         south = false;
@@ -190,6 +221,9 @@ public class Player extends Character {
         return east;
     }
 
+    /**
+     * Blocks the player if it tries to move in any direction.
+     */
     public void block() {
         if (north) {
             blockedNorth = true;
@@ -205,6 +239,9 @@ public class Player extends Character {
         }
     }
 
+    /**
+     * Unblocks the movement of the player.
+     */
     public void unBlock() {
         blockedNorth = false;
         blockedSouth = false;
@@ -229,6 +266,11 @@ public class Player extends Character {
         pcs.removePropertyChangeListener(pcl);
     }
 
+    /**
+     * Updates the movement vector so that it aligns with the direction the player is facing.
+     *
+     * @param dt - delta time (the time span between the current frame and the last frame in seconds)
+     */
     private void updateMovementVector(float dt) {
         getMovementVector().set(1, 0);
         if (north) {
