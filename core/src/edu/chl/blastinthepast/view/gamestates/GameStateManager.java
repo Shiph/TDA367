@@ -1,7 +1,7 @@
 package edu.chl.blastinthepast.view.gamestates;
 
 import com.badlogic.gdx.Gdx;
-import edu.chl.blastinthepast.model.BPModel;
+import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.model.level.LevelManager;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

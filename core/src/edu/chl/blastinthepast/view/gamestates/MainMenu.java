@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import edu.chl.blastinthepast.model.BPModel;
+import edu.chl.blastinthepast.model.level.BPModel;
 import edu.chl.blastinthepast.model.level.LevelInterface;
 import edu.chl.blastinthepast.view.assets.GraphicalAssets;
 import edu.chl.blastinthepast.view.assets.SoundAssets;
