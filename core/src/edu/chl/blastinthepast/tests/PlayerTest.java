@@ -70,7 +70,10 @@ public class PlayerTest {
         assertTrue(player.getRectangle().getY()>0);
         assertTrue(player.getRectangle().getX()>0);
 
+        player=new Player(new MockPosition());
+
         player.setPosition(new MockPosition(0,0));
+        player.setMovementDirection("north");
         player.setMovementDirection("west");
         player.move(200f);
         assertTrue(player.getPosition().getY()>0);
@@ -94,7 +97,10 @@ public class PlayerTest {
         assertTrue(player.getRectangle().getY()<0);
         assertTrue(player.getRectangle().getX()>0);
 
+        player=new Player(new MockPosition());
+
         player.setPosition(new Position(0,0));
+        player.setMovementDirection("south");
         player.setMovementDirection("west");
         player.move(200f);
         assertTrue(player.getPosition().getY()<0);
