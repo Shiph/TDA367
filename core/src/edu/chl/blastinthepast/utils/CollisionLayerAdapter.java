@@ -7,7 +7,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 /**
  * Created by Shif on 2015-05-30.
  */
-public class CollisionLayerAdapter implements CollisionLayerInterface {
+public class CollisionLayerAdapter implements CollisionLayer {
 
     private TiledMapTileLayer layer;
     private TiledMap map;

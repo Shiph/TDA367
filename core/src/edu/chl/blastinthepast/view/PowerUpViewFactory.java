@@ -14,13 +14,13 @@ public class PowerUpViewFactory {
         }
         switch (powerUp.getPowerUpType()){
             case HEALTH:
-                return new PowerUpView(powerUp, GraphicalAssets.BOSSUP);
+                return new PowerUpView(powerUp, GraphicalAssets.HEART);
             case FIRERATE:
-                return new PowerUpView(powerUp, GraphicalAssets.CHESTOPEN);
+                return new PowerUpView(powerUp, GraphicalAssets.FIRERATE_UP);
             case DAMAGE:
-                return new PowerUpView(powerUp, GraphicalAssets.AK47);
+                return new PowerUpView(powerUp, GraphicalAssets.DMG_UP);
             case MOVEMENTSPEED:
-                return new PowerUpView(powerUp, GraphicalAssets.MAGNUM);
+                return new PowerUpView(powerUp, GraphicalAssets.BOOT);
         }
         return null;
     }

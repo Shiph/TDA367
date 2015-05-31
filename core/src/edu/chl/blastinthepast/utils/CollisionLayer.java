@@ -6,7 +6,7 @@ import edu.chl.blastinthepast.model.player.Player;
 /**
  * Created by Shif on 2015-05-30.
  */
-public interface CollisionLayerInterface {
+public interface CollisionLayer {
 
     float getTileWidth();
     float getTileHeight();

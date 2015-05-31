@@ -34,5 +34,8 @@ public class GraphicalAssets {
     public static final Texture INGAMEMENU = new Texture(Gdx.files.internal("ingamemenu.jpg"));
     public static final Texture GAMEOVER = new Texture(Gdx.files.internal("ingamemenu.jpg"));
     public static final Texture HIGHSCORE = new Texture(Gdx.files.internal("ingamemenu.jpg"));
+    public static final Texture DMG_UP = new Texture(Gdx.files.internal("dmg_up.png"));
+    public static final Texture FIRERATE_UP = new Texture(Gdx.files.internal("firerate_up.png"));
+    public static final Texture BOOT = new Texture(Gdx.files.internal("boot.png"));
 
 }
