@@ -1,6 +1,12 @@
 # TDA367
 Project in Chalmers course TDA367
 
+
+How to run application
+-------------------------
+Navigate to /pathtorepository/runnable/ and run BlastInThePast.jar by running the command "java -jar BlastInThePast.jar" in the terminal.
+
+
 How to run project
 -------------------------
 1. In IntelliJ: Import project -> build.gradle
@@ -11,7 +17,7 @@ How to run project
 
 
 Implications following of a group member dropping out
----------------------------------------------------------
+--------------------------------------------------------
 A few weeks in one of the group members decided to quit the course.
 The group member was working with the logic of collision between characters and collision between characters and map objects.
 Due to lack of communication we eventually had to suppose that the said group member had dropped out and therefore had to delegate the responsibilities that the group member had.
