@@ -1,7 +1,8 @@
-package edu.chl.blastinthepast.model.level;
+package edu.chl.blastinthepast.model;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.ammunition.AmmunitionInterface;
+import edu.chl.blastinthepast.model.level.LevelInterface;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.Magnum;
 import edu.chl.blastinthepast.model.enemy.Enemy;
@@ -40,9 +41,9 @@ public class BPModel extends Observable implements PropertyChangeListener {
 
     public BPModel(LevelInterface level) {
         this.level = level;
-        chest = new Chest(new Magnum(new Position(1000,1500), new Vector2(), new Vector2()), new Position(1000,1500));
         characterIs = new ArrayList<CharacterI>();
         player = level.getPlayer();
+        chest = new Chest(new Magnum(new Position(1000,1500), player.getAimVector(), player.getMovementVector()), new Position(1000,1500));
         newCharacter(player);
         enemies = level.getEnemies();
         for (CharacterI e : enemies) {

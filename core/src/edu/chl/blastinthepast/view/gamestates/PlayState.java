@@ -12,9 +12,10 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import edu.chl.blastinthepast.model.ammunition.Ammunition;
 import edu.chl.blastinthepast.model.player.CharacterTypeEnum;
 import edu.chl.blastinthepast.model.projectiles.AK47Projectile;
+import edu.chl.blastinthepast.model.projectiles.MagnumProjectile;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.player.CharacterI;
-import edu.chl.blastinthepast.model.level.BPModel;
+import edu.chl.blastinthepast.model.BPModel;
 import edu.chl.blastinthepast.model.level.LevelInterface;
 import edu.chl.blastinthepast.model.powerUp.*;
 import edu.chl.blastinthepast.view.assets.GraphicalAssets;
@@ -202,8 +203,10 @@ public class PlayState extends GameState implements PropertyChangeListener{
                 break;
             case "New Ammunition":
                 Ammunition ammo = (Ammunition) evt.getNewValue();
-                if (ammo.getType() instanceof AK47Projectile) {
-                    worldObjects.put(ammo, new AmmunitionView(ammo, GraphicalAssets.TRIFORCE_BULLET));
+                if (ammo.getType().getProjectileType().getID().equals("AK47")) {
+                    worldObjects.put(ammo, new AmmunitionView(ammo, GraphicalAssets.AK47_BULLET));
+                } else if (ammo.getType().getProjectileType().getID().equals("Magnum")) {
+                    worldObjects.put(ammo, new AmmunitionView(ammo, GraphicalAssets.MAGNUM_BULLET));
                 }
                 break;
             case "New Character":

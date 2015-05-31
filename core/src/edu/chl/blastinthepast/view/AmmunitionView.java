@@ -16,8 +16,8 @@ public class AmmunitionView implements WorldObject {
     private Sprite sprite;
 
     public AmmunitionView(Ammunition ammunition, Texture texture){
-        this.ammunition=ammunition;
-        this.texture=texture;
+        this.ammunition = ammunition;
+        this.texture = texture;
         sprite = new Sprite(texture);
         sprite.setPosition(ammunition.getPosition().getX(), ammunition.getPosition().getY());
     }
