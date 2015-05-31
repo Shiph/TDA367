@@ -34,6 +34,7 @@ public class PlayerView implements CharacterView {
     /**
      * @return the texture of the player character.
      */
+    @Override
     public Texture getTexture() {
         return texture;
     }
@@ -41,6 +42,7 @@ public class PlayerView implements CharacterView {
     /**
      * @return the sprite of the player character.
      */
+    @Override
     public Sprite getSprite() {
         return sprite;
     }

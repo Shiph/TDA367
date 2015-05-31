@@ -10,7 +10,7 @@ import edu.chl.blastinthepast.view.assets.SoundAssets;
 public class AK47ProjectileView extends ProjectileView {
 
     public AK47ProjectileView(ProjectileInterface projectile) {
-        super(projectile, GraphicalAssets.TRIFORCE_BULLET, SoundAssets.AK47_SOUND);
+        super(projectile, GraphicalAssets.AK47_BULLET, SoundAssets.AK47_SOUND);
     }
 
 }

@@ -22,7 +22,8 @@ public class GraphicalAssets {
     public static final Texture BOSSLEFT = new Texture(Gdx.files.internal("bossleft.png"));
     public static final Texture BOSSRIGHT = new Texture(Gdx.files.internal("bossright.png"));
     public static final Texture BOSSDOWN = new Texture(Gdx.files.internal("bossdown.png"));
-    public static final Texture TRIFORCE_BULLET = new Texture(Gdx.files.internal("triforce.png"));
+    public static final Texture AK47_BULLET = new Texture(Gdx.files.internal("triforce.png"));
+    public static final Texture MAGNUM_BULLET = new Texture(Gdx.files.internal("magnumprojectile.png"));
     public static final Texture AK47 = new Texture(Gdx.files.internal("ak47.gif"));
     public static final Texture CHESTOPEN = new Texture (Gdx.files.internal("open_chest.png"));
     public static final Texture CHESTCLOSED = new Texture (Gdx.files.internal("chest.png"));
