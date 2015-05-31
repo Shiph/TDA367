@@ -1,7 +1,8 @@
-package edu.chl.blastinthepast.model.level;
+package edu.chl.blastinthepast.model;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl.blastinthepast.model.ammunition.AmmunitionInterface;
+import edu.chl.blastinthepast.model.level.LevelInterface;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import edu.chl.blastinthepast.model.weapon.Magnum;
 import edu.chl.blastinthepast.model.enemy.Enemy;

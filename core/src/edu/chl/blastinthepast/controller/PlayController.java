@@ -1,7 +1,7 @@
 package edu.chl.blastinthepast.controller;
 
 import com.badlogic.gdx.Input;
-import edu.chl.blastinthepast.model.level.BPModel;
+import edu.chl.blastinthepast.model.BPModel;
 import edu.chl.blastinthepast.model.position.Position;
 import edu.chl.blastinthepast.view.gamestates.GameStateManager;
 import edu.chl.blastinthepast.view.gamestates.PlayState;

@@ -3,7 +3,7 @@ package edu.chl.blastinthepast.controller;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import edu.chl.blastinthepast.model.level.BPModel;
+import edu.chl.blastinthepast.model.BPModel;
 import edu.chl.blastinthepast.model.level.LevelManager;
 import edu.chl.blastinthepast.model.level.LevelOne;
 import edu.chl.blastinthepast.model.position.Position;

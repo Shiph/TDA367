@@ -1,6 +1,6 @@
 package edu.chl.blastinthepast.tests;
 
-import edu.chl.blastinthepast.model.level.BPModel;
+import edu.chl.blastinthepast.model.BPModel;
 import edu.chl.blastinthepast.model.player.CharacterI;
 import edu.chl.blastinthepast.model.projectiles.ProjectileInterface;
 import org.junit.Before;
