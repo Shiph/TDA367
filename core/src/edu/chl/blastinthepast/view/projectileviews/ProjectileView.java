@@ -58,7 +58,6 @@ public abstract class ProjectileView implements WorldObject {
         texture.dispose();
     }
 
-
     public ProjectileInterface getProjectile(){
         return projectile;
     }

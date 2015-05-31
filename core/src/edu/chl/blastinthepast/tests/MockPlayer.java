@@ -140,11 +140,6 @@ public class MockPlayer implements CharacterI {
     }
 
     @Override
-    public void removeListener(PropertyChangeListener pcl) {
-
-    }
-
-    @Override
     public boolean isColliding(Collidable c) {
         return false;
     }

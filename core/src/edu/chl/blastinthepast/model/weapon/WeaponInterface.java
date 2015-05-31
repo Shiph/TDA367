@@ -35,11 +35,16 @@ public interface WeaponInterface {
      */
     ProjectileInterface fire();
 
+    /**
+     * Checks if a weapon has any more ammo, both in the magazine and the total amount carried.
+     * @return <code>true</code> if the weapon has any ammo left.
+     */
+    boolean hasAmmo();
+
     void resetBonuses();
     int getTotalBullets();
     int getBonusDamage();
     int getFireRate();
-    boolean hasAmmo();
     void addAmmo(int amount);
     ProjectileInterface getProjectile();
     void setPosition(PositionInterface position);
@@ -55,4 +60,5 @@ public interface WeaponInterface {
     ProjectileInterface getNewProjectile();
     int getMagazineCapacity();
     WeaponTypeEnum getWeaponType();
+
 }

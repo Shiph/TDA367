@@ -118,11 +118,6 @@ public class MockEnemy implements CharacterI {
     }
 
     @Override
-    public void removeListener(PropertyChangeListener pcl) {
-
-    }
-
-    @Override
     public CharacterTypeEnum getCharacterType() {
         return null;
     }

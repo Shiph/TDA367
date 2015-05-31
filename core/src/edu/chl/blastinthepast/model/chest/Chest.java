@@ -14,8 +14,8 @@ public class Chest implements ChestInterface{
     private boolean isOpen = false;
     private WeaponInterface weapon;
     private final PositionInterface position;
-    private int width=64;
-    private int height=64;
+    private int width = 64;
+    private int height = 64;
     private Rectangle rectangle = new RectangleAdapter();
 
     public Chest(WeaponInterface weapon, PositionInterface position) {
@@ -24,32 +24,28 @@ public class Chest implements ChestInterface{
         rectangle.setSize(width, height);
     }
 
-    /**
-     * Flags the chest that it's opened and returns a weapon.
-     * @param characterI The character that loots the chest.
-     * @return a new weapon.
-     */
+    @Override
     public WeaponInterface open(CharacterI characterI) {
             isOpen = true;
             return weapon;
     }
 
-    /**
-     * This method is called before (and if) the player character actually opens the chest.
-     * @return true if the chest is already opened.
-     */
+    @Override
     public boolean isOpened() {
         return isOpen;
     }
 
+    @Override
     public PositionInterface getPosition() {
         return position;
     }
 
+    @Override
     public boolean isColliding(Collidable c){
         return rectangle.overlaps(c.getRectangle());
     }
 
+    @Override
     public Rectangle getRectangle(){
         return rectangle;
     }
