@@ -21,7 +21,8 @@ public class PlayerView implements CharacterView {
     private String currentWeapon;
 
     public PlayerView(Player player){
-        texture = GraphicalAssets.CHARACTERDOWN;
+        //texture = GraphicalAssets.CHARACTERDOWN;
+        texture = GraphicalAssets.PLAYER;
         sprite = new Sprite(texture);
         this.player = player;
         weaponViewFactory = new WeaponViewFactory();
@@ -55,7 +56,11 @@ public class PlayerView implements CharacterView {
     }
 
     public void updateDirection() {
-        if (player.isMovingWest()) {
+        sprite.setOrigin(32, 32);
+        if (!(player.getAimVector() == null)) {
+            sprite.setRotation(player.getAimVector().angle());
+        }
+        /*if (player.isMovingWest()) {
             sprite.setTexture(GraphicalAssets.CHARACTERLEFT);
         } else if (player.isMovingEast()) {
             sprite.setTexture(GraphicalAssets.CHARACTERRIGHT);
@@ -63,8 +68,10 @@ public class PlayerView implements CharacterView {
             sprite.setTexture(GraphicalAssets.CHARACTERUP);
         } else if (player.isMovingSouth()) {
             sprite.setTexture(GraphicalAssets.CHARACTERDOWN);
-        }
+        }*/
     }
+
+
 
     @Override
     public Object getObject() {

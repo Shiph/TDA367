@@ -13,6 +13,7 @@ public class GraphicalAssets {
     public static final Texture CHARACTERLEFT = new Texture(Gdx.files.internal("characterleft.png"));
     public static final Texture CHARACTERRIGHT = new Texture(Gdx.files.internal("characterright.png"));
     public static final Texture CHARACTERDOWN = new Texture(Gdx.files.internal("characterdown.png"));
+    public static final Texture PLAYER = new Texture(Gdx.files.internal("Player.png"));
     public static final Texture PLEBUP = new Texture(Gdx.files.internal("plebup.png"));
     public static final Texture PLEBLEFT = new Texture(Gdx.files.internal("plebleft.png"));
     public static final Texture PLEBRIGHT = new Texture(Gdx.files.internal("plebright.png"));
