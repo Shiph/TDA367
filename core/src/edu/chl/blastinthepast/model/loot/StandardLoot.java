@@ -25,7 +25,7 @@ public class StandardLoot implements LootInterface{
         boolean hasAmmo = random.nextBoolean();
         if (hasAmmo) {
             int amount = random.nextInt(4)*10+20;
-            Ammunition ammo = new Ammunition(spawnPosition, weapon.getProjectile(), amount);
+            Ammunition ammo = new Ammunition(spawnPosition, weapon.getNewProjectile(), amount);
             ammoLoot.add(ammo);
         }
         boolean hasPowerUp = random.nextBoolean();

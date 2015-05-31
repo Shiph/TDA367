@@ -10,6 +10,8 @@ import edu.chl.blastinthepast.model.player.CharacterI;
 import edu.chl.blastinthepast.model.player.Player;
 import edu.chl.blastinthepast.model.powerUp.PowerUpI;
 import edu.chl.blastinthepast.model.position.Position;
+import edu.chl.blastinthepast.model.weapon.WeaponInterface;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -184,7 +186,11 @@ public class BPModel extends Observable implements PropertyChangeListener {
         while (ammoIter.hasNext()) {
             AmmunitionInterface ammo = ammoIter.next();
             if (player.isColliding(ammo)) {
-                player.getCurrentWeapon().addAmmo(ammo.getAmount());
+                for (WeaponInterface w : player.getAllWeapons()) {
+                    if (w.getNewProjectile().getProjectileType().getID().equals(ammo.getType().getProjectileType().getID())) {
+                        w.addAmmo(ammo.getAmount());
+                    }
+                }
                 ammoIter.remove();
                 pcs.firePropertyChange("Remove Ammunition", null, ammo);
             }
