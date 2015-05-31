@@ -26,6 +26,10 @@ public abstract class PowerUp implements PowerUpI{
         activationTime = System.currentTimeMillis();
     }
 
+    /**
+     * The power-up will always be applied the first time the update method is called. This is for allowing
+     * permanent changes to a character.
+     */
     @Override
     public void update(){
         if (System.currentTimeMillis() - activationTime < duration){

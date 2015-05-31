@@ -116,12 +116,12 @@ public class EnemyTest {
     @Test
     public void testDie() {
         MockPCL pcl = new MockPCL();
+        MockPlayer p = new MockPlayer();
+        p.addWeapon(new MockWeapon());
+        enemy = enemyFactory.getEnemy(p, CharacterTypeEnum.PLEB, new MockPosition());
         enemy.addListener(pcl);
         enemy.die();
         assertTrue(pcl.eventName.equals("Ammunition drops"));
         assertTrue(pcl.newValue instanceof ArrayList);
     }
-
-    //should we have testUpdate as well?
-
 }

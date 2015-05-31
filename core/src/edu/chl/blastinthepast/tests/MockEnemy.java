@@ -17,6 +17,9 @@ import java.util.ArrayList;
  */
 public class MockEnemy implements CharacterI {
 
+    MockWeapon weapon = new MockWeapon();
+    ArrayList<MockWeapon> weapons = new ArrayList<MockWeapon>();
+
     @Override
     public void move(float dt) {
 

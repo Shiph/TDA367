@@ -140,7 +140,7 @@ public class MockWeapon implements WeaponInterface {
 
     @Override
     public ProjectileInterface getNewProjectile() {
-        return null;
+        return new MockProjectile();
     }
 
     @Override
