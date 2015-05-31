@@ -23,6 +23,8 @@ import java.util.Random;
 
 /**
  * Created by Mattias on 15-04-21.
+ *
+ * Classes that extends Enemy are Pleb and Boss.
  */
 public abstract class Enemy extends Character {
 
@@ -40,6 +42,17 @@ public abstract class Enemy extends Character {
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private LootInterface lootStuff;
 
+    /**
+     * Creates a new Enemy.
+     *
+     * @param movementSpeed - the movement speed of the enemy
+     * @param health - the health (HP) of the enemy
+     * @param player - reference to the active player
+     * @param width - width of the enemy
+     * @param height - height of the enemy
+     * @param lootStyle - what type of loot/drop the enemy should leave behind when it dies
+     * @param position - the position of the enemy
+     */
     public Enemy(int movementSpeed, int health, CharacterI player, int width, int height, LootInterface lootStyle, PositionInterface position) {
         getRectangle().setSize(width, height);
         loot= new ArrayList<>();
@@ -61,6 +74,12 @@ public abstract class Enemy extends Character {
         lootStuff=lootStyle;
     }
 
+    /**
+     * The enemy can move in four different directions (West, East, North, South), determined by an int (0, 1, 2, 3).
+     * The movement direction is updated in the private inner class MyActionListener.
+     *
+     * @param dt - delta time (the time span between the current frame and the last frame in seconds)
+     */
     public void move(float dt) {
         movementVector.setLength(movementSpeed * dt);
         switch (movementDirection) {
@@ -105,6 +124,11 @@ public abstract class Enemy extends Character {
         return weaponArray;
     }
 
+    /**
+     * Updates the vector from the enemy to the player. Updates the enemy's weapon's position. Fires weapon if the player is in range.
+     *
+     * @param dt - delta time (the time span between the current frame and the last frame in seconds)
+     */
     public void update(float dt) {
         setPrevpos(new Position(getPosition()));
         playerDirectionVector.set(player.getPosition().getX() - getPosition().getX(), player.getPosition().getY() - getPosition().getY());
@@ -117,12 +141,17 @@ public abstract class Enemy extends Character {
                 pcs.firePropertyChange("New Projectile", null, p);
             }
         } else {
-            updateMovementDirectionVector(movementDirection);
+            updateAimVector(movementDirection);
         }
 
     }
 
-    private void updateMovementDirectionVector(int movementDirection) {
+    /**
+     * Updates the aim vector so that it aligns with the movement direction.
+     *
+     * @param movementDirection - the enemies movement direction.
+     */
+    private void updateAimVector(int movementDirection) {
         switch (movementDirection) {
             case 0: // moving west
                 aimVector.set(getPosition().getX() - range, getPosition().getY());
@@ -141,6 +170,11 @@ public abstract class Enemy extends Character {
         }
     }
 
+    /**
+     * Checks if the player is in range. The enemy has a "vision range" of 300 pixels and a "vision span" of 300 degrees.
+     *
+     * @return <code>true</code> if player is in range, <code>false</code> otherwise.
+     */
     public boolean isPlayerInRange() {
         if (Math.abs(playerDirectionVector.angle(aimVector)) < 150 &&
                playerDirectionVector.len() < 300) {
@@ -149,8 +183,12 @@ public abstract class Enemy extends Character {
         return false;
     }
 
+
     private class MyActionListener implements ActionListener {
         @Override
+        /**
+         * Sets the enemy's movement direction randomly (out of four).
+         */
         public void actionPerformed(ActionEvent e) {
             Random r = new Random();
             movementDirection = r.nextInt(4);
@@ -158,7 +196,8 @@ public abstract class Enemy extends Character {
     }
 
     /**
-     * Generate loot by randomly choosing one of the player's weapons and possibly generating ammo for it
+     * Is executed when the enemy runs out of health. Randomly creates new loot/drop for the player to pick up.
+     *
      * @return
      */
     public ArrayList<Object> die() {
