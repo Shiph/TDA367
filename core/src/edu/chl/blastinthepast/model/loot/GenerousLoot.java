@@ -13,6 +13,8 @@ import java.util.Random;
 
 /**
  * Created by jonas on 2015-05-29.
+ *
+ * Generous loot is guaranteed to provide a random power-up and 20-60 ammunition.
  */
 public class GenerousLoot implements LootInterface {
 

@@ -34,7 +34,7 @@ import java.util.*;
 /**
  * Created by Shif on 23/04/15.
  */
-public class PlayState extends GameState implements Observer, PropertyChangeListener{
+public class PlayState extends GameState implements PropertyChangeListener{
 
     private BPModel model;
     private PlayerView playerView;
@@ -63,7 +63,6 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
         chestView = new ChestView(model.getChest());
         batch = new SpriteBatch();
         gui = new GUI();
-        model.addObserver(this);
         init(model, level);
         model.addListener(this);
     }
@@ -114,28 +113,14 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        if (worldObjects.containsKey(arg)) {
-            if (!worldObjectsRemoveList.contains(arg)) {
-                worldObjectsRemoveList.add(arg);
-            }
-        } else {
-            checkIfProjectile(o, arg);
-            checkIfCharacter(o, arg);
-            checkIfAmmunition(o, arg);
-            checkIfPowerUp(o, arg);
-        }
-    }
-
-    @Override
     public void draw() {
         tiledMapRenderer.render();
-        gui.draw(batch);
 
         chestView.draw(batch);
         for (WorldObject o : worldObjects.values()){
             o.draw(batch);
         }
+        gui.draw(batch);
 
         if (!worldObjectsRemoveList.isEmpty()) {
             removeObjects();
@@ -202,36 +187,6 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
             ViewConstants.masterVolume = 0;
         }
         music.setVolume(ViewConstants.masterVolume);
-    }
-
-    public void checkIfProjectile(Observable o, Object arg){
-        if (arg instanceof ProjectileInterface){
-            ProjectileInterface projectile = (ProjectileInterface) arg;
-            worldObjects.put(arg, projectileViewFactory.getProjectileView(projectile));
-        }
-    }
-
-    public void checkIfCharacter(Observable o, Object arg){
-        if (arg instanceof CharacterI) {
-            CharacterI characterI = (CharacterI) arg;
-            worldObjects.put(characterI, characterViewFactory.getCharacterView(characterI));
-        }
-    }
-
-    public void checkIfAmmunition(Observable o, Object arg){
-        if (arg instanceof Ammunition){
-            Ammunition ammo = (Ammunition) arg;
-            if (ammo.getType() instanceof AK47Projectile) {
-                worldObjects.put(ammo, new AmmunitionView(ammo, GraphicalAssets.TRIFORCE_BULLET));
-            }
-        }
-    }
-
-    public void checkIfPowerUp(Observable o, Object arg){
-        if (arg instanceof PowerUpI){
-            PowerUpI powerUp = (PowerUpI) arg;
-            worldObjects.put(powerUp, powerUpViewFactory.getPowerUpView(powerUp));
-        }
     }
 
     @Override
