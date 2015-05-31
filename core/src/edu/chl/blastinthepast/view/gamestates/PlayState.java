@@ -95,7 +95,7 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 
         //Sets the music for the game.
-        music = SoundAssets.SANIC_THEME;
+        music = SoundAssets.GAME_MUSIC;
         music.setVolume(ViewConstants.masterVolume);
         music.setLooping(true);
         music.stop();
@@ -200,10 +200,9 @@ public class PlayState extends GameState implements Observer, PropertyChangeList
 
     public void toggleSound() {
         if (ViewConstants.masterVolume == 0) {
-            ViewConstants.masterVolume = 0.2f;
+            ViewConstants.masterVolume = 0.4f;
         } else {
             ViewConstants.masterVolume = 0;
-
         }
         music.setVolume(ViewConstants.masterVolume);
     }

@@ -10,5 +10,5 @@ import com.badlogic.gdx.audio.Sound;
 public class SoundAssets {
     public static final Sound WOW_SOUND = Gdx.audio.newSound(Gdx.files.internal("wow.mp3"));
     public static final Music MENU_MUSIC = Gdx.audio.newMusic(Gdx.files.internal("menu.mp3"));
-    public static final Music SANIC_THEME =  Gdx.audio.newMusic(Gdx.files.internal("sanic.mp3"));
+    public static final Music GAME_MUSIC =  Gdx.audio.newMusic(Gdx.files.internal("contra.mp3"));
 }

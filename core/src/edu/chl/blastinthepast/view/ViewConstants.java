@@ -7,6 +7,6 @@ public class ViewConstants {
 
     public static final int CAMERA_WIDTH = 1280;
     public static final int CAMERA_HEIGHT = 720;
-    public static float masterVolume = 0.2f;
+    public static float masterVolume = 0.4f;
 
 }
